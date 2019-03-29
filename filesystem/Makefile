@@ -1,13 +1,13 @@
-all: kernel clean
+all: filesystem clean
 
-kernel: kernel.o server.o 
-	gcc -o kernel.k kernel.o server.o -lcommons -pthread
+filesystem: filesystem.o server.o
+	gcc -o filesystem filesystem.o server.o -lcommons -pthread
 
-kernel.o: 
-	gcc -c kernel.c -lcommons
-
+filesystem.o: filesystem.c
+	gcc -c filesystem.c -o filesystem.o -lcommons
+	
 server.o:
-	gcc -c ../server.c -lcommons
+	gcc -c ..server.c -lcommons
 
 clean: 
 	find . -name "*.o" -type f -delete
