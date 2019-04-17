@@ -11,6 +11,11 @@
 #include <commons/string.h> //string append
 #include <unistd.h> //read function
 
-void* serverThread (int portNumber, char * ip, t_log* logger);
+void* serverThread (void* args);
 
+typedef struct {
+    int portNumber;
+    char* ip;
+    t_log* logger;
+} server_info;
 #endif
