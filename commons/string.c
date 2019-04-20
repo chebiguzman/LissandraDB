@@ -42,7 +42,7 @@ char* string_duplicate(char* original) {
 	return strdup(original);
 }
 
-void string_append(char** original, char* string_to_add) {
+void string_append(char* original, char* string_to_add) {
 	*original = realloc(*original, strlen(*original) + strlen(string_to_add) + 1);
 	strcat(*original, string_to_add);
 }
