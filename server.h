@@ -10,29 +10,48 @@
 #include <commons/log.h> //loggger
 #include <commons/string.h> //string append
 #include <unistd.h> //read function
-
+#define HEADER_BYTE_SIZE 6
 void* create_server (void* args);
 
+//SELECT [NOMBRE_TABLA] [KEY]
 typedef struct 
 {
-    char* header[9];
-    char* arg0 [491];
-    int arg1;
-    int arg2;
-    int arg3;
+    char* header[HEADER_BYTE_SIZE];
+    char* table_name;
+    int key;
 
-}pakage_post;
+}pakage_select;
 
+//INSERT [NOMBRE_TABLA] [KEY] “[VALUE]”
 typedef struct 
 {
-    //char* ???[]
-} pakage_response;
+    char* header[HEADER_BYTE_SIZE];
+    char table_name;
+    int key;
+    char* value;
+} pakage_insert;
+
+//CREATE [TABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]
+typedef struct 
+{
+    char* header[HEADER_BYTE_SIZE];
+    char* table_name;
+    char* consistency;
+    int partition_number;
+    long compactation_time;
+
+} create_pakage;
 
 
+//DESCRIBE [NOMBRE_TABLA]
+//DROP [NOMBRE_TABLA]
+//JOURNAL
+//ADD MEMORY [NÚMERO] TO [CRITERIO]
+//RUN <path>
+//METRICS
 
 typedef struct {
     int portNumber;
-    char ip[13];
     t_log* logger;
 } server_info;
 #endif
