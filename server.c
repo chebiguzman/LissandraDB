@@ -41,8 +41,8 @@ void* create_server(void* args){
         string_append(&log1, "Set server to ip: ");
         string_append(&log1, serverInfo->ip);
         log_info(serverInfo->logger, log1);
-        //inet_pton(AF_INET, serverInfo->ip, &serverAddress.sin_addr.s_addr );
-        serverAddress.sin_addr.s_addr = inet_addr(serverInfo->ip);
+        inet_pton(AF_INET, serverInfo->ip, &serverAddress.sin_addr.s_addr );
+       // serverAddress.sin_addr.s_addr = inet_addr(serverInfo->ip);
         free(log1);
     
     } //SI se le pasa null a la ip se elije cualquiera disponible si no se setea esa

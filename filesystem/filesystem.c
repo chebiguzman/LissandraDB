@@ -21,9 +21,6 @@ int main(int argc, char const *argv[])
     char* PORT = config_get_string_value(config, "PORT");
 
     
-    
-
-   
     //set up log
     t_log* logger;
     pthread_t tid;
@@ -35,21 +32,7 @@ int main(int argc, char const *argv[])
     serverInfo->portNumber = PORT;
     serverInfo->ip[0] = '\0';
     
-    int reslt = pthread_create(&tid, NULL, create_server, (void*) serverInfo);
-    
-    //set up client 
-    int clientfd = socket(AF_INET, SOCK_STREAM, 0); 
-
-    struct sockaddr_in sock_client;
-   
-    sock_client.sin_family = AF_INET; 
-    sock_client.sin_addr.s_addr = inet_addr(IP); 
-    sock_client.sin_port = htons(PORT);
-
-    int connectS =  connect(clientfd, (struct sockaddr*)&sock_client, sizeof(sock_client));
-    printf("coneccion: %d", connectS);
-    //write(clientfd, "hello world", sizeof("hello world"));
-    
+    int reslt = pthread_create(&tid, NULL, create_server, (void*) serverInfo);   
 
     //JOIN THREADS
     pthread_join(tid,NULL);

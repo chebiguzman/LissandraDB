@@ -32,7 +32,7 @@ typedef struct
 
 typedef struct {
     int portNumber;
-    char ip[11];
+    char ip[13];
     t_log* logger;
 } server_info;
 #endif
