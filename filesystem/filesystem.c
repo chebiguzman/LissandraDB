@@ -19,15 +19,11 @@ int main(int argc, char const *argv[])
     t_config* config = config_create("config");
     char* LOGPATH = config_get_string_value(config, "LOG_PATH");
     int PORT = config_get_int_value(config, "PORT");
-
-    char* MEMORY_IP = config_get_string_value(config, "MEMORY_IP");
-    int MEMORY_PORT = config_get_int_value(config, "MEMORT_PORT");
-
    
     //set up log
     t_log* logger;
     pthread_t tid;
-    logger = log_create(LOGPATH, "Kernel", 1, LOG_LEVEL_INFO);
+    logger = log_create(LOGPATH, "Filesystem", 1, LOG_LEVEL_INFO);
 
 
     //set up server
@@ -35,23 +31,8 @@ int main(int argc, char const *argv[])
     memset(serverInfo, 0, sizeof( server_info));    
     serverInfo->logger = logger;
     serverInfo->portNumber = PORT;
-      
-    int reslt = pthread_create(&tid, NULL, create_server, (void*) serverInfo);
-    
-    //set up client 
-    int clientfd = socket(AF_INET, SOCK_STREAM, 0); 
 
-    struct sockaddr_in sock_client;
-   
-    sock_client.sin_family = AF_INET; 
-    sock_client.sin_addr.s_addr = inet_addr(MEMORY_IP); 
-    sock_client.sin_port = htons(MEMORY_PORT);
-
-    int connectS =  connect(clientfd, (struct sockaddr*)&sock_client, sizeof(sock_client));
-    printf("coneccion: %d", connectS);
-    
-    write(clientfd, "hello world", sizeof("hello world"));
-    
+    pthread_create(&tid, NULL, create_server, (void*) serverInfo);
 
     //JOIN THREADS
     pthread_join(tid,NULL);

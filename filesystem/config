@@ -1,3 +1,4 @@
+LOG_PATH=filesystem.log
 PORT=5003
 PUNTO_MONTAJE="/mnt/LISSANDRA_FS/"    
 RETARDO=500
