@@ -10,17 +10,17 @@
 #include <commons/log.h> //loggger
 #include <commons/string.h> //string append
 #include <unistd.h> //read function
-#define HEADER_BYTE_SIZE 6
+#define HEADER_BYTE_SIZE 9 //tambien cargar en el pharser
 void* create_server (void* args);
 
 //SELECT [NOMBRE_TABLA] [KEY]
-typedef struct 
+typedef struct pakage_select
 {
-    char* header[HEADER_BYTE_SIZE];
+    char header[HEADER_BYTE_SIZE];
     char* table_name;
     int key;
 
-}pakage_select;
+}pakage_select ;
 
 //INSERT [NOMBRE_TABLA] [KEY] “[VALUE]”
 typedef struct 
