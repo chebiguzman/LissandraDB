@@ -10,10 +10,11 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
+#include "../pharser.h"
 #include "../actions.h"
 
 //punto de entrada para el programa y el kernel
-
+t_log* logger;
 int main(int argc, char const *argv[])
 {
     
@@ -27,11 +28,12 @@ int main(int argc, char const *argv[])
 
    
     //set up log
-    t_log* logger;
+    
     pthread_t tid;
     logger = log_create(LOGPATH, "Kernel", 1, LOG_LEVEL_INFO);
-
-
+    int a = 1457;
+    char buffer[] = "SELECT\0\0\0Tabla1\0a";
+    pharse_bytearray(buffer);
     //set up server
     server_info* serverInfo = malloc(sizeof(server_info));
     memset(serverInfo, 0, sizeof( server_info));    
@@ -45,7 +47,7 @@ int main(int argc, char const *argv[])
     sock_client.sin_family = AF_INET; 
     sock_client.sin_addr.s_addr = inet_addr(MEMORY_IP); 
     sock_client.sin_port = htons(MEMORY_PORT);
-
+    
     int conection_result = connect(clientfd, (struct sockaddr*)&sock_client, sizeof(sock_client));
 
     if(conection_result<0){
@@ -69,6 +71,10 @@ int main(int argc, char const *argv[])
       return 0;
 }
 
+
+void action_select(pakage_select* select_info){
+  log_info(logger, "Se recibio una accion select");
+}
 
 
 
