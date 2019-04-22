@@ -14,13 +14,13 @@
 void* create_server (void* args);
 
 //SELECT [NOMBRE_TABLA] [KEY]
-typedef struct pakage_select
+typedef struct package_select
 {
     char header[HEADER_BYTE_SIZE];
     char* table_name;
     int key;
 
-}pakage_select ;
+}package_select ;
 
 //INSERT [NOMBRE_TABLA] [KEY] “[VALUE]”
 typedef struct 
@@ -29,7 +29,8 @@ typedef struct
     char table_name;
     int key;
     char* value;
-} pakage_insert;
+
+} package_insert;
 
 //CREATE [TABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]
 typedef struct 
@@ -40,16 +41,60 @@ typedef struct
     int partition_number;
     long compactation_time;
 
-} create_pakage;
-
+} package_create;
 
 //DESCRIBE [NOMBRE_TABLA]
-//DROP [NOMBRE_TABLA]
-//JOURNAL
-//ADD MEMORY [NÚMERO] TO [CRITERIO]
-//RUN <path>
-//METRICS
+typedef struct
+{
+    char* header[HEADER_BYTE_SIZE];
+    char* table_name;
 
+} package_describe;
+
+
+//DROP [NOMBRE_TABLA]
+typedef struct
+{
+    char* header[HEADER_BYTE_SIZE];
+    char* table_name;
+
+} package_drop;
+
+//JOURNAL
+typedef struct
+{
+    char* header[HEADER_BYTE_SIZE];
+
+} package_journal;
+
+//ADD MEMORY [NÚMERO] TO [CRITERIO]
+typedef struct
+{
+    char* header[HEADER_BYTE_SIZE];
+    char memory[6];
+    int memory_number;
+    char to[2];
+    char* criterio;
+
+} package_add;
+
+//RUN <path>
+typedef struct
+{
+    char* header[HEADER_BYTE_SIZE];
+    char* path;
+
+} package_run;
+
+//METRICS
+typedef struct
+{
+    char* header[HEADER_BYTE_SIZE];
+
+} package_metrics;
+
+
+//SERVER
 typedef struct {
     int portNumber;
     t_log* logger;
