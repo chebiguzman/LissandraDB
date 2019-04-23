@@ -4,87 +4,131 @@
 #include "server.h"
 #include "actions.h"
 #include <string.h>
-#define HEADER_BYTE_SIZE 9
+#define INSTRUCTION_BYTE_SIZE 9
 
 
 
 typedef struct package_select package_select;
 
 void pharse_bytearray(char* buffer){
-    char header[HEADER_BYTE_SIZE];
-    memcpy(header, buffer, HEADER_BYTE_SIZE);
-    printf("header: %s\n", header );
+    char instruction[INSTRUCTION_BYTE_SIZE];
+    memcpy(instruction, buffer, INSTRUCTION_BYTE_SIZE);
+    printf("instruction: %s\n", instruction );
 
-    if(!strcmp(header,"SELECT")){
+    if(!strcmp(instruction,"SELECT")){
         package_select* package = malloc(sizeof(package_select));
-        strcpy(package->header, header);
+        strcpy(package->instruction, instruction);
         
-        int table_name_len = strlen(get_string_from_buffer(buffer, HEADER_BYTE_SIZE))+1; //sumo el \o
-        package->table_name = strdup(get_string_from_buffer(buffer, HEADER_BYTE_SIZE));
-        package->key = buffer[HEADER_BYTE_SIZE+table_name_len];
+        //TABLE_NAME
+        int table_name_len = strlen(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE))+1; //sumo el \o
+        package->table_name = strdup(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE));
+
+        //KEY
+        package->key = buffer[INSTRUCTION_BYTE_SIZE+table_name_len];
 
 
-        printf("\n Datos de paquete:\n Header: %s\n Table name: %s\n Key: %d\n", package->header, package->table_name, buffer[HEADER_BYTE_SIZE+table_name_len]);
+        printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name, buffer[INSTRUCTION_BYTE_SIZE+table_name_len]);
         action_select(package);
     }
 
-    /*
-    if(!strcmp(header,"INSERT")){
-        package_select* package = malloc(sizeof(package_insert));
-        strcpy(package->header, header);
+    
+    if(!strcmp(instruction,"INSERT")){
+        package_insert* package = malloc(sizeof(package_insert));
+        strcpy(package->instruction, instruction);
+
+        //TABLE_NAME
+        int table_name_len = strlen(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE))+1; //sumo el \o
+        package->table_name = strdup(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE));
+
+        int tot_len = INSTRUCTION_BYTE_SIZE + table_name_len;
+
+        //KEY
+        package->key = buffer[tot_len];
+        tot_len += sizeof(package->key);
+
+        //VALUE
+        int value_len = strlen(get_string_from_buffer(buffer, tot_len))+1;
+        package->value = strdup(get_string_from_buffer(buffer, tot_len));
 
         action_insert(package);
     }
 
-    if(!strcmp(header,"CREATE")){
-        create_package* package = malloc(sizeof(package_create));
-        strcpy(package->header, header);
+    if(!strcmp(instruction,"CREATE")){
+        package_create* package = malloc(sizeof(package_create));
+        strcpy(package->instruction, instruction);
+
+        //TABLE_NAME
+        int table_name_len = strlen(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE))+1; //sumo el \o
+        package->table_name = strdup(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE));
+
+        int tot_len = INSTRUCTION_BYTE_SIZE + table_name_len;
+
+        //CONSISTENCY
+        tot_len =+ strlen(get_string_from_buffer(buffer, tot_len))+1;
+        package->consistency =(consistency_type) strdup(get_string_from_buffer(buffer, tot_len));
+
+        package->partition_number = buffer[tot_len];
+        tot_len += sizeof(package->partition_number);
+
+        package->compactation_time = buffer[tot_len];
 
         action_create(package);
     }
 
-    if(!strcmp(header,"DESCRIBE")){
+    if(!strcmp(instruction,"DESCRIBE")){
         package_describe* package = malloc(sizeof(package_describe));
-        strcpy(package->header, header);
+        strcpy(package->instruction, instruction);
+
+        //TABLE_NAME
+        int table_name_len = strlen(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE))+1; //sumo el \o
+        package->table_name = strdup(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE));
 
         action_describe(package);
     }
 
-    if(!strcmp(header,"DROP")){
+    if(!strcmp(instruction,"DROP")){
         package_drop* package = malloc(sizeof(package_drop));
-        strcpy(package->header, header);
+        strcpy(package->instruction, instruction);
+
+        //TABLE_NAME
+        int table_name_len = strlen(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE))+1; //sumo el \o
+        package->table_name = strdup(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE));
 
         action_drop(package);
     }
 
-    if(!strcmp(header,"JOURNAL")){
+    if(!strcmp(instruction,"JOURNAL")){
         package_journal* package = malloc(sizeof(package_journal));
-        strcpy(package->header, header);
+        strcpy(package->instruction, instruction);
 
         action_journal(package);
     }
 
-    if(!strcmp(header,"ADD")){
+    if(!strcmp(instruction,"ADD")){
         package_add* package = malloc(sizeof(package_add));
-        strcpy(package->header, header);
+        strcpy(package->instruction, instruction);
 
+        //comparar que verdaderamente diga ADD MEMORY y TO y no otra cosa
+        //Ya que usar inadecuadamente el comando no deberia estar permitido
+        //Aca tenemos que santificar lo que nos entre, despues de este punto vamos a confiar 
+        //en toda la informacion 
         action_add(package);
     }
 
-    if(!strcmp(header,"RUN")){
+    if(!strcmp(instruction,"RUN")){
         package_run* package = malloc(sizeof(package_run));
-        strcpy(package->header, header);
+        strcpy(package->instruction, instruction);
 
         action_run(package);
     }
 
-    if(!strcmp(header,"METRICS")){
+    if(!strcmp(instruction,"METRICS")){
         package_metrics* package = malloc(sizeof(package_metrics));
-        strcpy(package->header, header);
+        strcpy(package->instruction, instruction);
 
         action_metrics(package);
-    }*/
-
+    }
+    
     
 }
 

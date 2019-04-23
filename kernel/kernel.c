@@ -31,9 +31,10 @@ int main(int argc, char const *argv[])
     
     pthread_t tid;
     logger = log_create(LOGPATH, "Kernel", 1, LOG_LEVEL_INFO);
-    int a = 1457;
-    char buffer[] = "SELECT\0\0\0Tabla1\0a";
-    pharse_bytearray(buffer);
+    //int a = 1457;
+    //char buffer[] = "SELECT\0\0\0Tabla1\0a";
+    //pharse_bytearray(buffer);
+
     //set up server
     server_info* serverInfo = malloc(sizeof(server_info));
     memset(serverInfo, 0, sizeof( server_info));    
@@ -54,7 +55,7 @@ int main(int argc, char const *argv[])
       log_error(logger, "No se logro establecer coneccion con memoria");
       
     }
-    write(clientfd, "hello world", sizeof("hello world"));
+    //write(clientfd, "hello world", sizeof("hello world"));
 
 
     
@@ -72,8 +73,40 @@ int main(int argc, char const *argv[])
 }
 
 
-void action_select(pakage_select* select_info){
+void action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
+}
+
+void action_insert(package_insert* insert_info){
+  log_info(logger, "Se recibio una accion insert");
+}
+
+void action_create(package_create* create_info){
+  log_info(logger, "Se recibio una accion create");
+}
+
+void action_describe(package_describe* describe_info){
+  log_info(logger, "Se recibio una accion describe");
+}
+
+void action_drop(package_drop* drop_info){
+  log_info(logger, "Se recibio una accion drop");
+}
+
+void action_journal(package_journal* journal_info){
+  log_info(logger, "Se recibio una accion select");
+}
+
+void action_add(package_add* add_info){
+  log_info(logger, "Se recibio una accion select");
+}
+
+void action_run(package_run* run_info){
+  log_info(logger, "Se recibio una accion run");
+}
+
+void action_metrics(package_metrics* metrics_info){
+  log_info(logger, "Se recibio una accion metrics");
 }
 
 
