@@ -19,7 +19,7 @@ typedef enum { EVENTUAL_CONSISTENCY, STRONG_CONSISTENCY, STRONG_HASH_CONSISTENCY
 //SELECT [NOMBRE_TABLA] [KEY]
 typedef struct package_select
 {
-    char instruction[INSTRUCTION_BYTE_SIZE];
+    char* instruction;
     char* table_name;
     int key;
 

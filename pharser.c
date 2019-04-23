@@ -4,43 +4,59 @@
 #include "server.h"
 #include "actions.h"
 #include <string.h>
-#define INSTRUCTION_BYTE_SIZE 9
 
 
 
 typedef struct package_select package_select;
 
 void pharse_bytearray(char* buffer){
-    char instruction[INSTRUCTION_BYTE_SIZE];
-    memcpy(instruction, buffer, INSTRUCTION_BYTE_SIZE);
-    printf("instruction: %s\n", instruction );
 
+    int i = 0;
+
+    while (buffer[i] != '\0')
+    {
+        if(buffer[i]== '\n') buffer[i]='\0'; //quito las nuevas lineas 
+        if(buffer[i]==' ') buffer[i] = '\0'; //quito los espacios
+
+        i++;
+    }
+    
+    int instruction_size = strlen( get_string_from_buffer(buffer,0))+1;
+    char* instruction = malloc(instruction_size);
+
+    strcpy(instruction, buffer);
+    printf("instruction: %s\n",instruction );
+    
     if(!strcmp(instruction,"SELECT")){
         package_select* package = malloc(sizeof(package_select));
+        package->instruction = malloc(instruction_size);
         strcpy(package->instruction, instruction);
         
         //TABLE_NAME
-        int table_name_len = strlen(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE))+1; //sumo el \o
-        package->table_name = strdup(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE));
 
+        int table_name_len = strlen(get_string_from_buffer(buffer, instruction_size))+1; //sumo el \o
+        package->table_name = strdup(get_string_from_buffer(buffer, instruction_size));
+        
         //KEY
-        package->key = buffer[INSTRUCTION_BYTE_SIZE+table_name_len];
+        char* key_tmp = strdup(get_string_from_buffer(buffer, instruction_size+table_name_len));
+        package->key = atoi(key_tmp);
+        free(key_tmp);
+        
 
-
-        printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name, buffer[INSTRUCTION_BYTE_SIZE+table_name_len]);
+        printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name,package->key);
         action_select(package);
     }
 
     
-    if(!strcmp(instruction,"INSERT")){
+    /*if(!strcmp(instruction,"INSERT")){
         package_insert* package = malloc(sizeof(package_insert));
         strcpy(package->instruction, instruction);
 
         //TABLE_NAME
-        int table_name_len = strlen(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE))+1; //sumo el \o
-        package->table_name = strdup(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE));
+        int table_name_len = strlen(get_string_from_buffer(buffer, instruction_size))+1; //sumo el \o
+        package->table_name = strdup(get_string_from_buffer(buffer, instruction_size));
 
-        int tot_len = INSTRUCTION_BYTE_SIZE + table_name_len;
+        int tot_len = instruction_size + table_name_len;
 
         //KEY
         package->key = buffer[tot_len];
@@ -58,10 +74,10 @@ void pharse_bytearray(char* buffer){
         strcpy(package->instruction, instruction);
 
         //TABLE_NAME
-        int table_name_len = strlen(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE))+1; //sumo el \o
-        package->table_name = strdup(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE));
+        int table_name_len = strlen(get_string_from_buffer(buffer, instruction_size))+1; //sumo el \o
+        package->table_name = strdup(get_string_from_buffer(buffer, instruction_size));
 
-        int tot_len = INSTRUCTION_BYTE_SIZE + table_name_len;
+        int tot_len = instruction_size + table_name_len;
 
         //CONSISTENCY
         tot_len =+ strlen(get_string_from_buffer(buffer, tot_len))+1;
@@ -80,8 +96,8 @@ void pharse_bytearray(char* buffer){
         strcpy(package->instruction, instruction);
 
         //TABLE_NAME
-        int table_name_len = strlen(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE))+1; //sumo el \o
-        package->table_name = strdup(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE));
+        int table_name_len = strlen(get_string_from_buffer(buffer, instruction_size))+1; //sumo el \o
+        package->table_name = strdup(get_string_from_buffer(buffer, instruction_size));
 
         action_describe(package);
     }
@@ -91,8 +107,8 @@ void pharse_bytearray(char* buffer){
         strcpy(package->instruction, instruction);
 
         //TABLE_NAME
-        int table_name_len = strlen(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE))+1; //sumo el \o
-        package->table_name = strdup(get_string_from_buffer(buffer, INSTRUCTION_BYTE_SIZE));
+        int table_name_len = strlen(get_string_from_buffer(buffer, instruction_size))+1; //sumo el \o
+        package->table_name = strdup(get_string_from_buffer(buffer, instruction_size));
 
         action_drop(package);
     }
@@ -127,29 +143,49 @@ void pharse_bytearray(char* buffer){
         strcpy(package->instruction, instruction);
 
         action_metrics(package);
-    }
+    }*/
     
     
 }
 
 
 char* create_buffer(int argc, char const *argv[]){
-	int argSize = 0;
-	for(int i = 0; i < argc; i++){
-		argSize += sizeof(argv[i]);
-	}
-	char* buffer = malloc(argSize);
-	memcpy(buffer, argv, argSize);
-	return buffer;
+	char* buffer;
+    int len = 0;
+    if(argc-1 > 0){
+        for (int i = 1; i < argc; i++)
+        {
+            len += strlen(argv[i])+1;
+        }
+
+        buffer = malloc(len);
+        buffer = string_new();
+        for (int i = 1; i < argc; i++)
+        {
+            strcat(buffer,argv[i]);
+            strcat(buffer," ");
+        }
+        
+        return buffer;
+    }else{
+        buffer = string_new();
+        return buffer;
+    }
+    
 }
 
 //devuelve un string de un string de un array
 char* get_string_from_buffer(char* buffer, int index){
+    while (buffer[index] == '\0')
+    {
+        index++;
+    }//mientras que la posicion inicial sea un fin de cadena moverse hacia adelante
+    
 	int endOfWord = index;
-	while(buffer[endOfWord] != '\0'){
+	while(buffer[endOfWord] != '\0' &&  buffer[endOfWord] != ' '){
 		endOfWord ++;
 	}
-	char* bufferWord = malloc(endOfWord - index-2);
+	char* bufferWord = malloc(endOfWord - index);
 	memcpy(bufferWord, buffer + index, endOfWord);
 	return bufferWord;
 }
