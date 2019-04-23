@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -13,6 +14,7 @@
 #include <sys/socket.h> 
 #include <stdlib.h> 
 #include <netinet/in.h> 
+#include "pharser.h"
 
 
 void* create_server(void* args){
@@ -21,7 +23,7 @@ void* create_server(void* args){
     
 	 int sockfd, clilentNumber;
 	 struct sockaddr_in serverAddress, cli_addr;
-     char buffer[512] = {0};
+     char* buffer;
 
     
 	int portNumber = htons(serverInfo->portNumber);
@@ -57,11 +59,17 @@ void* create_server(void* args){
             exit(1);
         }
 
+        pakage_header buffer_size;  //Primero se lee que tan grande es el paquete   
         
-
-        read(newsockfd, buffer, sizeof(buffer)); //BUFFER DINAMMICO ALOCAR LO NECESARIO PARA EL MENSAJE 
-        log_info(serverInfo->logger, buffer );
-
+        read(newsockfd, &buffer_size, sizeof(unsigned int));
+        printf("%d", buffer_size);
+        buffer = malloc(buffer_size);
+        read(newsockfd, buffer, buffer_size);
+        pharse_bytearray(buffer);
+        
+        /*log_info(serverInfo->logger, buffer );*/
+        /*free(buffer);
+        buffer = NULL;*/
     }
     
     

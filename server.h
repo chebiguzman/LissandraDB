@@ -10,13 +10,16 @@
 #include <commons/log.h> //loggger
 #include <commons/string.h> //string append
 #include <unistd.h> //read function
-#define HEADER_BYTE_SIZE 9 //tambien cargar en el pharser
+#define INSTRUCTION_BYTE_SIZE 9 //tambien cargar en el pharser
+
 void* create_server (void* args);
 
+typedef unsigned int pakage_header;
+typedef enum { EVENTUAL_CONSISTENCY, STRONG_CONSISTENCY, STRONG_HASH_CONSISTENCY } consistency_type ;
 //SELECT [NOMBRE_TABLA] [KEY]
 typedef struct package_select
 {
-    char header[HEADER_BYTE_SIZE];
+    char instruction[INSTRUCTION_BYTE_SIZE];
     char* table_name;
     int key;
 
@@ -25,8 +28,8 @@ typedef struct package_select
 //INSERT [NOMBRE_TABLA] [KEY] “[VALUE]”
 typedef struct 
 {
-    char* header[HEADER_BYTE_SIZE];
-    char table_name;
+    char instruction[INSTRUCTION_BYTE_SIZE];
+    char* table_name;
     int key;
     char* value;
 
@@ -35,9 +38,9 @@ typedef struct
 //CREATE [TABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]
 typedef struct 
 {
-    char* header[HEADER_BYTE_SIZE];
+    char instruction[INSTRUCTION_BYTE_SIZE];
     char* table_name;
-    char* consistency;
+    consistency_type consistency;
     int partition_number;
     long compactation_time;
 
@@ -46,7 +49,7 @@ typedef struct
 //DESCRIBE [NOMBRE_TABLA]
 typedef struct
 {
-    char* header[HEADER_BYTE_SIZE];
+    char instruction[INSTRUCTION_BYTE_SIZE];
     char* table_name;
 
 } package_describe;
@@ -55,7 +58,7 @@ typedef struct
 //DROP [NOMBRE_TABLA]
 typedef struct
 {
-    char* header[HEADER_BYTE_SIZE];
+    char instruction[INSTRUCTION_BYTE_SIZE];
     char* table_name;
 
 } package_drop;
@@ -63,25 +66,25 @@ typedef struct
 //JOURNAL
 typedef struct
 {
-    char* header[HEADER_BYTE_SIZE];
+    char instruction[INSTRUCTION_BYTE_SIZE];
 
 } package_journal;
 
 //ADD MEMORY [NÚMERO] TO [CRITERIO]
 typedef struct
 {
-    char* header[HEADER_BYTE_SIZE];
-    char memory[6];
+    char instruction[INSTRUCTION_BYTE_SIZE];
+    char memory[7];
     int memory_number;
-    char to[2];
-    char* criterio;
+    char to[3];
+    consistency_type criterio;
 
 } package_add;
 
 //RUN <path>
 typedef struct
 {
-    char* header[HEADER_BYTE_SIZE];
+    char instruction[INSTRUCTION_BYTE_SIZE];
     char* path;
 
 } package_run;
@@ -89,7 +92,7 @@ typedef struct
 //METRICS
 typedef struct
 {
-    char* header[HEADER_BYTE_SIZE];
+    char instruction[INSTRUCTION_BYTE_SIZE];
 
 } package_metrics;
 
