@@ -935,3 +935,369 @@
 [ERROR] 21:06:53:38 Kernel/(3886:3887): el servidor se cayo por un error en bind()
 [ERROR] 21:07:24:516 Kernel/(3944:3944): No se logro establecer coneccion con memoria
 [INFO] 21:07:24:516 Kernel/(3944:3945): El servidor se inicializo exitosamente
+[ERROR] 12:30:18:48 Kernel/(5509:5509): No se logro establecer coneccion con memoria
+[INFO] 12:30:18:48 Kernel/(5509:5510): El servidor se inicializo exitosamente
+[ERROR] 12:30:41:758 Kernel/(5552:5552): No se logro establecer coneccion con memoria
+[INFO] 12:30:41:758 Kernel/(5552:5553): El servidor se inicializo exitosamente
+[INFO] 12:30:54:467 Kernel/(5584:5584): Se recibio una accion select
+[ERROR] 12:30:54:468 Kernel/(5584:5584): No se logro establecer coneccion con memoria
+[INFO] 12:30:54:468 Kernel/(5584:5585): El servidor se inicializo exitosamente
+[INFO] 12:31:51:975 Kernel/(5651:5651): Se recibio una accion select
+[ERROR] 12:31:51:976 Kernel/(5651:5651): No se logro establecer coneccion con memoria
+[INFO] 12:31:51:976 Kernel/(5651:5652): El servidor se inicializo exitosamente
+[INFO] 12:32:24:859 Kernel/(5694:5695): El servidor se inicializo exitosamente
+[ERROR] 12:32:24:859 Kernel/(5694:5694): No se logro establecer coneccion con memoria
+[ERROR] 12:33:14:733 Kernel/(5760:5760): No se logro establecer coneccion con memoria
+[INFO] 12:33:14:733 Kernel/(5760:5761): El servidor se inicializo exitosamente
+[ERROR] 12:38:42:333 Kernel/(7155:7155): No se logro establecer coneccion con memoria
+[INFO] 12:38:42:333 Kernel/(7155:7156): El servidor se inicializo exitosamente
+[ERROR] 12:45:31:444 Kernel/(7623:7623): No se logro establecer coneccion con memoria
+[INFO] 12:45:31:444 Kernel/(7623:7624): El servidor se inicializo exitosamente
+[INFO] 12:46:56:708 Kernel/(7702:7702): Se recibio una accion select
+[ERROR] 12:46:56:709 Kernel/(7702:7702): No se logro establecer coneccion con memoria
+[INFO] 12:46:56:709 Kernel/(7702:7703): El servidor se inicializo exitosamente
+[INFO] 12:47:48:906 Kernel/(7762:7762): Se recibio una accion select
+[ERROR] 12:47:48:906 Kernel/(7762:7762): No se logro establecer coneccion con memoria
+[INFO] 12:47:48:906 Kernel/(7762:7763): El servidor se inicializo exitosamente
+[INFO] 12:48:24:122 Kernel/(7812:7812): Se recibio una accion select
+[ERROR] 12:48:24:122 Kernel/(7812:7812): No se logro establecer coneccion con memoria
+[INFO] 12:48:24:122 Kernel/(7812:7813): El servidor se inicializo exitosamente
+[INFO] 12:48:34:67 Kernel/(7841:7841): Se recibio una accion select
+[ERROR] 12:48:34:67 Kernel/(7841:7841): No se logro establecer coneccion con memoria
+[INFO] 12:48:34:67 Kernel/(7841:7842): El servidor se inicializo exitosamente
+[INFO] 13:05:51:293 Kernel/(8674:8674): Se recibio una accion select
+[ERROR] 13:05:51:294 Kernel/(8674:8674): No se logro establecer coneccion con memoria
+[INFO] 13:05:51:294 Kernel/(8674:8675): El servidor se inicializo exitosamente
+[INFO] 13:06:34:467 Kernel/(8720:8720): Se recibio una accion select
+[ERROR] 13:06:34:467 Kernel/(8720:8720): No se logro establecer coneccion con memoria
+[INFO] 13:06:34:467 Kernel/(8720:8721): El servidor se inicializo exitosamente
+[ERROR] 13:06:38:131 Kernel/(8740:8740): No se logro establecer coneccion con memoria
+[INFO] 13:06:38:131 Kernel/(8740:8741): El servidor se inicializo exitosamente
+[ERROR] 13:07:48:510 Kernel/(8813:8813): No se logro establecer coneccion con memoria
+[INFO] 13:07:48:510 Kernel/(8813:8814): El servidor se inicializo exitosamente
+[INFO] 13:18:04:795 Kernel/(9288:9289): El servidor se inicializo exitosamente
+[ERROR] 13:18:04:795 Kernel/(9288:9288): No se logro establecer coneccion con memoria
+[INFO] 13:18:30:348 Kernel/(9327:9328): El servidor se inicializo exitosamente
+[ERROR] 13:18:30:348 Kernel/(9327:9327): No se logro establecer coneccion con memoria
+[INFO] 13:27:09:55 Kernel/(9846:9846): Se recibio una accion select
+[INFO] 13:27:09:55 Kernel/(9846:9847): El servidor se inicializo exitosamente
+[ERROR] 13:27:09:55 Kernel/(9846:9846): No se logro establecer coneccion con memoria
+[INFO] 13:27:16:812 Kernel/(9877:9877): Se recibio una accion select
+[ERROR] 13:27:16:812 Kernel/(9877:9877): No se logro establecer coneccion con memoria
+[INFO] 13:27:16:813 Kernel/(9877:9878): El servidor se inicializo exitosamente
+[ERROR] 13:31:48:453 Kernel/(10245:10245): No se logro establecer coneccion con memoria
+[INFO] 13:31:48:453 Kernel/(10245:10246): El servidor se inicializo exitosamente
+[INFO] 13:31:57:268 Kernel/(10276:10277): El servidor se inicializo exitosamente
+[ERROR] 13:31:57:268 Kernel/(10276:10276): No se logro establecer coneccion con memoria
+[INFO] 13:32:32:517 Kernel/(10373:10374): El servidor se inicializo exitosamente
+[ERROR] 13:32:32:517 Kernel/(10373:10373): No se logro establecer coneccion con memoria
+[INFO] 13:32:48:851 Kernel/(10411:10412): El servidor se inicializo exitosamente
+[ERROR] 13:32:48:851 Kernel/(10411:10411): No se logro establecer coneccion con memoria
+[ERROR] 13:32:57:547 Kernel/(10448:10448): No se logro establecer coneccion con memoria
+[INFO] 13:32:57:547 Kernel/(10448:10449): El servidor se inicializo exitosamente
+[ERROR] 13:33:11:706 Kernel/(10513:10513): No se logro establecer coneccion con memoria
+[INFO] 13:33:11:706 Kernel/(10513:10514): El servidor se inicializo exitosamente
+[INFO] 13:33:30:210 Kernel/(10610:10611): El servidor se inicializo exitosamente
+[ERROR] 13:33:30:210 Kernel/(10610:10610): No se logro establecer coneccion con memoria
+[ERROR] 13:34:04:13 Kernel/(10739:10739): No se logro establecer coneccion con memoria
+[INFO] 13:34:04:13 Kernel/(10739:10740): El servidor se inicializo exitosamente
+[ERROR] 13:34:26:305 Kernel/(10784:10784): No se logro establecer coneccion con memoria
+[INFO] 13:34:26:305 Kernel/(10784:10785): El servidor se inicializo exitosamente
+[INFO] 13:34:36:631 Kernel/(10813:10814): El servidor se inicializo exitosamente
+[ERROR] 13:34:36:631 Kernel/(10813:10813): No se logro establecer coneccion con memoria
+[INFO] 13:34:44:984 Kernel/(10865:10866): El servidor se inicializo exitosamente
+[ERROR] 13:34:44:984 Kernel/(10865:10865): No se logro establecer coneccion con memoria
+[ERROR] 13:34:52:748 Kernel/(10892:10892): No se logro establecer coneccion con memoria
+[INFO] 13:34:52:748 Kernel/(10892:10893): El servidor se inicializo exitosamente
+[INFO] 13:35:00:719 Kernel/(10928:10929): El servidor se inicializo exitosamente
+[ERROR] 13:35:00:719 Kernel/(10928:10928): No se logro establecer coneccion con memoria
+[ERROR] 13:35:25:31 Kernel/(10969:10969): No se logro establecer coneccion con memoria
+[INFO] 13:35:25:31 Kernel/(10969:10970): El servidor se inicializo exitosamente
+[ERROR] 13:35:37:526 Kernel/(11005:11005): No se logro establecer coneccion con memoria
+[INFO] 13:35:37:526 Kernel/(11005:11006): El servidor se inicializo exitosamente
+[INFO] 13:35:55:533 Kernel/(11043:11044): El servidor se inicializo exitosamente
+[ERROR] 13:35:55:533 Kernel/(11043:11043): No se logro establecer coneccion con memoria
+[INFO] 13:36:02:110 Kernel/(11079:11080): El servidor se inicializo exitosamente
+[ERROR] 13:36:02:110 Kernel/(11079:11079): No se logro establecer coneccion con memoria
+[ERROR] 13:36:18:565 Kernel/(11117:11117): No se logro establecer coneccion con memoria
+[INFO] 13:36:18:565 Kernel/(11117:11118): El servidor se inicializo exitosamente
+[INFO] 13:36:27:509 Kernel/(11155:11156): El servidor se inicializo exitosamente
+[ERROR] 13:36:27:509 Kernel/(11155:11155): No se logro establecer coneccion con memoria
+[ERROR] 13:36:52:474 Kernel/(11193:11193): No se logro establecer coneccion con memoria
+[INFO] 13:36:52:474 Kernel/(11193:11194): El servidor se inicializo exitosamente
+[ERROR] 13:37:00:771 Kernel/(11229:11229): No se logro establecer coneccion con memoria
+[INFO] 13:37:00:771 Kernel/(11229:11230): El servidor se inicializo exitosamente
+[ERROR] 13:37:22:282 Kernel/(11274:11274): No se logro establecer coneccion con memoria
+[INFO] 13:37:22:282 Kernel/(11274:11275): El servidor se inicializo exitosamente
+[ERROR] 13:37:28:181 Kernel/(11311:11311): No se logro establecer coneccion con memoria
+[INFO] 13:37:28:181 Kernel/(11311:11312): El servidor se inicializo exitosamente
+[ERROR] 13:41:36:639 Kernel/(11640:11640): No se logro establecer coneccion con memoria
+[INFO] 13:41:36:639 Kernel/(11640:11641): El servidor se inicializo exitosamente
+[INFO] 13:42:08:389 Kernel/(11688:11689): El servidor se inicializo exitosamente
+[ERROR] 13:42:08:389 Kernel/(11688:11688): No se logro establecer coneccion con memoria
+[INFO] 13:42:45:392 Kernel/(11745:11746): El servidor se inicializo exitosamente
+[ERROR] 13:42:45:392 Kernel/(11745:11745): No se logro establecer coneccion con memoria
+[ERROR] 13:45:04:964 Kernel/(12359:12359): No se logro establecer coneccion con memoria
+[INFO] 13:45:04:964 Kernel/(12359:12360): El servidor se inicializo exitosamente
+[INFO] 13:45:18:332 Kernel/(12389:12389): Se recibio una accion select
+[ERROR] 13:45:18:332 Kernel/(12389:12389): No se logro establecer coneccion con memoria
+[INFO] 13:45:18:332 Kernel/(12389:12390): El servidor se inicializo exitosamente
+[INFO] 13:52:26:290 Kernel/(12991:12991): Se recibio una accion select
+[ERROR] 13:52:26:290 Kernel/(12991:12991): No se logro establecer coneccion con memoria
+[INFO] 13:52:26:290 Kernel/(12991:12992): El servidor se inicializo exitosamente
+[INFO] 13:52:35:985 Kernel/(13012:13012): Se recibio una accion select
+[ERROR] 13:52:35:986 Kernel/(13012:13012): No se logro establecer coneccion con memoria
+[INFO] 13:52:35:986 Kernel/(13012:13013): El servidor se inicializo exitosamente
+[INFO] 13:52:47:169 Kernel/(13041:13041): Se recibio una accion select
+[ERROR] 13:52:47:170 Kernel/(13041:13041): No se logro establecer coneccion con memoria
+[INFO] 13:52:47:170 Kernel/(13041:13042): El servidor se inicializo exitosamente
+[INFO] 13:52:53:208 Kernel/(13045:13045): Se recibio una accion select
+[ERROR] 13:52:53:209 Kernel/(13045:13045): No se logro establecer coneccion con memoria
+[INFO] 13:52:53:209 Kernel/(13045:13046): El servidor se inicializo exitosamente
+[INFO] 13:52:55:119 Kernel/(13048:13048): Se recibio una accion select
+[ERROR] 13:52:55:120 Kernel/(13048:13048): No se logro establecer coneccion con memoria
+[INFO] 13:52:55:121 Kernel/(13048:13049): El servidor se inicializo exitosamente
+[INFO] 13:52:56:968 Kernel/(13060:13060): Se recibio una accion select
+[ERROR] 13:52:56:968 Kernel/(13060:13060): No se logro establecer coneccion con memoria
+[INFO] 13:52:56:968 Kernel/(13060:13061): El servidor se inicializo exitosamente
+[INFO] 13:53:26:814 Kernel/(13107:13107): Se recibio una accion select
+[INFO] 13:53:26:815 Kernel/(13107:13108): El servidor se inicializo exitosamente
+[ERROR] 13:53:26:815 Kernel/(13107:13107): No se logro establecer coneccion con memoria
+[INFO] 13:53:32:670 Kernel/(13127:13127): Se recibio una accion select
+[ERROR] 13:53:32:670 Kernel/(13127:13127): No se logro establecer coneccion con memoria
+[INFO] 13:53:32:671 Kernel/(13127:13128): El servidor se inicializo exitosamente
+[INFO] 13:53:43:309 Kernel/(13156:13156): Se recibio una accion select
+[ERROR] 13:53:43:310 Kernel/(13156:13156): No se logro establecer coneccion con memoria
+[INFO] 13:53:43:310 Kernel/(13156:13157): El servidor se inicializo exitosamente
+[INFO] 13:53:53:12 Kernel/(13177:13177): Se recibio una accion select
+[INFO] 13:53:53:13 Kernel/(13177:13178): El servidor se inicializo exitosamente
+[ERROR] 13:53:53:13 Kernel/(13177:13177): No se logro establecer coneccion con memoria
+[INFO] 13:55:00:377 Kernel/(13257:13257): Se recibio una accion select
+[ERROR] 13:55:00:377 Kernel/(13257:13257): No se logro establecer coneccion con memoria
+[INFO] 13:55:00:377 Kernel/(13257:13258): El servidor se inicializo exitosamente
+[INFO] 13:55:33:550 Kernel/(13306:13306): Se recibio una accion select
+[ERROR] 13:55:33:550 Kernel/(13306:13306): No se logro establecer coneccion con memoria
+[INFO] 13:55:33:550 Kernel/(13306:13307): El servidor se inicializo exitosamente
+[INFO] 13:55:55:412 Kernel/(13339:13339): Se recibio una accion select
+[ERROR] 13:55:55:413 Kernel/(13339:13339): No se logro establecer coneccion con memoria
+[INFO] 13:55:55:413 Kernel/(13339:13340): El servidor se inicializo exitosamente
+[INFO] 13:56:11:118 Kernel/(13382:13382): Se recibio una accion select
+[INFO] 13:56:11:118 Kernel/(13382:13383): El servidor se inicializo exitosamente
+[ERROR] 13:56:11:118 Kernel/(13382:13382): No se logro establecer coneccion con memoria
+[INFO] 13:56:37:48 Kernel/(13434:13434): Se recibio una accion select
+[ERROR] 13:56:37:48 Kernel/(13434:13434): No se logro establecer coneccion con memoria
+[INFO] 13:56:37:48 Kernel/(13434:13435): El servidor se inicializo exitosamente
+[INFO] 13:57:13:224 Kernel/(13486:13486): Se recibio una accion select
+[ERROR] 13:57:13:224 Kernel/(13486:13486): No se logro establecer coneccion con memoria
+[INFO] 13:57:13:224 Kernel/(13486:13487): El servidor se inicializo exitosamente
+[INFO] 13:57:31:487 Kernel/(13523:13523): Se recibio una accion select
+[ERROR] 13:57:31:487 Kernel/(13523:13523): No se logro establecer coneccion con memoria
+[INFO] 13:57:31:487 Kernel/(13523:13524): El servidor se inicializo exitosamente
+[INFO] 13:58:22:499 Kernel/(13592:13592): Se recibio una accion select
+[ERROR] 13:58:22:500 Kernel/(13592:13592): No se logro establecer coneccion con memoria
+[INFO] 13:58:22:500 Kernel/(13592:13593): El servidor se inicializo exitosamente
+[INFO] 13:59:24:311 Kernel/(13644:13644): Se recibio una accion select
+[ERROR] 13:59:24:311 Kernel/(13644:13644): No se logro establecer coneccion con memoria
+[INFO] 13:59:24:312 Kernel/(13644:13645): El servidor se inicializo exitosamente
+[INFO] 13:59:28:271 Kernel/(13673:13673): Se recibio una accion select
+[INFO] 13:59:28:271 Kernel/(13673:13674): El servidor se inicializo exitosamente
+[ERROR] 13:59:28:271 Kernel/(13673:13673): No se logro establecer coneccion con memoria
+[INFO] 14:00:00:269 Kernel/(13711:13711): Se recibio una accion select
+[INFO] 14:00:00:270 Kernel/(13711:13712): El servidor se inicializo exitosamente
+[ERROR] 14:00:00:270 Kernel/(13711:13711): No se logro establecer coneccion con memoria
+[INFO] 14:00:06:940 Kernel/(13730:13730): Se recibio una accion select
+[ERROR] 14:00:06:940 Kernel/(13730:13730): No se logro establecer coneccion con memoria
+[INFO] 14:00:06:940 Kernel/(13730:13731): El servidor se inicializo exitosamente
+[INFO] 14:00:28:651 Kernel/(13770:13770): Se recibio una accion select
+[ERROR] 14:00:28:652 Kernel/(13770:13770): No se logro establecer coneccion con memoria
+[INFO] 14:00:28:652 Kernel/(13770:13771): El servidor se inicializo exitosamente
+[INFO] 14:00:36:691 Kernel/(13789:13789): Se recibio una accion select
+[ERROR] 14:00:36:692 Kernel/(13789:13789): No se logro establecer coneccion con memoria
+[INFO] 14:00:36:692 Kernel/(13789:13790): El servidor se inicializo exitosamente
+[INFO] 14:02:00:672 Kernel/(13882:13882): Se recibio una accion select
+[ERROR] 14:02:00:673 Kernel/(13882:13882): No se logro establecer coneccion con memoria
+[INFO] 14:02:00:673 Kernel/(13882:13883): El servidor se inicializo exitosamente
+[INFO] 14:02:08:873 Kernel/(13903:13903): Se recibio una accion select
+[ERROR] 14:02:08:874 Kernel/(13903:13903): No se logro establecer coneccion con memoria
+[INFO] 14:02:08:874 Kernel/(13903:13904): El servidor se inicializo exitosamente
+[INFO] 14:03:42:142 Kernel/(14005:14005): Se recibio una accion select
+[ERROR] 14:03:42:143 Kernel/(14005:14005): No se logro establecer coneccion con memoria
+[ERROR] 14:03:42:143 Kernel/(14005:14006): el servidor se cayo por un error en bind()
+[INFO] 14:03:51:607 Kernel/(14026:14026): Se recibio una accion select
+[ERROR] 14:03:51:607 Kernel/(14026:14026): No se logro establecer coneccion con memoria
+[ERROR] 14:03:51:607 Kernel/(14026:14027): el servidor se cayo por un error en bind()
+[INFO] 14:04:06:241 Kernel/(14055:14055): Se recibio una accion select
+[ERROR] 14:04:06:242 Kernel/(14055:14055): No se logro establecer coneccion con memoria
+[ERROR] 14:04:06:242 Kernel/(14055:14056): el servidor se cayo por un error en bind()
+[INFO] 14:04:22:969 Kernel/(14094:14094): Se recibio una accion select
+[ERROR] 14:04:22:969 Kernel/(14094:14095): el servidor se cayo por un error en bind()
+[ERROR] 14:04:22:969 Kernel/(14094:14094): No se logro establecer coneccion con memoria
+[ERROR] 14:04:22:969 Kernel/(14094:14094): No se logro establecer coneccion con memoria
+[INFO] 14:04:29:779 Kernel/(14125:14125): Se recibio una accion select
+[ERROR] 14:04:29:780 Kernel/(14125:14126): el servidor se cayo por un error en bind()
+[ERROR] 14:04:29:780 Kernel/(14125:14125): No se logro establecer coneccion con memoria
+[ERROR] 14:04:29:780 Kernel/(14125:14125): No se logro establecer coneccion con memoria
+[INFO] 14:04:36:579 Kernel/(14145:14145): Se recibio una accion select
+[ERROR] 14:04:36:580 Kernel/(14145:14145): No se logro establecer coneccion con memoria
+[ERROR] 14:04:36:580 Kernel/(14145:14146): el servidor se cayo por un error en bind()
+[INFO] 14:05:05:535 Kernel/(14193:14193): Se recibio una accion select
+[ERROR] 14:05:05:535 Kernel/(14193:14193): No se logro establecer coneccion con memoria
+[ERROR] 14:05:05:536 Kernel/(14193:14194): el servidor se cayo por un error en bind()
+[INFO] 14:05:34:705 Kernel/(14239:14239): Se recibio una accion select
+[ERROR] 14:05:34:706 Kernel/(14239:14240): el servidor se cayo por un error en bind()
+[ERROR] 14:05:34:706 Kernel/(14239:14239): No se logro establecer coneccion con memoria
+[ERROR] 14:05:34:706 Kernel/(14239:14239): No se logro establecer coneccion con memoria
+[INFO] 14:05:41:14 Kernel/(14259:14259): Se recibio una accion select
+[ERROR] 14:05:41:14 Kernel/(14259:14260): el servidor se cayo por un error en bind()
+[INFO] 14:05:50:287 Kernel/(14288:14288): Se recibio una accion select
+[ERROR] 14:05:50:287 Kernel/(14288:14289): el servidor se cayo por un error en bind()
+[ERROR] 14:05:50:287 Kernel/(14288:14288): No se logro establecer coneccion con memoria
+[ERROR] 14:05:50:287 Kernel/(14288:14288): No se logro establecer coneccion con memoria
+[INFO] 14:05:57:828 Kernel/(14320:14320): Se recibio una accion select
+[ERROR] 14:05:57:828 Kernel/(14320:14320): No se logro establecer coneccion con memoria
+[ERROR] 14:05:57:828 Kernel/(14320:14321): el servidor se cayo por un error en bind()
+[INFO] 14:06:25:54 Kernel/(14355:14355): Se recibio una accion select
+[ERROR] 14:06:25:54 Kernel/(14355:14355): No se logro establecer coneccion con memoria
+[ERROR] 14:06:25:55 Kernel/(14355:14356): el servidor se cayo por un error en bind()
+[INFO] 14:06:35:760 Kernel/(14385:14385): Se recibio una accion select
+[ERROR] 14:06:35:760 Kernel/(14385:14386): el servidor se cayo por un error en bind()
+[ERROR] 14:06:35:760 Kernel/(14385:14385): No se logro establecer coneccion con memoria
+[ERROR] 14:06:35:760 Kernel/(14385:14385): No se logro establecer coneccion con memoria
+[INFO] 14:06:48:528 Kernel/(14398:14398): Se recibio una accion select
+[ERROR] 14:06:48:529 Kernel/(14398:14398): No se logro establecer coneccion con memoria
+[ERROR] 14:06:48:529 Kernel/(14398:14399): el servidor se cayo por un error en bind()
+[INFO] 14:06:49:137 Kernel/(14401:14401): Se recibio una accion select
+[ERROR] 14:06:49:137 Kernel/(14401:14401): No se logro establecer coneccion con memoria
+[ERROR] 14:06:49:138 Kernel/(14401:14402): el servidor se cayo por un error en bind()
+[INFO] 14:07:03:746 Kernel/(14433:14433): Se recibio una accion select
+[ERROR] 14:07:03:746 Kernel/(14433:14434): el servidor se cayo por un error en bind()
+[ERROR] 14:07:03:746 Kernel/(14433:14433): No se logro establecer coneccion con memoria
+[ERROR] 14:07:03:746 Kernel/(14433:14433): No se logro establecer coneccion con memoria
+[INFO] 14:07:27:452 Kernel/(14474:14474): Se recibio una accion select
+[ERROR] 14:07:27:453 Kernel/(14474:14474): No se logro establecer coneccion con memoria
+[ERROR] 14:07:27:453 Kernel/(14474:14475): el servidor se cayo por un error en bind()
+[INFO] 14:07:33:724 Kernel/(14496:14496): Se recibio una accion select
+[ERROR] 14:07:33:724 Kernel/(14496:14496): No se logro establecer coneccion con memoria
+[ERROR] 14:07:33:724 Kernel/(14496:14497): el servidor se cayo por un error en bind()
+[INFO] 14:07:55:805 Kernel/(14521:14521): Se recibio una accion select
+[ERROR] 14:07:55:806 Kernel/(14521:14521): No se logro establecer coneccion con memoria
+[ERROR] 14:07:55:806 Kernel/(14521:14522): el servidor se cayo por un error en bind()
+[INFO] 14:08:31:982 Kernel/(14583:14583): Se recibio una accion select
+[ERROR] 14:08:31:983 Kernel/(14583:14583): No se logro establecer coneccion con memoria
+[ERROR] 14:08:31:983 Kernel/(14583:14584): el servidor se cayo por un error en bind()
+[INFO] 14:08:52:848 Kernel/(14613:14613): Se recibio una accion select
+[ERROR] 14:08:52:848 Kernel/(14613:14613): No se logro establecer coneccion con memoria
+[ERROR] 14:08:52:849 Kernel/(14613:14614): el servidor se cayo por un error en bind()
+[INFO] 14:09:13:145 Kernel/(14657:14657): Se recibio una accion select
+[ERROR] 14:09:13:146 Kernel/(14657:14657): No se logro establecer coneccion con memoria
+[ERROR] 14:09:13:146 Kernel/(14657:14658): el servidor se cayo por un error en bind()
+[INFO] 14:09:49:811 Kernel/(14701:14701): Se recibio una accion select
+[ERROR] 14:09:49:811 Kernel/(14701:14701): No se logro establecer coneccion con memoria
+[ERROR] 14:09:49:811 Kernel/(14701:14702): el servidor se cayo por un error en bind()
+[INFO] 14:10:07:371 Kernel/(14731:14731): Se recibio una accion select
+[ERROR] 14:10:07:372 Kernel/(14731:14731): No se logro establecer coneccion con memoria
+[ERROR] 14:10:07:372 Kernel/(14731:14732): el servidor se cayo por un error en bind()
+[INFO] 14:10:16:108 Kernel/(14763:14763): Se recibio una accion select
+[ERROR] 14:10:16:108 Kernel/(14763:14763): No se logro establecer coneccion con memoria
+[ERROR] 14:10:16:108 Kernel/(14763:14764): el servidor se cayo por un error en bind()
+[INFO] 14:10:27:220 Kernel/(14794:14794): Se recibio una accion select
+[ERROR] 14:10:27:221 Kernel/(14794:14795): el servidor se cayo por un error en bind()
+[INFO] 14:10:36:173 Kernel/(14814:14814): Se recibio una accion select
+[ERROR] 14:10:36:173 Kernel/(14814:14814): No se logro establecer coneccion con memoria
+[ERROR] 14:10:36:173 Kernel/(14814:14815): el servidor se cayo por un error en bind()
+[INFO] 14:10:58:330 Kernel/(14857:14857): Se recibio una accion select
+[ERROR] 14:10:58:330 Kernel/(14857:14857): No se logro establecer coneccion con memoria
+[ERROR] 14:10:58:330 Kernel/(14857:14858): el servidor se cayo por un error en bind()
+[INFO] 14:11:34:71 Kernel/(14906:14906): Se recibio una accion select
+[ERROR] 14:11:34:71 Kernel/(14906:14906): No se logro establecer coneccion con memoria
+[INFO] 14:11:34:71 Kernel/(14906:14907): El servidor se inicializo exitosamente
+[INFO] 14:11:45:526 Kernel/(14906:14907): Servidor esperando mensajes
+[INFO] 14:13:48:338 Kernel/(15061:15061): Se recibio una accion select
+[INFO] 14:13:48:339 Kernel/(15061:15062): El servidor se inicializo exitosamente
+[ERROR] 14:13:48:339 Kernel/(15061:15061): No se logro establecer coneccion con memoria
+[INFO] 14:13:51:850 Kernel/(15061:15062): Servidor esperando mensajes
+[INFO] 14:13:59:141 Kernel/(15061:15062): Se recibio una accion select
+[INFO] 14:15:05:820 Kernel/(15134:15134): Se recibio una accion select
+[ERROR] 14:15:05:820 Kernel/(15134:15134): No se logro establecer coneccion con memoria
+[INFO] 14:15:15:395 Kernel/(15134:15135): El servidor se inicializo exitosamente
+[INFO] 14:15:15:395 Kernel/(15134:15135): Servidor esperando mensajes
+[INFO] 14:15:23:614 Kernel/(15134:15135): Se recibio una accion select
+[INFO] 14:15:23:614 Kernel/(15134:15135): Servidor esperando mensajes
+[INFO] 14:15:45:903 Kernel/(15134:15135): Se recibio una accion select
+[INFO] 14:15:45:903 Kernel/(15134:15135): Servidor esperando mensajes
+[INFO] 14:15:53:967 Kernel/(15134:15135): Servidor esperando mensajes
+[INFO] 14:16:02:471 Kernel/(15134:15135): Servidor esperando mensajes
+[INFO] 14:16:16:895 Kernel/(15134:15135): Servidor esperando mensajes
+[INFO] 14:16:41:796 Kernel/(15214:15214): Se recibio una accion select
+[ERROR] 14:16:41:797 Kernel/(15214:15214): No se logro establecer coneccion con memoria
+[ERROR] 14:16:41:797 Kernel/(15214:15215): el servidor se cayo por un error en bind()
+[INFO] 14:17:01:316 Kernel/(15241:15241): Se recibio una accion select
+[ERROR] 14:17:01:317 Kernel/(15241:15241): No se logro establecer coneccion con memoria
+[ERROR] 14:17:01:317 Kernel/(15241:15242): el servidor se cayo por un error en bind()
+[INFO] 14:17:26:369 Kernel/(15265:15265): Se recibio una accion select
+[ERROR] 14:17:26:369 Kernel/(15265:15266): el servidor se cayo por un error en bind()
+[ERROR] 14:17:26:369 Kernel/(15265:15265): No se logro establecer coneccion con memoria
+[ERROR] 14:17:26:369 Kernel/(15265:15265): No se logro establecer coneccion con memoria
+[ERROR] 14:17:48:237 Kernel/(15310:15310): No se logro establecer coneccion con memoria
+[INFO] 14:18:02:452 Kernel/(15310:15311): El servidor se inicializo exitosamente
+[INFO] 14:18:02:452 Kernel/(15310:15311): Servidor esperando mensajes
+[INFO] 14:18:46:583 Kernel/(15310:15311): Se recibio una accion select
+[INFO] 14:18:46:583 Kernel/(15310:15311): Servidor esperando mensajes
+[INFO] 14:19:01:415 Kernel/(15310:15311): Servidor esperando mensajes
+[INFO] 14:19:15:551 Kernel/(15310:15311): Se recibio una accion select
+[INFO] 14:19:15:551 Kernel/(15310:15311): Servidor esperando mensajes
+[ERROR] 14:33:03:63 Kernel/(16401:16401): No se logro establecer coneccion con memoria
+[ERROR] 14:33:03:63 Kernel/(16401:16402): el servidor se cayo por un error en bind()
+[ERROR] 14:33:12:888 Kernel/(16414:16414): No se logro establecer coneccion con memoria
+[INFO] 14:33:16:700 Kernel/(16414:16415): El servidor se inicializo exitosamente
+[INFO] 14:33:16:700 Kernel/(16414:16415): Servidor esperando mensajes
+[INFO] 14:33:24:370 Kernel/(16414:16415): Se recibio una accion select
+[INFO] 14:33:24:370 Kernel/(16414:16415): Servidor esperando mensajes
+[INFO] 14:33:34:193 Kernel/(16414:16415): Se recibio una accion select
+[INFO] 14:33:34:194 Kernel/(16414:16415): Servidor esperando mensajes
+[INFO] 14:33:52:985 Kernel/(16414:16415): Se recibio una accion select
+[INFO] 14:33:52:986 Kernel/(16414:16415): Servidor esperando mensajes
+[INFO] 14:33:59:529 Kernel/(16414:16415): Se recibio una accion select
+[INFO] 14:33:59:530 Kernel/(16414:16415): Servidor esperando mensajes
+[INFO] 14:34:19:329 Kernel/(16414:16415): Se recibio una accion select
+[INFO] 14:34:19:329 Kernel/(16414:16415): Servidor esperando mensajes
+[INFO] 14:34:23:961 Kernel/(16414:16415): Se recibio una accion select
+[INFO] 14:34:23:961 Kernel/(16414:16415): Servidor esperando mensajes
+[INFO] 14:34:29:841 Kernel/(16414:16415): Se recibio una accion select
+[INFO] 14:34:29:841 Kernel/(16414:16415): Servidor esperando mensajes
+[INFO] 14:34:54:848 Kernel/(16414:16415): Se recibio una accion select
+[INFO] 14:34:54:849 Kernel/(16414:16415): Servidor esperando mensajes
+[INFO] 14:35:05:160 Kernel/(16414:16415): Se recibio una accion select
+[INFO] 14:35:05:160 Kernel/(16414:16415): Servidor esperando mensajes
+[INFO] 14:35:13:256 Kernel/(16414:16415): Se recibio una accion select
+[INFO] 14:35:13:256 Kernel/(16414:16415): Servidor esperando mensajes
+[INFO] 14:35:28:528 Kernel/(16414:16415): Se recibio una accion select
+[INFO] 14:35:28:529 Kernel/(16414:16415): Servidor esperando mensajes
+[ERROR] 15:15:40:770 Kernel/(19303:19303): No se logro establecer coneccion con memoria
+[ERROR] 15:15:40:770 Kernel/(19303:19304): el servidor se cayo por un error en bind()
+[ERROR] 15:16:00:474 Kernel/(19329:19329): No se logro establecer coneccion con memoria
+[ERROR] 15:16:00:474 Kernel/(19329:19330): el servidor se cayo por un error en bind()
+[ERROR] 15:16:05:858 Kernel/(19332:19332): No se logro establecer coneccion con memoria
+[ERROR] 15:16:05:858 Kernel/(19332:19333): el servidor se cayo por un error en bind()
+[ERROR] 15:17:13:637 Kernel/(19399:19399): No se logro establecer coneccion con memoria
+[ERROR] 15:17:31:384 Kernel/(19445:19445): No se logro establecer coneccion con memoria
+[ERROR] 15:17:40:48 Kernel/(19468:19468): No se logro establecer coneccion con memoria
+[ERROR] 15:22:03:666 Kernel/(19732:19732): No se logro establecer coneccion con memoria
+[ERROR] 15:24:57:7 Kernel/(20018:20018): No se logro establecer coneccion con memoria
+[ERROR] 15:25:17:606 Kernel/(20052:20052): No se logro establecer coneccion con memoria
+[ERROR] 15:29:09:713 Kernel/(20292:20292): No se logro establecer coneccion con memoria
+[ERROR] 15:35:05:888 Kernel/(20740:20740): No se logro establecer coneccion con memoria
+[ERROR] 15:35:40:175 Kernel/(20765:20765): No se logro establecer coneccion con memoria
+[ERROR] 15:35:53:344 Kernel/(20777:20777): No se logro establecer coneccion con memoria
+[ERROR] 15:35:56:576 Kernel/(20782:20782): No se logro establecer coneccion con memoria
+[ERROR] 15:36:05:119 Kernel/(20795:20795): No se logro establecer coneccion con memoria
+[ERROR] 15:36:10:799 Kernel/(20802:20802): No se logro establecer coneccion con memoria
+[ERROR] 15:36:15:343 Kernel/(20814:20814): No se logro establecer coneccion con memoria
+[ERROR] 15:36:19:47 Kernel/(20817:20817): No se logro establecer coneccion con memoria
+[ERROR] 15:38:55:123 Kernel/(20981:20981): No se logro establecer coneccion con memoria
+[ERROR] 15:39:00:75 Kernel/(20993:20993): No se logro establecer coneccion con memoria
+[ERROR] 15:40:09:370 Kernel/(21072:21072): No se logro establecer coneccion con memoria
+[ERROR] 15:40:22:122 Kernel/(21092:21092): No se logro establecer coneccion con memoria
+[ERROR] 15:40:40:162 Kernel/(21107:21107): No se logro establecer coneccion con memoria
+[ERROR] 15:41:17:513 Kernel/(21166:21166): No se logro establecer coneccion con memoria
+[ERROR] 15:41:40:376 Kernel/(21202:21202): No se logro establecer coneccion con memoria

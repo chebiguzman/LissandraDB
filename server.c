@@ -23,7 +23,7 @@ void* create_server(void* args){
     
 	 int sockfd, clilentNumber;
 	 struct sockaddr_in serverAddress, cli_addr;
-     char* buffer;
+     char* buffer[3000];
 
     
 	int portNumber = htons(serverInfo->portNumber);
@@ -48,26 +48,21 @@ void* create_server(void* args){
     listen(sockfd, 5);
 
     clilentNumber = sizeof(cli_addr);
-    log_info(serverInfo->logger, "El servidor se inicializo exitosamente");
-    while (1)
-    {
-        int newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilentNumber);
-        log_info(serverInfo->logger, "Servidor esperando mensajes");
+    int newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilentNumber);
+        
 
         if(newsockfd<0){
             log_error(serverInfo->logger, "el servidor se cayo por un error en accept()");
             exit(1);
         }
-
-        pakage_header buffer_size;  //Primero se lee que tan grande es el paquete   
-        
-        read(newsockfd, &buffer_size, sizeof(unsigned int));
-        printf("%d", buffer_size);
-        buffer = malloc(buffer_size);
-        read(newsockfd, buffer, buffer_size);
+    log_info(serverInfo->logger, "El servidor se inicializo exitosamente");
+    while (1)
+    {
+        log_info(serverInfo->logger, "Servidor esperando mensajes");
+        read(newsockfd, buffer, sizeof(buffer));
         pharse_bytearray(buffer);
         
-        /*log_info(serverInfo->logger, buffer );*/
+        //log_info(serverInfo->logger, buffer );
         /*free(buffer);
         buffer = NULL;*/
     }
