@@ -1301,3 +1301,122 @@
 [ERROR] 15:40:40:162 Kernel/(21107:21107): No se logro establecer coneccion con memoria
 [ERROR] 15:41:17:513 Kernel/(21166:21166): No se logro establecer coneccion con memoria
 [ERROR] 15:41:40:376 Kernel/(21202:21202): No se logro establecer coneccion con memoria
+[INFO] 23:59:39:437 Kernel/(25382:25383): El servidor se inicializo exitosamente
+[INFO] 00:02:59:912 Kernel/(25708:25709): El servidor se inicializo exitosamente
+[ERROR] 00:12:33:379 Kernel/(28672:28673): el servidor se cayo por un error en bind()
+[ERROR] 00:14:31:25 Kernel/(28799:28800): el servidor se cayo por un error en bind()
+[ERROR] 00:15:15:160 Kernel/(28858:28859): el servidor se cayo por un error en bind()
+[ERROR] 00:51:47:10 Kernel/(32440:32441): el servidor se cayo por un error en bind()
+[ERROR] 00:51:47:10 Kernel/(32440:32440): No se logro establecer coneccion con memoria
+[ERROR] 00:51:47:10 Kernel/(32440:32440): No se logro establecer coneccion con memoria
+[INFO] 00:54:38:358 Kernel/(32626:32627): El servidor se inicializo exitosamente
+[ERROR] 00:54:38:358 Kernel/(32626:32626): No se logro establecer coneccion con memoria
+[INFO] 00:54:54:132 Kernel/(32626:32627): El servidor se conecto exitosamente
+[INFO] 00:54:54:133 Kernel/(32626:32627): Servidor esperando mensajes
+[INFO] 00:55:00:216 Kernel/(32626:32627): SELECT tabla 4
+
+[INFO] 00:55:00:216 Kernel/(32626:32627): Se recibio una accion select
+[ERROR] 00:55:26:557 Kernel/(32664:32664): No se logro establecer coneccion con memoria
+[ERROR] 00:55:26:557 Kernel/(32664:32665): el servidor se cayo por un error en bind()
+[ERROR] 00:55:36:692 Kernel/(32685:32685): No se logro establecer coneccion con memoria
+[INFO] 00:55:36:692 Kernel/(32685:32686): El servidor se inicializo exitosamente
+[INFO] 00:55:40:612 Kernel/(32685:32686): El servidor se conecto exitosamente
+[INFO] 00:55:40:612 Kernel/(32685:32686): Servidor esperando mensajes
+[INFO] 00:55:45:871 Kernel/(32685:32686): SELECT t 4
+
+[INFO] 00:55:45:871 Kernel/(32685:32686): Se recibio una accion select
+[INFO] 00:55:45:872 Kernel/(32685:32686): SELECTt4
+[ERROR] 01:00:03:622 Kernel/(452:452): No se logro establecer coneccion con memoria
+[INFO] 01:00:03:622 Kernel/(452:453): El servidor se inicializo exitosamente
+[ERROR] 01:00:18:886 Kernel/(486:486): No se logro establecer coneccion con memoria
+[INFO] 01:00:18:886 Kernel/(486:487): El servidor se inicializo exitosamente
+[INFO] 01:00:22:789 Kernel/(486:487): El servidor se conecto exitosamente
+[INFO] 01:00:22:789 Kernel/(486:487): Servidor esperando mensajes
+[INFO] 01:00:28:593 Kernel/(486:487): SELECT tabla 4
+
+[INFO] 01:00:28:593 Kernel/(486:487): Se recibio una accion select
+[INFO] 01:00:28:593 Kernel/(486:487): SELECT tabla 4
+[ERROR] 01:01:13:485 Kernel/(541:542): el servidor se cayo por un error en bind()
+[ERROR] 01:01:13:485 Kernel/(541:541): No se logro establecer coneccion con memoria
+[ERROR] 01:01:13:485 Kernel/(541:541): No se logro establecer coneccion con memoria
+[ERROR] 01:01:15:645 Kernel/(561:562): el servidor se cayo por un error en bind()
+[ERROR] 01:01:15:645 Kernel/(561:561): No se logro establecer coneccion con memoria
+[ERROR] 01:01:15:645 Kernel/(561:561): No se logro establecer coneccion con memoria
+[ERROR] 01:01:44:788 Kernel/(604:604): No se logro establecer coneccion con memoria
+[INFO] 01:01:44:788 Kernel/(604:605): El servidor se inicializo exitosamente
+[INFO] 01:01:50:41 Kernel/(604:605): El servidor se conecto exitosamente
+[INFO] 01:01:50:41 Kernel/(604:605): Servidor esperando mensajes
+[INFO] 01:01:54:975 Kernel/(604:605): SELECT tabla 48
+
+[INFO] 01:01:54:975 Kernel/(604:605): Se recibio una accion select
+[ERROR] 01:05:06:800 Kernel/(912:912): No se logro establecer coneccion con memoria
+[INFO] 01:05:06:800 Kernel/(912:913): El servidor se inicializo exitosamente
+[INFO] 01:05:10:895 Kernel/(912:913): El servidor se conecto exitosamente
+[INFO] 01:05:10:895 Kernel/(912:913): Servidor esperando mensajes
+[INFO] 01:05:12:458 Kernel/(912:913): s
+
+[INFO] 01:06:05:550 Kernel/(912:913): El servidor se conecto exitosamente
+[INFO] 01:06:05:550 Kernel/(912:913): Servidor esperando mensajes
+[ERROR] 01:06:57:414 Kernel/(1114:1114): No se logro establecer coneccion con memoria
+[ERROR] 01:06:57:414 Kernel/(1114:1115): el servidor se cayo por un error en bind()
+[ERROR] 01:07:04:237 Kernel/(1133:1134): el servidor se cayo por un error en bind()
+[ERROR] 01:07:04:237 Kernel/(1133:1133): No se logro establecer coneccion con memoria
+[ERROR] 01:07:04:237 Kernel/(1133:1133): No se logro establecer coneccion con memoria
+[ERROR] 01:07:10:941 Kernel/(1146:1146): No se logro establecer coneccion con memoria
+[INFO] 01:07:10:941 Kernel/(1146:1147): El servidor se inicializo exitosamente
+[INFO] 01:07:30:92 Kernel/(1146:1147): El servidor se conecto exitosamente
+[INFO] 01:07:30:92 Kernel/(1146:1147): Servidor esperando mensajes
+[INFO] 01:07:32:551 Kernel/(1146:1147): s
+
+[INFO] 01:07:40:496 Kernel/(1146:1147): El servidor se conecto exitosamente
+[INFO] 01:07:40:496 Kernel/(1146:1147): Servidor esperando mensajes
+[INFO] 01:08:15:142 Kernel/(1146:1147): SELECT tabla 4
+
+[INFO] 01:08:15:143 Kernel/(1146:1147): Se recibio una accion select
+[INFO] 01:12:38:645 Kernel/(1541:1542): El servidor se inicializo exitosamente
+[ERROR] 01:12:38:645 Kernel/(1541:1541): No se logro establecer coneccion con memoria
+[INFO] 01:12:42:485 Kernel/(1541:1542): El servidor se conecto exitosamente
+[INFO] 01:12:42:485 Kernel/(1541:1542): Servidor esperando mensajes
+[INFO] 01:12:50:848 Kernel/(1541:1542): SELECT tabla 41
+
+[INFO] 01:12:50:849 Kernel/(1541:1542): Se recibio una accion select
+[ERROR] 01:17:16:896 Kernel/(1783:1783): No se logro establecer coneccion con memoria
+[INFO] 01:17:16:897 Kernel/(1783:1784): El servidor se inicializo exitosamente
+[INFO] 01:17:19:888 Kernel/(1783:1784): El servidor se conecto exitosamente
+[INFO] 01:17:19:888 Kernel/(1783:1784): Servidor esperando mensajes
+[INFO] 01:17:27:882 Kernel/(1783:1784): SELECT tabla 41
+
+[INFO] 01:17:27:882 Kernel/(1783:1784): Se recibio una accion select
+[INFO] 01:17:27:883 Kernel/(1783:1784): Servidor esperando mensajes
+[INFO] 01:17:30:530 Kernel/(1783:1784): 
+LECT
+[ERROR] 01:17:41:599 Kernel/(1802:1802): No se logro establecer coneccion con memoria
+[ERROR] 01:17:41:599 Kernel/(1802:1803): el servidor se cayo por un error en bind()
+[ERROR] 01:19:37:20 Kernel/(1930:1930): No se logro establecer coneccion con memoria
+[INFO] 01:19:37:20 Kernel/(1930:1931): El servidor se inicializo exitosamente
+[ERROR] 01:20:21:803 Kernel/(1994:1994): No se logro establecer coneccion con memoria
+[INFO] 01:20:21:803 Kernel/(1994:1995): El servidor se inicializo exitosamente
+[INFO] 01:20:24:538 Kernel/(1994:1995): El servidor se conecto exitosamente
+[INFO] 01:20:24:539 Kernel/(1994:1995): Servidor esperando mensajes
+[INFO] 01:20:26:798 Kernel/(1994:1995): s
+
+[INFO] 01:20:26:798 Kernel/(1994:1995): Servidor esperando mensajes
+[INFO] 01:20:31:485 Kernel/(1994:1995): sdf
+
+[INFO] 01:20:31:486 Kernel/(1994:1995): Servidor esperando mensajes
+[INFO] 01:20:49:318 Kernel/(1994:1995): SELECT tabla 41
+
+[INFO] 01:20:49:318 Kernel/(1994:1995): Se recibio una accion select
+[INFO] 01:20:49:318 Kernel/(1994:1995): Servidor esperando mensajes
+[INFO] 01:20:49:933 Kernel/(1994:1995): 
+LECT
+[INFO] 01:20:49:934 Kernel/(1994:1995): Servidor esperando mensajes
+[INFO] 01:21:13:109 Kernel/(1994:1995): 
+LECT
+[INFO] 01:21:13:110 Kernel/(1994:1995): Servidor esperando mensajes
+[INFO] 01:21:13:837 Kernel/(1994:1995): 
+LECT
+[INFO] 01:21:13:837 Kernel/(1994:1995): Servidor esperando mensajes
+[INFO] 01:21:14:333 Kernel/(1994:1995): 
+LECT
+[INFO] 01:21:14:333 Kernel/(1994:1995): Servidor esperando mensajes

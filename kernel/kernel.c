@@ -15,6 +15,7 @@
 
 //punto de entrada para el programa y el kernel
 t_log* logger;
+int memoryfd;
 int main(int argc, char const *argv[])
 {
     
@@ -42,20 +43,22 @@ int main(int argc, char const *argv[])
     
     //START FILESYSTEM MODULE
     //START MEMORY MODULE
+
+    
     //set up client 
-    int clientfd = socket(AF_INET, SOCK_STREAM, 0); 
+    memoryfd = socket(AF_INET, SOCK_STREAM, 0); 
     struct sockaddr_in sock_client;
     sock_client.sin_family = AF_INET; 
     sock_client.sin_addr.s_addr = inet_addr(MEMORY_IP); 
     sock_client.sin_port = htons(MEMORY_PORT);
     
-    int conection_result = connect(clientfd, (struct sockaddr*)&sock_client, sizeof(sock_client));
+    int conection_result = connect(memoryfd, (struct sockaddr*)&sock_client, sizeof(sock_client));
 
     if(conection_result<0){
       log_error(logger, "No se logro establecer coneccion con memoria");
       
     }
-    //write(clientfd, "hello world", sizeof("hello world"));
+    
 
     //pharse console args
     char* buffer = create_buffer(argc,argv);
@@ -75,8 +78,11 @@ int main(int argc, char const *argv[])
 }
 
 
-void action_select(package_select* select_info){
+char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
+  char* bff =  pharse_pakage_select(select_info);
+  return bff;
+
 }
 
 void action_insert(package_insert* insert_info){

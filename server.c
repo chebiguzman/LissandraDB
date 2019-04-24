@@ -15,6 +15,7 @@
 #include <stdlib.h> 
 #include <netinet/in.h> 
 #include "pharser.h"
+#include <string.h>
 
 
 void* create_server(void* args){
@@ -23,7 +24,7 @@ void* create_server(void* args){
     
 	 int sockfd, clilentNumber;
 	 struct sockaddr_in serverAddress, cli_addr;
-     char* buffer[3000];
+     char buffer[3000];
 
     
 	int portNumber = htons(serverInfo->portNumber);
@@ -46,26 +47,34 @@ void* create_server(void* args){
 
     //escucha al socket con un queue de 5 coneccioens
     listen(sockfd, 5);
-
-    clilentNumber = sizeof(cli_addr);
-    int newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilentNumber);
+    log_info(serverInfo->logger, "El servidor se inicializo exitosamente");
+    
         
+        clilentNumber = sizeof(cli_addr);
+        int newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilentNumber);
+                
 
         if(newsockfd<0){
             log_error(serverInfo->logger, "el servidor se cayo por un error en accept()");
-            exit(1);
+            
         }
-    log_info(serverInfo->logger, "El servidor se inicializo exitosamente");
-    while (1)
-    {
-        log_info(serverInfo->logger, "Servidor esperando mensajes");
-        read(newsockfd, buffer, sizeof(buffer));
-        pharse_bytearray(buffer);
-        
-        //log_info(serverInfo->logger, buffer );
-        /*free(buffer);
-        buffer = NULL;*/
-    }
+        log_info(serverInfo->logger, "El servidor se conecto exitosamente");
+        while (1)
+        {
+            log_info(serverInfo->logger, "Servidor esperando mensajes");
+            read(newsockfd, buffer, sizeof(buffer));
+
+            log_info(serverInfo->logger, buffer);
+            char* responce = pharse_bytearray(buffer);
+            write(newsockfd,responce,strlen(responce)+1);
+            //close(newsockfd);
+            //log_info(serverInfo->logger, buffer );
+            /*free(buffer);
+            buffer = NULL;*/
+        }    
+    
+    
+    
     
     
 	return 0;
