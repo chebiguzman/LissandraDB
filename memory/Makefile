@@ -1,13 +1,16 @@
-all: kernel clean
+all: pharser.o memory clean
 
-kernel: kernel.o server.o 
-	gcc -o memory.m memory.o server.o -lcommons -pthread
+memory: memory.o server.o 
+	gcc -o memory memory.o server.o pharser.o -lcommons -pthread
 
-kernel.o: 
+memory.o: 
 	gcc -c memory.c -lcommons
 
 server.o:
 	gcc -c ../server.c -lcommons
+
+pharser.o:
+	gcc -c ../pharser.c
 
 clean: 
 	find . -name "*.o" -type f -delete

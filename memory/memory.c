@@ -11,6 +11,7 @@
 #include <netinet/tcp.h>
 #include <netdb.h>
 
+t_log* logger;
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
 {
@@ -23,12 +24,13 @@ int main(int argc, char const *argv[])
 
    
     //set up log
-    t_log* logger;
-    pthread_t tid;
-    logger = log_create(LOGPATH, "Kernel", 1, LOG_LEVEL_INFO);
+    
+  
+    logger = log_create(LOGPATH, "Memory", 1, LOG_LEVEL_INFO);
 
-
+    log_info(logger, "El log fue creado con exito");
     //set up server
+    pthread_t tid;
     server_info* serverInfo = malloc(sizeof(server_info));
     memset(serverInfo, 0, sizeof( server_info));    
     serverInfo->logger = logger;
@@ -55,10 +57,10 @@ int main(int argc, char const *argv[])
     pthread_join(tid,NULL);
     
     //FREE MEMORY
-    free(LOGPATH);
+    /*free(LOGPATH);
     free(logger);
     free(serverInfo);
-    config_destroy(config);
+    config_destroy(config);*/
 
       return 0;
 }

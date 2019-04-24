@@ -1,5 +1,6 @@
 
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "pharser.h"
 #include "server.h"
 #include "actions.h"
@@ -9,7 +10,7 @@
 
 typedef struct package_select package_select;
 
-void pharse_bytearray(char* buffer){
+char* pharse_bytearray(char* buffer){
 
     int i = 0;
 
@@ -38,13 +39,16 @@ void pharse_bytearray(char* buffer){
         package->table_name = strdup(get_string_from_buffer(buffer, instruction_size));
         
         //KEY
+        
         char* key_tmp = strdup(get_string_from_buffer(buffer, instruction_size+table_name_len));
         package->key = atoi(key_tmp);
         free(key_tmp);
         
+    
 
         printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name,package->key);
-        action_select(package);
+        char* responce = action_select(package);
+        return responce;
     }
 
     
@@ -144,10 +148,32 @@ void pharse_bytearray(char* buffer){
 
         action_metrics(package);
     }*/
-    
-    
+    char* error_message = strdup("no es una instruccion valida\n");
+    return error_message;
 }
 
+
+
+char* pharse_pakage_select(package_select* package){
+    char* buffer; //separator for null terminations
+    char sep[2] = {' '};
+    char* instr = strdup(package->instruction);
+    char* tbl_n = strdup(package->table_name);
+    char key[16];
+    sprintf(key, "%d", package->key);
+    int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + strlen(key)+1;
+    
+    // = strdup(itoa(package->key,10));
+    buffer = malloc(tot_len);
+    buffer = string_new();
+    buffer = strcat(buffer, instr);
+    buffer = strcat(buffer, sep); //emular NULL terminations
+    buffer = strcat(buffer, tbl_n);
+    buffer = strcat(buffer, sep);
+    buffer = strcat(buffer, key);
+
+
+}
 
 char* create_buffer(int argc, char const *argv[]){
 	char* buffer;

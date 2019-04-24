@@ -2,7 +2,7 @@
 #define PHARSER_H_
 #include "server.h"
 
-void action_select(package_select* select_info);
+char* action_select(package_select* select_info);
 
 void action_insert(package_insert* insert_info);
 
