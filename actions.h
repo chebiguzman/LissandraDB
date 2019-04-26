@@ -16,7 +16,7 @@ void action_journal(package_journal* journal_info);
 
 void action_add(package_add* add_info);
 
-void action_run(package_run* run_info);
+char* action_run(package_run* run_info);
 
 void action_metrics(package_metrics* metrics_info);
 
