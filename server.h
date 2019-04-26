@@ -14,17 +14,9 @@
 
 void* create_server (void* args);
 
-typedef unsigned int pakage_header;
 typedef enum { EVENTUAL_CONSISTENCY, STRONG_CONSISTENCY, STRONG_HASH_CONSISTENCY } consistency_type ;
-//SELECT [NOMBRE_TABLA] [KEY]
-typedef struct package_select
-{
-    char* instruction;
-    char* table_name;
-    int key;
 
-}package_select ;
-
+//SE ESTAN MOVIENDO LAS ESTRUCTURAS A PHARSER.c
 //INSERT [NOMBRE_TABLA] [KEY] “[VALUE]”
 typedef struct 
 {
@@ -80,14 +72,6 @@ typedef struct
     consistency_type criterio;
 
 } package_add;
-
-//RUN <path>
-typedef struct
-{
-    char instruction[INSTRUCTION_BYTE_SIZE];
-    char* path;
-
-} package_run;
 
 //METRICS
 typedef struct

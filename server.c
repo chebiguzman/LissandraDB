@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -49,31 +48,37 @@ void* create_server(void* args){
     listen(sockfd, 5);
     log_info(serverInfo->logger, "El servidor se inicializo exitosamente");
     
-        
+    while(1){  
+
         clilentNumber = sizeof(cli_addr);
         int newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilentNumber);
                 
-
         if(newsockfd<0){
+
             log_error(serverInfo->logger, "el servidor se cayo por un error en accept()");
             
         }
-        log_info(serverInfo->logger, "El servidor se conecto exitosamente");
-        while (1)
-        {
-            log_info(serverInfo->logger, "Servidor esperando mensajes");
-            read(newsockfd, buffer, sizeof(buffer));
 
-            log_info(serverInfo->logger, buffer);
-            char* responce = pharse_bytearray(buffer);
-            write(newsockfd,responce,strlen(responce)+1);
-            //close(newsockfd);
-            //log_info(serverInfo->logger, buffer );
-            /*free(buffer);
-            buffer = NULL;*/
+        log_info(serverInfo->logger, "El servidor se conecto exitosamente");
+        while (1){
+
+            log_info(serverInfo->logger, "Servidor esperando mensajes");
+
+            if(read(newsockfd, buffer, sizeof(buffer))){
+
+                log_info(serverInfo->logger, buffer);
+                char* responce = parse_bytearray(buffer);
+                write(newsockfd,responce,strlen(responce)+1);
+
+            }else{
+
+                break;
+
+            }//SI el cliente se desconecta deja de leer para ir a por otro cliente
+
         }    
     
-    
+    }
     
     
     

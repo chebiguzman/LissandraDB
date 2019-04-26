@@ -30,16 +30,15 @@ int main(int argc, char const *argv[])
    
     //set up log
     logger = log_create(LOGPATH, "Kernel", 1, LOG_LEVEL_INFO);
-
-
-
+    char* a = "sad hola";
+    parse_bytearray(a);
     //set up server
     pthread_t tid;
     server_info* serverInfo = malloc(sizeof(server_info));
     memset(serverInfo, 0, sizeof( server_info));    
     serverInfo->logger = logger;
     serverInfo->portNumber = PORT;
-    pthread_create(&tid, NULL, create_server, (void*) serverInfo);
+    //pthread_create(&tid, NULL, create_server, (void*) serverInfo);
     
     //START FILESYSTEM MODULE
     //START MEMORY MODULE
@@ -61,12 +60,12 @@ int main(int argc, char const *argv[])
     
 
     //pharse console args
-    char* buffer = create_buffer(argc,argv);
-    pharse_bytearray(buffer);
+    //char* buffer = create_buffer(argc,argv);
+    //parse_bytearray(buffer);
     
 
     //JOIN THREADS
-    pthread_join(tid,NULL);
+    //pthread_join(tid,NULL);
     
     //FREE MEMORY
     free(LOGPATH);
@@ -80,7 +79,7 @@ int main(int argc, char const *argv[])
 
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
-  char* bff =  pharse_pakage_select(select_info);
+  char* bff =  parse_package_select(select_info);
   return bff;
 
 }
@@ -109,8 +108,15 @@ void action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion select");
 }
 
-void action_run(package_run* run_info){
+char* action_run(package_run* run_info){
   log_info(logger, "Se recibio una accion run");
+  char* rt = string_new();
+  FILE* fp = fopen(run_info->path, "r");
+
+  if(fp == NULL){
+    log_error(logger, "El archivo no existe o no se puede leer");
+  }
+    return rt;
 }
 
 void action_metrics(package_metrics* metrics_info){

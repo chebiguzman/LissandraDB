@@ -1,7 +1,7 @@
 all: kernel clean
 
 kernel: kernel.o server.o pharser.o
-	gcc -o kernel.k kernel.o server.o pharser.o -lcommons -pthread
+	gcc -o kernel kernel.o server.o pharser.o -lcommons -pthread
 
 kernel.o: 
 	gcc -c kernel.c -lcommons

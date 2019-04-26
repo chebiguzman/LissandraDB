@@ -1420,3 +1420,1110 @@ LECT
 [INFO] 01:21:14:333 Kernel/(1994:1995): 
 LECT
 [INFO] 01:21:14:333 Kernel/(1994:1995): Servidor esperando mensajes
+[ERROR] 01:09:44:18 Kernel/(7300:7300): No se logro establecer coneccion con memoria
+[INFO] 01:09:44:18 Kernel/(7300:7301): El servidor se inicializo exitosamente
+[INFO] 01:12:29:319 Kernel/(7516:7517): El servidor se inicializo exitosamente
+[ERROR] 01:12:29:319 Kernel/(7516:7516): No se logro establecer coneccion con memoria
+[ERROR] 01:20:34:354 Kernel/(7916:7916): No se logro establecer coneccion con memoria
+[INFO] 01:20:34:354 Kernel/(7916:7917): El servidor se inicializo exitosamente
+[INFO] 01:21:55:293 Kernel/(7916:7917): El servidor se conecto exitosamente
+[INFO] 01:21:55:293 Kernel/(7916:7917): Servidor esperando mensajes
+[INFO] 01:22:00:364 Kernel/(7916:7917): RUN asd 2
+
+[INFO] 01:22:00:364 Kernel/(7916:7917): Se recibio una accion run
+[ERROR] 01:22:00:364 Kernel/(7916:7917): El archivo no existe o no se puede leer
+[ERROR] 01:23:00:455 Kernel/(8081:8081): No se logro establecer coneccion con memoria
+[ERROR] 01:23:00:455 Kernel/(8081:8082): el servidor se cayo por un error en bind()
+[ERROR] 01:23:11:487 Kernel/(8120:8120): No se logro establecer coneccion con memoria
+[INFO] 01:23:11:487 Kernel/(8120:8121): El servidor se inicializo exitosamente
+[INFO] 01:23:14:815 Kernel/(8120:8121): El servidor se conecto exitosamente
+[INFO] 01:23:14:815 Kernel/(8120:8121): Servidor esperando mensajes
+[INFO] 01:23:20:794 Kernel/(8120:8121): SELECT sad 2
+
+[INFO] 01:23:20:795 Kernel/(8120:8121): Se recibio una accion select
+[INFO] 01:23:20:795 Kernel/(8120:8121): Servidor esperando mensajes
+[INFO] 01:23:22:866 Kernel/(8120:8121): 
+LECT
+[INFO] 01:23:22:867 Kernel/(8120:8121): Servidor esperando mensajes
+[INFO] 01:24:53:856 Kernel/(8120:8121): RUN /Dre
+
+[INFO] 01:24:53:857 Kernel/(8120:8121): Se recibio una accion run
+[ERROR] 01:24:53:857 Kernel/(8120:8121): El archivo no existe o no se puede leer
+[INFO] 01:24:53:857 Kernel/(8120:8121): Servidor esperando mensajes
+[INFO] 01:25:28:184 Kernel/(8120:8121): RUN /Documents/desktop.ini
+
+[INFO] 01:25:28:184 Kernel/(8120:8121): Se recibio una accion run
+[ERROR] 01:25:28:185 Kernel/(8120:8121): El archivo no existe o no se puede leer
+[ERROR] 01:26:06:892 Kernel/(8311:8311): No se logro establecer coneccion con memoria
+[ERROR] 01:26:06:892 Kernel/(8311:8312): el servidor se cayo por un error en bind()
+[INFO] 01:26:19:548 Kernel/(8330:8331): El servidor se inicializo exitosamente
+[ERROR] 01:26:19:548 Kernel/(8330:8330): No se logro establecer coneccion con memoria
+[INFO] 01:26:23:747 Kernel/(8330:8331): El servidor se conecto exitosamente
+[INFO] 01:26:23:748 Kernel/(8330:8331): Servidor esperando mensajes
+[INFO] 01:26:27:199 Kernel/(8330:8331): RUN a
+
+[ERROR] 01:26:46:860 Kernel/(8367:8367): No se logro establecer coneccion con memoria
+[ERROR] 01:26:46:860 Kernel/(8367:8368): el servidor se cayo por un error en bind()
+[ERROR] 01:27:20:195 Kernel/(8403:8403): No se logro establecer coneccion con memoria
+[ERROR] 01:27:20:195 Kernel/(8403:8404): el servidor se cayo por un error en bind()
+[ERROR] 01:27:26:579 Kernel/(8407:8407): No se logro establecer coneccion con memoria
+[INFO] 01:27:26:579 Kernel/(8407:8408): El servidor se inicializo exitosamente
+[INFO] 01:27:29:602 Kernel/(8407:8408): El servidor se conecto exitosamente
+[INFO] 01:27:29:602 Kernel/(8407:8408): Servidor esperando mensajes
+[INFO] 01:27:35:742 Kernel/(8407:8408): RUN abcde
+
+[INFO] 01:27:35:742 Kernel/(8407:8408): Se recibio una accion run
+[ERROR] 01:27:35:742 Kernel/(8407:8408): El archivo no existe o no se puede leer
+[INFO] 01:27:35:743 Kernel/(8407:8408): Servidor esperando mensajes
+[INFO] 01:27:47:853 Kernel/(8407:8408): RUN 123456789
+
+[INFO] 01:27:47:854 Kernel/(8407:8408): Se recibio una accion run
+[ERROR] 01:27:47:854 Kernel/(8407:8408): El archivo no existe o no se puede leer
+[INFO] 01:27:47:854 Kernel/(8407:8408): Servidor esperando mensajes
+[ERROR] 01:29:45:712 Kernel/(8528:8528): No se logro establecer coneccion con memoria
+[ERROR] 01:29:45:712 Kernel/(8528:8529): el servidor se cayo por un error en bind()
+[ERROR] 01:29:51:984 Kernel/(8542:8542): No se logro establecer coneccion con memoria
+[INFO] 01:29:51:985 Kernel/(8542:8543): El servidor se inicializo exitosamente
+[INFO] 01:29:54:864 Kernel/(8542:8543): El servidor se conecto exitosamente
+[INFO] 01:29:54:864 Kernel/(8542:8543): Servidor esperando mensajes
+[INFO] 01:29:59:619 Kernel/(8542:8543): RUN 123456789
+
+[INFO] 01:29:59:620 Kernel/(8542:8543): Se recibio una accion run
+[ERROR] 01:29:59:620 Kernel/(8542:8543): El archivo no existe o no se puede leer
+[INFO] 01:29:59:620 Kernel/(8542:8543): Servidor esperando mensajes
+[ERROR] 01:30:57:895 Kernel/(8610:8610): No se logro establecer coneccion con memoria
+[ERROR] 01:30:57:895 Kernel/(8610:8611): el servidor se cayo por un error en bind()
+[INFO] 01:31:09:159 Kernel/(8648:8649): El servidor se inicializo exitosamente
+[ERROR] 01:31:09:159 Kernel/(8648:8648): No se logro establecer coneccion con memoria
+[INFO] 01:31:14:559 Kernel/(8648:8649): El servidor se conecto exitosamente
+[INFO] 01:31:14:559 Kernel/(8648:8649): Servidor esperando mensajes
+[INFO] 01:31:18:714 Kernel/(8648:8649): RUN asd
+
+[INFO] 01:31:18:714 Kernel/(8648:8649): Se recibio una accion run
+[ERROR] 01:31:18:715 Kernel/(8648:8649): El archivo no existe o no se puede leer
+[INFO] 01:31:18:715 Kernel/(8648:8649): Servidor esperando mensajes
+[ERROR] 01:32:46:374 Kernel/(8742:8742): No se logro establecer coneccion con memoria
+[ERROR] 01:32:46:374 Kernel/(8742:8743): el servidor se cayo por un error en bind()
+[INFO] 01:33:04:838 Kernel/(8781:8782): El servidor se inicializo exitosamente
+[ERROR] 01:33:04:838 Kernel/(8781:8781): No se logro establecer coneccion con memoria
+[INFO] 01:33:10:261 Kernel/(8781:8782): El servidor se conecto exitosamente
+[INFO] 01:33:10:261 Kernel/(8781:8782): Servidor esperando mensajes
+[INFO] 01:33:13:696 Kernel/(8781:8782): RUN asd
+
+[INFO] 01:33:13:697 Kernel/(8781:8782): Se recibio una accion run
+[ERROR] 01:33:13:697 Kernel/(8781:8782): El archivo no existe o no se puede leer
+[INFO] 01:33:13:697 Kernel/(8781:8782): Servidor esperando mensajes
+[INFO] 01:34:15:423 Kernel/(8781:8782): as
+asd
+[INFO] 01:34:15:424 Kernel/(8781:8782): Servidor esperando mensajes
+[INFO] 01:34:49:807 Kernel/(8781:8782): a a
+sd
+[INFO] 01:34:49:807 Kernel/(8781:8782): Servidor esperando mensajes
+[ERROR] 01:36:03:882 Kernel/(8965:8965): No se logro establecer coneccion con memoria
+[ERROR] 01:36:03:882 Kernel/(8965:8966): el servidor se cayo por un error en bind()
+[ERROR] 01:36:13:8 Kernel/(8995:8995): No se logro establecer coneccion con memoria
+[INFO] 01:36:13:8 Kernel/(8995:8996): El servidor se inicializo exitosamente
+[INFO] 01:36:17:306 Kernel/(8995:8996): El servidor se conecto exitosamente
+[INFO] 01:36:17:306 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:36:22:149 Kernel/(8995:8996): a dsd
+
+[INFO] 01:36:22:150 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:14:797 Kernel/(8995:8996): s
+sd
+[INFO] 01:37:14:797 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:18:292 Kernel/(8995:8996): asd
+
+[INFO] 01:37:18:293 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:20:332 Kernel/(8995:8996): a
+
+[INFO] 01:37:20:332 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:21:292 Kernel/(8995:8996): s
+
+[INFO] 01:37:21:293 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:22:260 Kernel/(8995:8996): ss
+
+[INFO] 01:37:22:261 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:26:916 Kernel/(8995:8996): sss
+
+[INFO] 01:37:26:917 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:29:684 Kernel/(8995:8996): sssssssss
+
+[INFO] 01:37:29:685 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:34:244 Kernel/(8995:8996): sssssss
+
+[INFO] 01:37:34:245 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:39:644 Kernel/(8995:8996): ssssss
+
+[INFO] 01:37:39:645 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:49:988 Kernel/(8995:8996): ssssssss
+
+[INFO] 01:37:49:988 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:55:156 Kernel/(8995:8996): s
+sssss
+[INFO] 01:37:55:156 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:56:476 Kernel/(8995:8996): 
+
+[INFO] 01:37:56:476 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:57:516 Kernel/(8995:8996): 
+
+[INFO] 01:37:57:516 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:57:996 Kernel/(8995:8996): 
+
+[INFO] 01:37:57:996 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:58:364 Kernel/(8995:8996): 
+
+[INFO] 01:37:58:364 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:58:780 Kernel/(8995:8996): 
+
+[INFO] 01:37:58:780 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:59:228 Kernel/(8995:8996): 
+
+[INFO] 01:37:59:228 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:37:59:700 Kernel/(8995:8996): 
+
+[INFO] 01:37:59:700 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:38:00:308 Kernel/(8995:8996): 
+
+[INFO] 01:38:00:309 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:38:00:772 Kernel/(8995:8996): 
+
+[INFO] 01:38:00:772 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:38:01:964 Kernel/(8995:8996): 
+
+[INFO] 01:38:01:964 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:38:02:364 Kernel/(8995:8996): 
+
+[INFO] 01:38:02:364 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:38:03:140 Kernel/(8995:8996): s
+sssss
+[INFO] 01:38:03:140 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:38:05:220 Kernel/(8995:8996): s
+sssss
+[INFO] 01:38:05:220 Kernel/(8995:8996): Servidor esperando mensajes
+[INFO] 01:38:06:292 Kernel/(8995:8996): ss
+ssss
+[INFO] 01:38:06:292 Kernel/(8995:8996): Servidor esperando mensajes
+[ERROR] 01:38:17:585 Kernel/(9107:9107): No se logro establecer coneccion con memoria
+[ERROR] 01:38:17:585 Kernel/(9107:9108): el servidor se cayo por un error en bind()
+[ERROR] 01:38:27:927 Kernel/(9120:9120): No se logro establecer coneccion con memoria
+[INFO] 01:38:27:927 Kernel/(9120:9121): El servidor se inicializo exitosamente
+[INFO] 01:38:31:288 Kernel/(9120:9121): El servidor se conecto exitosamente
+[INFO] 01:38:31:288 Kernel/(9120:9121): Servidor esperando mensajes
+[INFO] 01:38:33:276 Kernel/(9120:9121): s
+
+[INFO] 01:38:33:276 Kernel/(9120:9121): Servidor esperando mensajes
+[INFO] 01:38:38:691 Kernel/(9120:9121): as
+
+[INFO] 01:38:38:692 Kernel/(9120:9121): Servidor esperando mensajes
+[INFO] 01:38:41:75 Kernel/(9120:9121): asd
+
+[INFO] 01:38:41:76 Kernel/(9120:9121): Servidor esperando mensajes
+[INFO] 01:38:42:851 Kernel/(9120:9121): s
+
+[INFO] 01:38:42:852 Kernel/(9120:9121): Servidor esperando mensajes
+[INFO] 01:38:44:91 Kernel/(9120:9121): s
+
+[INFO] 01:38:44:92 Kernel/(9120:9121): Servidor esperando mensajes
+[INFO] 01:38:45:291 Kernel/(9120:9121): sd
+
+[INFO] 01:38:45:292 Kernel/(9120:9121): Servidor esperando mensajes
+[INFO] 01:38:48:339 Kernel/(9120:9121): s s
+
+[INFO] 01:38:48:340 Kernel/(9120:9121): Servidor esperando mensajes
+[INFO] 01:39:08:626 Kernel/(9120:9121): sdf
+
+[INFO] 01:39:08:626 Kernel/(9120:9121): Servidor esperando mensajes
+[ERROR] 01:47:53:485 Kernel/(9768:9769): el servidor se cayo por un error en bind()
+[ERROR] 01:47:53:485 Kernel/(9768:9768): No se logro establecer coneccion con memoria
+[ERROR] 01:47:53:485 Kernel/(9768:9768): No se logro establecer coneccion con memoria
+[ERROR] 01:48:02:653 Kernel/(9774:9774): No se logro establecer coneccion con memoria
+[INFO] 01:48:02:653 Kernel/(9774:9775): El servidor se inicializo exitosamente
+[INFO] 01:48:05:603 Kernel/(9774:9775): El servidor se conecto exitosamente
+[INFO] 01:48:05:604 Kernel/(9774:9775): Servidor esperando mensajes
+[INFO] 01:48:10:183 Kernel/(9774:9775): asd 
+
+[INFO] 01:48:10:183 Kernel/(9774:9775): Servidor esperando mensajes
+[INFO] 01:48:19:902 Kernel/(9774:9775): asd asd 
+
+[INFO] 01:48:19:903 Kernel/(9774:9775): Servidor esperando mensajes
+[INFO] 01:48:26:710 Kernel/(9774:9775): s sdd
+
+[INFO] 01:48:26:710 Kernel/(9774:9775): Servidor esperando mensajes
+[INFO] 01:48:33:774 Kernel/(9774:9775): zz df
+
+[INFO] 01:48:33:774 Kernel/(9774:9775): Servidor esperando mensajes
+[INFO] 01:48:37:958 Kernel/(9774:9775): ddd dfs
+
+[INFO] 01:48:37:958 Kernel/(9774:9775): Servidor esperando mensajes
+[ERROR] 01:50:08:455 Kernel/(9900:9900): No se logro establecer coneccion con memoria
+[ERROR] 01:50:08:455 Kernel/(9900:9901): el servidor se cayo por un error en bind()
+[INFO] 01:50:17:495 Kernel/(9921:9922): El servidor se inicializo exitosamente
+[ERROR] 01:50:17:495 Kernel/(9921:9921): No se logro establecer coneccion con memoria
+[INFO] 01:50:22:126 Kernel/(9921:9922): El servidor se conecto exitosamente
+[INFO] 01:50:22:126 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:50:30:497 Kernel/(9921:9922): asd d
+
+[INFO] 01:50:30:498 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:50:38:1 Kernel/(9921:9922): d
+
+[INFO] 01:50:38:1 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:50:44:585 Kernel/(9921:9922): asd s
+
+[INFO] 01:50:44:585 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:50:49:640 Kernel/(9921:9922): asd d
+
+[INFO] 01:50:49:641 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:50:52:704 Kernel/(9921:9922): wa 
+
+[INFO] 01:50:52:705 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:50:55:56 Kernel/(9921:9922): wqe e
+
+[INFO] 01:50:55:57 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:50:55:556 Kernel/(9921:9922): 
+e
+[INFO] 01:50:55:556 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:50:55:585 Kernel/(9921:9922): 
+e
+[INFO] 01:50:55:585 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:50:55:616 Kernel/(9921:9922): 
+e
+[INFO] 01:50:55:616 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:50:57:80 Kernel/(9921:9922): e
+
+[INFO] 01:50:57:81 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:00:760 Kernel/(9921:9922): w
+
+[INFO] 01:51:00:760 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:03:128 Kernel/(9921:9922): e e 
+
+[INFO] 01:51:03:128 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:06:120 Kernel/(9921:9922): e e e 
+
+[INFO] 01:51:06:120 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:07:960 Kernel/(9921:9922): w
+
+[INFO] 01:51:07:960 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:09:256 Kernel/(9921:9922): w
+
+[INFO] 01:51:09:256 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:11:272 Kernel/(9921:9922): e e
+
+[INFO] 01:51:11:272 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:25:191 Kernel/(9921:9922): ds 
+
+[INFO] 01:51:25:192 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:29:423 Kernel/(9921:9922): asd
+
+[INFO] 01:51:29:423 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:32:135 Kernel/(9921:9922): asd
+
+[INFO] 01:51:32:135 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:33:927 Kernel/(9921:9922): ds
+
+[INFO] 01:51:33:927 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:34:831 Kernel/(9921:9922): s
+
+[INFO] 01:51:34:831 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:36:759 Kernel/(9921:9922): s
+
+[INFO] 01:51:36:759 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:37:551 Kernel/(9921:9922): s
+
+[INFO] 01:51:37:551 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:38:511 Kernel/(9921:9922): ds
+
+[INFO] 01:51:38:511 Kernel/(9921:9922): Servidor esperando mensajes
+[INFO] 01:51:45:591 Kernel/(9921:9922): adsd asd
+
+[INFO] 01:51:45:591 Kernel/(9921:9922): Servidor esperando mensajes
+[ERROR] 01:52:31:106 Kernel/(10042:10042): No se logro establecer coneccion con memoria
+[ERROR] 01:52:31:106 Kernel/(10042:10043): el servidor se cayo por un error en bind()
+[INFO] 01:52:39:647 Kernel/(10075:10076): El servidor se inicializo exitosamente
+[ERROR] 01:52:39:647 Kernel/(10075:10075): No se logro establecer coneccion con memoria
+[INFO] 01:52:44:585 Kernel/(10075:10076): El servidor se conecto exitosamente
+[INFO] 01:52:44:585 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:52:49:540 Kernel/(10075:10076): asd d
+
+[INFO] 01:52:49:541 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:52:52:276 Kernel/(10075:10076): s
+
+[INFO] 01:52:52:277 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:52:53:524 Kernel/(10075:10076): s
+
+[INFO] 01:52:53:524 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:52:54:492 Kernel/(10075:10076): 
+
+[INFO] 01:52:54:493 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:52:55:220 Kernel/(10075:10076): 
+
+[INFO] 01:52:55:221 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:52:55:708 Kernel/(10075:10076): 
+
+[INFO] 01:52:55:709 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:52:56:148 Kernel/(10075:10076): 
+
+[INFO] 01:52:56:148 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:52:56:516 Kernel/(10075:10076): 
+
+[INFO] 01:52:56:516 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:52:56:908 Kernel/(10075:10076): 
+
+[INFO] 01:52:56:908 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:52:57:284 Kernel/(10075:10076): 
+
+[INFO] 01:52:57:284 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:52:58:260 Kernel/(10075:10076): d
+
+[INFO] 01:52:58:260 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:52:59:844 Kernel/(10075:10076): d 
+d
+[INFO] 01:52:59:844 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:53:01:396 Kernel/(10075:10076): d  
+
+[INFO] 01:53:01:396 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:53:02:732 Kernel/(10075:10076): dd 
+
+[INFO] 01:53:02:732 Kernel/(10075:10076): Servidor esperando mensajes
+[INFO] 01:53:04:780 Kernel/(10075:10076): ddd
+
+[INFO] 01:53:04:780 Kernel/(10075:10076): Servidor esperando mensajes
+[ERROR] 01:54:32:694 Kernel/(10186:10187): el servidor se cayo por un error en bind()
+[ERROR] 01:54:32:694 Kernel/(10186:10186): No se logro establecer coneccion con memoria
+[ERROR] 01:54:32:694 Kernel/(10186:10186): No se logro establecer coneccion con memoria
+[ERROR] 01:54:41:717 Kernel/(10199:10199): No se logro establecer coneccion con memoria
+[INFO] 01:54:41:717 Kernel/(10199:10200): El servidor se inicializo exitosamente
+[INFO] 01:54:44:117 Kernel/(10199:10200): El servidor se conecto exitosamente
+[INFO] 01:54:44:117 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:54:46:249 Kernel/(10199:10200): asd 
+
+[INFO] 01:54:46:249 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:54:51:184 Kernel/(10199:10200): asd
+
+[INFO] 01:54:51:185 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:54:54:496 Kernel/(10199:10200): asd
+
+[INFO] 01:54:54:497 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:54:55:384 Kernel/(10199:10200): s
+
+[INFO] 01:54:55:385 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:54:56:448 Kernel/(10199:10200): s
+
+[INFO] 01:54:56:449 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:54:58:360 Kernel/(10199:10200): a
+
+[INFO] 01:54:58:361 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:54:59:472 Kernel/(10199:10200): s
+
+[INFO] 01:54:59:473 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:00:456 Kernel/(10199:10200): s
+
+[INFO] 01:55:00:457 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:01:392 Kernel/(10199:10200): s
+
+[INFO] 01:55:01:393 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:02:216 Kernel/(10199:10200): s
+
+[INFO] 01:55:02:216 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:03:7 Kernel/(10199:10200): s
+
+[INFO] 01:55:03:7 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:03:608 Kernel/(10199:10200): s
+
+[INFO] 01:55:03:608 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:04:264 Kernel/(10199:10200): s
+
+[INFO] 01:55:04:264 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:04:848 Kernel/(10199:10200): s
+
+[INFO] 01:55:04:848 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:05:480 Kernel/(10199:10200): s
+
+[INFO] 01:55:05:480 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:06:48 Kernel/(10199:10200): s
+
+[INFO] 01:55:06:48 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:06:640 Kernel/(10199:10200): s
+
+[INFO] 01:55:06:640 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:07:176 Kernel/(10199:10200): s
+
+[INFO] 01:55:07:177 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:07:864 Kernel/(10199:10200): s
+
+[INFO] 01:55:07:864 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:08:456 Kernel/(10199:10200): s
+
+[INFO] 01:55:08:456 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:09:104 Kernel/(10199:10200): s
+
+[INFO] 01:55:09:104 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:09:640 Kernel/(10199:10200): s
+
+[INFO] 01:55:09:640 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:10:312 Kernel/(10199:10200): s
+
+[INFO] 01:55:10:312 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:10:992 Kernel/(10199:10200): s
+
+[INFO] 01:55:10:992 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:12:352 Kernel/(10199:10200): s
+
+[INFO] 01:55:12:352 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:14:160 Kernel/(10199:10200): s
+
+[INFO] 01:55:14:160 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:55:24:183 Kernel/(10199:10200): s
+
+[INFO] 01:55:24:184 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:50:538 Kernel/(10199:10200): s
+
+[INFO] 01:58:50:538 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:51:186 Kernel/(10199:10200): s
+
+[INFO] 01:58:51:186 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:51:753 Kernel/(10199:10200): s
+
+[INFO] 01:58:51:754 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:52:193 Kernel/(10199:10200): s
+
+[INFO] 01:58:52:194 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:52:665 Kernel/(10199:10200): s
+
+[INFO] 01:58:52:666 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:53:58 Kernel/(10199:10200): s
+
+[INFO] 01:58:53:58 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:53:497 Kernel/(10199:10200): s
+
+[INFO] 01:58:53:498 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:53:937 Kernel/(10199:10200): s
+
+[INFO] 01:58:53:937 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:54:345 Kernel/(10199:10200): s
+
+[INFO] 01:58:54:346 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:54:745 Kernel/(10199:10200): s
+
+[INFO] 01:58:54:746 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:55:105 Kernel/(10199:10200): s
+
+[INFO] 01:58:55:106 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:55:489 Kernel/(10199:10200): s
+
+[INFO] 01:58:55:490 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:55:865 Kernel/(10199:10200): s
+
+[INFO] 01:58:55:866 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:56:225 Kernel/(10199:10200): s
+
+[INFO] 01:58:56:226 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:56:585 Kernel/(10199:10200): s
+
+[INFO] 01:58:56:586 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:56:905 Kernel/(10199:10200): s
+
+[INFO] 01:58:56:906 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:57:249 Kernel/(10199:10200): s
+
+[INFO] 01:58:57:250 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:57:521 Kernel/(10199:10200): s
+
+[INFO] 01:58:57:522 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:57:857 Kernel/(10199:10200): s
+
+[INFO] 01:58:57:858 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:58:153 Kernel/(10199:10200): s
+
+[INFO] 01:58:58:154 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:58:433 Kernel/(10199:10200): s
+
+[INFO] 01:58:58:434 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:58:649 Kernel/(10199:10200): s
+
+[INFO] 01:58:58:650 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:58:881 Kernel/(10199:10200): ss
+
+[INFO] 01:58:58:882 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:59:49 Kernel/(10199:10200): 
+
+[INFO] 01:58:59:50 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:59:241 Kernel/(10199:10200): ss
+
+[INFO] 01:58:59:242 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:59:433 Kernel/(10199:10200): s
+
+[INFO] 01:58:59:434 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:59:609 Kernel/(10199:10200): s
+
+[INFO] 01:58:59:610 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:59:801 Kernel/(10199:10200): s
+
+[INFO] 01:58:59:802 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:58:59:969 Kernel/(10199:10200): s
+
+[INFO] 01:58:59:970 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:00:161 Kernel/(10199:10200): s
+
+[INFO] 01:59:00:162 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:00:289 Kernel/(10199:10200): 
+
+[INFO] 01:59:00:290 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:00:473 Kernel/(10199:10200): ss
+
+[INFO] 01:59:00:473 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:00:649 Kernel/(10199:10200): s
+
+[INFO] 01:59:00:650 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:00:825 Kernel/(10199:10200): s
+
+[INFO] 01:59:00:826 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:00:985 Kernel/(10199:10200): s
+
+[INFO] 01:59:00:986 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:01:177 Kernel/(10199:10200): s
+
+[INFO] 01:59:01:178 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:01:369 Kernel/(10199:10200): s
+
+[INFO] 01:59:01:370 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:01:553 Kernel/(10199:10200): s
+
+[INFO] 01:59:01:554 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:01:729 Kernel/(10199:10200): s
+
+[INFO] 01:59:01:730 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:01:905 Kernel/(10199:10200): s
+
+[INFO] 01:59:01:906 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:02:89 Kernel/(10199:10200): s
+
+[INFO] 01:59:02:90 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:02:281 Kernel/(10199:10200): s
+
+[INFO] 01:59:02:282 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:02:481 Kernel/(10199:10200): s
+
+[INFO] 01:59:02:482 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:02:657 Kernel/(10199:10200): s
+
+[INFO] 01:59:02:658 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:03:33 Kernel/(10199:10200): ss
+
+[INFO] 01:59:03:34 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:03:369 Kernel/(10199:10200): s
+
+[INFO] 01:59:03:370 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:03:553 Kernel/(10199:10200): s
+
+[INFO] 01:59:03:554 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:03:737 Kernel/(10199:10200): s
+
+[INFO] 01:59:03:738 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:03:953 Kernel/(10199:10200): ss
+
+[INFO] 01:59:03:954 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:04:161 Kernel/(10199:10200): s
+
+[INFO] 01:59:04:161 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:04:353 Kernel/(10199:10200): s
+
+[INFO] 01:59:04:354 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:04:529 Kernel/(10199:10200): s
+
+[INFO] 01:59:04:529 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:04:729 Kernel/(10199:10200): s
+
+[INFO] 01:59:04:730 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:04:945 Kernel/(10199:10200): s
+
+[INFO] 01:59:04:946 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:05:145 Kernel/(10199:10200): s
+
+[INFO] 01:59:05:145 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:05:321 Kernel/(10199:10200): s
+
+[INFO] 01:59:05:322 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:05:505 Kernel/(10199:10200): s
+
+[INFO] 01:59:05:506 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:05:681 Kernel/(10199:10200): s
+
+[INFO] 01:59:05:682 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:05:913 Kernel/(10199:10200): s
+
+[INFO] 01:59:05:913 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:06:121 Kernel/(10199:10200): s
+
+[INFO] 01:59:06:121 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:06:289 Kernel/(10199:10200): s
+
+[INFO] 01:59:06:290 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:06:513 Kernel/(10199:10200): s
+
+[INFO] 01:59:06:514 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:06:721 Kernel/(10199:10200): s
+
+[INFO] 01:59:06:722 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:06:897 Kernel/(10199:10200): s
+
+[INFO] 01:59:06:897 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:07:97 Kernel/(10199:10200): s
+
+[INFO] 01:59:07:98 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:07:665 Kernel/(10199:10200): sss
+
+[INFO] 01:59:07:665 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:07:857 Kernel/(10199:10200): s
+
+[INFO] 01:59:07:858 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:08:33 Kernel/(10199:10200): s
+
+[INFO] 01:59:08:34 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:08:233 Kernel/(10199:10200): s
+
+[INFO] 01:59:08:234 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:08:441 Kernel/(10199:10200): s
+
+[INFO] 01:59:08:442 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:09:849 Kernel/(10199:10200): sss
+
+[INFO] 01:59:09:849 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:10:417 Kernel/(10199:10200): s
+
+[INFO] 01:59:10:417 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:10:633 Kernel/(10199:10200): s
+
+[INFO] 01:59:10:633 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:10:833 Kernel/(10199:10200): s
+
+[INFO] 01:59:10:833 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:11:17 Kernel/(10199:10200): s
+
+[INFO] 01:59:11:18 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:11:217 Kernel/(10199:10200): s
+
+[INFO] 01:59:11:217 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:12:89 Kernel/(10199:10200): ssss
+
+[INFO] 01:59:12:89 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:13:137 Kernel/(10199:10200): ssss
+
+[INFO] 01:59:13:137 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:15:985 Kernel/(10199:10200): sssssssssssssssssssssssssssssssssssssssssssssssss
+
+[INFO] 01:59:15:985 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:21:737 Kernel/(10199:10200): ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+
+[INFO] 01:59:21:737 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:32:768 Kernel/(10199:10200): s
+sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+[INFO] 01:59:32:769 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:34:64 Kernel/(10199:10200): s
+sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+[INFO] 01:59:34:64 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:35:648 Kernel/(10199:10200): s
+sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+[INFO] 01:59:35:649 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:36:864 Kernel/(10199:10200): s
+sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+[INFO] 01:59:36:865 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:38:704 Kernel/(10199:10200): s
+sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+[INFO] 01:59:38:705 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:40:288 Kernel/(10199:10200): ss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+[INFO] 01:59:40:289 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:44:888 Kernel/(10199:10200): sss
+sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+[INFO] 01:59:44:889 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:50:712 Kernel/(10199:10200): ssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+[INFO] 01:59:50:712 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:53:536 Kernel/(10199:10200): ssssssssssssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssss
+[INFO] 01:59:53:536 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:55:304 Kernel/(10199:10200): s
+sssssssssssssss
+[INFO] 01:59:55:304 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 01:59:58:128 Kernel/(10199:10200): ssssssssssssssssssssssssssss
+ssssssssssssssssssssssssssssssssssssss
+[INFO] 01:59:58:128 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:00:296 Kernel/(10199:10200): s
+sssssssssssssssssssssssss
+[INFO] 02:00:00:296 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:01:48 Kernel/(10199:10200): s
+sssssssssssssssssssssssss
+[INFO] 02:00:01:48 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:01:880 Kernel/(10199:10200): ss
+ssssssssssssssssssssssss
+[INFO] 02:00:01:880 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:02:616 Kernel/(10199:10200): ss
+ssssssssssssssssssssssss
+[INFO] 02:00:02:616 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:03:400 Kernel/(10199:10200): ss
+ssssssssssssssssssssssss
+[INFO] 02:00:03:400 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:04:503 Kernel/(10199:10200): sss
+sssssssssssssssssssssss
+[INFO] 02:00:04:504 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:06:23 Kernel/(10199:10200): sssss
+sssssssssssssssssssss
+[INFO] 02:00:06:23 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:09:527 Kernel/(10199:10200): sssssssssssssssssssssssssssssssssssssssssssss
+sssssssssssssssssssss
+[INFO] 02:00:09:528 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:15:887 Kernel/(10199:10200): sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+
+[INFO] 02:00:15:888 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:18:991 Kernel/(10199:10200): ssssssssssssssss
+sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+[INFO] 02:00:18:992 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:20:631 Kernel/(10199:10200): sssssssssssssssssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+[INFO] 02:00:20:632 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:21:815 Kernel/(10199:10200): ssssssssssss
+sssssssss
+[INFO] 02:00:21:815 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:23:23 Kernel/(10199:10200): sssssss
+sss
+[INFO] 02:00:23:23 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:23:703 Kernel/(10199:10200): s
+ssss
+[INFO] 02:00:23:703 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:26:655 Kernel/(10199:10200): s
+ssss
+[INFO] 02:00:26:656 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:27:519 Kernel/(10199:10200): s
+ssss
+[INFO] 02:00:27:519 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:28:719 Kernel/(10199:10200): sssss
+
+[INFO] 02:00:28:719 Kernel/(10199:10200): Servidor esperando mensajes
+[INFO] 02:00:30:463 Kernel/(10199:10200): sssssssssss
+
+[INFO] 02:00:30:463 Kernel/(10199:10200): Servidor esperando mensajes
+[ERROR] 02:01:37:786 Kernel/(10547:10548): el servidor se cayo por un error en bind()
+[ERROR] 02:01:37:786 Kernel/(10547:10547): No se logro establecer coneccion con memoria
+[ERROR] 02:01:37:786 Kernel/(10547:10547): No se logro establecer coneccion con memoria
+[ERROR] 02:01:54:370 Kernel/(10580:10580): No se logro establecer coneccion con memoria
+[INFO] 02:01:54:370 Kernel/(10580:10581): El servidor se inicializo exitosamente
+[INFO] 02:01:58:489 Kernel/(10580:10581): El servidor se conecto exitosamente
+[INFO] 02:01:58:489 Kernel/(10580:10581): Servidor esperando mensajes
+[INFO] 02:02:05:221 Kernel/(10580:10581): SELECT 
+
+[ERROR] 02:02:14:702 Kernel/(10615:10615): No se logro establecer coneccion con memoria
+[ERROR] 02:02:14:702 Kernel/(10615:10616): el servidor se cayo por un error en bind()
+[ERROR] 02:02:31:537 Kernel/(10637:10637): No se logro establecer coneccion con memoria
+[INFO] 02:02:31:537 Kernel/(10637:10638): El servidor se inicializo exitosamente
+[INFO] 02:02:33:32 Kernel/(10637:10638): El servidor se conecto exitosamente
+[INFO] 02:02:33:33 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:02:38:180 Kernel/(10637:10638): SELECT tabla 4
+
+[INFO] 02:02:38:180 Kernel/(10637:10638): Se recibio una accion select
+[INFO] 02:02:38:181 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:02:42:340 Kernel/(10637:10638): 3
+ECT
+[INFO] 02:02:42:340 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:02:42:840 Kernel/(10637:10638): 
+
+[INFO] 02:02:42:840 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:02:42:870 Kernel/(10637:10638): 
+
+[INFO] 02:02:42:870 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:02:42:900 Kernel/(10637:10638): 
+
+[INFO] 02:02:42:901 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:02:42:930 Kernel/(10637:10638): 
+
+[INFO] 02:02:42:931 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:02:42:960 Kernel/(10637:10638): 
+
+[INFO] 02:02:42:961 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:02:42:990 Kernel/(10637:10638): 
+
+[INFO] 02:02:42:991 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:02:43:21 Kernel/(10637:10638): 
+
+[INFO] 02:02:43:21 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:02:43:52 Kernel/(10637:10638): 
+
+[INFO] 02:02:43:52 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:02:43:82 Kernel/(10637:10638): 
+
+[INFO] 02:02:43:82 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:07:947 Kernel/(10637:10638): s
+ECT
+[INFO] 02:03:07:948 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:11:867 Kernel/(10637:10638): s
+ECT
+[INFO] 02:03:11:867 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:12:963 Kernel/(10637:10638): s
+ECT
+[INFO] 02:03:12:963 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:13:723 Kernel/(10637:10638): s
+ECT
+[INFO] 02:03:13:723 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:14:235 Kernel/(10637:10638): s
+ECT
+[INFO] 02:03:14:235 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:15:35 Kernel/(10637:10638): s
+ECT
+[INFO] 02:03:15:35 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:16:323 Kernel/(10637:10638): s
+ECT
+[INFO] 02:03:16:323 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:17:211 Kernel/(10637:10638): s
+ECT
+[INFO] 02:03:17:211 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:21:643 Kernel/(10637:10638): s
+ECT
+[INFO] 02:03:21:643 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:22:531 Kernel/(10637:10638): d
+ECT
+[INFO] 02:03:22:531 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:24:627 Kernel/(10637:10638): d
+ECT
+[INFO] 02:03:24:627 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:26:819 Kernel/(10637:10638): fd
+CT
+[INFO] 02:03:26:819 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:29:675 Kernel/(10637:10638): df
+CT
+[INFO] 02:03:29:675 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:30:355 Kernel/(10637:10638): d
+
+[INFO] 02:03:30:355 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:33:139 Kernel/(10637:10638): df
+CT
+[INFO] 02:03:33:139 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:35:443 Kernel/(10637:10638): ff
+CT
+[INFO] 02:03:35:443 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:36:538 Kernel/(10637:10638): ff
+CT
+[INFO] 02:03:36:539 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:37:698 Kernel/(10637:10638): ff
+CT
+[INFO] 02:03:37:699 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:39:258 Kernel/(10637:10638): fff
+T
+[INFO] 02:03:39:259 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:43:362 Kernel/(10637:10638): ffff
+
+[INFO] 02:03:43:363 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:46:162 Kernel/(10637:10638): ffff
+
+[INFO] 02:03:46:163 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:50:554 Kernel/(10637:10638): fffff
+tabla
+[INFO] 02:03:50:555 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:52:722 Kernel/(10637:10638): ffffff
+abla
+[INFO] 02:03:52:722 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:54:138 Kernel/(10637:10638): ffffffffffffffff
+
+[INFO] 02:03:54:138 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:55:346 Kernel/(10637:10638): f
+fffffffffffff
+[INFO] 02:03:55:346 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:56:258 Kernel/(10637:10638): f
+fffffffffffff
+[INFO] 02:03:56:258 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:57:458 Kernel/(10637:10638): fff
+fffffffffff
+[INFO] 02:03:57:458 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:03:58:866 Kernel/(10637:10638): ffffffffff
+ffff
+[INFO] 02:03:58:866 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:04:00:850 Kernel/(10637:10638): ffffffffffffff
+
+[INFO] 02:04:00:851 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:04:05:474 Kernel/(10637:10638): RUN 
+ffffffff
+[INFO] 02:04:05:474 Kernel/(10637:10638): Se recibio una accion run
+[ERROR] 02:04:05:474 Kernel/(10637:10638): El archivo no existe o no se puede leer
+[INFO] 02:04:05:474 Kernel/(10637:10638): Servidor esperando mensajes
+[INFO] 02:04:29:457 Kernel/(10637:10638): RUN abcd
+ffff
+[INFO] 02:04:29:457 Kernel/(10637:10638): Se recibio una accion run
+[ERROR] 02:04:29:457 Kernel/(10637:10638): El archivo no existe o no se puede leer
+[INFO] 02:04:29:458 Kernel/(10637:10638): Servidor esperando mensajes
+[ERROR] 02:06:12:901 Kernel/(10804:10805): el servidor se cayo por un error en bind()
+[ERROR] 02:06:12:901 Kernel/(10804:10804): No se logro establecer coneccion con memoria
+[ERROR] 02:06:12:901 Kernel/(10804:10804): No se logro establecer coneccion con memoria
+[ERROR] 02:06:24:355 Kernel/(10818:10818): No se logro establecer coneccion con memoria
+[ERROR] 02:06:24:355 Kernel/(10818:10819): el servidor se cayo por un error en bind()
+[ERROR] 02:08:36:12 Kernel/(10955:10955): No se logro establecer coneccion con memoria
+[INFO] 02:08:36:12 Kernel/(10955:10956): El servidor se inicializo exitosamente
+[INFO] 02:08:36:12 Kernel/(10955:10955): Se recibio una accion run
+[ERROR] 02:08:36:13 Kernel/(10955:10955): El archivo no existe o no se puede leer
+[ERROR] 02:09:46:503 Kernel/(11008:11008): No se logro establecer coneccion con memoria
+[INFO] 02:09:46:503 Kernel/(11008:11009): El servidor se inicializo exitosamente
+[INFO] 02:09:46:504 Kernel/(11008:11008): Se recibio una accion run
+[ERROR] 02:09:46:504 Kernel/(11008:11008): El archivo no existe o no se puede leer
+[INFO] 02:09:51:927 Kernel/(11036:11037): El servidor se inicializo exitosamente
+[ERROR] 02:09:51:927 Kernel/(11036:11036): No se logro establecer coneccion con memoria
+[INFO] 02:09:51:928 Kernel/(11036:11036): Se recibio una accion run
+[ERROR] 02:09:51:929 Kernel/(11036:11036): El archivo no existe o no se puede leer
+[ERROR] 02:10:00:775 Kernel/(11040:11040): No se logro establecer coneccion con memoria
+[INFO] 02:10:00:775 Kernel/(11040:11041): El servidor se inicializo exitosamente
+[INFO] 02:10:07:566 Kernel/(11040:11041): El servidor se conecto exitosamente
+[INFO] 02:10:07:566 Kernel/(11040:11041): Servidor esperando mensajes
+[INFO] 02:10:25:953 Kernel/(11040:11041): RUN /Documents/desktop.ini
+
+[ERROR] 02:11:20:469 Kernel/(11112:11112): No se logro establecer coneccion con memoria
+[ERROR] 02:11:20:469 Kernel/(11112:11113): el servidor se cayo por un error en bind()
+[ERROR] 02:11:25:62 Kernel/(11127:11128): el servidor se cayo por un error en bind()
+[ERROR] 02:11:25:62 Kernel/(11127:11127): No se logro establecer coneccion con memoria
+[ERROR] 02:11:25:62 Kernel/(11127:11127): No se logro establecer coneccion con memoria
+[ERROR] 02:11:41:997 Kernel/(11139:11139): No se logro establecer coneccion con memoria
+[INFO] 02:11:41:997 Kernel/(11139:11140): El servidor se inicializo exitosamente
+[INFO] 02:11:41:997 Kernel/(11139:11139): Se recibio una accion run
+[ERROR] 02:11:41:998 Kernel/(11139:11139): El archivo no existe o no se puede leer
+[ERROR] 02:12:08:700 Kernel/(11163:11163): No se logro establecer coneccion con memoria
+[INFO] 02:12:08:700 Kernel/(11163:11164): El servidor se inicializo exitosamente
+[ERROR] 02:12:18:212 Kernel/(11169:11169): No se logro establecer coneccion con memoria
+[INFO] 02:12:18:212 Kernel/(11169:11170): El servidor se inicializo exitosamente
+[INFO] 02:12:18:212 Kernel/(11169:11169): Se recibio una accion run
+[ERROR] 02:12:18:213 Kernel/(11169:11169): El archivo no existe o no se puede leer
+[ERROR] 02:12:24:140 Kernel/(11182:11182): No se logro establecer coneccion con memoria
+[INFO] 02:12:24:140 Kernel/(11182:11183): El servidor se inicializo exitosamente
+[ERROR] 02:13:04:355 Kernel/(11229:11229): No se logro establecer coneccion con memoria
+[INFO] 02:13:04:355 Kernel/(11229:11230): El servidor se inicializo exitosamente
+[INFO] 02:13:04:355 Kernel/(11229:11229): Se recibio una accion run
+[ERROR] 02:13:04:356 Kernel/(11229:11229): El archivo no existe o no se puede leer
+[INFO] 02:13:18:875 Kernel/(11242:11243): El servidor se inicializo exitosamente
+[ERROR] 02:13:18:875 Kernel/(11242:11242): No se logro establecer coneccion con memoria
+[INFO] 02:13:18:876 Kernel/(11242:11242): Se recibio una accion run
+[ERROR] 02:13:18:876 Kernel/(11242:11242): El archivo no existe o no se puede leer
+[ERROR] 02:13:26:3 Kernel/(11257:11257): No se logro establecer coneccion con memoria
+[INFO] 02:13:26:3 Kernel/(11257:11258): El servidor se inicializo exitosamente
+[INFO] 02:13:26:3 Kernel/(11257:11257): Se recibio una accion run
+[ERROR] 02:13:26:3 Kernel/(11257:11257): El archivo no existe o no se puede leer
+[ERROR] 02:13:33:859 Kernel/(11260:11260): No se logro establecer coneccion con memoria
+[INFO] 02:13:33:859 Kernel/(11260:11261): El servidor se inicializo exitosamente
+[INFO] 02:13:33:859 Kernel/(11260:11260): Se recibio una accion run
+[ERROR] 02:13:33:859 Kernel/(11260:11260): El archivo no existe o no se puede leer
+[INFO] 02:13:47:474 Kernel/(11272:11273): El servidor se inicializo exitosamente
+[ERROR] 02:13:47:474 Kernel/(11272:11272): No se logro establecer coneccion con memoria
+[INFO] 02:13:47:474 Kernel/(11272:11272): Se recibio una accion run
+[ERROR] 02:13:47:474 Kernel/(11272:11272): El archivo no existe o no se puede leer
+[ERROR] 02:13:57:482 Kernel/(11286:11286): No se logro establecer coneccion con memoria
+[INFO] 02:13:57:482 Kernel/(11286:11287): El servidor se inicializo exitosamente
+[INFO] 02:13:57:482 Kernel/(11286:11286): Se recibio una accion run
+[ERROR] 02:13:57:482 Kernel/(11286:11286): El archivo no existe o no se puede leer
+[ERROR] 02:14:06:506 Kernel/(11291:11291): No se logro establecer coneccion con memoria
+[INFO] 02:14:06:506 Kernel/(11291:11292): El servidor se inicializo exitosamente
+[INFO] 02:14:06:506 ssssss/(11291:11291): Se recibio una accion run
+[ERROR] 02:14:06:507 ssssss/(11291:11291): El archivo no existe o no se puede leer
+[ERROR] 02:14:23:874 Kernel/(11314:11314): No se logro establecer coneccion con memoria
+[INFO] 02:14:23:874 Kernel/(11314:11315): El servidor se inicializo exitosamente
+[INFO] 02:14:23:874 Kernel/(11314:11314): Se recibio una accion run
+[ERROR] 02:14:23:875 Kernel/(11314:11314): El archivo no existe o no se puede leer
+[ERROR] 02:14:58:393 Kernel/(11345:11345): No se logro establecer coneccion con memoria
+[INFO] 02:14:58:393 Kernel/(11345:11346): El servidor se inicializo exitosamente
+[INFO] 02:14:58:393 Kernel/(11345:11345): Se recibio una accion run
+[ERROR] 02:14:58:393 Kernel/(11345:11345): El archivo no existe o no se puede leer
+[ERROR] 02:15:15:456 Kernel/(11363:11363): No se logro establecer coneccion con memoria
+[INFO] 02:15:15:456 Kernel/(11363:11364): El servidor se inicializo exitosamente
+[INFO] 02:15:22:608 Kernel/(11376:11377): El servidor se inicializo exitosamente
+[ERROR] 02:15:22:608 Kernel/(11376:11376): No se logro establecer coneccion con memoria
+[INFO] 02:15:22:609 Kernel/(11376:11376): Se recibio una accion run
+[ERROR] 02:15:22:609 Kernel/(11376:11376): El archivo no existe o no se puede leer
+[ERROR] 02:15:27:600 Kernel/(11381:11381): No se logro establecer coneccion con memoria
+[INFO] 02:15:27:600 Kernel/(11381:11381): Se recibio una accion run
+[ERROR] 02:15:27:601 Kernel/(11381:11381): El archivo no existe o no se puede leer
+[INFO] 02:15:27:600 Kernel/(11381:11382): El servidor se inicializo exitosamente
+[ERROR] 02:15:34:312 Kernel/(11384:11384): No se logro establecer coneccion con memoria
+[INFO] 02:15:34:312 Kernel/(11384:11385): El servidor se inicializo exitosamente
+[INFO] 02:15:34:312 Kernel/(11384:11384): Se recibio una accion run
+[ERROR] 02:15:34:312 Kernel/(11384:11384): El archivo no existe o no se puede leer
+[ERROR] 02:15:43:224 Kernel/(11396:11396): No se logro establecer coneccion con memoria
+[INFO] 02:15:43:224 Kernel/(11396:11396): Se recibio una accion run
+[INFO] 02:15:43:224 Kernel/(11396:11397): El servidor se inicializo exitosamente
+[ERROR] 02:15:43:225 Kernel/(11396:11396): El archivo no existe o no se puede leer
+[ERROR] 02:16:02:407 Kernel/(11412:11412): No se logro establecer coneccion con memoria
+[INFO] 02:16:02:407 Kernel/(11412:11413): El servidor se inicializo exitosamente
+[ERROR] 14:25:18:579 Kernel/(7834:7834): No se logro establecer coneccion con memoria
+[ERROR] 14:26:40:889 Kernel/(7972:7972): No se logro establecer coneccion con memoria
+[ERROR] 14:27:18:664 Kernel/(8035:8035): No se logro establecer coneccion con memoria
+[ERROR] 14:27:48:432 Kernel/(8059:8059): No se logro establecer coneccion con memoria
+[ERROR] 14:27:49:424 Kernel/(8061:8061): No se logro establecer coneccion con memoria
+[ERROR] 14:27:53:912 Kernel/(8065:8065): No se logro establecer coneccion con memoria
+[ERROR] 14:27:54:527 Kernel/(8068:8068): No se logro establecer coneccion con memoria
+[ERROR] 14:27:55:160 Kernel/(8070:8070): No se logro establecer coneccion con memoria
+[ERROR] 14:27:55:768 Kernel/(8072:8072): No se logro establecer coneccion con memoria
+[ERROR] 14:27:56:416 Kernel/(8074:8074): No se logro establecer coneccion con memoria
+[ERROR] 14:27:57:80 Kernel/(8086:8086): No se logro establecer coneccion con memoria
+[ERROR] 14:27:57:711 Kernel/(8088:8088): No se logro establecer coneccion con memoria
+[ERROR] 14:28:01:496 Kernel/(8106:8106): No se logro establecer coneccion con memoria
+[ERROR] 14:28:03:791 Kernel/(8108:8108): No se logro establecer coneccion con memoria
+[ERROR] 14:28:26:742 Kernel/(8138:8138): No se logro establecer coneccion con memoria
+[ERROR] 14:28:37:543 Kernel/(8169:8169): No se logro establecer coneccion con memoria
+[ERROR] 14:28:38:791 Kernel/(8171:8171): No se logro establecer coneccion con memoria
+[ERROR] 14:32:02:371 Kernel/(8383:8383): No se logro establecer coneccion con memoria
+[ERROR] 14:32:13:579 Kernel/(8414:8414): No se logro establecer coneccion con memoria
+[ERROR] 14:32:31:250 Kernel/(8441:8441): No se logro establecer coneccion con memoria
+[ERROR] 14:34:00:711 Kernel/(8709:8709): No se logro establecer coneccion con memoria
+[ERROR] 14:34:57:412 Kernel/(8795:8795): No se logro establecer coneccion con memoria
+[ERROR] 14:36:42:254 Kernel/(9014:9014): No se logro establecer coneccion con memoria
+[ERROR] 14:37:22:278 Kernel/(9067:9067): No se logro establecer coneccion con memoria
+[ERROR] 14:38:46:840 Kernel/(9196:9196): No se logro establecer coneccion con memoria
+[ERROR] 14:38:56:36 Kernel/(9224:9224): No se logro establecer coneccion con memoria
+[ERROR] 14:39:04:820 Kernel/(9253:9253): No se logro establecer coneccion con memoria
+[ERROR] 14:39:16:372 Kernel/(9285:9285): No se logro establecer coneccion con memoria
+[ERROR] 14:39:23:227 Kernel/(9304:9304): No se logro establecer coneccion con memoria
+[ERROR] 14:39:26:948 Kernel/(9333:9333): No se logro establecer coneccion con memoria
+[ERROR] 14:39:36:715 Kernel/(9359:9359): No se logro establecer coneccion con memoria
+[ERROR] 14:39:42:23 Kernel/(9386:9386): No se logro establecer coneccion con memoria
+[ERROR] 14:39:49:760 Kernel/(9407:9407): No se logro establecer coneccion con memoria
+[ERROR] 14:39:59:667 Kernel/(9438:9438): No se logro establecer coneccion con memoria
+[ERROR] 14:40:01:218 Kernel/(9456:9456): No se logro establecer coneccion con memoria
+[ERROR] 14:40:17:714 Kernel/(9485:9485): No se logro establecer coneccion con memoria
+[ERROR] 14:40:38:174 Kernel/(9531:9531): No se logro establecer coneccion con memoria
+[ERROR] 14:41:14:266 Kernel/(9589:9589): No se logro establecer coneccion con memoria
+[ERROR] 14:41:19:218 Kernel/(9608:9608): No se logro establecer coneccion con memoria
+[ERROR] 14:41:27:354 Kernel/(9642:9642): No se logro establecer coneccion con memoria
+[ERROR] 14:41:32:253 Kernel/(9661:9661): No se logro establecer coneccion con memoria
+[ERROR] 14:43:09:247 Kernel/(9828:9828): No se logro establecer coneccion con memoria
+[ERROR] 14:47:20:726 Kernel/(10192:10192): No se logro establecer coneccion con memoria
+[ERROR] 14:47:22:702 Kernel/(10198:10198): No se logro establecer coneccion con memoria
+[ERROR] 14:47:41:270 Kernel/(10216:10216): No se logro establecer coneccion con memoria
+[ERROR] 14:48:04:893 Kernel/(10244:10244): No se logro establecer coneccion con memoria
+[ERROR] 14:48:35:421 Kernel/(10290:10290): No se logro establecer coneccion con memoria
+[ERROR] 14:49:02:316 Kernel/(10330:10330): No se logro establecer coneccion con memoria
+[ERROR] 15:06:40:187 Kernel/(11397:11397): No se logro establecer coneccion con memoria
+[ERROR] 15:18:36:828 Kernel/(12067:12067): No se logro establecer coneccion con memoria
+[ERROR] 15:22:45:629 Kernel/(12335:12335): No se logro establecer coneccion con memoria
+[ERROR] 15:23:19:293 Kernel/(12378:12378): No se logro establecer coneccion con memoria
+[ERROR] 15:35:39:997 Kernel/(13259:13259): No se logro establecer coneccion con memoria
+[ERROR] 15:36:31:242 Kernel/(13332:13332): No se logro establecer coneccion con memoria
+[ERROR] 15:36:59:1 Kernel/(13366:13366): No se logro establecer coneccion con memoria
+[ERROR] 15:37:01:526 Kernel/(13384:13384): No se logro establecer coneccion con memoria
+[ERROR] 15:42:34:890 Kernel/(13774:13774): No se logro establecer coneccion con memoria
+[ERROR] 15:44:30:488 Kernel/(13938:13938): No se logro establecer coneccion con memoria
+[ERROR] 15:45:22:447 Kernel/(14033:14033): No se logro establecer coneccion con memoria
+[ERROR] 15:45:45:542 Kernel/(14098:14098): No se logro establecer coneccion con memoria
+[ERROR] 15:46:34:85 Kernel/(14155:14155): No se logro establecer coneccion con memoria
+[ERROR] 15:47:15:969 Kernel/(15125:15125): No se logro establecer coneccion con memoria
+[ERROR] 15:47:53:516 Kernel/(15171:15171): No se logro establecer coneccion con memoria
+[ERROR] 15:49:28:341 Kernel/(15295:15295): No se logro establecer coneccion con memoria
+[ERROR] 15:49:44:441 Kernel/(15337:15337): No se logro establecer coneccion con memoria
+[ERROR] 15:50:32:136 Kernel/(15405:15405): No se logro establecer coneccion con memoria
+[ERROR] 15:50:41:276 Kernel/(15408:15408): No se logro establecer coneccion con memoria
+[ERROR] 15:50:41:840 Kernel/(15410:15410): No se logro establecer coneccion con memoria
+[ERROR] 15:50:42:328 Kernel/(15412:15412): No se logro establecer coneccion con memoria
+[ERROR] 15:50:56:936 Kernel/(15452:15452): No se logro establecer coneccion con memoria
+[ERROR] 15:51:06:791 Kernel/(15472:15472): No se logro establecer coneccion con memoria
+[ERROR] 15:51:08:581 Kernel/(15491:15491): No se logro establecer coneccion con memoria
+[ERROR] 15:51:18:111 Kernel/(15529:15529): No se logro establecer coneccion con memoria
+[INFO] 15:51:30:190 Kernel/(15569:15569): Se recibio una accion run
+[ERROR] 15:51:30:191 Kernel/(15569:15569): El archivo no existe o no se puede leer
+[ERROR] 15:51:30:191 Kernel/(15569:15569): No se logro establecer coneccion con memoria
+[INFO] 15:52:19:149 Kernel/(15640:15640): Se recibio una accion run
+[ERROR] 15:52:19:150 Kernel/(15640:15640): El archivo no existe o no se puede leer
+[ERROR] 15:52:19:150 Kernel/(15640:15640): No se logro establecer coneccion con memoria
+[INFO] 15:52:21:870 Kernel/(15659:15659): Se recibio una accion run
+[ERROR] 15:52:21:870 Kernel/(15659:15659): El archivo no existe o no se puede leer
+[ERROR] 15:52:21:870 Kernel/(15659:15659): No se logro establecer coneccion con memoria
+[ERROR] 15:52:31:221 Kernel/(15694:15694): No se logro establecer coneccion con memoria
