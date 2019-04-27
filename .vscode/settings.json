@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "log.h": "c",
-        "tcp.h": "c"
-    }
-}
