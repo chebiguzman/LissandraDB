@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
     memset(serverInfo, 0, sizeof( server_info));    
     serverInfo->logger = logger;
     serverInfo->portNumber = PORT;
-    //pthread_create(&tid, NULL, create_server, (void*) serverInfo);
+    pthread_create(&tid, NULL, create_server, (void*) serverInfo);
     
     //START FILESYSTEM MODULE
     //START MEMORY MODULE
@@ -59,13 +59,13 @@ int main(int argc, char const *argv[])
     }
     
 
-    //pharse console args
-    //char* buffer = create_buffer(argc,argv);
-    //parse_bytearray(buffer);
+    pharse console args
+    char* buffer = create_buffer(argc,argv);
+    parse_bytearray(buffer);
     
 
     //JOIN THREADS
-    //pthread_join(tid,NULL);
+    pthread_join(tid,NULL);
     
     //FREE MEMORY
     free(LOGPATH);
