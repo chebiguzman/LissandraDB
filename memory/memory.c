@@ -69,7 +69,7 @@ int main(int argc, char const *argv[])
 //AUN NO HACERLES IMPLEMENTACION
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
-
+  return string_new(); //tienen que devolver algo si no se rompe
 }
 
 void action_insert(package_insert* insert_info){
