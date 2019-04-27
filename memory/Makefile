@@ -1,6 +1,6 @@
-all: pharser.o memory clean
+all: memory clean
 
-memory: memory.o server.o 
+memory: memory.o server.o pharser.o
 	gcc -o memory memory.o server.o pharser.o -lcommons -pthread
 
 memory.o: 

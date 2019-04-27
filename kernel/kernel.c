@@ -17,8 +17,7 @@
 t_log* logger;
 int memoryfd;
 int main(int argc, char const *argv[])
-{
-    
+{   
     //set up confg
     t_config* config = config_create("config");
     char* LOGPATH = config_get_string_value(config, "LOG_PATH");
