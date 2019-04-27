@@ -21,9 +21,9 @@ void* create_server(void* args){
 
     server_info* serverInfo = args;
     
-	 int sockfd, clilentNumber;
-	 struct sockaddr_in serverAddress, cli_addr;
-     char buffer[3000];
+	int sockfd, clilentNumber;
+	struct sockaddr_in serverAddress, cli_addr;
+    char buffer[3000];
 
     
 	int portNumber = htons(serverInfo->portNumber);
@@ -36,7 +36,9 @@ void* create_server(void* args){
     //argv0 que la coneccion es por medio de sockets, arv1 tipo TCP , argv2 y devuelve un fd (file decriptor)
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
-    
+    int activado = 1;
+    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &activado, sizeof(activado));
+
     if(bind(sockfd, (struct sockaddr*) &serverAddress, sizeof(serverAddress))){
 
         log_error(serverInfo->logger, "el servidor se cayo por un error en bind()");

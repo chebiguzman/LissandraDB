@@ -10,22 +10,20 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
+#include "../pharser.h"
+#include "../actions.h"
+#include "../console.h"
 
 t_log* logger;
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
 {
-    
+  //set up config  
    t_config* config = config_create("config");
     char* LOGPATH = config_get_string_value(config, "LOG_PATH");
     int PORT = config_get_int_value(config, "PORT");
 
-  
-
-   
     //set up log
-    
-  
     logger = log_create(LOGPATH, "Memory", 1, LOG_LEVEL_INFO);
 
     log_info(logger, "El log fue creado con exito");
@@ -37,7 +35,9 @@ int main(int argc, char const *argv[])
     serverInfo->portNumber = PORT;
       
     int reslt = pthread_create(&tid, NULL, create_server, (void*) serverInfo);
-    
+    // int clientKernel = accept()
+    // recv(clientSocket, buffer, packageSize, 0);
+	  // send(clientSocket, response, sizeof(response), 0);
     //set up client 
     /*int clientfd = socket(AF_INET, SOCK_STREAM, 0); 
 
@@ -57,18 +57,19 @@ int main(int argc, char const *argv[])
     pthread_join(tid,NULL);
     
     //FREE MEMORY
-    /*free(LOGPATH);
+    free(LOGPATH);
     free(logger);
     free(serverInfo);
-    config_destroy(config);*/
+    config_destroy(config);
 
       return 0;
 }
 
 //IMPLEMENTACION DE FUNCIONES (Devolver errror fuera del subconjunto)
 //AUN NO HACERLES IMPLEMENTACION
-void action_select(package_select* select_info){
+char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
+
 }
 
 void action_insert(package_insert* insert_info){
@@ -95,7 +96,7 @@ void action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion select");
 }
 
-void action_run(package_run* run_info){
+char* action_run(package_run* run_info){
   log_info(logger, "Se recibio una accion run");
 }
 
