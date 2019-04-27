@@ -12,6 +12,8 @@
 #include <netdb.h>
 #include "../pharser.h"
 #include "../actions.h"
+#include <commons/collections/queue.h>
+#include <signal.h>
 
 //punto de entrada para el programa y el kernel
 t_log* logger;
@@ -43,7 +45,8 @@ int main(int argc, char const *argv[])
     //START MEMORY MODULE
 
     
-    //set up client 
+    //set up client
+    signal(SIGPIPE, SIG_IGN); //Ignorar error de write
     memoryfd = socket(AF_INET, SOCK_STREAM, 0); 
     struct sockaddr_in sock_client;
     sock_client.sin_family = AF_INET; 
@@ -58,7 +61,7 @@ int main(int argc, char const *argv[])
     }
     
 
-    pharse console args
+    //pharse console args
     char* buffer = create_buffer(argc,argv);
     parse_bytearray(buffer);
     
@@ -75,12 +78,50 @@ int main(int argc, char const *argv[])
       return 0;
 }
 
-
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
-  char* bff =  parse_package_select(select_info);
-  return bff;
+  char* package =  parse_package_select(select_info);
+  write(memoryfd,package, strlen(package)+1);
+  char* buffer = malloc(3000);
+  //read(memoryfd, buffer, 3000);
+  free(buffer);
+  return buffer;
 
+}
+
+char* action_run(package_run* run_info){
+  log_info(logger, "Se recibio una accion run");
+  char* rt = string_new();
+  FILE* fp = fopen(run_info->path, "r");
+
+  if(fp == NULL){
+    log_error(logger, "El archivo no existe o no se puede leer");
+  }else{
+    
+    t_queue* instruction_set = queue_create();
+    size_t buffer_size = 0;
+    char* buffer = NULL;
+
+    while(getline(&buffer, &buffer_size, fp) != -1){
+      char* instr_from_file = malloc(buffer_size);
+      memcpy(instr_from_file, buffer, buffer_size);
+      queue_push(instruction_set, instr_from_file);
+
+    }
+    
+    
+    while(!queue_is_empty(instruction_set)){
+      char* instr = queue_pop(instruction_set);
+      printf("igna deja la gilada te hace mal:%s", instr);
+      parse_bytearray(instr);
+    }
+
+    free(buffer);
+    fclose(fp);
+  }
+
+  
+    return rt;
 }
 
 void action_insert(package_insert* insert_info){
@@ -107,22 +148,6 @@ void action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion select");
 }
 
-char* action_run(package_run* run_info){
-  log_info(logger, "Se recibio una accion run");
-  char* rt = string_new();
-  FILE* fp = fopen(run_info->path, "r");
-
-  if(fp == NULL){
-    log_error(logger, "El archivo no existe o no se puede leer");
-  }
-    return rt;
-}
-
 void action_metrics(package_metrics* metrics_info){
   log_info(logger, "Se recibio una accion metrics");
 }
-
-
-
-
-
