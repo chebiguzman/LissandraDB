@@ -1,0 +1,1 @@
+void *read_console(void *buffer);
