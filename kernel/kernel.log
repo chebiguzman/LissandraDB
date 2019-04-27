@@ -2527,3 +2527,6 @@ ffff
 [ERROR] 15:52:21:870 Kernel/(15659:15659): El archivo no existe o no se puede leer
 [ERROR] 15:52:21:870 Kernel/(15659:15659): No se logro establecer coneccion con memoria
 [ERROR] 15:52:31:221 Kernel/(15694:15694): No se logro establecer coneccion con memoria
+[ERROR] 17:19:51:505 Kernel/(21222:21222): No se logro establecer coneccion con memoria
+[ERROR] 17:20:21:333 Kernel/(21307:21307): No se logro establecer coneccion con memoria
+[ERROR] 17:20:36:577 Kernel/(21412:21412): No se logro establecer coneccion con memoria
