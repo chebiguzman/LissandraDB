@@ -15,7 +15,7 @@
 #include <netinet/in.h> 
 #include "pharser.h"
 #include <string.h>
-
+#define BUFFER_SOKET_SIZE 3000
 
 void* create_server(void* args){
 
