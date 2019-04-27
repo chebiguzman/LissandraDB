@@ -45,6 +45,7 @@
 *.idb
 *.pdb
 *.log
+*.json
 
 # Kernel Module Compile Results
 *.mod*
