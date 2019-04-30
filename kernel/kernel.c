@@ -12,6 +12,8 @@
 #include <netdb.h>
 #include "../pharser.h"
 #include "../actions.h"
+#include "../console.h"
+
 #include <commons/collections/queue.h>
 #include <signal.h>
 
@@ -41,8 +43,7 @@ int main(int argc, char const *argv[])
     serverInfo->portNumber = PORT;
     pthread_create(&tid, NULL, create_server, (void*) serverInfo);
     
-    //START FILESYSTEM MODULE
-    //START MEMORY MODULE
+    
 
     
     //set up client
@@ -61,9 +62,9 @@ int main(int argc, char const *argv[])
     }
     
 
-    //pharse console args
-    char* buffer = create_buffer(argc,argv);
-    parse_bytearray(buffer);
+   //inicio lectura por consola
+    pthread_t tid_console;
+    pthread_create(&tid_console, NULL, console_input, "kernel");
     
 
     //JOIN THREADS

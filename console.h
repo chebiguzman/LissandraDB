@@ -1,1 +1,1 @@
-void *read_console(void *buffer);
+void *console_input(void *no_args);
