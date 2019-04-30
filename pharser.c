@@ -16,7 +16,7 @@ char* parse_bytearray(char* buffer){
  
     char* instruction = malloc(instruction_size);
     strcpy(instruction, get_string_from_buffer(buffer,0));
-    printf("\ninstruccion:%s\n",instruction);
+    //printf("\ninstruccion:%s\n",instruction); //La dejo para debug
 
 
     if(!strcmp(instruction,"SELECT")){
