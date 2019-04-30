@@ -47,9 +47,24 @@ int main(int argc, char const *argv[])
 }
 
 //IMPLEMENTACION DE ACCIONES (Devolver error fuera del subconjunto)
-//AUN NO HACERLES IMPLEMENTACION!!!
-void action_select(package_select* select_info){
+
+char* obtener_key(char* nombreTabla, int key){
+  //en esta funcion deberias bscar sobre tus archivos y mem table
+  //y devolver ese resultado
+  return string_new();
+}
+
+/* esta funcion es llamada automaticamnte por el servidor.
+el return de la funcion es lo que devuelve el fs.
+recibe por parametro un select info definido en server.h*/
+char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
+  //aca haces lo que necesites hacer para generar un resultado
+  //ejemplo 
+  char* resultado = obtener_key(select_info->table_name, select_info->key);
+  return resultado; //este resultado es lo que se le manda a memoria / imprime en pantalla
+  /* pero vos no te tenes que preocupar por eso, ya que eso esta resuelto mas arriba en 
+  la implementacion*/
 }
 
 void action_insert(package_insert* insert_info){
