@@ -73,7 +73,7 @@ char* parse_package_select(package_select* package){
     buffer = strcat(buffer, tbl_n);
     buffer = strcat(buffer, sep);
     buffer = strcat(buffer, key);
-
+    return buffer;
 }
 
 char* parse_package_run(package_run* pk){
