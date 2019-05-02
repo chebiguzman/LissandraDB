@@ -10,7 +10,8 @@ void *console_input(void* name){
 		buffer = (char*)malloc(buffer_size * sizeof(char));
 		printf("%s>", (char*) name);
 		getline(&buffer, &buffer_size, stdin); //llamada bloqueante
-		parse_bytearray(buffer); 
+		char* response = parse_bytearray(buffer); 
+		printf("%s", response);
 		free(buffer);
 
 	} //se queda en escuhca constantenmente
