@@ -10,8 +10,12 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
+#include "../pharser.h"
+#include "../actions.h"
+#include "../console.h"
 
 //punto de entrada para el programa y el kernel
+t_log* logger;
 int main(int argc, char const *argv[])
 {
     
@@ -21,7 +25,6 @@ int main(int argc, char const *argv[])
     int PORT = config_get_int_value(config, "PORT");
    
     //set up log
-    t_log* logger;
     pthread_t tid;
     logger = log_create(LOGPATH, "Filesystem", 1, LOG_LEVEL_INFO);
 
@@ -58,7 +61,7 @@ char* obtener_key(char* nombreTabla, int key){
 el return de la funcion es lo que devuelve el fs.
 recibe por parametro un select info definido en server.h*/
 char* action_select(package_select* select_info){
-  log_info(logger, "Se recibio una accion select");
+  log_info(logger, "FS: Se recibio una accion select");
   //aca haces lo que necesites hacer para generar un resultado
   //ejemplo 
   char* resultado = obtener_key(select_info->table_name, select_info->key);
@@ -91,7 +94,7 @@ void action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion select");
 }
 
-void action_run(package_run* run_info){
+char* action_run(package_run* run_info){
   log_info(logger, "Se recibio una accion run");
 }
 
