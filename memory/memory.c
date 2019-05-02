@@ -14,62 +14,79 @@
 #include "../actions.h"
 #include "../console.h"
 
+//logger global para que lo accedan los threads
 t_log* logger;
+int fs_socket; 
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
 {
   //set up config  
-   t_config* config = config_create("config");
-    char* LOGPATH = config_get_string_value(config, "LOG_PATH");
-    int PORT = config_get_int_value(config, "PORT");
+  t_config* config = config_create("config");
+  char* LOGPATH = config_get_string_value(config, "LOG_PATH");
+  int PORT = config_get_int_value(config, "PORT");
 
-    //set up log
-    logger = log_create(LOGPATH, "Memory", 1, LOG_LEVEL_INFO);
+  //set up log
+  logger = log_create(LOGPATH, "Memory", 1, LOG_LEVEL_INFO);
+  log_info(logger, "El log fue creado con exito");
 
-    log_info(logger, "El log fue creado con exito");
-    //set up server
-    pthread_t tid;
-    server_info* serverInfo = malloc(sizeof(server_info));
-    memset(serverInfo, 0, sizeof( server_info));    
-    serverInfo->logger = logger;
-    serverInfo->portNumber = PORT;
-      
-    int reslt = pthread_create(&tid, NULL, create_server, (void*) serverInfo);
-    // int clientKernel = accept()
-    // recv(clientSocket, buffer, packageSize, 0);
-	  // send(clientSocket, response, sizeof(response), 0);
-    //set up client 
-    /*int clientfd = socket(AF_INET, SOCK_STREAM, 0); 
+  //set up server
+  pthread_t tid;
+  server_info* serverInfo = malloc(sizeof(server_info));
+  memset(serverInfo, 0, sizeof(server_info));    
+  serverInfo->logger = logger;
+  serverInfo->portNumber = PORT; 
+  int reslt = pthread_create(&tid, NULL, create_server, (void*) serverInfo);
 
-    struct sockaddr_in sock_client;
-   
-    sock_client.sin_family = AF_INET; 
-    sock_client.sin_addr.s_addr = inet_addr(MEMORY_IP); 
-    sock_client.sin_port = htons(INADDR_ANY);
+  //set up client 
+  fs_socket = socket(AF_INET, SOCK_STREAM, 0);
+  char* FS_IP = config_get_string_value(config, "FS_IP");
+  int FS_PORT = config_get_int_value(config, "FS_PORT");
+  printf("%s %d", FS_IP, FS_PORT);
+  struct sockaddr_in sock_client;
+  
+  sock_client.sin_family = AF_INET; 
+  sock_client.sin_addr.s_addr = inet_addr(FS_IP); 
+  sock_client.sin_port = htons(FS_PORT);
 
-    int connectS =  connect(clientfd, (struct sockaddr*)&sock_client, sizeof(sock_client));
-    printf("coneccion: %d", connectS);
+  int connection_result =  connect(fs_socket, (struct sockaddr*)&sock_client, sizeof(sock_client));
+  
+  if(connection_result < 0){
+    log_error(logger, "No se logro establecer la conexion con el File System");   
+  }
+  else{
     
-    //write(clientfd, "hello world", sizeof("hello world"));
-    */
+  }
 
-    //JOIN THREADS
-    pthread_join(tid,NULL);
+  //inicio lectura por consola
+  pthread_t tid_console;
+  pthread_create(&tid_console, NULL, console_input, "Memory");
     
-    //FREE MEMORY
-    free(LOGPATH);
-    free(logger);
-    free(serverInfo);
-    config_destroy(config);
+  
+  //Espera a que terminen las threads antes de seguir
+  pthread_join(tid,NULL);
+  
+  //FREE MEMORY
+  free(LOGPATH);
+  free(logger);
+  free(serverInfo);
+  config_destroy(config);
 
-      return 0;
+  return 0;
 }
 
 //IMPLEMENTACION DE FUNCIONES (Devolver errror fuera del subconjunto)
 //AUN NO HACERLES IMPLEMENTACION
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
-  return string_new(); //tienen que devolver algo si no se rompe
+  //char* response = "Sarasa 2"; //TODO serializar el response
+  char* response = parse_package_select(select_info);
+  char* sarasa = "hola";
+  printf("%s SIZE: %d \n", sarasa, sizeof(sarasa));
+  
+  printf("%s SIZE: %d \n", response, sizeof(response));
+  send(fs_socket, response, sizeof(response), 0);
+
+  return string_new("holis"); //tienen que devolver algo si no se rompe
 }
 
 void action_insert(package_insert* insert_info){
