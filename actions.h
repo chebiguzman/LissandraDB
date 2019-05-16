@@ -4,7 +4,7 @@
 
 char* action_select(package_select* select_info);
 
-void action_insert(package_insert* insert_info);
+char* action_insert(package_insert* insert_info);
 
 void action_create(package_create* create_info);
 
