@@ -10,11 +10,23 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
+<<<<<<< HEAD
 //set up confg
+=======
+#include "../pharser.h"
+#include "../actions.h"
+#include "../console.h"
+
+//punto de entrada para el programa y el kernel
+t_log* logger;
+int main(int argc, char const *argv[])
+{
+    
+    //set up confg
+>>>>>>> 230acc2e95961e2b222150dc747c1bb522e11d78
     t_config* config = config_create("config");
     char* LOGPATH = config_get_string_value(config, "LOG_PATH");
     //set up log
-    t_log* logger;
     pthread_t tid;
     logger = log_create(LOGPATH, "Filesystem", 1, LOG_LEVEL_INFO);
 
@@ -143,7 +155,7 @@ void action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion select");
 }
 
-void action_run(package_run* run_info){
+char* action_run(package_run* run_info){
   log_info(logger, "Se recibio una accion run");
 }
 
