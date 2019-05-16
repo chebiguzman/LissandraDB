@@ -10,44 +10,36 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
-<<<<<<< HEAD
-//set up confg
-=======
 #include "../pharser.h"
 #include "../actions.h"
 #include "../console.h"
 
 //punto de entrada para el programa y el kernel
 t_log* logger;
+
 int main(int argc, char const *argv[])
 {
     
+    typedef struct{
+      char consistency [2];
+      int apartitions;
+      int compactiont;
+    } metadatareg;
+
+    typedef struct{
+      int keey;
+      char value [20];
+    } readrow;
+
     //set up confg
->>>>>>> 230acc2e95961e2b222150dc747c1bb522e11d78
     t_config* config = config_create("config");
     char* LOGPATH = config_get_string_value(config, "LOG_PATH");
+    
     //set up log
     pthread_t tid;
     logger = log_create(LOGPATH, "Filesystem", 1, LOG_LEVEL_INFO);
-
-//punto de entrada para el programa y el kernel
-int main(int argc, char const *argv[])
-{    
-    
-    typedef struct{
-  char consistency [2];
-  int apartitions;
-  int compactiont;
-    }metadatareg;
     
     int PORT = config_get_int_value(config, "PORT");
-   
-   typedef struct{
-   int keey
-   char value [20]
-   }readrow;
-    
-
 
     //set up server
     server_info* serverInfo = malloc(sizeof(server_info));
@@ -56,6 +48,10 @@ int main(int argc, char const *argv[])
     serverInfo->portNumber = PORT;
 
     pthread_create(&tid, NULL, create_server, (void*) serverInfo);
+
+    //inicio lectura por consola
+    pthread_t tid_console;
+    pthread_create(&tid_console, NULL, console_input, "fileSystem");
 
     //JOIN THREADS
     pthread_join(tid,NULL);
@@ -66,7 +62,7 @@ int main(int argc, char const *argv[])
     free(serverInfo);
     config_destroy(config);
 
-      return 0;
+    return 0;
 }
 
 //IMPLEMENTACION DE ACCIONES (Devolver error fuera del subconjunto)
@@ -131,8 +127,16 @@ char* row=get_string_from_buffer(auxrow,index+index2+1);
 return row;
 }
 
-void action_insert(package_insert* insert_info){
+char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
+
+  //verificar que la tabla exista en el fileSystem, en caso q no exista informar y continuar.
+  //obtener la metadata asociada a dicha tabla
+  //verificar si existe en memoria una lista de datos a dumpear, de no existir alocar dicha memoria
+  //el parametro timestamp es opcional, en caso de que un request no lo provea, se usara el valor actual de epoch
+  //insertar en la memoria temporal una nueva entrada que contanga los datos del request
+  char* package =  parse_package_insert(insert_info);
+  return package;
 }
 
 void action_create(package_create* create_info){

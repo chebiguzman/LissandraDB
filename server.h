@@ -18,14 +18,14 @@ typedef enum { EVENTUAL_CONSISTENCY, STRONG_CONSISTENCY, STRONG_HASH_CONSISTENCY
 
 //SE ESTAN MOVIENDO LAS ESTRUCTURAS A PHARSER.c
 //INSERT [NOMBRE_TABLA] [KEY] “[VALUE]”
-typedef struct 
+/*typedef struct 
 {
     char instruction[INSTRUCTION_BYTE_SIZE];
     char* table_name;
     int key;
     char* value;
 
-} package_insert;
+} package_insert;*/
 
 //CREATE [TABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]
 typedef struct 
