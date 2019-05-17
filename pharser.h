@@ -17,11 +17,11 @@ typedef struct
 
 } package_run;
 
-char* parse_bytearray(char* buffer);
+char* exec_instr(char* input);
 char* create_buffer(int argc, char const *argv[]);
 char* get_string_from_buffer(char* buffer, int index);
 
 
 char* parse_package_select(package_select* package);
 char* parse_package_run(package_run* pk);
-
+char* parse_input(char* input);
