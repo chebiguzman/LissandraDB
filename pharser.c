@@ -200,25 +200,20 @@ char* get_string_from_buffer(char* buffer, int index){
 
 char* get_value_from_buffer(char* buffer, int index){
     
-    int value_max_len = strlen(buffer)-index;
-    char* value_tmp = malloc(value_max_len);
+    char* bufferWord = string_substring_from(buffer,index);
 
-    int i = index + 1; //avanzo 1 para no tomar la primer \"
-    int j = 0;
-
-    while (buffer[i] != '\"') {
-        if(buffer[i]==' ') buffer[i] = '_';
-        value_tmp[j] = buffer[i];
+    int val_len = 0;
+    int i = 1; //recorro desde el primer char despues de las comillas
+    while (bufferWord[i] != '\"') {
+        val_len++;
         i++;
-        j++;
     }
 
-    j++;
-    value_tmp[j] = '\0';
+    free(bufferWord);
 
-    char* value = strdup(value_tmp);
-    free(value_tmp);
+    char* buff_tmp = calloc(1, val_len+1);
+    buff_tmp = string_substring(buffer, index+1, val_len);
 
-    return value;
-    free(value);
+    return buff_tmp;
+    free(buff_tmp);
 }
