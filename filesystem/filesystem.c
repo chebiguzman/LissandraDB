@@ -129,14 +129,13 @@ return row;*/
 
 char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
-
+  
   //verificar que la tabla exista en el fileSystem, en caso q no exista informar y continuar.
   //obtener la metadata asociada a dicha tabla
   //verificar si existe en memoria una lista de datos a dumpear, de no existir alocar dicha memoria
   //el parametro timestamp es opcional, en caso de que un request no lo provea, se usara el valor actual de epoch
   //insertar en la memoria temporal una nueva entrada que contanga los datos del request
-  char* package =  parse_package_insert(insert_info);
-  return package;
+  
 }
 
 void action_create(package_create* create_info){

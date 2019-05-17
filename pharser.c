@@ -70,7 +70,7 @@ char* exec_instr(char* instr_buff){
         free(key_tmp);
 
         //VALUE
-        int value_len = strlen(get_value_from_buffer(instr_buff, instruction_size+table_name_len+key_len))+1;
+        int value_len = strlen(get_value_from_buffer(instr_buff, instruction_size+table_name_len+key_len))+3;
         package->value = strdup(get_value_from_buffer(instr_buff, instruction_size+table_name_len+key_len));
         
         //TIMESTAMP
@@ -211,7 +211,7 @@ char* get_value_from_buffer(char* buffer, int index){
 
     free(bufferWord);
 
-    char* buff_tmp = calloc(1, val_len+1);
+    char* buff_tmp = malloc(val_len+1);
     buff_tmp = string_substring(buffer, index+1, val_len);
 
     return buff_tmp;
