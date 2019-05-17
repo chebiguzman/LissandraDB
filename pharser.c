@@ -9,14 +9,13 @@
 
 
 
-typedef struct package_select package_select;
 char sep[2] = {' '};//separator for null terminations
-char* parse_bytearray(char* buffer){
+char* exec_instr(char* instr_buff){
 
-    int instruction_size = strlen( get_string_from_buffer(buffer,0))+1;
+    int instruction_size = strlen( get_string_from_buffer(instr_buff,0))+1;
  
     char* instruction = malloc(instruction_size);
-    strcpy(instruction, get_string_from_buffer(buffer,0));
+    strcpy(instruction, get_string_from_buffer(instr_buff,0));
     //printf("\ninstruccion:%s\n",instruction); //La dejo para debug
 
 
@@ -27,12 +26,12 @@ char* parse_bytearray(char* buffer){
         
         //TABLE_NAME
 
-        int table_name_len = strlen(get_string_from_buffer(buffer, instruction_size))+1; //sumo el \o
-        package->table_name = strdup(get_string_from_buffer(buffer, instruction_size));
+        int table_name_len = strlen(get_string_from_buffer(instr_buff, instruction_size))+1; //sumo el \o
+        package->table_name = strdup(get_string_from_buffer(instr_buff, instruction_size));
         
         //KEY
         
-        char* key_tmp = strdup(get_string_from_buffer(buffer, instruction_size+table_name_len));
+        char* key_tmp = strdup(get_string_from_buffer(instr_buff, instruction_size+table_name_len));
         package->key = atoi(key_tmp);
         free(key_tmp);
         
@@ -49,7 +48,7 @@ char* parse_bytearray(char* buffer){
         strcpy(package->instruction, instruction);
 
         //PATH
-        package->path = strdup(get_string_from_buffer(buffer, instruction_size));
+        package->path = strdup(get_string_from_buffer(instr_buff, instruction_size));
         printf("\n Datos de paquete:\n instruction: %s\n path: %s\n \n", package->instruction, package->path);
         char* responce = action_run(package);
         return responce;
@@ -61,21 +60,21 @@ char* parse_bytearray(char* buffer){
         strcpy(package->instruction, instruction);
         
         //TABLE_NAME
-        int table_name_len = strlen(get_string_from_buffer(buffer, instruction_size))+1; //sumo el \o
-        package->table_name = strdup(get_string_from_buffer(buffer, instruction_size));
+        int table_name_len = strlen(get_string_from_buffer(instr_buff, instruction_size))+1; //sumo el \o
+        package->table_name = strdup(get_string_from_buffer(instr_buff, instruction_size));
         
         //KEY
-        char* key_tmp = strdup(get_string_from_buffer(buffer, instruction_size+table_name_len));
+        char* key_tmp = strdup(get_string_from_buffer(instr_buff, instruction_size+table_name_len));
         int key_len = strlen(key_tmp)+1;
         package->key = atoi(key_tmp);
         free(key_tmp);
 
         //VALUE
-        int value_len = strlen(get_value_from_buffer(buffer, instruction_size+table_name_len+key_len))+2;
-        package->value = strdup(get_value_from_buffer(buffer, instruction_size+table_name_len+key_len));
+        int value_len = strlen(get_value_from_buffer(instr_buff, instruction_size+table_name_len+key_len))+2;
+        package->value = strdup(get_value_from_buffer(instr_buff, instruction_size+table_name_len+key_len));
         
         //TIMESTAMP
-        char* timestamp_tmp = strdup(get_string_from_buffer(buffer,instruction_size+table_name_len+key_len+value_len));
+        char* timestamp_tmp = strdup(get_string_from_buffer(instr_buff,instruction_size+table_name_len+key_len+value_len));
         if (timestamp_tmp != '\0') {
             package->timestamp = atoi(timestamp_tmp);
         } else {

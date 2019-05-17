@@ -120,3 +120,7 @@ char* action_run(package_run* run_info){
 void action_metrics(package_metrics* metrics_info){
   log_info(logger, "Se recibio una accion metrics");
 }
+
+char* parse_input(char* input){
+  return exec_instr(input);
+}

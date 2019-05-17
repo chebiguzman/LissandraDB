@@ -69,7 +69,7 @@ void* create_server(void* args){
             if(read(newsockfd, buffer, sizeof(buffer))){
 
                 log_info(serverInfo->logger, buffer);
-                char* responce = parse_bytearray(buffer);
+                char* responce = parse_input(buffer);
                 write(newsockfd,responce,strlen(responce)+1);
 
             }else{
