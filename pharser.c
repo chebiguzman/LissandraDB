@@ -70,7 +70,7 @@ char* exec_instr(char* instr_buff){
         free(key_tmp);
 
         //VALUE
-        int value_len = strlen(get_value_from_buffer(instr_buff, instruction_size+table_name_len+key_len))+2;
+        int value_len = strlen(get_value_from_buffer(instr_buff, instruction_size+table_name_len+key_len))+1;
         package->value = strdup(get_value_from_buffer(instr_buff, instruction_size+table_name_len+key_len));
         
         //TIMESTAMP
@@ -199,23 +199,26 @@ char* get_string_from_buffer(char* buffer, int index){
 }
 
 char* get_value_from_buffer(char* buffer, int index){
-    char* bufferWord = string_substring_from(buffer,index);
-    bufferWord = strdup(bufferWord);
-
-    char buff_tmp[strlen(bufferWord)];
-    memcpy(buff_tmp, bufferWord, strlen(bufferWord)+1);
     
-    int i = 0;
+    int value_max_len = strlen(buffer)-index;
+    char* value_tmp = malloc(value_max_len);
 
-    while (buff_tmp[i] != '\0'){
+    int i = index + 1; //avanzo 1 para no tomar la primer \"
+    int j = 0;
 
-        if(buff_tmp[i]== '\n') buff_tmp[i]='\0'; //quito las nuevas lineas 
-        if(buff_tmp[i]==' ') buff_tmp[i] = '\0'; //quito los espacios
-
+    while (buffer[i] != '\"') {
+        if(buffer[i]==' ') buffer[i] = '_';
+        value_tmp[j] = buffer[i];
         i++;
+        j++;
     }
 
-    bufferWord = strdup(buff_tmp);
+    j++;
+    value_tmp[j] = '\0';
 
-	return bufferWord;
+    char* value = strdup(value_tmp);
+    free(value_tmp);
+
+    return value;
+    free(value);
 }
