@@ -26,13 +26,14 @@ int main(int argc, char const *argv[])
     t_config* config = config_create("config");
     char* LOGPATH = config_get_string_value(config, "LOG_PATH");
     int PORT = config_get_int_value(config, "PORT");
+    int q = config_get_int_value(config, "QUANTUM");
 
     char* MEMORY_IP = config_get_string_value(config, "MEMORY_IP");
     int MEMORY_PORT = config_get_int_value(config, "MEMORY_PORT");
 
    
     //set up log
-    logger = log_create(LOGPATH, "Kernel", 1, LOG_LEVEL_INFO);
+    logger = log_create(LOGPATH, "Kernel", 1 , LOG_LEVEL_DEBUG);
 
     //set up server
     pthread_t tid;
@@ -59,11 +60,19 @@ int main(int argc, char const *argv[])
       log_error(logger, "No se logro establecer coneccion con memoria");
       
     }
-    
-    start_sheduler(logger);
+    pthread_cond_t console_cond;
+    pthread_mutex_t console_lock;
+    pthread_mutex_init(&console_lock, NULL);
+    pthread_cond_init(&console_cond,NULL);
+    t_console_control* control = malloc(sizeof(t_console_control));
+    control->lock = console_lock;
+    control->cond = console_cond;
+    control->name = strdup("kernel");
+
+    start_sheduler(logger,control);
    //inicio lectura por consola
     pthread_t tid_console;
-    pthread_create(&tid_console, NULL, console_input, "kernel");
+    pthread_create(&tid_console, NULL, console_input_wait, control);
     
 
     //JOIN THREADS
@@ -84,7 +93,7 @@ char* action_select(package_select* select_info){
   write(memoryfd,package, strlen(package)+1);
   char* buffer = malloc(3000);
   //read(memoryfd, buffer, 3000);
-  free(buffer);
+  //free(buffer);
   return buffer;
 
 }
@@ -109,12 +118,10 @@ char* action_run(package_run* run_info){
 
     }
     
-    
-    while(!queue_is_empty(instruction_set)){
-      char* instr = queue_pop(instruction_set);
-      printf("igna deja la gilada te hace mal:%s", instr);
-      
-    }
+    t_instr_set* set = malloc(sizeof(t_instr_set));
+    set->instr = instruction_set;
+    set->doesPrint = 1;
+    schedule(set);
 
     free(buffer);
     fclose(fp);
@@ -153,14 +160,12 @@ void action_metrics(package_metrics* metrics_info){
 }
 
 char* parse_input(char* input){
-  printf("\ninput raw: %s\n", input);
   t_instr_set* set = malloc(sizeof(t_instr_set));
   t_queue* q = queue_create();
   char* buff = strdup(input);
   queue_push(q, buff);
   set->doesPrint = 1;
   set->instr = q;
-  printf("\ninput on ese: %s\n", queue_peek(set->instr));
   schedule(set);
   return "";
 }
