@@ -1,6 +1,7 @@
 #include <commons/collections/queue.h>
 #include <pthread.h>
 #include <commons/log.h>
+#include <string.h>
 typedef struct 
 {
     t_queue* instr;
@@ -14,7 +15,7 @@ typedef struct
     long quantum;
     int multi_script_level;
 
-}scheduler_status;
+}scheduler_config;
 
 typedef struct 
 {
@@ -36,4 +37,6 @@ void scheduler_queue_create(scheduler_queue** s);
 void schedule(t_instr_set* instr_set);
 void ksyscall(char* call);
 void* exec();
-void updateTasks(t_queue* exec_queue, int exec_size);
+void updateTasks(t_queue* exec_queue);
+void* config_worker(void* args);
+void update_scheduler_config();
