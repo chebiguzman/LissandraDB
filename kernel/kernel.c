@@ -33,8 +33,7 @@ int main(int argc, char const *argv[])
    
     //set up log
     logger = log_create(LOGPATH, "Kernel", 1, LOG_LEVEL_INFO);
-    char* a = "sad hola";
-    parse_bytearray(a);
+
     //set up server
     pthread_t tid;
     server_info* serverInfo = malloc(sizeof(server_info));
@@ -114,7 +113,7 @@ char* action_run(package_run* run_info){
     while(!queue_is_empty(instruction_set)){
       char* instr = queue_pop(instruction_set);
       printf("igna deja la gilada te hace mal:%s", instr);
-      parse_bytearray(instr);
+      
     }
 
     free(buffer);
@@ -151,4 +150,8 @@ void action_add(package_add* add_info){
 
 void action_metrics(package_metrics* metrics_info){
   log_info(logger, "Se recibio una accion metrics");
+}
+
+char* parse_input(char* input){
+  return exec_instr(input);
 }
