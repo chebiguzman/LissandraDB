@@ -200,24 +200,20 @@ char* get_string_from_buffer(char* buffer, int index){
 }
 
 char* get_value_from_buffer(char* buffer, int index){
-
-    char* bufferWord = string_substring_from(buffer,index+1);
+    char* bufferWord = string_substring_from(buffer,index);
     bufferWord = strdup(bufferWord);
 
     char buff_tmp[strlen(bufferWord)];
-    //memcpy(buff_tmp, bufferWord, strlen(bufferWord)+1);
+    memcpy(buff_tmp, bufferWord, strlen(bufferWord)+1);
     
     int i = 0;
-    int j = 0;
 
-    while (bufferWord[j] != '\"'){
-        if(buff_tmp[i]==' ') {
-            buff_tmp[i] = '_';
-        } else {
-            buff_tmp[i] = bufferWord[j];
-        }
+    while (buff_tmp[i] != '\0'){
+
+        if(buff_tmp[i]== '\n') buff_tmp[i]='\0'; //quito las nuevas lineas 
+        if(buff_tmp[i]==' ') buff_tmp[i] = '\0'; //quito los espacios
+
         i++;
-        j++;
     }
 
     bufferWord = strdup(buff_tmp);

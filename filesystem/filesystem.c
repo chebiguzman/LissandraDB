@@ -78,7 +78,7 @@ el return de la funcion es lo que devuelve el fs.
 recibe por parametro un select info definido en server.h*/
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
-  char* auxrow;
+  /*char* auxrow;
   FILE* table=NULL;
   FILE* metadata=NULL;
   readrow rowreg;
@@ -124,7 +124,7 @@ char* trash2= get_string_from_buffer(auxrow,index+1);
 int index2=strlen(trash2);
 char* row=get_string_from_buffer(auxrow,index+index2+1);
 }
-return row;
+return row;*/
 }
 
 char* action_insert(package_insert* insert_info){
