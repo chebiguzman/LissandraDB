@@ -13,7 +13,7 @@
 #include "../pharser.h"
 #include "../actions.h"
 #include "../console.h"
-
+#include "scheduler.h"
 #include <commons/collections/queue.h>
 #include <signal.h>
 
@@ -60,7 +60,7 @@ int main(int argc, char const *argv[])
       
     }
     
-
+    start_sheduler(logger);
    //inicio lectura por consola
     pthread_t tid_console;
     pthread_create(&tid_console, NULL, console_input, "kernel");
@@ -153,5 +153,14 @@ void action_metrics(package_metrics* metrics_info){
 }
 
 char* parse_input(char* input){
-  return exec_instr(input);
+  printf("\ninput raw: %s\n", input);
+  t_instr_set* set = malloc(sizeof(t_instr_set));
+  t_queue* q = queue_create();
+  char* buff = strdup(input);
+  queue_push(q, buff);
+  set->doesPrint = 1;
+  set->instr = q;
+  printf("\ninput on ese: %s\n", queue_peek(set->instr));
+  schedule(set);
+  return "";
 }
