@@ -14,6 +14,8 @@
 #include "../actions.h"
 #include "../console.h"
 
+#include "fs_structure.h"
+
 //punto de entrada para el programa y el kernel
 t_log* logger;
 
@@ -49,6 +51,13 @@ int main(int argc, char const *argv[])
 
     pthread_create(&tid, NULL, create_server, (void*) serverInfo);
 
+    //levantar estructura del fileSystem
+    fs_structure_info* fs_structure_info = malloc(sizeof(fs_structure_info));
+    memset(fs_structure_info, 0, sizeof(fs_structure_info));
+    fs_structure_info->logger = logger;
+    pthread_t tid_fs_structure;
+    pthread_create(&tid_fs_structure, NULL, setup_fs, (void*) fs_structure_info);
+
     //inicio lectura por consola
     pthread_t tid_console;
     pthread_create(&tid_console, NULL, console_input, "fileSystem");
@@ -60,6 +69,7 @@ int main(int argc, char const *argv[])
     free(LOGPATH);
     free(logger);
     free(serverInfo);
+    free(fs_structure_info);
     config_destroy(config);
 
     return 0;
