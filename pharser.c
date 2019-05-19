@@ -78,7 +78,7 @@ char* exec_instr(char* instr_buff){
         if (timestamp_tmp != '\0') {
             package->timestamp = atoi(timestamp_tmp);
         } else {
-            package->timestamp = (unsigned)time(NULL);
+            package->timestamp = time(NULL);
         }
         free(timestamp_tmp);
     
