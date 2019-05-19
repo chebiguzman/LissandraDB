@@ -37,15 +37,14 @@ void start_sheduler(t_log* log, t_console_control* console_control ){
     
     update_scheduler_config();
 
-    queue = malloc(sizeof(scheduler_queue));
-    queue->scheduler_queue = queue_create();
-    int r = pthread_mutex_init(&queue->lock, NULL);
-    pthread_cond_init(&queue->cond,NULL);
-
     pthread_t worker_tid;
     pthread_create(&worker_tid,NULL,config_worker, NULL);
     
 
+    queue = malloc(sizeof(scheduler_queue));
+    queue->scheduler_queue = queue_create();
+    int r = pthread_mutex_init(&queue->lock, NULL);
+    pthread_cond_init(&queue->cond,NULL);
     
     console = console_control;
     pthread_t tid;
@@ -55,7 +54,7 @@ void start_sheduler(t_log* log, t_console_control* console_control ){
 }
 
 void* config_worker(void* args){
-    log_info(logg, "worker");
+    log_info(logg, "se inicia el monitoreo del config");
     int inotifyFd = inotify_init();
     inotify_add_watch(inotifyFd, "config", IN_MODIFY);
     char* buf = malloc(3000);
