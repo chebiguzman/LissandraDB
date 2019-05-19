@@ -15,8 +15,7 @@ void* exec(void *sch_queue){
         config->quantum = config_not->quantum;
         pthread_mutex_unlock(&config_lock);
        
-       printf("el nuvel de procesamiento es:%d, y quandum:%ld", config->multi_script_level, config->quantum
-       );
+       //printf("el nuvel de procesamiento es:%d, y quandum:%ld", config->multi_script_level, config->quantum);
 
         while(!queue_is_empty( exec_queue ) && exec_size != 0){
             ///obtengo el proximo programa de la cola de exec
@@ -36,12 +35,12 @@ void* exec(void *sch_queue){
                 ///home/dreamable/a.lql
                 log_debug(logg, instr);
                 char* r = exec_instr(instr);
-                log_debug(logg, "exec:obtengo respuesta");
+                //log_debug(logg, "exec:obtengo respuesta");
                 printf("%s", r);
 
 
-                //free(r);
-                //free(instr);
+                free(r);
+                free(instr);
 
                 /* si el programa se termino de ejecutar
                 voy a buscar otro para mantener el nivel de 
@@ -49,11 +48,10 @@ void* exec(void *sch_queue){
                 if(queue_is_empty( program->instr)){
                     log_debug(logg, "exec:termino programa");
                     exec_size--;
-                    log_debug(logg, "exec:me voy a buscar otro programa");
+                    //log_debug(logg, "exec:me voy a buscar otro programa");
                     lock_queue();
                     updateTasks(exec_queue);
-                    queue_destroy(program->instr);
-                    //free(program);
+                    
                     break;
                 }
 
@@ -63,13 +61,16 @@ void* exec(void *sch_queue){
             if(!queue_is_empty( program->instr)){
                 log_debug(logg, "exec: termino quantum");
                 queue_push(exec_queue, program);
+            }else{
+                queue_destroy(program->instr);
+                free(program);
             }
             
         }
 
         /*si mi cola de exec se quedo  vacia quiere decir
         que tambien la del scheduler asi que espero una señal*/       
-        log_debug(logg, "exec:cola exec vacia");
+        //log_debug(logg, "exec:cola exec vacia");
         
         
         log_debug(logg, "exec:devuelvo control a consola");
@@ -79,7 +80,7 @@ void* exec(void *sch_queue){
 
         lock_queue();
         pthread_cond_wait(&queue->cond, &queue->lock);
-        log_debug(logg, "exec:me llego una query");
+        //log_debug(logg, "exec:me llego una query");
         updateTasks(exec_queue);
         
     }   
@@ -92,20 +93,20 @@ void* exec(void *sch_queue){
 //la cola ya debe estar bloqueada
 void updateTasks(t_queue* q){
 
-    log_debug(logg, "exec:actualizando cola de exec");
+   // l//og_debug(logg, "exec:actualizando cola de exec");
     while(exec_size != config->multi_script_level && !queue_is_empty(queue->scheduler_queue)){
         
         t_instr_set* new_program = queue_pop(queue->scheduler_queue);
-        log_debug(logg, "nueva instruccion:");
-        log_debug(logg, queue_peek(new_program->instr));
+        //log_debug(logg, "nueva instruccion:");
+        //log_debug(logg, queue_peek(new_program->instr));
         queue_push(exec_queue, new_program);
         exec_size++;
-        log_debug(logg, "exec:agrego un programa");
+        //log_debug(logg, "exec:agrego un programa");
         
         
     }
     unlock_queue();
-    log_debug(logg, "exec:fin de acctualizacion");
+    //log_debug(logg, "exec:fin de acctualizacion");
 
     
 }
