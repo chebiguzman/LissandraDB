@@ -8,6 +8,7 @@
 #include <sys/types.h> //creacion de directorios
 
 #include <errno.h>
+#include <unistd.h>
 
 void* setup_fs(void* args) {
 
@@ -32,6 +33,36 @@ void* setup_fs(void* args) {
         log_error(fs_structure_info->logger, errorsito );
     } else {
         log_info(fs_structure_info->logger, "El directorio Metadata se creo exitosamente");
+    }
+
+    //Creo archivo Metadata/Metadata.bin
+    char* metadata_file_name = "Metadata.bin";
+    char path_metadata_file[300];
+    path_metadata_file[0] = '\0';
+    strcat(path_metadata_file,MNT_POINT);
+    strcat(path_metadata_file,metadata_dir_name);
+    strcat(path_metadata_file,metadata_file_name);
+    if (access(path_metadata_file, F_OK) == -1) { //si el archivo no existe
+        //crear el archivo
+        FILE* fp_m;
+        fp_m = fopen(path_metadata_file,"w");
+        fclose(fp_m);
+        log_info(fs_structure_info->logger, "El archivo Metadata/Metadata.bin se creo exitosamente");
+    }
+
+    //Creo el archivo Metadata/Bitmap.bin
+    char* bitmap_file_name = "Bitmap.bin";
+    char path_bitmap_file[300];
+    path_bitmap_file[0] = '\0';
+    strcat(path_bitmap_file,MNT_POINT);
+    strcat(path_bitmap_file,metadata_dir_name);
+    strcat(path_bitmap_file,bitmap_file_name);
+    if (access(path_bitmap_file, F_OK) == -1) { //si el archivo no existe
+        //crear el archivo
+        FILE* fp_b;
+        fp_b = fopen(path_bitmap_file,"w");
+        fclose(fp_b);
+        log_info(fs_structure_info->logger, "El archivo Metadata/Bitmap.bin se creo exitosamente");
     }
 
     //TABLES
@@ -63,6 +94,8 @@ void* setup_fs(void* args) {
     } else {
         log_info(fs_structure_info->logger, "El directorio Bloques se creo exitosamente");
     }
+
+    return 0;
 
 
     /*free(metadata_dir_name);
