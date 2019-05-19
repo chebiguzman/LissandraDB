@@ -21,7 +21,7 @@ void *console_input(void* name){
 void *console_input_wait(void* args){
 	t_console_control* self = args;
 	while(1){
-
+		
 		char* buffer;
 		size_t buffer_size = 3000;
 		buffer = (char*)malloc(buffer_size * sizeof(char));
@@ -31,6 +31,7 @@ void *console_input_wait(void* args){
 		printf("%s", response);
 		free(buffer);
 		pthread_cond_wait(&self->cond, &self->lock);
+
 	} //se queda en escuhca constantenmente
 	
 }

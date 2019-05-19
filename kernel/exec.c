@@ -23,7 +23,6 @@ void* exec(void *sch_queue){
             t_instr_set* program = queue_pop(exec_queue);
 
             for(int i = 0; i != config->quantum; i++){
-                log_error(logg, string_itoa(i));
             
                 char* instr = strdup(queue_pop( program->instr));
 
@@ -33,13 +32,13 @@ void* exec(void *sch_queue){
                     printf("%s",instr);
                 }
                 ///home/dreamable/a.lql
-                log_debug(logg, instr);
+                //log_debug(logg, instr);
                 char* r = exec_instr(instr);
                 //log_debug(logg, "exec:obtengo respuesta");
                 printf("%s", r);
 
 
-                free(r);
+                //free(r);
                 free(instr);
 
                 /* si el programa se termino de ejecutar

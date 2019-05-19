@@ -92,9 +92,8 @@ char* action_select(package_select* select_info){
   char* package =  parse_package_select(select_info);
   write(memoryfd,package, strlen(package)+1);
   char* buffer = malloc(3000);
-  //read(memoryfd, buffer, 3000);
-  //free(buffer);
-  return buffer;
+
+  return "respuesta SELECT\n";
 
 }
 
