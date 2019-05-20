@@ -16,6 +16,7 @@
 #include "scheduler.h"
 #include <commons/collections/queue.h>
 #include <signal.h>
+#include "kmemory.h"
 
 //punto de entrada para el programa y el kernel
 t_log* logger;
@@ -89,11 +90,27 @@ int main(int argc, char const *argv[])
 
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
-  char* package =  parse_package_select(select_info);
-  write(memoryfd,package, strlen(package)+1);
-  char* buffer = malloc(3000);
+  char* responce = malloc(3000);
+  strcpy(responce, "");
 
-  return "respuesta SELECT\n";
+  //get consistency of talble
+  t_consistency consistency = getTableConsistency(select_info->table_name);
+  //pedir una memoria
+  int memoryfd = get_loked_memory(consistency);
+  //ejecutar
+  char* package = parse_package_select(select_info);
+  if(write(memoryfd,package, strlen(package)+1)){
+    read(memoryfd, responce, 3000);
+    
+  }else{
+    log_error(logger, "No se logo comuniarse con memoria");
+  }
+
+  //debolver memoria
+  unlock_memory(memoryfd);
+  //dar resou
+ 
+  return responce;
 
 }
 
