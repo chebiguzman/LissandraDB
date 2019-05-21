@@ -15,6 +15,9 @@
 #include "../console.h"
 
 #include "fs_structure.h"
+#include <dirent.h>
+#include <errno.h>
+#include "memtable.h"
 
 //punto de entrada para el programa y el kernel
 t_log* logger;
@@ -139,12 +142,47 @@ return row;*/
 
 char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
+
+  t_config* config = config_create("config"); //consultar equipo si tengo que abrir config acá tambien.
   
+  char* MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE");
+  char* table_name = insert_info->table_name;
+  char path_table[300];
+  path_table[0] = '\0';
+  strcat(path_table,MNT_POINT);
+  strcat(path_table,"Tables/");
+  strcat(path_table,table_name);
+
   //verificar que la tabla exista en el fileSystem, en caso q no exista informar y continuar.
-  //obtener la metadata asociada a dicha tabla
-  //verificar si existe en memoria una lista de datos a dumpear, de no existir alocar dicha memoria
+  DIR* dir = opendir(path_table);
+  if (dir) {
+    closedir(dir);
+  } else if (ENOENT == errno) {
+    //directorio no existe
+    log_error(logger, "La tabla indicada no existe");
+  } else {
+    //opendir() fallo por otro motivo
+    log_error(logger, "Error al verificar la existencia de la tabla, fallo opendir()");
+  }
+
+  //obtener la metadata asociada a dicha tabla (tabla1) ??Para que necesito la metadata???
+  //strcat(path_table,"Metadata.bin"); //path de metadata
+  //FILE* fp_m = fopen(path_table,"r");
+
+  //TODO verificar si existe en memoria una lista de datos a dumpear, de no existir alocar dicha memoria
+  
+  insert_memtable(insert_info);
+
   //el parametro timestamp es opcional, en caso de que un request no lo provea, se usara el valor actual de epoch
-  //insertar en la memoria temporal una nueva entrada que contanga los datos del request
+  //char entry[300];
+  //entry[0] = '\0';
+  //strcat(entry,insert_info->timestamp);
+  //strcat(entry,";");
+  //strcat(entry,insert_info->key);
+  //strcat(entry,";");
+  //strcat(entry,insert_info->value);  //TODO verificar si no hace falta el nombre de la tabla también (en la memtable va a hacer falta creo)
+
+  //TODO insertar en la memoria temporal una nueva entrada que contanga los datos del request
   
 }
 
