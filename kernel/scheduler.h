@@ -8,6 +8,13 @@ typedef struct
     int doesPrint;
 }t_instr_set;
 
+typedef struct
+{
+    t_instr_set* instr;
+    char* result;
+    pthread_mutex_t lock;
+    pthread_cond_t cond;
+}t_ksyscall;
 
 
 typedef struct 
@@ -35,7 +42,7 @@ void lock_queue();
 void unlock_queue();
 void scheduler_queue_create(scheduler_queue** s);
 void schedule(t_instr_set* instr_set);
-void ksyscall(char* call);
+char* ksyscall(char* call);
 void* exec();
 void updateTasks(t_queue* exec_queue);
 void* config_worker(void* args);
