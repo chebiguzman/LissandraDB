@@ -12802,3 +12802,81 @@
 [DEBUG] 18:08:54:349 Kernel/(24733:24736): exec:obtengo programa
 [DEBUG] 18:08:54:350 Kernel/(24733:24736): exec:termino programa
 [DEBUG] 18:08:54:350 Kernel/(24733:24736): exec:devuelvo control a consola
+[ERROR] 02:55:23:810 Kernel/(12678:12678): No se logro establecer coneccion con memoria
+[INFO] 02:55:23:810 Kernel/(12678:12679): El servidor se inicializo exitosamente
+[INFO] 02:55:23:810 Kernel/(12678:12678): se inicia el modulo scheduler
+[INFO] 02:55:23:813 Kernel/(12678:12680): se inicia el monitoreo del config
+[DEBUG] 02:55:23:813 Kernel/(12678:12681): se inicia el modulo exec
+[DEBUG] 02:55:23:814 Kernel/(12678:12681): exec:devuelvo control a consola
+[INFO] 02:55:24:961 Kernel/(12678:12682): sh:acrego una instruccion
+[INFO] 02:55:24:961 Kernel/(12678:12682): llame a exec
+[DEBUG] 02:55:24:961 Kernel/(12678:12681): exec:obtengo programa
+[DEBUG] 02:55:24:961 Kernel/(12678:12681): exec:termino programa
+[DEBUG] 02:55:24:962 Kernel/(12678:12681): exec:devuelvo control a consola
+[INFO] 02:55:25:449 Kernel/(12678:12682): sh:acrego una instruccion
+[INFO] 02:55:25:449 Kernel/(12678:12682): llame a exec
+[DEBUG] 02:55:25:449 Kernel/(12678:12681): exec:obtengo programa
+[DEBUG] 02:55:25:449 Kernel/(12678:12681): exec:termino programa
+[DEBUG] 02:55:25:450 Kernel/(12678:12681): exec:devuelvo control a consola
+[INFO] 02:55:26:18 Kernel/(12678:12682): sh:acrego una instruccion
+[INFO] 02:55:26:18 Kernel/(12678:12682): llame a exec
+[DEBUG] 02:55:26:18 Kernel/(12678:12681): exec:obtengo programa
+[DEBUG] 02:55:26:18 Kernel/(12678:12681): exec:termino programa
+[DEBUG] 02:55:26:19 Kernel/(12678:12681): exec:devuelvo control a consola
+[INFO] 02:55:36:361 Kernel/(12678:12682): sh:acrego una instruccion
+[INFO] 02:55:36:361 Kernel/(12678:12682): llame a exec
+[DEBUG] 02:55:36:361 Kernel/(12678:12681): exec:obtengo programa
+[INFO] 02:55:36:362 Kernel/(12678:12681): Se recibio una accion run
+[INFO] 02:55:36:383 Kernel/(12678:12681): sh:acrego una instruccion
+[INFO] 02:55:36:383 Kernel/(12678:12681): llame a exec
+[DEBUG] 02:55:36:384 Kernel/(12678:12681): exec:termino programa
+[DEBUG] 02:55:36:384 Kernel/(12678:12681): exec:obtengo programa
+[INFO] 02:55:36:384 Kernel/(12678:12681): Se recibio una accion select
+[INFO] 02:55:36:384 Kernel/(12678:12681): Se recibio una accion select
+[DEBUG] 02:55:36:385 Kernel/(12678:12681): exec: termino quantum
+[DEBUG] 02:55:36:385 Kernel/(12678:12681): exec:obtengo programa
+[INFO] 02:55:36:385 Kernel/(12678:12681): Se recibio una accion select
+[INFO] 02:55:36:385 Kernel/(12678:12681): Se recibio una accion select
+[DEBUG] 02:55:36:385 Kernel/(12678:12681): exec: termino quantum
+[DEBUG] 02:55:36:386 Kernel/(12678:12681): exec:obtengo programa
+[INFO] 02:55:36:386 Kernel/(12678:12681): Se recibio una accion select
+[DEBUG] 02:55:36:386 Kernel/(12678:12681): exec:termino programa
+[DEBUG] 02:55:36:386 Kernel/(12678:12681): exec:devuelvo control a consola
+[INFO] 02:56:00:314 Kernel/(12678:12682): sh:acrego una instruccion
+[INFO] 02:56:00:314 Kernel/(12678:12682): llame a exec
+[DEBUG] 02:56:00:314 Kernel/(12678:12681): exec:obtengo programa
+[INFO] 02:56:00:315 Kernel/(12678:12681): Se recibio una accion run
+[INFO] 02:56:00:327 Kernel/(12678:12681): sh:acrego una instruccion
+[INFO] 02:56:00:327 Kernel/(12678:12681): llame a exec
+[DEBUG] 02:56:00:327 Kernel/(12678:12681): exec:termino programa
+[DEBUG] 02:56:00:328 Kernel/(12678:12681): exec:obtengo programa
+[INFO] 02:56:00:328 Kernel/(12678:12681): Se recibio una accion run
+[INFO] 02:56:00:328 Kernel/(12678:12681): sh:acrego una instruccion
+[INFO] 02:56:00:329 Kernel/(12678:12681): llame a exec
+[INFO] 02:56:00:329 Kernel/(12678:12681): Se recibio una accion run
+[INFO] 02:56:00:329 Kernel/(12678:12681): sh:acrego una instruccion
+[INFO] 02:56:00:329 Kernel/(12678:12681): llame a exec
+[DEBUG] 02:56:00:330 Kernel/(12678:12681): exec:termino programa
+[DEBUG] 02:56:00:330 Kernel/(12678:12681): exec:obtengo programa
+[INFO] 02:56:00:330 Kernel/(12678:12681): Se recibio una accion select
+[INFO] 02:56:00:330 Kernel/(12678:12681): Se recibio una accion select
+[DEBUG] 02:56:00:331 Kernel/(12678:12681): exec: termino quantum
+[DEBUG] 02:56:00:331 Kernel/(12678:12681): exec:obtengo programa
+[INFO] 02:56:00:331 Kernel/(12678:12681): Se recibio una accion select
+[INFO] 02:56:00:332 Kernel/(12678:12681): Se recibio una accion select
+[DEBUG] 02:56:00:332 Kernel/(12678:12681): exec: termino quantum
+[DEBUG] 02:56:00:332 Kernel/(12678:12681): exec:obtengo programa
+[INFO] 02:56:00:332 Kernel/(12678:12681): Se recibio una accion select
+[INFO] 02:56:00:333 Kernel/(12678:12681): Se recibio una accion select
+[DEBUG] 02:56:00:333 Kernel/(12678:12681): exec: termino quantum
+[DEBUG] 02:56:00:333 Kernel/(12678:12681): exec:obtengo programa
+[INFO] 02:56:00:334 Kernel/(12678:12681): Se recibio una accion select
+[INFO] 02:56:00:334 Kernel/(12678:12681): Se recibio una accion select
+[DEBUG] 02:56:00:334 Kernel/(12678:12681): exec: termino quantum
+[DEBUG] 02:56:00:334 Kernel/(12678:12681): exec:obtengo programa
+[INFO] 02:56:00:335 Kernel/(12678:12681): Se recibio una accion select
+[DEBUG] 02:56:00:335 Kernel/(12678:12681): exec:termino programa
+[DEBUG] 02:56:00:335 Kernel/(12678:12681): exec:obtengo programa
+[INFO] 02:56:00:335 Kernel/(12678:12681): Se recibio una accion select
+[DEBUG] 02:56:00:335 Kernel/(12678:12681): exec:termino programa
+[DEBUG] 02:56:00:336 Kernel/(12678:12681): exec:devuelvo control a consola

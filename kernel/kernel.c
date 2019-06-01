@@ -48,19 +48,7 @@ int main(int argc, char const *argv[])
 
     
     //set up client
-    signal(SIGPIPE, SIG_IGN); //Ignorar error de write
-    memoryfd = socket(AF_INET, SOCK_STREAM, 0); 
-    struct sockaddr_in sock_client;
-    sock_client.sin_family = AF_INET; 
-    sock_client.sin_addr.s_addr = inet_addr(MEMORY_IP); 
-    sock_client.sin_port = htons(MEMORY_PORT);
     
-    int conection_result = connect(memoryfd, (struct sockaddr*)&sock_client, sizeof(sock_client));
-
-    if(conection_result<0){
-      log_error(logger, "No se logro establecer coneccion con memoria");
-      
-    }
     pthread_cond_t console_cond;
     pthread_mutex_t console_lock;
     pthread_mutex_init(&console_lock, NULL);
@@ -71,10 +59,12 @@ int main(int argc, char const *argv[])
     control->name = strdup("kernel");
 
     start_sheduler(logger,control);
+    start_kmemory_module(logger, MEMORY_IP, MEMORY_PORT);
    //inicio lectura por consola
     pthread_t tid_console;
     pthread_create(&tid_console, NULL, console_input_wait, control);
     
+    signal(SIGPIPE, SIG_IGN); //Ignorar error de write
 
     //JOIN THREADS
     pthread_join(tid,NULL);
@@ -94,9 +84,9 @@ char* action_select(package_select* select_info){
   strcpy(responce, "");
 
   //get consistency of talble
-  t_consistency consistency = getTableConsistency(select_info->table_name);
+  //t_consistency consistency = getTableConsistency(select_info->table_name);
   //pedir una memoria
-  int memoryfd = get_loked_memory(consistency);
+  /*int memoryfd = get_loked_memory(consistency);
   //ejecutar
   char* package = parse_package_select(select_info);
   if(write(memoryfd,package, strlen(package)+1)){
@@ -107,7 +97,7 @@ char* action_select(package_select* select_info){
   }
 
   //debolver memoria
-  unlock_memory(memoryfd);
+  unlock_memory(memoryfd);*/
   //dar resou
  
   return responce;

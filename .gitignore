@@ -38,9 +38,9 @@
 *.m
 *.k
 *.f
-kernel
-memory
-filesystem
+**/kernel/kernel
+**/memory/memory
+**/filesystem/filesystem
 
 # Debug files
 *.dSYM/

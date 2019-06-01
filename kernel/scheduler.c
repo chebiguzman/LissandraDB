@@ -22,9 +22,12 @@ pthread_mutex_t config_lock = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t config_cond = PTHREAD_COND_INITIALIZER;
 
 scheduler_queue* queue;
+scheduler_queue* syscall_queue;
+
 t_log* logg;
 t_console_control* console;
 t_config* fconfig;
+
 void start_sheduler(t_log* log, t_console_control* console_control ){
 
     log_info(log, "se inicia el modulo scheduler");
@@ -40,6 +43,9 @@ void start_sheduler(t_log* log, t_console_control* console_control ){
     pthread_t worker_tid;
     pthread_create(&worker_tid,NULL,config_worker, NULL);
     
+    syscall_queue = malloc( sizeof(scheduler_queue));
+    pthread_mutex_init(&syscall_queue->lock, NULL);
+    syscall_queue->scheduler_queue = queue_create();
 
     queue = malloc(sizeof(scheduler_queue));
     queue->scheduler_queue = queue_create();
@@ -83,6 +89,7 @@ void update_scheduler_config(){
         pthread_mutex_unlock(&config_lock);
         pthread_cond_broadcast(&config_cond);
 }
+
 #include "exec.c"
 
 void lock_queue(){
@@ -103,7 +110,31 @@ void schedule(t_instr_set* instr_set){
     log_info(logg, "llame a exec");
 }
 
-void ksyscall(char* call){
+char* ksyscall(char* call){
+    t_ksyscall* syscall = malloc( sizeof(t_ksyscall));
+    syscall->instr = malloc ( sizeof ( t_instr_set));
 
+    t_queue* kqueue = queue_create();
+    queue_push(kqueue, call);
+
+    syscall->instr->instr = kqueue;
+    syscall->instr->doesPrint = false;
+
+    pthread_mutex_init(&syscall->lock, NULL);
+    pthread_cond_init(&syscall->cond, NULL);
+
+    pthread_mutex_lock(&syscall_queue->lock);
+    queue_push(syscall_queue->scheduler_queue, syscall);
+    pthread_mutex_unlock(&syscall_queue->lock);
+
+    pthread_mutex_lock(&syscall->lock);
+    pthread_cond_wait(&syscall->cond, &syscall->lock);
+
+    char* res = strdup(syscall->result);
+    pthread_mutex_destroy(&syscall->lock);
+    pthread_cond_destroy(&syscall->cond);
+    free(syscall);
+
+    return res;
 }
 

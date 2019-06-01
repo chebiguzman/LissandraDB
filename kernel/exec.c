@@ -1,12 +1,14 @@
 scheduler_config* config;
 t_queue* exec_queue;
+
 int exec_size = 0;
-void* exec(void *sch_queue){
+void* exec(void *system_queue){
     exec_queue = queue_create();
+  
     config = malloc(sizeof(scheduler_config));
     
     
-
+    bool superuser = false;
     log_debug(logg, "se inicia el modulo exec");
     while(true){
 
@@ -19,8 +21,24 @@ void* exec(void *sch_queue){
 
         while(!queue_is_empty( exec_queue ) && exec_size != 0){
             ///obtengo el proximo programa de la cola de exec
+            
             log_debug(logg, "exec:obtengo programa");
-            t_instr_set* program = queue_pop(exec_queue);
+            t_instr_set* program;
+            t_ksyscall* kernel_call;
+
+            //Reviso si hay llamadas al sistema
+            pthread_mutex_lock(&syscall_queue->lock);
+            if(!queue_is_empty(syscall_queue->scheduler_queue)){
+                log_debug(logg, "Se recibe un syscall");
+                kernel_call = queue_pop(syscall_queue->scheduler_queue);
+                program = kernel_call->instr;
+                superuser = true;
+            }else{
+                program = queue_pop(exec_queue);
+                superuser = false;
+            }
+            pthread_mutex_unlock(&syscall_queue->lock);
+
 
             for(int i = 0; i != config->quantum; i++){
             
@@ -37,6 +55,11 @@ void* exec(void *sch_queue){
                 //log_debug(logg, "exec:obtengo respuesta");
                 printf("%s", r);
 
+                if(superuser){
+                    kernel_call->result = r;
+                    pthread_cond_broadcast(&kernel_call->cond);
+                    log_debug(logg, "se le debvuelve al kernel su pedido");
+                }
 
                 //free(r);
                 free(instr);
