@@ -88,6 +88,19 @@ char* exec_instr(char* instr_buff){
         return responce;
     }
 
+    if(!strcmp(instruction,"DESCRIBE")){
+        package_describe* package = malloc(sizeof(package_describe));
+        package->instruction = malloc(instruction_size);
+        strcpy(package->instruction, instruction);
+
+        //TABLE_NAME
+        package->table_name = strdup(get_string_from_buffer(instr_buff, instruction_size));
+
+        printf("\n Datos de paquete:\n instruction: %s\n table name: %s\n \n", package->instruction, package->table_name);
+        char* responce = action_describe(package);
+        return responce;
+    }
+
     char* error_message = strdup("no es una instruccion valida\n");
     return error_message;
 }
@@ -145,6 +158,19 @@ char* parse_package_insert(package_insert* package){
     buffer = strcat(buffer, val);
     buffer = strcat(buffer, sep);
     buffer = strcat(buffer, timestmp);
+    return buffer;
+}
+
+char* parse_package_describe(package_describe* pk){
+    char* buffer;
+    char* instr = strdup(pk->instruction);
+    char* table_name = strdup(pk->table_name);
+    int tot_len = strlen(instr) + strlen(table_name) +2;
+    buffer = malloc(tot_len);
+    buffer[0] = '\0';
+    strcat(buffer, instr);
+    strcat(buffer,sep);
+    strcat(buffer,table_name);
     return buffer;
 }
 
