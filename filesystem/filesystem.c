@@ -198,8 +198,13 @@ void action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
 }
 
-void action_describe(package_describe* describe_info){
+char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
+
+  //recorrer el directorio de arboles de las tablas y descubrir cuales son las tablas de las que dispone el sistema
+  //leer los archivos de metadata de cada tabla
+  //retornar el contenido de dichos archivos de metadata
+
 }
 
 void action_drop(package_drop* drop_info){

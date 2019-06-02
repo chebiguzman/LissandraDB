@@ -10,7 +10,7 @@ char* action_insert(package_insert* insert_info);
 
 void action_create(package_create* create_info);
 
-void action_describe(package_describe* describe_info);
+char* action_describe(package_describe* describe_info);
 
 void action_drop(package_drop* drop_info);
 

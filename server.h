@@ -39,12 +39,12 @@ typedef struct
 } package_create;
 
 //DESCRIBE [NOMBRE_TABLA]
-typedef struct
+/*typedef struct
 {
     char instruction[INSTRUCTION_BYTE_SIZE];
     char* table_name;
 
-} package_describe;
+} package_describe;*/
 
 
 //DROP [NOMBRE_TABLA]
