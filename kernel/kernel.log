@@ -12880,3 +12880,1809 @@
 [INFO] 02:56:00:335 Kernel/(12678:12681): Se recibio una accion select
 [DEBUG] 02:56:00:335 Kernel/(12678:12681): exec:termino programa
 [DEBUG] 02:56:00:336 Kernel/(12678:12681): exec:devuelvo control a consola
+[INFO] 15:52:36:444 Kernel/(8438:8438): se inicia el modulo scheduler
+[INFO] 15:52:36:444 Kernel/(8438:8439): El servidor se inicializo exitosamente
+[INFO] 15:52:36:445 Kernel/(8438:8440): se inicia el monitoreo del config
+[ERROR] 15:52:36:445 Kernel/(8438:8438): No se logro establecer coneccion con memoria
+[INFO] 15:52:36:445 Kernel/(8438:8438): El modulo kmemory fue inicializado exitosamente
+[DEBUG] 15:52:36:445 Kernel/(8438:8441): se inicia el modulo exec
+[DEBUG] 15:52:36:445 Kernel/(8438:8441): exec:devuelvo control a consola
+[INFO] 16:37:55:893 Kernel/(11362:11363): El servidor se inicializo exitosamente
+[INFO] 16:37:55:893 Kernel/(11362:11362): se inicia el modulo scheduler
+[INFO] 16:37:55:894 Kernel/(11362:11362): El modulo kmemory fue inicializado exitosamente
+[INFO] 16:37:55:896 Kernel/(11362:11364): se inicia el monitoreo del config
+[DEBUG] 16:37:55:900 Kernel/(11362:11365): se inicia el modulo exec
+[DEBUG] 16:37:55:908 Kernel/(11362:11365): exec:devuelvo control a consola
+[INFO] 16:38:05:760 Kernel/(11362:11366): sh:acrego una instruccion
+[INFO] 16:38:05:761 Kernel/(11362:11366): llame a exec
+[DEBUG] 16:38:05:761 Kernel/(11362:11365): exec:obtengo programa
+[DEBUG] 16:38:05:761 Kernel/(11362:11365): exec:termino programa
+[DEBUG] 16:38:05:762 Kernel/(11362:11365): exec:devuelvo control a consola
+[INFO] 16:38:08:593 Kernel/(11362:11366): sh:acrego una instruccion
+[INFO] 16:38:08:593 Kernel/(11362:11366): llame a exec
+[DEBUG] 16:38:08:593 Kernel/(11362:11365): exec:obtengo programa
+[DEBUG] 16:38:08:594 Kernel/(11362:11365): exec:termino programa
+[DEBUG] 16:38:08:594 Kernel/(11362:11365): exec:devuelvo control a consola
+[INFO] 16:38:10:25 Kernel/(11362:11366): sh:acrego una instruccion
+[INFO] 16:38:10:25 Kernel/(11362:11366): llame a exec
+[DEBUG] 16:38:10:25 Kernel/(11362:11365): exec:obtengo programa
+[DEBUG] 16:38:10:26 Kernel/(11362:11365): exec:termino programa
+[DEBUG] 16:38:10:26 Kernel/(11362:11365): exec:devuelvo control a consola
+[INFO] 16:38:10:524 Kernel/(11362:11366): sh:acrego una instruccion
+[INFO] 16:38:10:524 Kernel/(11362:11366): llame a exec
+[DEBUG] 16:38:10:524 Kernel/(11362:11365): exec:obtengo programa
+[DEBUG] 16:38:10:524 Kernel/(11362:11365): exec:termino programa
+[DEBUG] 16:38:10:524 Kernel/(11362:11365): exec:devuelvo control a consola
+[INFO] 16:38:10:555 Kernel/(11362:11366): sh:acrego una instruccion
+[INFO] 16:38:10:556 Kernel/(11362:11366): llame a exec
+[DEBUG] 16:38:10:556 Kernel/(11362:11365): exec:obtengo programa
+[DEBUG] 16:38:10:556 Kernel/(11362:11365): exec:termino programa
+[DEBUG] 16:38:10:556 Kernel/(11362:11365): exec:devuelvo control a consola
+[INFO] 16:38:10:590 Kernel/(11362:11366): sh:acrego una instruccion
+[INFO] 16:38:10:590 Kernel/(11362:11366): llame a exec
+[DEBUG] 16:38:10:590 Kernel/(11362:11365): exec:obtengo programa
+[DEBUG] 16:38:10:590 Kernel/(11362:11365): exec:termino programa
+[DEBUG] 16:38:10:590 Kernel/(11362:11365): exec:devuelvo control a consola
+[INFO] 16:38:10:616 Kernel/(11362:11366): sh:acrego una instruccion
+[INFO] 16:38:10:616 Kernel/(11362:11366): llame a exec
+[DEBUG] 16:38:10:616 Kernel/(11362:11365): exec:obtengo programa
+[DEBUG] 16:38:10:616 Kernel/(11362:11365): exec:termino programa
+[DEBUG] 16:38:10:616 Kernel/(11362:11365): exec:devuelvo control a consola
+[INFO] 16:38:10:644 Kernel/(11362:11366): sh:acrego una instruccion
+[INFO] 16:38:10:645 Kernel/(11362:11366): llame a exec
+[DEBUG] 16:38:10:645 Kernel/(11362:11365): exec:obtengo programa
+[DEBUG] 16:38:10:645 Kernel/(11362:11365): exec:termino programa
+[DEBUG] 16:38:10:645 Kernel/(11362:11365): exec:devuelvo control a consola
+[INFO] 16:38:10:674 Kernel/(11362:11366): sh:acrego una instruccion
+[INFO] 16:38:10:675 Kernel/(11362:11366): llame a exec
+[DEBUG] 16:38:10:675 Kernel/(11362:11365): exec:obtengo programa
+[DEBUG] 16:38:10:675 Kernel/(11362:11365): exec:termino programa
+[DEBUG] 16:38:10:675 Kernel/(11362:11365): exec:devuelvo control a consola
+[INFO] 16:43:53:169 Kernel/(11747:11747): se inicia el modulo scheduler
+[INFO] 16:43:53:170 Kernel/(11747:11749): se inicia el monitoreo del config
+[INFO] 16:43:53:170 Kernel/(11747:11747): El modulo kmemory fue inicializado exitosamente
+[DEBUG] 16:43:53:170 Kernel/(11747:11750): se inicia el modulo exec
+[DEBUG] 16:43:53:170 Kernel/(11747:11750): exec:devuelvo control a consola
+[INFO] 16:43:53:175 Kernel/(11747:11748): El servidor se inicializo exitosamente
+[INFO] 16:43:58:101 Kernel/(11747:11751): sh:acrego una instruccion
+[DEBUG] 16:43:58:102 Kernel/(11747:11750): exec:obtengo programa
+[INFO] 16:43:58:102 Kernel/(11747:11751): llame a exec
+[INFO] 16:43:58:102 Kernel/(11747:11750): Se recibio una accion select
+[DEBUG] 16:43:58:102 Kernel/(11747:11750): exec:termino programa
+[DEBUG] 16:43:58:102 Kernel/(11747:11750): exec:devuelvo control a consola
+[INFO] 16:47:36:601 Kernel/(12030:12030): se inicia el modulo scheduler
+[INFO] 16:47:36:601 Kernel/(12030:12031): El servidor se inicializo exitosamente
+[INFO] 16:47:36:602 Kernel/(12030:12032): se inicia el monitoreo del config
+[INFO] 16:47:36:602 Kernel/(12030:12030): El modulo kmemory fue inicializado exitosamente
+[DEBUG] 16:47:36:602 Kernel/(12030:12033): se inicia el modulo exec
+[DEBUG] 16:47:36:603 Kernel/(12030:12033): exec:devuelvo control a consola
+[INFO] 16:47:41:60 Kernel/(12030:12034): sh:acrego una instruccion
+[INFO] 16:47:41:60 Kernel/(12030:12034): llame a exec
+[DEBUG] 16:47:41:60 Kernel/(12030:12033): exec:obtengo programa
+[INFO] 16:47:41:61 Kernel/(12030:12033): Se recibio una accion select
+[DEBUG] 16:47:41:61 Kernel/(12030:12033): se pide memoria de EVENTUAL
+[DEBUG] 16:47:41:61 Kernel/(12030:12033): exec:termino programa
+[DEBUG] 16:47:41:61 Kernel/(12030:12033): exec:devuelvo control a consola
+[INFO] 16:48:29:250 Kernel/(12030:12034): sh:acrego una instruccion
+[INFO] 16:48:29:250 Kernel/(12030:12034): llame a exec
+[DEBUG] 16:48:29:250 Kernel/(12030:12033): exec:obtengo programa
+[INFO] 16:48:29:251 Kernel/(12030:12033): Se recibio una accion select
+[DEBUG] 16:48:29:251 Kernel/(12030:12033): se pide memoria de EVENTUAL
+[DEBUG] 16:48:29:251 Kernel/(12030:12033): exec:termino programa
+[DEBUG] 16:48:29:251 Kernel/(12030:12033): exec:devuelvo control a consola
+[INFO] 16:48:33:747 Kernel/(12030:12034): sh:acrego una instruccion
+[INFO] 16:48:33:748 Kernel/(12030:12034): llame a exec
+[DEBUG] 16:48:33:748 Kernel/(12030:12033): exec:obtengo programa
+[INFO] 16:48:33:748 Kernel/(12030:12033): Se recibio una accion select
+[DEBUG] 16:48:33:749 Kernel/(12030:12033): se pide memoria de EVENTUAL
+[DEBUG] 16:48:33:749 Kernel/(12030:12033): exec:termino programa
+[DEBUG] 16:48:33:749 Kernel/(12030:12033): exec:devuelvo control a consola
+[INFO] 16:50:14:79 Kernel/(12199:12199): se inicia el modulo scheduler
+[INFO] 16:50:14:79 Kernel/(12199:12200): El servidor se inicializo exitosamente
+[INFO] 16:50:14:80 Kernel/(12199:12201): se inicia el monitoreo del config
+[INFO] 16:50:14:80 Kernel/(12199:12199): El modulo kmemory fue inicializado exitosamente
+[DEBUG] 16:50:14:81 Kernel/(12199:12202): se inicia el modulo exec
+[DEBUG] 16:50:14:82 Kernel/(12199:12202): exec:devuelvo control a consola
+[INFO] 16:50:18:923 Kernel/(12199:12203): sh:acrego una instruccion
+[DEBUG] 16:50:18:923 Kernel/(12199:12202): exec:obtengo programa
+[INFO] 16:50:18:923 Kernel/(12199:12202): Se recibio una accion select
+[INFO] 16:50:18:923 Kernel/(12199:12203): llame a exec
+[ERROR] 16:50:18:924 Kernel/(12199:12202): Fatal error. El sistema no reconoce el tipo de memoria solicitado
+[DEBUG] 16:50:18:924 Kernel/(12199:12202): exec:termino programa
+[DEBUG] 16:50:18:924 Kernel/(12199:12202): exec:devuelvo control a consola
+[INFO] 16:50:35:127 Kernel/(12226:12226): se inicia el modulo scheduler
+[INFO] 16:50:35:127 Kernel/(12226:12227): El servidor se inicializo exitosamente
+[INFO] 16:50:35:128 Kernel/(12226:12226): El modulo kmemory fue inicializado exitosamente
+[INFO] 16:50:35:128 Kernel/(12226:12228): se inicia el monitoreo del config
+[DEBUG] 16:50:35:136 Kernel/(12226:12229): se inicia el modulo exec
+[DEBUG] 16:50:35:144 Kernel/(12226:12229): exec:devuelvo control a consola
+[INFO] 16:50:39:483 Kernel/(12226:12230): sh:acrego una instruccion
+[INFO] 16:50:39:483 Kernel/(12226:12230): llame a exec
+[DEBUG] 16:50:39:483 Kernel/(12226:12229): exec:obtengo programa
+[INFO] 16:50:39:484 Kernel/(12226:12229): Se recibio una accion select
+[ERROR] 16:50:39:484 Kernel/(12226:12229): Fatal error. El sistema no reconoce el tipo de memoria solicitado
+[DEBUG] 16:50:39:484 Kernel/(12226:12229): exec:termino programa
+[DEBUG] 16:50:39:484 Kernel/(12226:12229): exec:devuelvo control a consola
+[INFO] 16:50:59:471 Kernel/(12301:12301): se inicia el modulo scheduler
+[INFO] 16:50:59:471 Kernel/(12301:12302): El servidor se inicializo exitosamente
+[DEBUG] 16:50:59:472 Kernel/(12301:12304): se inicia el modulo exec
+[INFO] 16:50:59:472 Kernel/(12301:12301): El modulo kmemory fue inicializado exitosamente
+[DEBUG] 16:50:59:472 Kernel/(12301:12304): exec:devuelvo control a consola
+[INFO] 16:50:59:476 Kernel/(12301:12303): se inicia el monitoreo del config
+[INFO] 16:51:03:146 Kernel/(12301:12305): sh:acrego una instruccion
+[INFO] 16:51:03:147 Kernel/(12301:12305): llame a exec
+[DEBUG] 16:51:03:147 Kernel/(12301:12304): exec:obtengo programa
+[INFO] 16:51:03:147 Kernel/(12301:12304): Se recibio una accion select
+[ERROR] 16:51:03:148 Kernel/(12301:12304): Fatal error. El sistema no reconoce el tipo de memoria solicitado
+[INFO] 16:52:25:961 Kernel/(12414:12414): se inicia el modulo scheduler
+[INFO] 16:52:25:961 Kernel/(12414:12415): El servidor se inicializo exitosamente
+[INFO] 16:52:25:962 Kernel/(12414:12414): El modulo kmemory fue inicializado exitosamente
+[DEBUG] 16:52:25:963 Kernel/(12414:12417): se inicia el modulo exec
+[INFO] 16:52:25:963 Kernel/(12414:12416): se inicia el monitoreo del config
+[DEBUG] 16:52:25:963 Kernel/(12414:12417): exec:devuelvo control a consola
+[INFO] 16:52:29:242 Kernel/(12414:12418): sh:acrego una instruccion
+[INFO] 16:52:29:242 Kernel/(12414:12418): llame a exec
+[DEBUG] 16:52:29:242 Kernel/(12414:12417): exec:obtengo programa
+[INFO] 16:52:29:243 Kernel/(12414:12417): Se recibio una accion select
+[DEBUG] 16:52:29:243 Kernel/(12414:12417): se pide memoria de SC
+[DEBUG] 16:52:29:243 Kernel/(12414:12417): exec:termino programa
+[DEBUG] 16:52:29:244 Kernel/(12414:12417): exec:devuelvo control a consola
+[INFO] 17:01:49:31 Kernel/(12959:12959): se inicia el modulo scheduler
+[INFO] 17:01:49:31 Kernel/(12959:12960): El servidor se inicializo exitosamente
+[INFO] 17:01:49:32 Kernel/(12959:12959): El modulo kmemory fue inicializado exitosamente
+[INFO] 17:01:49:33 Kernel/(12959:12961): se inicia el monitoreo del config
+[DEBUG] 17:01:49:36 Kernel/(12959:12962): se inicia el modulo exec
+[DEBUG] 17:01:49:40 Kernel/(12959:12962): exec:devuelvo control a consola
+[INFO] 17:01:53:539 Kernel/(12959:12963): sh:acrego una instruccion
+[INFO] 17:01:53:540 Kernel/(12959:12963): llame a exec
+[DEBUG] 17:01:53:540 Kernel/(12959:12962): exec:obtengo programa
+[INFO] 17:01:53:540 Kernel/(12959:12962): Se recibio una accion select
+[DEBUG] 17:01:53:540 Kernel/(12959:12962): se pide memoria de SC
+[DEBUG] 17:01:53:541 Kernel/(12959:12962): exec:termino programa
+[DEBUG] 17:01:53:541 Kernel/(12959:12962): exec:devuelvo control a consola
+[INFO] 17:01:56:115 Kernel/(12959:12963): sh:acrego una instruccion
+[INFO] 17:01:56:115 Kernel/(12959:12963): llame a exec
+[DEBUG] 17:01:56:115 Kernel/(12959:12962): exec:obtengo programa
+[DEBUG] 17:01:56:116 Kernel/(12959:12962): exec:termino programa
+[DEBUG] 17:01:56:116 Kernel/(12959:12962): exec:devuelvo control a consola
+[INFO] 17:05:18:842 Kernel/(13194:13194): se inicia el modulo scheduler
+[INFO] 17:05:18:842 Kernel/(13194:13195): El servidor se inicializo exitosamente
+[INFO] 17:05:18:843 Kernel/(13194:13196): se inicia el monitoreo del config
+[DEBUG] 17:05:18:843 Kernel/(13194:13197): se inicia el modulo exec
+[INFO] 17:05:18:843 Kernel/(13194:13194): El modulo kmemory fue inicializado exitosamente
+[DEBUG] 17:05:18:844 Kernel/(13194:13197): exec:devuelvo control a consola
+[INFO] 17:07:53:22 Kernel/(13429:13429): se inicia el modulo scheduler
+[INFO] 17:07:53:23 Kernel/(13429:13430): El servidor se inicializo exitosamente
+[INFO] 17:07:53:24 Kernel/(13429:13429): El modulo kmemory fue inicializado exitosamente
+[INFO] 17:07:53:24 Kernel/(13429:13431): se inicia el monitoreo del config
+[DEBUG] 17:07:53:28 Kernel/(13429:13432): se inicia el modulo exec
+[DEBUG] 17:07:53:28 Kernel/(13429:13432): exec:devuelvo control a consola
+[INFO] 17:09:01:579 Kernel/(13522:13522): se inicia el modulo scheduler
+[INFO] 17:09:01:579 Kernel/(13522:13523): El servidor se inicializo exitosamente
+[INFO] 17:09:01:581 Kernel/(13522:13524): se inicia el monitoreo del config
+[DEBUG] 17:09:01:581 Kernel/(13522:13525): se inicia el modulo exec
+[DEBUG] 17:09:01:581 Kernel/(13522:13525): exec:devuelvo control a consola
+[INFO] 17:09:16:234 Kernel/(13566:13566): se inicia el modulo scheduler
+[INFO] 17:09:16:234 Kernel/(13566:13567): El servidor se inicializo exitosamente
+[DEBUG] 17:09:16:235 Kernel/(13566:13569): se inicia el modulo exec
+[DEBUG] 17:09:16:236 Kernel/(13566:13569): exec:devuelvo control a consola
+[INFO] 17:09:16:240 Kernel/(13566:13568): se inicia el monitoreo del config
+[INFO] 17:09:46:910 Kernel/(13635:13635): se inicia el modulo scheduler
+[INFO] 17:09:46:910 Kernel/(13635:13636): El servidor se inicializo exitosamente
+[INFO] 17:09:46:910 Kernel/(13635:13637): se inicia el monitoreo del config
+[DEBUG] 17:09:46:911 Kernel/(13635:13638): se inicia el modulo exec
+[DEBUG] 17:09:46:911 Kernel/(13635:13638): exec:devuelvo control a consola
+[INFO] 17:15:45:613 Kernel/(14015:14016): El servidor se inicializo exitosamente
+[INFO] 17:15:45:613 Kernel/(14015:14015): se inicia el modulo scheduler
+[INFO] 17:15:45:614 Kernel/(14015:14017): se inicia el monitoreo del config
+[DEBUG] 17:15:45:614 Kernel/(14015:14018): se inicia el modulo exec
+[DEBUG] 17:15:45:614 Kernel/(14015:14018): exec:devuelvo control a consola
+[INFO] 17:18:03:322 Kernel/(14202:14202): se inicia el modulo scheduler
+[INFO] 17:18:03:322 Kernel/(14202:14203): El servidor se inicializo exitosamente
+[DEBUG] 17:18:03:323 Kernel/(14202:14205): se inicia el modulo exec
+[DEBUG] 17:18:03:323 Kernel/(14202:14205): exec:devuelvo control a consola
+[INFO] 17:18:03:323 Kernel/(14202:14204): se inicia el monitoreo del config
+[INFO] 17:18:50:9 Kernel/(14294:14294): se inicia el modulo scheduler
+[INFO] 17:18:50:9 Kernel/(14294:14295): El servidor se inicializo exitosamente
+[DEBUG] 17:18:50:11 Kernel/(14294:14297): se inicia el modulo exec
+[INFO] 17:18:50:11 Kernel/(14294:14296): se inicia el monitoreo del config
+[DEBUG] 17:18:50:11 Kernel/(14294:14297): exec:devuelvo control a consola
+[INFO] 17:18:50:11 Kernel/(14294:14294): El modulo kmemory fue inicializado exitosamente
+[INFO] 17:18:50:789 Kernel/(14294:14299): sh:acrego una instruccion
+[DEBUG] 17:18:50:790 Kernel/(14294:14297): exec:obtengo programa
+[DEBUG] 17:18:50:790 Kernel/(14294:14297): exec:termino programa
+[DEBUG] 17:18:50:791 Kernel/(14294:14297): exec:devuelvo control a consola
+[INFO] 17:18:50:790 Kernel/(14294:14299): llame a exec
+[INFO] 17:19:05:73 Kernel/(14343:14343): se inicia el modulo scheduler
+[INFO] 17:19:05:73 Kernel/(14343:14344): El servidor se inicializo exitosamente
+[INFO] 17:19:05:74 Kernel/(14343:14345): se inicia el monitoreo del config
+[DEBUG] 17:19:05:74 Kernel/(14343:14346): se inicia el modulo exec
+[DEBUG] 17:19:05:75 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:05:77 Kernel/(14343:14343): El modulo kmemory fue inicializado exitosamente
+[INFO] 17:19:11:60 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:11:60 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:11:60 Kernel/(14343:14346): exec:obtengo programa
+[INFO] 17:19:11:61 Kernel/(14343:14346): Se recibio una accion select
+[DEBUG] 17:19:11:61 Kernel/(14343:14346): se pide memoria de SC
+[DEBUG] 17:19:11:61 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:11:61 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:17:317 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:17:317 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:17:317 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:17:318 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:17:318 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:18:710 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:18:710 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:18:710 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:18:711 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:18:711 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:19:253 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:19:253 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:19:253 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:19:254 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:19:254 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:19:753 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:19:753 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:19:753 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:19:754 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:19:754 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:19:788 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:19:789 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:19:789 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:19:789 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:19:789 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:19:811 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:19:811 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:19:811 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:19:812 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:19:812 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:19:842 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:19:842 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:19:842 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:19:842 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:19:842 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:19:874 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:19:874 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:19:874 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:19:875 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:19:875 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:19:904 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:19:904 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:19:904 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:19:905 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:19:905 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:19:934 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:19:934 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:19:934 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:19:935 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:19:935 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:19:964 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:19:965 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:19:965 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:19:966 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:19:966 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:19:994 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:19:994 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:19:994 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:19:995 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:19:995 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:24 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:25 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:25 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:25 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:25 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:54 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:55 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:55 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:55 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:55 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:86 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:86 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:86 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:87 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:87 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:120 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:120 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:120 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:121 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:121 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:146 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:146 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:146 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:146 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:147 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:180 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:180 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:180 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:181 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:181 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:206 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:206 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:206 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:207 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:207 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:240 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:240 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:241 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:241 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:241 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:266 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:266 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:266 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:266 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:267 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:300 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:301 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:301 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:301 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:302 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:327 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:327 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:327 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:328 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:328 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:357 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:357 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:357 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:358 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:358 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:386 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:387 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:387 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:387 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:387 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:417 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:417 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:417 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:418 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:418 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:447 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:447 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:447 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:448 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:448 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:477 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:478 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:478 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:478 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:478 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:507 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:507 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:507 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:508 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:508 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:537 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:537 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:537 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:538 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:538 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:568 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:568 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:568 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:568 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:569 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:598 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:598 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:599 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:599 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:599 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:629 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:629 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:629 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:630 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:630 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:659 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:660 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:660 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:660 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:660 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:689 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:689 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:689 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:690 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:690 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:720 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:720 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:720 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:720 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:721 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:750 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:751 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:751 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:751 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:751 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:781 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:782 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:782 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:782 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:782 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:813 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:813 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:813 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:813 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:814 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:842 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:843 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:843 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:843 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:843 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:873 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:873 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:873 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:874 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:874 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:903 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:903 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:903 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:903 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:904 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:933 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:933 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:933 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:934 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:934 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:963 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:964 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:964 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:964 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:964 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:20:994 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:20:994 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:20:994 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:20:995 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:20:995 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:24 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:24 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:24 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:25 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:25 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:54 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:55 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:55 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:55 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:55 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:84 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:85 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:85 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:85 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:85 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:115 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:115 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:115 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:116 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:116 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:146 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:147 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:147 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:147 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:148 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:177 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:177 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:177 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:178 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:178 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:207 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:207 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:207 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:208 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:208 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:237 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:237 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:237 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:238 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:238 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:268 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:268 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:268 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:269 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:269 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:298 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:298 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:298 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:299 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:299 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:328 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:328 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:328 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:329 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:329 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:357 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:358 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:358 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:358 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:358 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:388 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:389 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:389 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:389 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:390 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:419 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:419 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:419 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:420 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:420 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:449 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:449 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:449 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:450 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:450 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:480 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:480 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:480 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:481 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:481 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:510 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:511 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:511 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:511 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:512 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:541 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:541 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:541 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:542 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:542 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:572 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:572 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:572 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:573 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:573 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:601 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:602 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:602 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:602 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:603 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:632 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:632 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:632 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:633 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:633 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:662 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:663 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:663 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:663 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:664 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:693 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:693 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:693 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:694 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:694 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:723 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:723 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:723 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:724 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:724 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:753 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:754 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:754 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:754 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:754 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:782 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:783 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:783 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:783 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:784 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:813 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:813 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:813 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:814 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:814 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:844 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:844 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:844 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:844 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:845 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:874 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:875 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:875 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:875 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:875 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:904 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:904 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:904 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:905 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:905 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:934 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:934 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:934 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:935 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:935 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:965 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:965 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:965 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:966 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:966 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:21:995 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:21:996 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:21:996 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:21:996 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:21:996 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:26 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:26 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:26 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:27 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:27 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:56 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:56 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:56 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:57 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:57 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:86 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:86 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:86 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:87 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:87 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:116 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:116 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:116 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:117 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:117 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:146 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:146 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:146 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:147 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:147 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:175 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:176 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:176 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:176 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:177 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:206 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:207 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:207 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:207 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:207 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:237 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:237 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:237 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:237 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:238 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:266 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:267 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:267 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:267 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:267 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:297 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:297 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:297 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:297 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:298 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:327 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:328 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:328 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:328 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:328 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:356 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:357 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:357 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:357 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:358 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:387 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:387 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:387 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:388 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:388 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:418 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:419 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:419 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:419 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:419 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:448 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:449 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:449 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:449 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:449 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:479 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:479 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:479 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:480 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:480 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:509 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:510 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:510 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:510 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:511 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:540 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:541 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:541 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:541 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:541 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:572 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:572 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:572 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:572 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:573 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:601 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:601 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:601 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:601 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:602 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:631 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:631 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:631 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:632 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:632 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:661 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:662 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:662 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:662 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:662 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:691 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:692 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:692 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:692 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:692 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:721 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:721 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:721 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:722 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:722 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:751 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:752 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:752 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:752 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:752 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:781 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:782 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:782 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:782 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:782 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:812 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:812 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:812 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:813 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:813 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:842 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:842 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:842 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:843 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:843 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:872 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:873 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:873 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:873 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:873 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:903 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:903 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:903 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:904 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:904 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:933 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:933 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:933 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:934 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:934 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:22:962 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:22:963 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:22:963 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:22:963 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:22:964 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:23:253 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:23:253 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:23:253 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:23:254 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:23:254 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:23:461 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:23:461 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:23:461 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:23:462 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:23:462 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:23:653 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:23:653 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:23:653 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:23:654 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:23:654 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:23:837 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:23:837 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:23:837 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:23:838 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:23:838 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:24:5 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:24:5 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:24:5 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:24:6 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:24:6 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:24:165 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:24:165 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:24:165 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:24:166 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:24:166 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:24:357 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:24:357 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:24:357 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:24:358 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:24:358 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:24:509 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:24:509 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:24:509 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:24:509 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:24:510 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:24:675 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:24:675 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:24:675 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:24:675 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:24:675 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:24:885 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:24:885 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:24:885 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:24:886 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:24:886 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:25:37 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:25:37 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:25:37 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:25:37 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:25:38 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:25:269 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:25:269 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:25:269 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:25:269 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:25:270 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:25:491 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:25:491 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:25:491 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:25:491 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:25:492 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:25:725 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:25:725 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:25:725 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:25:726 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:25:726 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:25:957 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:25:957 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:25:957 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:25:957 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:25:958 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:26:173 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:26:173 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:26:173 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:26:174 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:26:174 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:26:356 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:26:357 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:26:357 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:26:358 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:26:358 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:26:573 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:26:573 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:26:573 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:26:574 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:26:574 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:26:805 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:26:805 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:26:805 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:26:805 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:26:806 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:27:165 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:27:165 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:27:165 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:27:166 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:27:166 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:27:437 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:27:437 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:27:437 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:27:438 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:27:438 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:27:677 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:27:677 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:27:677 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:27:678 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:27:678 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:27:949 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:27:949 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:27:949 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:27:950 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:27:950 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:28:197 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:28:197 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:28:197 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:28:197 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:28:198 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:28:437 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:28:437 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:28:437 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:28:437 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:28:438 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:29:588 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:29:589 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:29:589 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:29:589 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:29:589 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:29:853 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:29:853 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:29:854 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:29:854 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:29:854 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:30:124 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:30:125 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:30:125 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:30:125 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:30:126 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:30:381 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:30:381 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:30:381 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:30:381 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:30:382 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:30:620 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:30:621 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:30:621 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:30:621 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:30:621 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:30:820 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:30:821 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:30:821 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:30:821 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:30:822 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:31:147 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:31:148 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:31:148 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:31:148 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:31:148 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:31:388 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:31:389 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:31:389 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:31:389 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:31:389 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:31:636 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:31:637 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:31:637 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:31:637 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:31:637 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:32:13 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:32:13 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:32:13 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:32:14 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:32:14 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:32:237 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:32:237 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:32:237 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:32:238 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:32:238 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:32:861 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:32:862 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:32:862 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:32:862 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:32:862 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:33:53 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:33:53 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:33:53 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:33:54 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:33:54 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:33:261 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:33:261 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:33:261 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:33:261 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:33:262 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:33:980 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:33:982 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:33:982 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:33:982 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:33:982 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:34:149 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:34:149 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:34:149 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:34:149 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:34:150 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:34:333 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:34:333 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:34:333 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:34:334 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:34:334 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:34:541 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:34:541 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:34:541 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:34:542 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:34:543 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:34:860 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:34:861 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:34:861 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:34:861 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:34:861 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:35:76 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:35:77 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:35:77 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:35:77 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:35:78 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:35:293 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:35:293 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:35:293 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:35:293 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:35:294 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:35:740 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:35:741 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:35:741 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:35:741 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:35:741 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:35:892 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:35:893 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:35:893 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:35:893 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:35:894 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:36:93 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:36:93 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:36:93 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:36:94 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:36:94 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:36:588 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:36:589 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:36:589 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:36:590 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:36:590 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:36:805 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:36:805 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:36:805 Kernel/(14343:14346): exec:obtengo programa
+[DEBUG] 17:19:36:806 Kernel/(14343:14346): exec:termino programa
+[DEBUG] 17:19:36:806 Kernel/(14343:14346): exec:devuelvo control a consola
+[INFO] 17:19:40:245 Kernel/(14343:14348): sh:acrego una instruccion
+[INFO] 17:19:40:245 Kernel/(14343:14348): llame a exec
+[DEBUG] 17:19:40:245 Kernel/(14343:14346): exec:obtengo programa
+[INFO] 17:19:40:246 Kernel/(14343:14346): Se recibio una accion select
+[DEBUG] 17:19:40:246 Kernel/(14343:14346): se pide memoria de SC
+[INFO] 17:19:44:40 Kernel/(14373:14373): se inicia el modulo scheduler
+[INFO] 17:19:44:40 Kernel/(14373:14374): El servidor se inicializo exitosamente
+[INFO] 17:19:44:41 Kernel/(14373:14375): se inicia el monitoreo del config
+[DEBUG] 17:19:44:41 Kernel/(14373:14376): se inicia el modulo exec
+[DEBUG] 17:19:44:43 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:44:44 Kernel/(14373:14373): El modulo kmemory fue inicializado exitosamente
+[INFO] 17:19:44:876 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:44:877 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:44:877 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:44:877 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:44:877 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:45:70 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:45:70 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:45:70 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:45:70 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:45:71 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:45:244 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:45:245 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:45:245 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:45:245 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:45:246 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:45:395 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:45:395 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:45:395 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:45:395 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:45:395 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:45:555 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:45:555 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:45:555 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:45:555 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:45:555 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:45:677 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:45:677 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:45:677 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:45:678 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:45:678 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:45:836 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:45:837 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:45:837 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:45:837 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:45:838 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:46:4 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:46:4 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:46:5 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:46:5 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:46:5 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:46:284 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:46:285 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:46:285 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:46:285 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:46:285 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:46:785 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:46:786 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:46:786 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:46:786 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:46:786 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:46:816 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:46:816 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:46:816 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:46:817 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:46:818 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:46:846 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:46:847 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:46:847 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:46:847 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:46:847 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:46:876 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:46:876 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:46:876 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:46:876 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:46:877 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:46:907 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:46:907 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:46:907 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:46:907 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:46:907 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:46:937 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:46:938 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:46:938 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:46:938 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:46:938 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:46:968 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:46:968 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:46:968 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:46:968 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:46:969 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:46:998 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:46:998 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:46:998 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:46:999 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:46:999 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:47:29 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:47:29 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:47:29 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:47:30 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:47:30 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:47:59 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:47:59 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:47:59 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:47:59 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:47:59 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:47:90 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:47:90 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:47:90 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:47:91 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:47:91 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:47:212 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:47:213 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:47:213 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:47:213 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:47:214 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:47:396 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:47:397 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:47:397 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:47:397 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:47:397 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:50:860 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:50:861 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:50:861 Kernel/(14373:14376): exec:obtengo programa
+[INFO] 17:19:50:861 Kernel/(14373:14376): Se recibio una accion select
+[DEBUG] 17:19:50:861 Kernel/(14373:14376): se pide memoria de SC
+[DEBUG] 17:19:50:862 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:50:862 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:51:884 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:51:885 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:51:885 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:51:885 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:51:886 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:52:532 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:52:533 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:52:533 Kernel/(14373:14376): exec:obtengo programa
+[DEBUG] 17:19:52:533 Kernel/(14373:14376): exec:termino programa
+[DEBUG] 17:19:52:534 Kernel/(14373:14376): exec:devuelvo control a consola
+[INFO] 17:19:56:588 Kernel/(14373:14378): sh:acrego una instruccion
+[INFO] 17:19:56:589 Kernel/(14373:14378): llame a exec
+[DEBUG] 17:19:56:589 Kernel/(14373:14376): exec:obtengo programa
+[INFO] 17:19:56:589 Kernel/(14373:14376): Se recibio una accion select
+[DEBUG] 17:19:56:589 Kernel/(14373:14376): se pide memoria de SC
+[INFO] 17:20:55:519 Kernel/(14489:14489): se inicia el modulo scheduler
+[INFO] 17:20:55:519 Kernel/(14489:14490): El servidor se inicializo exitosamente
+[INFO] 17:20:55:520 Kernel/(14489:14491): se inicia el monitoreo del config
+[INFO] 17:20:55:520 Kernel/(14489:14489): El modulo kmemory fue inicializado exitosamente
+[DEBUG] 17:20:55:521 Kernel/(14489:14492): se inicia el modulo exec
+[DEBUG] 17:20:55:522 Kernel/(14489:14492): exec:devuelvo control a consola
+[INFO] 17:20:56:739 Kernel/(14489:14494): sh:acrego una instruccion
+[INFO] 17:20:56:740 Kernel/(14489:14494): llame a exec
+[DEBUG] 17:20:56:740 Kernel/(14489:14492): exec:obtengo programa
+[DEBUG] 17:20:56:740 Kernel/(14489:14492): exec:termino programa
+[DEBUG] 17:20:56:741 Kernel/(14489:14492): exec:devuelvo control a consola
+[INFO] 17:20:57:211 Kernel/(14489:14494): sh:acrego una instruccion
+[INFO] 17:20:57:212 Kernel/(14489:14494): llame a exec
+[DEBUG] 17:20:57:212 Kernel/(14489:14492): exec:obtengo programa
+[DEBUG] 17:20:57:212 Kernel/(14489:14492): exec:termino programa
+[DEBUG] 17:20:57:213 Kernel/(14489:14492): exec:devuelvo control a consola
+[INFO] 17:20:57:355 Kernel/(14489:14494): sh:acrego una instruccion
+[INFO] 17:20:57:356 Kernel/(14489:14494): llame a exec
+[DEBUG] 17:20:57:356 Kernel/(14489:14492): exec:obtengo programa
+[DEBUG] 17:20:57:356 Kernel/(14489:14492): exec:termino programa
+[DEBUG] 17:20:57:357 Kernel/(14489:14492): exec:devuelvo control a consola
+[INFO] 17:20:57:524 Kernel/(14489:14494): sh:acrego una instruccion
+[INFO] 17:20:57:524 Kernel/(14489:14494): llame a exec
+[DEBUG] 17:20:57:524 Kernel/(14489:14492): exec:obtengo programa
+[DEBUG] 17:20:57:524 Kernel/(14489:14492): exec:termino programa
+[DEBUG] 17:20:57:525 Kernel/(14489:14492): exec:devuelvo control a consola
+[INFO] 17:20:57:668 Kernel/(14489:14494): sh:acrego una instruccion
+[INFO] 17:20:57:668 Kernel/(14489:14494): llame a exec
+[DEBUG] 17:20:57:668 Kernel/(14489:14492): exec:obtengo programa
+[DEBUG] 17:20:57:668 Kernel/(14489:14492): exec:termino programa
+[DEBUG] 17:20:57:669 Kernel/(14489:14492): exec:devuelvo control a consola
+[INFO] 17:21:00:354 Kernel/(14489:14494): sh:acrego una instruccion
+[INFO] 17:21:00:354 Kernel/(14489:14494): llame a exec
+[DEBUG] 17:21:00:354 Kernel/(14489:14492): exec:obtengo programa
+[INFO] 17:21:00:355 Kernel/(14489:14492): Se recibio una accion select
+[DEBUG] 17:21:00:355 Kernel/(14489:14492): se pide memoria de SC
+[DEBUG] 17:21:00:355 Kernel/(14489:14492): exec:termino programa
+[DEBUG] 17:21:00:355 Kernel/(14489:14492): exec:devuelvo control a consola
+[INFO] 17:21:01:323 Kernel/(14489:14494): sh:acrego una instruccion
+[INFO] 17:21:01:324 Kernel/(14489:14494): llame a exec
+[DEBUG] 17:21:01:324 Kernel/(14489:14492): exec:obtengo programa
+[DEBUG] 17:21:01:324 Kernel/(14489:14492): exec:termino programa
+[DEBUG] 17:21:01:324 Kernel/(14489:14492): exec:devuelvo control a consola
+[INFO] 17:21:04:594 Kernel/(14489:14494): sh:acrego una instruccion
+[INFO] 17:21:04:594 Kernel/(14489:14494): llame a exec
+[DEBUG] 17:21:04:594 Kernel/(14489:14492): exec:obtengo programa
+[INFO] 17:21:04:594 Kernel/(14489:14492): Se recibio una accion select
+[DEBUG] 17:21:04:594 Kernel/(14489:14492): se pide memoria de SC
+[DEBUG] 17:21:04:594 Kernel/(14489:14492): exec:termino programa
+[DEBUG] 17:21:04:594 Kernel/(14489:14492): exec:devuelvo control a consola
+[INFO] 17:21:11:531 Kernel/(14489:14494): sh:acrego una instruccion
+[INFO] 17:21:11:531 Kernel/(14489:14494): llame a exec
+[DEBUG] 17:21:11:532 Kernel/(14489:14492): exec:obtengo programa
+[INFO] 17:21:11:532 Kernel/(14489:14492): Se recibio una accion select
+[DEBUG] 17:21:11:532 Kernel/(14489:14492): se pide memoria de SC
+[DEBUG] 17:21:11:533 Kernel/(14489:14492): exec:termino programa
+[DEBUG] 17:21:11:533 Kernel/(14489:14492): exec:devuelvo control a consola
+[INFO] 17:21:15:723 Kernel/(14489:14494): sh:acrego una instruccion
+[INFO] 17:21:15:723 Kernel/(14489:14494): llame a exec
+[DEBUG] 17:21:15:723 Kernel/(14489:14492): exec:obtengo programa
+[INFO] 17:21:15:724 Kernel/(14489:14492): Se recibio una accion select
+[DEBUG] 17:21:15:724 Kernel/(14489:14492): se pide memoria de SC
+[DEBUG] 17:21:15:724 Kernel/(14489:14492): exec:termino programa
+[DEBUG] 17:21:15:724 Kernel/(14489:14492): exec:devuelvo control a consola
+[INFO] 17:23:41:77 Kernel/(14764:14764): se inicia el modulo scheduler
+[INFO] 17:23:41:78 Kernel/(14764:14765): El servidor se inicializo exitosamente
+[DEBUG] 17:23:41:80 Kernel/(14764:14767): se inicia el modulo exec
+[INFO] 17:23:41:80 Kernel/(14764:14766): se inicia el monitoreo del config
+[DEBUG] 17:23:41:81 Kernel/(14764:14767): exec:devuelvo control a consola
+[INFO] 17:24:18:245 Kernel/(14836:14836): se inicia el modulo scheduler
+[INFO] 17:24:18:245 Kernel/(14836:14837): El servidor se inicializo exitosamente
+[INFO] 17:24:18:247 Kernel/(14836:14838): se inicia el monitoreo del config
+[DEBUG] 17:24:18:247 Kernel/(14836:14839): se inicia el modulo exec
+[DEBUG] 17:24:18:248 Kernel/(14836:14839): exec:devuelvo control a consola
+[INFO] 17:25:08:428 Kernel/(14907:14907): se inicia el modulo scheduler
+[INFO] 17:25:08:428 Kernel/(14907:14908): El servidor se inicializo exitosamente
+[INFO] 17:25:08:429 Kernel/(14907:14909): se inicia el monitoreo del config
+[DEBUG] 17:25:08:429 Kernel/(14907:14907): se crea una syscall
+[DEBUG] 17:25:08:429 Kernel/(14907:14910): se inicia el modulo exec
+[DEBUG] 17:25:08:430 Kernel/(14907:14910): exec:devuelvo control a consola
+[INFO] 17:52:12:810 Kernel/(17799:17799): se inicia el modulo scheduler
+[INFO] 17:52:12:810 Kernel/(17799:17800): El servidor se inicializo exitosamente
+[INFO] 17:52:12:812 Kernel/(17799:17801): se inicia el monitoreo del config
+[DEBUG] 17:52:12:812 Kernel/(17799:17802): se inicia el modulo exec
+[DEBUG] 17:52:12:812 Kernel/(17799:17803): Aun no estan disponibles las syscall 
+[DEBUG] 17:52:12:814 Kernel/(17799:17803): 
+[INFO] 17:52:12:814 Kernel/(17799:17799): El modulo kmemory fue inicializado exitosamente
+[INFO] 17:52:17:863 Kernel/(17799:17804): sh:acrego una instruccion
+[INFO] 17:52:17:863 Kernel/(17799:17804): llame a exec
+[DEBUG] 17:52:17:863 Kernel/(17799:17802): exec:obtengo programa
+[DEBUG] 17:52:17:864 Kernel/(17799:17802): exec:termino programa
+[INFO] 17:52:18:207 Kernel/(17799:17804): sh:acrego una instruccion
+[DEBUG] 17:52:18:208 Kernel/(17799:17802): exec:obtengo programa
+[INFO] 17:52:18:208 Kernel/(17799:17804): llame a exec
+[DEBUG] 17:52:18:208 Kernel/(17799:17802): exec:termino programa
+[INFO] 17:52:18:414 Kernel/(17799:17804): sh:acrego una instruccion
+[INFO] 17:52:18:415 Kernel/(17799:17804): llame a exec
+[DEBUG] 17:52:18:415 Kernel/(17799:17802): exec:obtengo programa
+[DEBUG] 17:52:18:415 Kernel/(17799:17802): exec:termino programa
+[INFO] 18:23:45:106 Kernel/(19589:19590): El servidor se inicializo exitosamente
+[INFO] 18:23:45:106 Kernel/(19589:19589): se inicia el modulo scheduler
+[INFO] 18:23:45:107 Kernel/(19589:19591): se inicia el monitoreo del config
+[DEBUG] 18:23:45:107 Kernel/(19589:19592): se inicia el modulo exec
+[DEBUG] 18:23:45:108 Kernel/(19589:19593): Aun no estan disponibles las syscall 
+[DEBUG] 18:23:45:129 Kernel/(19589:19593): 
+[INFO] 18:23:45:129 Kernel/(19589:19589): El modulo kmemory fue inicializado exitosamente
+[INFO] 18:23:46:134 Kernel/(19589:19594): sh:acrego una instruccion
+[INFO] 18:23:46:134 Kernel/(19589:19594): llame a exec
+[DEBUG] 18:23:46:134 Kernel/(19589:19592): exec:obtengo programa
+[DEBUG] 18:23:46:134 Kernel/(19589:19592): exec:termino programa
+[INFO] 18:23:46:573 Kernel/(19589:19594): sh:acrego una instruccion
+[INFO] 18:23:46:573 Kernel/(19589:19594): llame a exec
+[DEBUG] 18:23:46:573 Kernel/(19589:19592): exec:obtengo programa
+[DEBUG] 18:23:46:574 Kernel/(19589:19592): exec:termino programa
+[INFO] 18:23:46:805 Kernel/(19589:19594): sh:acrego una instruccion
+[INFO] 18:23:46:805 Kernel/(19589:19594): llame a exec
+[DEBUG] 18:23:46:805 Kernel/(19589:19592): exec:obtengo programa
+[DEBUG] 18:23:46:805 Kernel/(19589:19592): exec:termino programa
+[INFO] 18:29:25:497 Kernel/(20065:20065): se inicia el modulo scheduler
+[INFO] 18:29:25:498 Kernel/(20065:20066): El servidor se inicializo exitosamente
+[DEBUG] 18:29:25:498 Kernel/(20065:20068): se inicia el modulo exec
+[DEBUG] 18:29:25:499 Kernel/(20065:20069): se crea una syscall
+[DEBUG] 18:29:25:499 Kernel/(20065:20068): Una syscall libera al procesador ocioso
+[INFO] 18:29:25:500 Kernel/(20065:20067): se inicia el monitoreo del config
+[INFO] 18:30:00:169 Kernel/(20122:20123): El servidor se inicializo exitosamente
+[INFO] 18:30:00:169 Kernel/(20122:20122): se inicia el modulo scheduler
+[DEBUG] 18:30:00:172 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:172 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:172 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[INFO] 18:30:00:172 Kernel/(20122:20124): se inicia el monitoreo del config
+[DEBUG] 18:30:00:173 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:173 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:173 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:174 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:174 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:175 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:176 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:176 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:176 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:176 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:177 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:177 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:177 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:177 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:178 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:178 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:178 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:178 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:179 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:179 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:179 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:179 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:180 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:180 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:180 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:180 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:181 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:181 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:181 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:182 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:182 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:183 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:183 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:183 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:184 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:184 Kernel/(20122:20126): Aun no estan disponibles las syscall 
+[DEBUG] 18:30:00:176 Kernel/(20122:20125): se inicia el modulo exec
+[DEBUG] 18:30:00:184 Kernel/(20122:20126): 
+[DEBUG] 18:30:00:192 Kernel/(20122:20126): se crea una syscall
+[DEBUG] 18:30:00:193 Kernel/(20122:20125): Una syscall libera al procesador ocioso
+[INFO] 18:32:08:390 Kernel/(20318:20318): se inicia el modulo scheduler
+[INFO] 18:32:08:390 Kernel/(20318:20319): El servidor se inicializo exitosamente
+[INFO] 18:32:08:391 Kernel/(20318:20320): se inicia el monitoreo del config
+[DEBUG] 18:32:08:392 Kernel/(20318:20322): Aun no estan disponibles las syscall 
+[DEBUG] 18:32:08:392 Kernel/(20318:20322): 
+[DEBUG] 18:32:08:392 Kernel/(20318:20322): Aun no estan disponibles las syscall 
+[DEBUG] 18:32:08:392 Kernel/(20318:20322): 
+[DEBUG] 18:32:08:393 Kernel/(20318:20322): Aun no estan disponibles las syscall 
+[DEBUG] 18:32:08:393 Kernel/(20318:20322): 
+[DEBUG] 18:32:08:393 Kernel/(20318:20322): Aun no estan disponibles las syscall 
+[DEBUG] 18:32:08:394 Kernel/(20318:20322): 
+[DEBUG] 18:32:08:394 Kernel/(20318:20322): Aun no estan disponibles las syscall 
+[DEBUG] 18:32:08:394 Kernel/(20318:20322): 
+[DEBUG] 18:32:08:395 Kernel/(20318:20322): Aun no estan disponibles las syscall 
+[DEBUG] 18:32:08:395 Kernel/(20318:20322): 
+[DEBUG] 18:32:08:395 Kernel/(20318:20322): Aun no estan disponibles las syscall 
+[DEBUG] 18:32:08:395 Kernel/(20318:20322): 
+[DEBUG] 18:32:08:395 Kernel/(20318:20322): Aun no estan disponibles las syscall 
+[DEBUG] 18:32:08:396 Kernel/(20318:20322): 
+[DEBUG] 18:32:08:396 Kernel/(20318:20322): Aun no estan disponibles las syscall 
+[DEBUG] 18:32:08:396 Kernel/(20318:20321): se inicia el modulo exec
+[DEBUG] 18:32:08:396 Kernel/(20318:20322): 
+[DEBUG] 18:32:08:401 Kernel/(20318:20322): se crea una syscall
+[DEBUG] 18:32:08:401 Kernel/(20318:20321): Una syscall libera al procesador ocioso
+[DEBUG] 18:32:08:401 Kernel/(20318:20321): exec:obtengo programa
+[DEBUG] 18:32:08:401 Kernel/(20318:20321): Se recibe un syscall
+[DEBUG] 18:32:08:402 Kernel/(20318:20321): se le debvuelve al kernel su pedido
+[DEBUG] 18:32:08:402 Kernel/(20318:20322): no es una instruccion valida
+
+[DEBUG] 18:32:08:402 Kernel/(20318:20321): exec:termino programa
+[DEBUG] 18:32:08:402 Kernel/(20318:20322): se crea una syscall
+[INFO] 18:34:22:795 Kernel/(20460:20460): se inicia el modulo scheduler
+[INFO] 18:34:22:795 Kernel/(20460:20461): El servidor se inicializo exitosamente
+[INFO] 18:34:22:798 Kernel/(20460:20462): se inicia el monitoreo del config
+[DEBUG] 18:34:22:798 Kernel/(20460:20463): se inicia el modulo exec
+[DEBUG] 18:34:22:798 Kernel/(20460:20464): se crea una syscall
+[DEBUG] 18:34:22:798 Kernel/(20460:20463): Una syscall libera al procesador ocioso
+[DEBUG] 18:34:22:799 Kernel/(20460:20463): exec:obtengo programa
+[DEBUG] 18:34:22:799 Kernel/(20460:20463): Se recibe un syscall
+[DEBUG] 18:34:22:799 Kernel/(20460:20463): exec:termino programa
+[INFO] 18:34:57:635 Kernel/(20518:20519): El servidor se inicializo exitosamente
+[INFO] 18:34:57:635 Kernel/(20518:20518): se inicia el modulo scheduler
+[DEBUG] 18:34:57:636 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:637 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:638 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:638 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:638 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:638 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:638 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:639 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:639 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:639 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:639 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:639 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:639 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:640 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:640 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:640 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:640 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:640 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:641 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:641 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:641 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:641 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:641 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:642 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:642 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:642 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:642 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:643 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:643 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:644 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:644 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:644 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:644 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:644 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:644 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:645 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:645 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:645 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:645 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:645 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:646 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:646 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:646 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:648 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:649 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:649 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:649 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:649 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:650 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:650 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:650 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:650 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:651 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:651 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:651 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:651 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:651 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:652 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:652 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:652 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:652 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:652 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:653 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:653 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:653 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:653 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:653 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:654 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:654 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:654 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:654 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:654 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:655 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:655 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:655 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:655 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:655 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:656 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:659 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:659 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:659 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:660 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:660 Kernel/(20518:20522): Aun no estan disponibles las syscall 
+[DEBUG] 18:34:57:640 Kernel/(20518:20521): se inicia el modulo exec
+[INFO] 18:34:57:636 Kernel/(20518:20520): se inicia el monitoreo del config
+[DEBUG] 18:34:57:660 Kernel/(20518:20522): 
+[DEBUG] 18:34:57:661 Kernel/(20518:20522): se crea una syscall
+[DEBUG] 18:34:57:661 Kernel/(20518:20521): Una syscall libera al procesador ocioso
+[DEBUG] 18:34:57:661 Kernel/(20518:20521): exec:obtengo programa
+[DEBUG] 18:34:57:661 Kernel/(20518:20521): Se recibe un syscall
+[DEBUG] 18:34:57:662 Kernel/(20518:20521): exec:termino programa
+[INFO] 18:36:07:729 Kernel/(20632:20632): se inicia el modulo scheduler
+[INFO] 18:36:07:729 Kernel/(20632:20633): El servidor se inicializo exitosamente
+[INFO] 18:36:07:731 Kernel/(20632:20634): se inicia el monitoreo del config
+[DEBUG] 18:36:07:731 Kernel/(20632:20636): Aun no estan disponibles las syscall 
+[DEBUG] 18:36:07:731 Kernel/(20632:20635): se inicia el modulo exec
+[DEBUG] 18:36:07:731 Kernel/(20632:20636): 
+[DEBUG] 18:36:07:732 Kernel/(20632:20636): se crea una syscall
+[DEBUG] 18:36:07:732 Kernel/(20632:20635): Una syscall libera al procesador ocioso
+[DEBUG] 18:36:07:732 Kernel/(20632:20635): exec:obtengo programa
+[DEBUG] 18:36:07:732 Kernel/(20632:20635): Se recibe un syscall
+[DEBUG] 18:36:07:732 Kernel/(20632:20635): exec:termino programa
+[INFO] 18:38:09:648 Kernel/(20758:20759): El servidor se inicializo exitosamente
+[INFO] 18:38:09:648 Kernel/(20758:20758): se inicia el modulo scheduler
+[INFO] 18:38:09:650 Kernel/(20758:20760): se inicia el monitoreo del config
+[DEBUG] 18:38:09:650 Kernel/(20758:20761): se inicia el modulo exec
+[DEBUG] 18:38:09:656 Kernel/(20758:20762): se crea una syscall
+[DEBUG] 18:38:09:657 Kernel/(20758:20761): Una syscall libera al procesador ocioso
+[DEBUG] 18:38:09:657 Kernel/(20758:20761): exec:obtengo programa
+[DEBUG] 18:38:09:657 Kernel/(20758:20761): Se recibe un syscall
+[DEBUG] 18:38:09:657 Kernel/(20758:20761): exec:termino programa
+[INFO] 18:38:23:726 Kernel/(20813:20813): se inicia el modulo scheduler
+[INFO] 18:38:23:726 Kernel/(20813:20814): El servidor se inicializo exitosamente
+[DEBUG] 18:38:23:728 Kernel/(20813:20816): se inicia el modulo exec
+[DEBUG] 18:38:23:728 Kernel/(20813:20817): Aun no estan disponibles las syscall 
+[DEBUG] 18:38:23:728 Kernel/(20813:20817): 
+[DEBUG] 18:38:23:729 Kernel/(20813:20817): se crea una syscall
+[DEBUG] 18:38:23:729 Kernel/(20813:20816): Una syscall libera al procesador ocioso
+[DEBUG] 18:38:23:729 Kernel/(20813:20816): exec:obtengo programa
+[DEBUG] 18:38:23:729 Kernel/(20813:20816): Se recibe un syscall
+[DEBUG] 18:38:23:730 Kernel/(20813:20816): exec:termino programa
+[INFO] 18:38:23:732 Kernel/(20813:20815): se inicia el monitoreo del config
+[INFO] 18:38:33:135 Kernel/(20852:20853): El servidor se inicializo exitosamente
+[INFO] 18:38:33:135 Kernel/(20852:20852): se inicia el modulo scheduler
+[INFO] 18:38:33:136 Kernel/(20852:20854): se inicia el monitoreo del config
+[DEBUG] 18:38:33:137 Kernel/(20852:20856): Aun no estan disponibles las syscall 
+[DEBUG] 18:38:33:138 Kernel/(20852:20856): 
+[DEBUG] 18:38:33:138 Kernel/(20852:20856): Aun no estan disponibles las syscall 
+[DEBUG] 18:38:33:138 Kernel/(20852:20856): 
+[DEBUG] 18:38:33:138 Kernel/(20852:20856): Aun no estan disponibles las syscall 
+[DEBUG] 18:38:33:139 Kernel/(20852:20856): 
+[DEBUG] 18:38:33:139 Kernel/(20852:20856): Aun no estan disponibles las syscall 
+[DEBUG] 18:38:33:139 Kernel/(20852:20856): 
+[DEBUG] 18:38:33:139 Kernel/(20852:20856): Aun no estan disponibles las syscall 
+[DEBUG] 18:38:33:140 Kernel/(20852:20856): 
+[DEBUG] 18:38:33:140 Kernel/(20852:20856): Aun no estan disponibles las syscall 
+[DEBUG] 18:38:33:139 Kernel/(20852:20855): se inicia el modulo exec
+[DEBUG] 18:38:33:140 Kernel/(20852:20856): 
+[DEBUG] 18:38:33:141 Kernel/(20852:20856): se crea una syscall
+[DEBUG] 18:38:33:141 Kernel/(20852:20856): la syscall se TERMINA
+[DEBUG] 18:38:33:141 Kernel/(20852:20855): Una syscall libera al procesador ocioso
+[DEBUG] 18:38:33:141 Kernel/(20852:20855): exec:obtengo programa
+[DEBUG] 18:38:33:142 Kernel/(20852:20855): Se recibe un syscall
+[DEBUG] 18:38:33:142 Kernel/(20852:20855): exec:termino programa
+[INFO] 18:38:49:134 Kernel/(20907:20907): se inicia el modulo scheduler
+[INFO] 18:38:49:134 Kernel/(20907:20908): El servidor se inicializo exitosamente
+[INFO] 18:38:49:136 Kernel/(20907:20909): se inicia el monitoreo del config
+[DEBUG] 18:38:49:136 Kernel/(20907:20911): Aun no estan disponibles las syscall 
+[DEBUG] 18:38:49:137 Kernel/(20907:20911): 
+[DEBUG] 18:38:49:137 Kernel/(20907:20911): Aun no estan disponibles las syscall 
+[DEBUG] 18:38:49:137 Kernel/(20907:20911): 
+[DEBUG] 18:38:49:138 Kernel/(20907:20911): Aun no estan disponibles las syscall 
+[DEBUG] 18:38:49:138 Kernel/(20907:20911): 
+[DEBUG] 18:38:49:139 Kernel/(20907:20911): Aun no estan disponibles las syscall 
+[DEBUG] 18:38:49:139 Kernel/(20907:20911): 
+[DEBUG] 18:38:49:136 Kernel/(20907:20910): se inicia el modulo exec
+[DEBUG] 18:38:49:139 Kernel/(20907:20911): Aun no estan disponibles las syscall 
+[DEBUG] 18:38:49:140 Kernel/(20907:20911): 
+[DEBUG] 18:38:49:140 Kernel/(20907:20911): se crea una syscall
+[DEBUG] 18:38:49:140 Kernel/(20907:20910): Una syscall libera al procesador ocioso
+[DEBUG] 18:38:49:141 Kernel/(20907:20910): exec:obtengo programa
+[DEBUG] 18:38:49:141 Kernel/(20907:20910): Se recibe un syscall
+[DEBUG] 18:38:49:141 Kernel/(20907:20910): exec:termino programa
+[INFO] 18:39:02:581 Kernel/(20981:20981): se inicia el modulo scheduler
+[INFO] 18:39:02:582 Kernel/(20981:20982): El servidor se inicializo exitosamente
+[INFO] 18:39:02:583 Kernel/(20981:20983): se inicia el monitoreo del config
+[DEBUG] 18:39:02:583 Kernel/(20981:20985): Aun no estan disponibles las syscall 
+[DEBUG] 18:39:02:584 Kernel/(20981:20985): 
+[DEBUG] 18:39:02:584 Kernel/(20981:20985): Aun no estan disponibles las syscall 
+[DEBUG] 18:39:02:584 Kernel/(20981:20985): 
+[DEBUG] 18:39:02:584 Kernel/(20981:20985): Aun no estan disponibles las syscall 
+[DEBUG] 18:39:02:585 Kernel/(20981:20985): 
+[DEBUG] 18:39:02:585 Kernel/(20981:20984): se inicia el modulo exec
+[DEBUG] 18:39:02:585 Kernel/(20981:20985): Aun no estan disponibles las syscall 
+[DEBUG] 18:39:02:586 Kernel/(20981:20985): 
+[DEBUG] 18:39:02:586 Kernel/(20981:20985): se crea una syscall
+[DEBUG] 18:39:02:586 Kernel/(20981:20984): Una syscall libera al procesador ocioso
+[DEBUG] 18:39:02:586 Kernel/(20981:20984): exec:obtengo programa
+[DEBUG] 18:39:02:586 Kernel/(20981:20984): Se recibe un syscall
+[DEBUG] 18:39:02:587 Kernel/(20981:20984): exec:termino programa
+[INFO] 18:40:11:270 Kernel/(21076:21077): El servidor se inicializo exitosamente
+[INFO] 18:40:11:270 Kernel/(21076:21076): se inicia el modulo scheduler
+[INFO] 18:40:11:273 Kernel/(21076:21078): se inicia el monitoreo del config
+[DEBUG] 18:40:11:273 Kernel/(21076:21080): Aun no estan disponibles las syscall 
+[DEBUG] 18:40:11:274 Kernel/(21076:21080): 
+[DEBUG] 18:40:11:274 Kernel/(21076:21080): Aun no estan disponibles las syscall 
+[DEBUG] 18:40:11:274 Kernel/(21076:21080): 
+[DEBUG] 18:40:11:275 Kernel/(21076:21080): Aun no estan disponibles las syscall 
+[DEBUG] 18:40:11:275 Kernel/(21076:21080): 
+[DEBUG] 18:40:11:275 Kernel/(21076:21080): Aun no estan disponibles las syscall 
+[DEBUG] 18:40:11:276 Kernel/(21076:21080): 
+[DEBUG] 18:40:11:276 Kernel/(21076:21080): Aun no estan disponibles las syscall 
+[DEBUG] 18:40:11:276 Kernel/(21076:21080): 
+[DEBUG] 18:40:11:276 Kernel/(21076:21080): Aun no estan disponibles las syscall 
+[DEBUG] 18:40:11:276 Kernel/(21076:21079): se inicia el modulo exec
+[DEBUG] 18:40:11:276 Kernel/(21076:21080): 
+[DEBUG] 18:40:11:277 Kernel/(21076:21080): se crea una syscall
+[DEBUG] 18:40:11:277 Kernel/(21076:21079): Una syscall libera al procesador ocioso
+[DEBUG] 18:40:11:277 Kernel/(21076:21079): exec:obtengo programa
+[DEBUG] 18:40:11:277 Kernel/(21076:21079): Se recibe un syscall
+[DEBUG] 18:40:11:278 Kernel/(21076:21079): se le debvuelve al kernel su pedido
+[DEBUG] 18:40:11:278 Kernel/(21076:21080): la syscall se TERMINA
+[DEBUG] 18:40:11:278 Kernel/(21076:21079): exec:termino programa
+[DEBUG] 18:40:11:278 Kernel/(21076:21080): no es una instruccion valida
+
+[DEBUG] 18:40:11:278 Kernel/(21076:21080): se crea una syscall
+[INFO] 18:43:54:540 Kernel/(21358:21359): El servidor se inicializo exitosamente
+[INFO] 18:43:54:540 Kernel/(21358:21358): se inicia el modulo scheduler
+[INFO] 18:43:54:541 Kernel/(21358:21360): se inicia el monitoreo del config
+[DEBUG] 18:43:54:542 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:542 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:542 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:543 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:543 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:543 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:543 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:544 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:544 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:544 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:544 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:545 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:545 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:545 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:545 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:545 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:546 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:546 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:546 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:546 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:546 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:547 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:547 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:547 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:547 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:548 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:548 Kernel/(21358:21361): se inicia el modulo exec
+[DEBUG] 18:43:54:548 Kernel/(21358:21362): Aun no estan disponibles las syscall 
+[DEBUG] 18:43:54:551 Kernel/(21358:21362): 
+[DEBUG] 18:43:54:551 Kernel/(21358:21362): se crea una syscall
+[DEBUG] 18:43:54:552 Kernel/(21358:21361): Una syscall libera al procesador ocioso
+[DEBUG] 18:43:54:554 Kernel/(21358:21361): exec:obtengo programa
+[DEBUG] 18:43:54:554 Kernel/(21358:21361): Se recibe un syscall
+[DEBUG] 18:43:54:555 Kernel/(21358:21361): se le debvuelve al kernel su pedido
+[DEBUG] 18:43:54:555 Kernel/(21358:21362): la syscall se TERMINA
+[DEBUG] 18:43:54:555 Kernel/(21358:21361): exec:termino programa
+[DEBUG] 18:43:54:555 Kernel/(21358:21362): no es una instruccion valida
+
+[DEBUG] 18:43:54:555 Kernel/(21358:21362): se crea una syscall
+[INFO] 18:46:20:758 Kernel/(21551:21551): se inicia el modulo scheduler
+[INFO] 18:46:20:758 Kernel/(21551:21552): El servidor se inicializo exitosamente
+[INFO] 18:46:20:758 Kernel/(21551:21553): se inicia el monitoreo del config
+[DEBUG] 18:46:20:759 Kernel/(21551:21555): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:20:759 Kernel/(21551:21555): 
+[DEBUG] 18:46:20:759 Kernel/(21551:21555): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:20:759 Kernel/(21551:21555): 
+[DEBUG] 18:46:20:758 Kernel/(21551:21554): se inicia el modulo exec
+[DEBUG] 18:46:20:759 Kernel/(21551:21555): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:20:759 Kernel/(21551:21555): 
+[DEBUG] 18:46:20:759 Kernel/(21551:21555): se crea una syscall
+[DEBUG] 18:46:20:759 Kernel/(21551:21554): Una syscall libera al procesador ocioso
+[DEBUG] 18:46:20:759 Kernel/(21551:21554): exec:obtengo programa
+[DEBUG] 18:46:20:759 Kernel/(21551:21554): Se recibe un syscall
+[DEBUG] 18:46:20:759 Kernel/(21551:21554): se le debvuelve al kernel su pedido
+[DEBUG] 18:46:20:760 Kernel/(21551:21554): exec:termino programa
+[DEBUG] 18:46:20:760 Kernel/(21551:21555): la syscall se TERMINA
+[DEBUG] 18:46:20:760 Kernel/(21551:21555): no es una instruccion valida
+
+[DEBUG] 18:46:20:760 Kernel/(21551:21555): se crea una syscall
+[INFO] 18:46:23:666 Kernel/(21594:21594): se inicia el modulo scheduler
+[INFO] 18:46:23:666 Kernel/(21594:21595): El servidor se inicializo exitosamente
+[INFO] 18:46:23:667 Kernel/(21594:21596): se inicia el monitoreo del config
+[DEBUG] 18:46:23:667 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:667 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:667 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:668 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:668 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:668 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:668 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:668 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:668 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:669 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:669 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:669 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:669 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:669 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:669 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:669 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:670 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:670 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:670 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:670 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:670 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:670 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:670 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:670 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:671 Kernel/(21594:21597): se inicia el modulo exec
+[DEBUG] 18:46:23:671 Kernel/(21594:21598): Aun no estan disponibles las syscall 
+[DEBUG] 18:46:23:673 Kernel/(21594:21598): 
+[DEBUG] 18:46:23:673 Kernel/(21594:21598): se crea una syscall
+[DEBUG] 18:46:23:673 Kernel/(21594:21598): la syscall se TERMINA
+[DEBUG] 18:46:23:673 Kernel/(21594:21597): Una syscall libera al procesador ocioso
+[DEBUG] 18:46:23:673 Kernel/(21594:21597): exec:obtengo programa
+[DEBUG] 18:46:23:673 Kernel/(21594:21597): Se recibe un syscall
+[DEBUG] 18:46:23:674 Kernel/(21594:21597): se le debvuelve al kernel su pedido
+[DEBUG] 18:46:23:674 Kernel/(21594:21598): no es una instruccion valida
+
+[DEBUG] 18:46:23:674 Kernel/(21594:21597): exec:termino programa
+[DEBUG] 18:46:23:674 Kernel/(21594:21598): se crea una syscall
+[DEBUG] 18:46:23:674 Kernel/(21594:21598): la syscall se TERMINA
+[INFO] 18:47:08:841 Kernel/(21666:21666): se inicia el modulo scheduler
+[INFO] 18:47:08:841 Kernel/(21666:21667): El servidor se inicializo exitosamente
+[INFO] 18:47:08:842 Kernel/(21666:21668): se inicia el monitoreo del config
+[DEBUG] 18:47:08:842 Kernel/(21666:21669): se inicia el modulo exec
+[DEBUG] 18:47:08:843 Kernel/(21666:21670): Aun no estan disponibles las syscall 
+[DEBUG] 18:47:08:843 Kernel/(21666:21670): 
+[DEBUG] 18:47:08:843 Kernel/(21666:21670): se crea una syscall
+[DEBUG] 18:47:08:844 Kernel/(21666:21670): la syscall se TERMINA
+[DEBUG] 18:47:08:844 Kernel/(21666:21669): Una syscall libera al procesador ocioso
+[DEBUG] 18:47:08:844 Kernel/(21666:21669): exec:obtengo programa
+[DEBUG] 18:47:08:844 Kernel/(21666:21669): Se recibe un syscall
+[DEBUG] 18:47:08:845 Kernel/(21666:21669): se le debvuelve al kernel su pedido
+[DEBUG] 18:47:08:845 Kernel/(21666:21670): no es una instruccion valida
+
+[DEBUG] 18:47:08:845 Kernel/(21666:21669): exec:termino programa
+[DEBUG] 18:47:08:845 Kernel/(21666:21670): se crea una syscall
+[DEBUG] 18:47:08:845 Kernel/(21666:21670): la syscall se TERMINA
+[INFO] 19:00:44:916 Kernel/(22412:22412): se inicia el modulo scheduler
+[INFO] 19:00:44:916 Kernel/(22412:22413): El servidor se inicializo exitosamente
+[DEBUG] 19:00:44:917 Kernel/(22412:22415): se inicia el modulo exec
+[INFO] 19:00:44:917 Kernel/(22412:22414): se inicia el monitoreo del config
+[DEBUG] 19:00:44:922 Kernel/(22412:22416): se crea una syscall
+[DEBUG] 19:00:44:924 Kernel/(22412:22416): la syscall se TERMINA
+[DEBUG] 19:00:44:924 Kernel/(22412:22415): Una syscall libera al procesador ocioso
+[INFO] 19:04:20:496 Kernel/(22715:22715): se inicia el modulo scheduler
+[INFO] 19:04:20:496 Kernel/(22715:22716): El servidor se inicializo exitosamente
+[DEBUG] 19:04:20:497 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:497 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:497 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[INFO] 19:04:20:497 Kernel/(22715:22717): se inicia el monitoreo del config
+[DEBUG] 19:04:20:498 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:499 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:499 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:499 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:499 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:499 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:499 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:500 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:500 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:500 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:500 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:501 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:501 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:501 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:501 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:501 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:502 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:502 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:502 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:502 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:502 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:503 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:503 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:503 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:503 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:503 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:504 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:504 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:505 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:505 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:505 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:505 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:505 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:506 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:506 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:506 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:506 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:506 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:507 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:507 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:508 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:508 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:509 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:509 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:509 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:509 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:509 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:510 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:510 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:500 Kernel/(22715:22718): se inicia el modulo exec
+[DEBUG] 19:04:20:513 Kernel/(22715:22719): Aun no estan disponibles las syscall 
+[DEBUG] 19:04:20:514 Kernel/(22715:22719): 
+[DEBUG] 19:04:20:514 Kernel/(22715:22719): se crea una syscall
+[DEBUG] 19:04:20:514 Kernel/(22715:22719): la syscall se TERMINA
+[DEBUG] 19:04:20:514 Kernel/(22715:22718): Una syscall libera al procesador ocioso
+[DEBUG] 19:04:20:515 Kernel/(22715:22718): exec:obtengo programa
+[DEBUG] 19:04:20:515 Kernel/(22715:22718): Se recibe un syscall
+[DEBUG] 19:04:20:515 Kernel/(22715:22718): se le debvuelve al kernel su pedido
+[DEBUG] 19:04:20:515 Kernel/(22715:22719): no es una instruccion valida
+
+[DEBUG] 19:04:20:515 Kernel/(22715:22718): exec:termino programa
+[DEBUG] 19:04:20:515 Kernel/(22715:22719): se crea una syscall
+[DEBUG] 19:04:20:516 Kernel/(22715:22719): la syscall se TERMINA
+[INFO] 02:35:57:708 Kernel/(8641:8641): se inicia el modulo scheduler
+[INFO] 02:35:57:708 Kernel/(8641:8642): El servidor se inicializo exitosamente
+[INFO] 02:35:57:716 Kernel/(8641:8643): se inicia el monitoreo del config
+[ERROR] 02:35:57:716 Kernel/(8641:8641): No se logro establecer coneccion con memoria
+[DEBUG] 02:35:57:716 Kernel/(8641:8644): se inicia el modulo exec
+[DEBUG] 02:35:57:716 Kernel/(8641:8645): Aun no estan disponibles las syscall 
+[DEBUG] 02:35:57:716 Kernel/(8641:8645): 
+[DEBUG] 02:35:57:716 Kernel/(8641:8645): se crea una syscall
+[DEBUG] 02:35:57:716 Kernel/(8641:8645): la syscall se TERMINA
+[DEBUG] 02:35:57:716 Kernel/(8641:8644): Una syscall libera al procesador ocioso
+[DEBUG] 02:35:57:717 Kernel/(8641:8644): exec:obtengo programa
+[DEBUG] 02:35:57:717 Kernel/(8641:8644): Se recibe un syscall
+[DEBUG] 02:35:57:717 Kernel/(8641:8644): se le debvuelve al kernel su pedido
+[DEBUG] 02:35:57:717 Kernel/(8641:8645): no es una instruccion valida
+
+[DEBUG] 02:35:57:717 Kernel/(8641:8644): exec:termino programa
+[DEBUG] 02:35:57:717 Kernel/(8641:8645): se crea una syscall
+[DEBUG] 02:35:57:717 Kernel/(8641:8645): la syscall se TERMINA

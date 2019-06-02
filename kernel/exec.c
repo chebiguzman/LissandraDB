@@ -21,12 +21,15 @@ void* exec(void *system_queue){
 
         while(!queue_is_empty( exec_queue ) && exec_size != 0){
             ///obtengo el proximo programa de la cola de exec
-            
+            EXECUTION:
             log_debug(logg, "exec:obtengo programa");
             t_instr_set* program;
             t_ksyscall* kernel_call;
 
-            //Reviso si hay llamadas al sistema
+            /*Reviso si hay llamadas al sistema
+            si las hay las pongo primeras en linea para ejecutar en el proximo
+            cuantum ya que RR es apropiativo en el quantum*/
+
             pthread_mutex_lock(&syscall_queue->lock);
             if(!queue_is_empty(syscall_queue->scheduler_queue)){
                 log_debug(logg, "Se recibe un syscall");
@@ -55,12 +58,12 @@ void* exec(void *system_queue){
                 //log_debug(logg, "exec:obtengo respuesta");
                 printf("%s", r);
 
+                
                 if(superuser){
                     kernel_call->result = r;
                     pthread_cond_broadcast(&kernel_call->cond);
                     log_debug(logg, "se le debvuelve al kernel su pedido");
                 }
-
                 //free(r);
                 free(instr);
 
@@ -69,9 +72,11 @@ void* exec(void *system_queue){
                 multiprogramacion, si no, lo devuelvo a exec*/
                 if(queue_is_empty( program->instr)){
                     log_debug(logg, "exec:termino programa");
+                    
                     exec_size--;
-                    //log_debug(logg, "exec:me voy a buscar otro programa");
+                   
                     lock_queue();
+                    log_debug(logg, "exec:me voy a buscar otro programa");
                     updateTasks(exec_queue);
                     
                     break;
@@ -90,20 +95,30 @@ void* exec(void *system_queue){
             
         }
 
-        /*si mi cola de exec se quedo  vacia quiere decir
-        que tambien la del scheduler asi que espero una señal*/       
-        //log_debug(logg, "exec:cola exec vacia");
+             
+
         
         
-        log_debug(logg, "exec:devuelvo control a consola");
+        syscall_availity_status = true;
         //devuelvo el control a consola
         pthread_mutex_unlock(&console->lock);
         pthread_cond_broadcast(&console->cond);
 
-        lock_queue();
+         /*si mi cola de exec se quedo  vacia quiere decir
+        que tambien la del scheduler asi que espero una señal
+        ya sea una syscal o que añadan una tarea*/ 
+        
         pthread_cond_wait(&queue->cond, &queue->lock);
         //log_debug(logg, "exec:me llego una query");
-        updateTasks(exec_queue);
+        if(!queue_is_empty(syscall_queue->scheduler_queue)){
+            log_debug(logg, "Una syscall libera al procesador ocioso");
+           goto EXECUTION;
+            
+        }else{
+            lock_queue();
+            updateTasks(exec_queue);
+        }
+        
         
     }   
 

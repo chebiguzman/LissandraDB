@@ -68,6 +68,7 @@ int main(int argc, char const *argv[])
 
     //JOIN THREADS
     pthread_join(tid,NULL);
+    pthread_join(tid_console,NULL);
     
     //FREE MEMORY
     free(LOGPATH);
@@ -84,20 +85,26 @@ char* action_select(package_select* select_info){
   strcpy(responce, "");
 
   //get consistency of talble
-  //t_consistency consistency = getTableConsistency(select_info->table_name);
+  t_consistency consistency = get_table_consistency(select_info->table_name);
   //pedir una memoria
-  /*int memoryfd = get_loked_memory(consistency);
+  int memoryfd = get_loked_memory(consistency);
+  printf("\nla fd de mem es: %d", memoryfd);
+  if ( memoryfd < 0 ){
+    log_error(logger, "No se pudo llevar a cabo la accion select");
+    return "";
+  }
+
   //ejecutar
-  char* package = parse_package_select(select_info);
+  /*char* package = parse_package_select(select_info);
   if(write(memoryfd,package, strlen(package)+1)){
     read(memoryfd, responce, 3000);
     
   }else{
     log_error(logger, "No se logo comuniarse con memoria");
   }
-
+  */
   //debolver memoria
-  unlock_memory(memoryfd);*/
+  unlock_memory(memoryfd);
   //dar resou
  
   return responce;

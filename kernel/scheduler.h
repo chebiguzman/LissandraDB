@@ -20,7 +20,10 @@ typedef struct
 typedef struct 
 {
     long quantum;
+    long sleep;
+    long metadata_refresh;
     int multi_script_level;
+
 
 }scheduler_config;
 
