@@ -20,7 +20,7 @@
 scheduler_config* config_not;
 pthread_mutex_t config_lock = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t config_cond = PTHREAD_COND_INITIALIZER;
-
+bool syscall_availity_status = false; //No puedo hacer una sys call hasta que algun exec llegue a una espera.
 scheduler_queue* queue;
 scheduler_queue* syscall_queue;
 
@@ -35,7 +35,9 @@ void start_sheduler(t_log* log, t_console_control* console_control ){
     fconfig = config_create("config");
     logg = log;
     config_not= malloc(sizeof(scheduler_config));
-    config_not->multi_script_level = 1;
+
+    int m = config_get_int_value(fconfig, "MULTIPROCESAMIENTO");
+    config_not->multi_script_level = m;
     config_not->quantum = 1;
     
     update_scheduler_config();
@@ -82,9 +84,12 @@ void update_scheduler_config(){
         pthread_mutex_lock(&config_lock);
         
         int q = config_get_int_value(fconfig, "QUANTUM");
-        int m = config_get_int_value(fconfig, "MULTIPROCESAMIENTO");
+        long sleep = config_get_long_value(fconfig, "SLEEP_EJECUCION");
+        long refresh = config_get_long_value(fconfig, "METADATA_REFRESH");
+
         config_not->quantum = q;
-        config_not->multi_script_level = m;
+        config_not->sleep = sleep;
+        config_not->metadata_refresh = refresh;
         
         pthread_mutex_unlock(&config_lock);
         pthread_cond_broadcast(&config_cond);
@@ -111,30 +116,43 @@ void schedule(t_instr_set* instr_set){
 }
 
 char* ksyscall(char* call){
-    t_ksyscall* syscall = malloc( sizeof(t_ksyscall));
-    syscall->instr = malloc ( sizeof ( t_instr_set));
 
-    t_queue* kqueue = queue_create();
-    queue_push(kqueue, call);
+    if(syscall_availity_status){
 
-    syscall->instr->instr = kqueue;
-    syscall->instr->doesPrint = false;
+        t_ksyscall* syscall = malloc( sizeof(t_ksyscall));
+        syscall->instr = malloc ( sizeof ( t_instr_set));
 
-    pthread_mutex_init(&syscall->lock, NULL);
-    pthread_cond_init(&syscall->cond, NULL);
+        t_queue* kqueue = queue_create();
+        queue_push(kqueue, call);
 
-    pthread_mutex_lock(&syscall_queue->lock);
-    queue_push(syscall_queue->scheduler_queue, syscall);
-    pthread_mutex_unlock(&syscall_queue->lock);
+        syscall->instr->instr = kqueue;
+        syscall->instr->doesPrint = false;
 
-    pthread_mutex_lock(&syscall->lock);
-    pthread_cond_wait(&syscall->cond, &syscall->lock);
+        pthread_mutex_init(&syscall->lock, NULL);
+        pthread_cond_init(&syscall->cond, NULL);
 
-    char* res = strdup(syscall->result);
-    pthread_mutex_destroy(&syscall->lock);
-    pthread_cond_destroy(&syscall->cond);
-    free(syscall);
+        pthread_mutex_lock(&syscall_queue->lock);
+        queue_push(syscall_queue->scheduler_queue, syscall);
+        pthread_mutex_unlock(&syscall_queue->lock);
 
-    return res;
+        log_debug(logg, "se crea una syscall");
+        
+        pthread_cond_broadcast(&queue->cond);
+        log_debug(logg, "la syscall se TERMINA");
+        pthread_mutex_lock(&syscall->lock);
+        pthread_cond_wait(&syscall->cond, &syscall->lock);
+        
+        char* res = strdup(syscall->result);
+        pthread_mutex_destroy(&syscall->lock);
+        pthread_cond_destroy(&syscall->cond);
+        
+        free(syscall);
+
+        return res;
+
+    }else{
+        log_debug(logg, "Aun no estan disponibles las syscall ");
+        return "";
+    }
 }
 

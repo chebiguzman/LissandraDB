@@ -42,6 +42,7 @@
 **/memory/memory
 **/filesystem/filesystem
 
+
 # Debug files
 *.dSYM/
 *.su
@@ -49,6 +50,8 @@
 *.pdb
 *.log
 *.json
+.*
+!/.gitignore
 
 # Kernel Module Compile Results
 *.mod*
