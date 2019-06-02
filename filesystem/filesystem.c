@@ -22,6 +22,9 @@
 //punto de entrada para el programa y el kernel
 t_log* logger;
 
+//crear memtable
+struct table_node* memtable_p = NULL;
+
 int main(int argc, char const *argv[])
 {
     
@@ -171,7 +174,7 @@ char* action_insert(package_insert* insert_info){
 
   //TODO verificar si existe en memoria una lista de datos a dumpear, de no existir alocar dicha memoria
   
-  insert_memtable(insert_info);
+  insert_memtable(insert_info, memtable_p);
 
   //el parametro timestamp es opcional, en caso de que un request no lo provea, se usara el valor actual de epoch
   //char entry[300];
@@ -183,6 +186,11 @@ char* action_insert(package_insert* insert_info){
   //strcat(entry,insert_info->value);  //TODO verificar si no hace falta el nombre de la tabla también (en la memtable va a hacer falta creo)
 
   //TODO insertar en la memoria temporal una nueva entrada que contanga los datos del request
+
+  log_info(logger, "Se inserto el valor en la memtable");
+  char* response = "INSERT ok";
+
+  return response;
   
 }
 
