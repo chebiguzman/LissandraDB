@@ -7,9 +7,9 @@
 
 #include <errno.h>
 
-struct table_node* memtable_first = NULL;
+//struct table_node* memtable_first = NULL;
 
-void insert_memtable(void* args) {
+void insert_memtable(void* args, struct table_node* memtable_p) {
 
     typedef struct {
         char* table_name;
@@ -20,7 +20,7 @@ void insert_memtable(void* args) {
 
     insert_info_s* insert_info = args;
     
-    if (memtable_first->table_next == NULL) { //la memtable esta vacia - agrego tabla nueva y cargo la data
+    if (memtable_p == NULL) { //la memtable esta vacia - agrego tabla nueva y cargo la data
         struct table_node* new_nodo_table;
         new_nodo_table = (struct table_node*)malloc(sizeof(struct table_node));
         new_nodo_table->table_next = NULL;
@@ -38,14 +38,14 @@ void insert_memtable(void* args) {
         new_nodo_table->data = new_nodo_data;
 
         //agrego la tabla a la memtable
-        memtable_first = new_nodo_table;
+        memtable_p = new_nodo_table;
 
         free(new_nodo_table);
         free(new_nodo_data);
 
     } else { //la memtable no esta vacia - busco si existe la tabla
         struct table_node* aux_table;
-        aux_table = memtable_first;
+        aux_table = memtable_p;
         while(aux_table->table_name != insert_info->table_name && aux_table->table_next != NULL) { //si la tabla en la que estoy parado no es
             aux_table = aux_table->table_next;
         }
