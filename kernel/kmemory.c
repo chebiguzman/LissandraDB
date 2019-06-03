@@ -101,14 +101,18 @@ int getStrongConsistencyMemory(){
 }
 
 void add_memory_to_sc(int id){
-
+    printf("el id de la memoria es: %d\n", id);
     bool find_memory_by_id(void* m){
-        t_kmemory* mem = m;
+        printf("busco en la lista" );
+        t_kmemory* mem = (t_kmemory*) m;
         pthread_mutex_lock(&mem->lock);
         int memId = mem->id;
+        printf("busco en la lista. Esta memoria tiene un id:%d\n",memId );
         pthread_mutex_unlock(&mem->lock);
         if(memId == id){
             return true;
+        printf("encontre la memoria!" );
+
         }
         return false;
     }
