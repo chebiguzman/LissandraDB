@@ -39,6 +39,9 @@ typedef struct
     scheduler_queue** queue;
 }exec_atrr;
 
+extern scheduler_config* config_not;
+extern pthread_mutex_t config_lock;
+
 void schedule(t_instr_set* instr_set);
 void start_sheduler();
 void lock_queue();

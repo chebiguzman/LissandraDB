@@ -55,7 +55,7 @@ void* exec(void *system_queue){
                 ///home/dreamable/a.lql
                 //log_debug(logg, instr);
                 char* r = exec_instr(instr);
-                //log_debug(logg, "exec:obtengo respuesta");
+                log_debug(logg, "exec:obtengo respuesta");
                 printf("%s", r);
 
                 
@@ -75,7 +75,6 @@ void* exec(void *system_queue){
                     
                     exec_size--;
                    
-                    lock_queue();
                     log_debug(logg, "exec:me voy a buscar otro programa");
                     updateTasks(exec_queue);
                     
@@ -108,14 +107,16 @@ void* exec(void *system_queue){
         que tambien la del scheduler asi que espero una señal
         ya sea una syscal o que añadan una tarea*/ 
         
+        lock_queue();
         pthread_cond_wait(&queue->cond, &queue->lock);
-        //log_debug(logg, "exec:me llego una query");
+        log_debug(logg, "exec:me llego una query");
         if(!queue_is_empty(syscall_queue->scheduler_queue)){
-            log_debug(logg, "Una syscall libera al procesador ocioso");
+            log_debug(logg, "exec:Una syscall libera al procesador ocioso");
+            unlock_queue(); //Ya que no voy a actualizar la lista la
            goto EXECUTION;
             
         }else{
-            lock_queue();
+            log_debug(logg, "exec:Una instruccion saco al procesador de modo ocioso");
             updateTasks(exec_queue);
         }
         
@@ -129,8 +130,8 @@ void* exec(void *system_queue){
 //obtiene de la cola del scheduler las proximas tareas
 //la cola ya debe estar bloqueada
 void updateTasks(t_queue* q){
-
-   // l//og_debug(logg, "exec:actualizando cola de exec");
+    
+    log_debug(logg, "exec:actualizando cola de exec");
     while(exec_size != config->multi_script_level && !queue_is_empty(queue->scheduler_queue)){
         
         t_instr_set* new_program = queue_pop(queue->scheduler_queue);
@@ -138,12 +139,12 @@ void updateTasks(t_queue* q){
         //log_debug(logg, queue_peek(new_program->instr));
         queue_push(exec_queue, new_program);
         exec_size++;
-        //log_debug(logg, "exec:agrego un programa");
+        log_debug(logg, "exec:agrego un programa");
         
         
     }
     unlock_queue();
-    //log_debug(logg, "exec:fin de acctualizacion");
+    log_debug(logg, "exec:fin de acctualizacion");
 
     
 }
