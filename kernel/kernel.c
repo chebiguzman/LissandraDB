@@ -38,17 +38,14 @@ int main(int argc, char const *argv[])
     logger = log_create(LOGPATH, "Kernel", 1 , LOG_LEVEL_DEBUG);
 
     //set up server
-   /* pthread_t tid;
+    pthread_t tid;
     server_info* serverInfo = malloc(sizeof(server_info));
     memset(serverInfo, 0, sizeof( server_info));    
     serverInfo->logger = logger;
     serverInfo->portNumber = PORT;
-    pthread_create(&tid, NULL, create_server, (void*) serverInfo);*/
-    
+    pthread_create(&tid, NULL, create_server, (void*) serverInfo);
     
 
-    
-    //set up client
     
     pthread_cond_t console_cond;
     pthread_mutex_t console_lock;
@@ -148,6 +145,9 @@ char* action_run(package_run* run_info){
 
 char* action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion add");
+  if(add_info->consistency == S_CONSISTENCY){
+    add_memory_to_sc(add_info->id);
+  }
   return "";
 }
 

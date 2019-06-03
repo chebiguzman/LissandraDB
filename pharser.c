@@ -53,7 +53,7 @@ char* exec_instr(char* instr_buff){
         //quito los espacios 
     }
     buff[i-offset+1] = '\0';
-    printf("%s\n", buff);
+    
     //printf("es \n%s\n", buff);
 
     
@@ -62,8 +62,9 @@ char* exec_instr(char* instr_buff){
     while (parameters[parameters_length] != NULL){
         parameters_length++;
     }
-
-    if(!strcmp(instruction,"SELECT")){
+    printf("%s\n", buff);
+    printf("%d\n", parameters_length);
+        if(!strcmp(instruction,"SELECT")){
         package_select* package = malloc(sizeof(package_select));
         package->instruction = malloc(instruction_size);
         strcpy(package->instruction, instruction);
@@ -103,9 +104,16 @@ char* exec_instr(char* instr_buff){
         package->instruction = malloc(instruction_size);
         strcpy(package->instruction, instruction);
 
+        if(parameters_length != 5) return "Numero de parametros incorrecto";
+        string_to_upper(parameters[1]);
+        string_to_upper(parameters[3]);
+        if(strcmp(parameters[1], "MEMORY")) return "Instrucion ADD mal formulada";
+        if(strcmp(parameters[3], "TO")) return "Instruccion ADD mal formulada";
+        
         char* ids = strdup(parameters[2]);
-        printf("id:%s\n", ids);
+        //printf("id:%s\n", ids);
         package->id = atoi(ids);
+        free(ids);
 
         char* c =  strdup(parameters[4]); //+2 por TO
         string_to_upper(c);
@@ -119,7 +127,8 @@ char* exec_instr(char* instr_buff){
         }else{
             return "Criterio no valido";
         }
-        printf("\n Datos de paquete:\n instruction: %s\n id: %d\n, criterio:%d \n", package->instruction , package->id, package->consistency);
+        //free(instr_buff);
+        printf("\n Datos de paquete:\n instruction: %s\n id: %d\ncriterio:%d \n", package->instruction , package->id, package->consistency);
         char* responce = action_add(package);
         return responce;
     }
