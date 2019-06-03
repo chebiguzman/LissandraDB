@@ -4,7 +4,8 @@
 #include "pharser.h"
 #include "server.h"
 #include "actions.h"
-#include <string.h>
+#include<string.h>
+
 
 
 
@@ -15,8 +16,52 @@ char* exec_instr(char* instr_buff){
  
     char* instruction = malloc(instruction_size);
     strcpy(instruction, get_string_from_buffer(instr_buff,0));
-    //printf("\ninstruccion:%s\n",instruction); //La dejo para debug
+    string_to_upper(instruction);
 
+    printf("\ninstruccion:%s\n",instruction); //La dejo para debug
+
+    char buff[strlen(instr_buff)];
+    memcpy(buff, instr_buff, strlen(instr_buff)+1);
+
+    int i = 0;
+    int offset = 0;
+    bool last_character_was_null = false;
+    while(buff[i+offset] !='\0'){
+        
+        if(buff[i]== '\n' || buff[i]==' '){
+
+            buff[i]= '|';
+            buff[i] = '|';
+
+            if(last_character_was_null){
+                int len = strlen(buff)+1;
+                char* tmp = string_substring_from(buff,i+1);
+                memcpy(&buff[i], tmp, strlen(tmp)+1);
+                i--;
+            }
+
+            last_character_was_null = true;
+
+        }else{
+            buff[i] = buff[i];   
+            last_character_was_null = false;
+      
+        }
+
+        i++;        
+        //quito las nuevas lineas 
+        //quito los espacios 
+    }
+    buff[i-offset+1] = '\0';
+    printf("%s\n", buff);
+    //printf("es \n%s\n", buff);
+
+    
+    char** parameters = string_split(buff, "|");
+    int parameters_length = 0;
+    while (parameters[parameters_length] != NULL){
+        parameters_length++;
+    }
 
     if(!strcmp(instruction,"SELECT")){
         package_select* package = malloc(sizeof(package_select));
@@ -41,7 +86,7 @@ char* exec_instr(char* instr_buff){
         return responce;
     }
 
-        if(!strcmp(instruction,"RUN")){
+    if(!strcmp(instruction,"RUN")){
         package_run* package = malloc(sizeof(package_run));
         package->instruction = malloc(instruction_size);
         strcpy(package->instruction, instruction);
@@ -50,6 +95,32 @@ char* exec_instr(char* instr_buff){
         package->path = strdup(get_string_from_buffer(instr_buff, instruction_size));
         printf("\n Datos de paquete:\n instruction: %s\n path: %s\n \n", package->instruction, package->path);
         char* responce = action_run(package);
+        return responce;
+    }
+
+    if(!strcmp(instruction,"ADD")){
+        package_add* package = malloc(sizeof(package_add));
+        package->instruction = malloc(instruction_size);
+        strcpy(package->instruction, instruction);
+
+        char* ids = strdup(parameters[2]);
+        printf("id:%s\n", ids);
+        package->id = atoi(ids);
+
+        char* c =  strdup(parameters[4]); //+2 por TO
+        string_to_upper(c);
+        printf("c:%s\n", c);
+        if(!strcmp(c,"SC")){
+            package->consistency = S_CONSISTENCY;
+        }else if(!strcmp(c,"ANY")){
+            package->consistency = ANY_CONSISTENCY;
+        }else if(!strcmp(c,"HC")){
+            package->consistency = H_CONSISTENCY;
+        }else{
+            return "Criterio no valido";
+        }
+        printf("\n Datos de paquete:\n instruction: %s\n id: %d\n, criterio:%d \n", package->instruction , package->id, package->consistency);
+        char* responce = action_add(package);
         return responce;
     }
 

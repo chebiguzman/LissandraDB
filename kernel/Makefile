@@ -1,7 +1,7 @@
 all: kernel clean
 
-kernel: kernel.o server.o pharser.o scheduler.o kmemory.o console.o list_helper.o
-	gcc -o kernel kernel.o server.o pharser.o scheduler.o kmemory.o list_helper.o console.o -lcommons -pthread
+kernel: kernel.o server.o pharser.o scheduler.o kmemory.o console.o
+	gcc -o kernel kernel.o server.o pharser.o scheduler.o kmemory.o console.o -lcommons -pthread
 
 kernel.o: 
 	gcc -c kernel.c -lcommons
@@ -23,9 +23,6 @@ kmemory.o:
 
 console.o:
 	gcc -c ../console.c
-
-list_helper.o:
-	gcc -c list_helper.c
 
 clean: 
 	find . -name "*.o" -type f -delete

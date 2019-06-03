@@ -62,16 +62,6 @@ typedef struct
 
 } package_journal;
 
-//ADD MEMORY [NÚMERO] TO [CRITERIO]
-typedef struct
-{
-    char instruction[INSTRUCTION_BYTE_SIZE];
-    char memory[7];
-    int memory_number;
-    char to[3];
-    consistency_type criterio;
-
-} package_add;
 
 //METRICS
 typedef struct
