@@ -10,13 +10,14 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
+
 #include "../pharser.h"
 #include "../actions.h"
 #include "../console.h"
 #include "scheduler.h"
 #include <commons/collections/queue.h>
 #include <signal.h>
-#include "kmemory.h"
+
 
 //punto de entrada para el programa y el kernel
 t_log* logger;
@@ -37,12 +38,12 @@ int main(int argc, char const *argv[])
     logger = log_create(LOGPATH, "Kernel", 1 , LOG_LEVEL_DEBUG);
 
     //set up server
-    pthread_t tid;
+   /* pthread_t tid;
     server_info* serverInfo = malloc(sizeof(server_info));
     memset(serverInfo, 0, sizeof( server_info));    
     serverInfo->logger = logger;
     serverInfo->portNumber = PORT;
-    pthread_create(&tid, NULL, create_server, (void*) serverInfo);
+    pthread_create(&tid, NULL, create_server, (void*) serverInfo);*/
     
     
 
@@ -67,13 +68,13 @@ int main(int argc, char const *argv[])
     signal(SIGPIPE, SIG_IGN); //Ignorar error de write
 
     //JOIN THREADS
-    pthread_join(tid,NULL);
+    //pthread_join(tid,NULL);
     pthread_join(tid_console,NULL);
     
     //FREE MEMORY
     free(LOGPATH);
     free(logger);
-    free(serverInfo);
+    //free(serverInfo);
     config_destroy(config);
 
       return 0;
@@ -111,6 +112,7 @@ char* action_select(package_select* select_info){
 
 }
 
+
 char* action_run(package_run* run_info){
   log_info(logger, "Se recibio una accion run");
   char* rt = string_new();
@@ -144,6 +146,12 @@ char* action_run(package_run* run_info){
     return rt;
 }
 
+char* action_add(package_add* add_info){
+  log_info(logger, "Se recibio una accion add");
+  return "";
+}
+
+
 void action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
 }
@@ -164,14 +172,11 @@ void action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
 }
 
-void action_add(package_add* add_info){
-  log_info(logger, "Se recibio una accion select");
-}
-
 void action_metrics(package_metrics* metrics_info){
   log_info(logger, "Se recibio una accion metrics");
 }
 
+//Crea un t_instr con un string
 char* parse_input(char* input){
   t_instr_set* set = malloc(sizeof(t_instr_set));
   t_queue* q = queue_create();

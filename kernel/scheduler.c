@@ -19,7 +19,6 @@
 
 scheduler_config* config_not;
 pthread_mutex_t config_lock = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t config_cond = PTHREAD_COND_INITIALIZER;
 bool syscall_availity_status = false; //No puedo hacer una sys call hasta que algun exec llegue a una espera.
 scheduler_queue* queue;
 scheduler_queue* syscall_queue;
@@ -37,8 +36,10 @@ void start_sheduler(t_log* log, t_console_control* console_control ){
     config_not= malloc(sizeof(scheduler_config));
 
     int m = config_get_int_value(fconfig, "MULTIPROCESAMIENTO");
+    long ref = config_get_long_value(fconfig, "METADATA_REFRESH");
     config_not->multi_script_level = m;
     config_not->quantum = 1;
+    config_not->metadata_refresh = ref;
     
     update_scheduler_config();
 
@@ -64,16 +65,23 @@ void start_sheduler(t_log* log, t_console_control* console_control ){
 void* config_worker(void* args){
     log_info(logg, "se inicia el monitoreo del config");
     int inotifyFd = inotify_init();
-    inotify_add_watch(inotifyFd, "config", IN_MODIFY);
-    char* buf = malloc(3000);
+    inotify_add_watch(inotifyFd, "config", IN_CLOSE_WRITE);
+    char* buf = malloc(EVENT_BUF_LEN);
     while(1){
-        read(inotifyFd, buf, 3000);
+        int length = read(inotifyFd, buf, EVENT_BUF_LEN);
+
+         if ( length < 0 ) {
+            perror( "Error en config" );
+        }  
+
         struct inotify_event *event = (struct inotify_event *) buf;
-        if(event->mask == IN_MODIFY){
-        log_info(logg, "se modifico el archivo de configuracion");
+        if(event->mask == IN_CLOSE_WRITE){
+        //config_destroy(fconfig);
+        fconfig = config_create("config");
+        log_info(logg, "ConfigWorker: se modifico el archivo de configuracion");
         update_scheduler_config();
 
-    }
+        }
     }
     
 }
@@ -81,27 +89,30 @@ void* config_worker(void* args){
 //leo y actualico la informaion del config;
 void update_scheduler_config(){
          
-        pthread_mutex_lock(&config_lock);
+        
         
         int q = config_get_int_value(fconfig, "QUANTUM");
         long sleep = config_get_long_value(fconfig, "SLEEP_EJECUCION");
         long refresh = config_get_long_value(fconfig, "METADATA_REFRESH");
-
+        log_debug(logg, "el nuevo es: ");
+        log_debug(logg, string_itoa((int) refresh));
+        pthread_mutex_lock(&config_lock);
         config_not->quantum = q;
         config_not->sleep = sleep;
         config_not->metadata_refresh = refresh;
-        
         pthread_mutex_unlock(&config_lock);
-        pthread_cond_broadcast(&config_cond);
 }
 
 #include "exec.c"
 
 void lock_queue(){
+    //log_info(logg, "scheduler: BLOQUEO COLA DE PROCESOS");
     pthread_mutex_lock(&queue->lock);
 }
 void unlock_queue(){
     pthread_mutex_unlock(&queue->lock);
+    //log_info(logg, "scheduler: DESBLOQUEO COLA DE PROCESOS");
+
 }
 
 
@@ -118,7 +129,7 @@ void schedule(t_instr_set* instr_set){
 char* ksyscall(char* call){
 
     if(syscall_availity_status){
-
+        log_debug(logg, "syscall");
         t_ksyscall* syscall = malloc( sizeof(t_ksyscall));
         syscall->instr = malloc ( sizeof ( t_instr_set));
 
@@ -135,10 +146,9 @@ char* ksyscall(char* call){
         queue_push(syscall_queue->scheduler_queue, syscall);
         pthread_mutex_unlock(&syscall_queue->lock);
 
-        log_debug(logg, "se crea una syscall");
+        
         
         pthread_cond_broadcast(&queue->cond);
-        log_debug(logg, "la syscall se TERMINA");
         pthread_mutex_lock(&syscall->lock);
         pthread_cond_wait(&syscall->cond, &syscall->lock);
         
@@ -151,7 +161,7 @@ char* ksyscall(char* call){
         return res;
 
     }else{
-        log_debug(logg, "Aun no estan disponibles las syscall ");
+        log_debug(logg, "Aun no estan disponibles las syscall");
         return "";
     }
 }
