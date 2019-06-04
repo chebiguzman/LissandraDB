@@ -24,3 +24,7 @@ void start_kmemory_module(t_log* logg, char* main_memory_ip, int main_memoy_port
 int connect_to_memory(char* ip, int port);
 void *metadata_service(void* args);
 void add_memory_to_sc(int id);
+int get_loked_main_memory();
+void check_for_new_memory(char* ip, int port, int id);
+void add_memory_to_any(int id);
+void* memory_finder_service(void* args);
