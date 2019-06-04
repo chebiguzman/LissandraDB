@@ -15,13 +15,13 @@
 #include "../actions.h"
 #include "../console.h"
 #include "scheduler.h"
+#include <commons/string.h>
 #include <commons/collections/queue.h>
 #include <signal.h>
 
 
 //punto de entrada para el programa y el kernel
 t_log* logger;
-int memoryfd;
 int main(int argc, char const *argv[])
 {   
     //set up confg
@@ -37,16 +37,7 @@ int main(int argc, char const *argv[])
     //set up log
     logger = log_create(LOGPATH, "Kernel", 1 , LOG_LEVEL_DEBUG);
 
-    //set up server
-    pthread_t tid;
-    server_info* serverInfo = malloc(sizeof(server_info));
-    memset(serverInfo, 0, sizeof( server_info));    
-    serverInfo->logger = logger;
-    serverInfo->portNumber = PORT;
-    pthread_create(&tid, NULL, create_server, (void*) serverInfo);
-    
-
-    
+  
     pthread_cond_t console_cond;
     pthread_mutex_t console_lock;
     pthread_mutex_init(&console_lock, NULL);
@@ -57,7 +48,10 @@ int main(int argc, char const *argv[])
     control->name = strdup("kernel");
 
     start_sheduler(logger,control);
+
     start_kmemory_module(logger, MEMORY_IP, MEMORY_PORT);
+        
+
    //inicio lectura por consola
     pthread_t tid_console;
     pthread_create(&tid_console, NULL, console_input_wait, control);
@@ -77,38 +71,42 @@ int main(int argc, char const *argv[])
       return 0;
 }
 
+char* exec_in_memory(int memory_fd, char* payload){
+    char* responce = malloc(3000);
+    strcpy(responce, "");
+    printf("la fd de mem es: %d\n", memory_fd);
+    if ( memory_fd < 0 ){
+      log_error(logger, "No se pudo llevar a cabo la accion select");
+      return "";
+    }
+
+    //ejecutar
+
+    if(write(memory_fd,payload, strlen(payload)+1)){
+      read(memory_fd, responce, 3000);
+      return responce;
+    }else{
+      log_error(logger, "No se logo comuniarse con memoria");
+      return "NO SE ENCTUENTEA MEMORIA";
+    }  
+    return "algo sale mal";
+}
+
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
-  char* responce = malloc(3000);
-  strcpy(responce, "");
-
   //get consistency of talble
   t_consistency consistency = get_table_consistency(select_info->table_name);
+
   //pedir una memoria
   int memoryfd = get_loked_memory(consistency);
-  printf("\nla fd de mem es: %d", memoryfd);
-  if ( memoryfd < 0 ){
-    log_error(logger, "No se pudo llevar a cabo la accion select");
-    return "";
-  }
+  char* package = parse_package_select(select_info);
 
-  //ejecutar
-  /*char* package = parse_package_select(select_info);
-  if(write(memoryfd,package, strlen(package)+1)){
-    read(memoryfd, responce, 3000);
-    
-  }else{
-    log_error(logger, "No se logo comuniarse con memoria");
-  }
-  */
-  //debolver memoria
-  unlock_memory(memoryfd);
-  //dar resou
+  char* responce = exec_in_memory(memoryfd, package); 
  
+  unlock_memory(memoryfd);
   return responce;
 
 }
-
 
 char* action_run(package_run* run_info){
   log_info(logger, "Se recibio una accion run");
@@ -147,6 +145,8 @@ char* action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion add");
   if(add_info->consistency == S_CONSISTENCY){
     add_memory_to_sc(add_info->id);
+  }else if(add_info->consistency == ANY_CONSISTENCY){
+    add_memory_to_any(add_info->id);
   }
   return "";
 }
@@ -176,13 +176,34 @@ void action_metrics(package_metrics* metrics_info){
   log_info(logger, "Se recibio una accion metrics");
 }
 
+char* action_intern_memory_status(){
+  log_info(logger, "Se recibio una accion status");
+  int memfd = get_loked_main_memory();
+  
+
+  char* responce = exec_in_memory(memfd, "MEMORY");
+  unlock_memory(memfd);
+  char** memories = string_split(responce, "|");
+  int i = 0;
+
+  while(memories[i]!=NULL){
+    char** info = string_split(memories[i], ",");
+    int id = atoi(info[0]);
+    char* ip = info[1];
+    int port = atoi(info[2]);
+
+    check_for_new_memory(ip ,port, id);
+    i++;
+  }
+  return responce;
+}
 //Crea un t_instr con un string
 char* parse_input(char* input){
   t_instr_set* set = malloc(sizeof(t_instr_set));
   t_queue* q = queue_create();
   char* buff = strdup(input);
   queue_push(q, buff);
-  set->doesPrint = 1;
+  set->doesPrint = 0;
   set->instr = q;
   schedule(set);
   return "";

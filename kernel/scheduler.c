@@ -13,7 +13,7 @@
 #include <sys/inotify.h>
 #include <errno.h>
 #include <commons/config.h>
-
+#include <unistd.h>
 #define EVENT_SIZE  ( sizeof (struct inotify_event) )
 #define EVENT_BUF_LEN     ( 1024 * ( EVENT_SIZE + 16 ) )
 
@@ -89,8 +89,6 @@ void* config_worker(void* args){
 //leo y actualico la informaion del config;
 void update_scheduler_config(){
          
-        
-        
         int q = config_get_int_value(fconfig, "QUANTUM");
         long sleep = config_get_long_value(fconfig, "SLEEP_EJECUCION");
         long refresh = config_get_long_value(fconfig, "METADATA_REFRESH");
@@ -119,11 +117,11 @@ void unlock_queue(){
 void schedule(t_instr_set* instr_set){
     lock_queue();
     queue_push(queue->scheduler_queue, instr_set);
-    log_info(logg, "sh:acrego una instruccion");
+    //log_info(logg, "sh:acrego una instruccion");
     unlock_queue();
     
     pthread_cond_broadcast(&queue->cond);
-    log_info(logg, "llame a exec");
+    //log_info(logg, "llame a exec");
 }
 
 char* ksyscall(char* call){

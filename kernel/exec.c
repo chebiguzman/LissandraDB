@@ -9,7 +9,7 @@ void* exec(void *system_queue){
     
     
     bool superuser = false;
-    log_debug(logg, "se inicia el modulo exec");
+    //log_debug(logg, "se inicia el modulo exec");
     while(true){
 
         pthread_mutex_lock(&config_lock);
@@ -17,7 +17,7 @@ void* exec(void *system_queue){
         config->quantum = config_not->quantum;
         pthread_mutex_unlock(&config_lock);
        
-       //printf("el nuvel de procesamiento es:%d, y quandum:%ld", config->multi_script_level, config->quantum);
+       printf("el nuvel de procesamiento es:%d, y quandum:%ld", config->multi_script_level, config->quantum);
 
         while(!queue_is_empty( exec_queue ) && exec_size != 0){
             ///obtengo el proximo programa de la cola de exec
@@ -32,7 +32,7 @@ void* exec(void *system_queue){
 
             pthread_mutex_lock(&syscall_queue->lock);
             if(!queue_is_empty(syscall_queue->scheduler_queue)){
-                log_debug(logg, "Se recibe un syscall");
+                //log_debug(logg, "Se recibe un syscall");
                 kernel_call = queue_pop(syscall_queue->scheduler_queue);
                 program = kernel_call->instr;
                 superuser = true;
@@ -55,14 +55,14 @@ void* exec(void *system_queue){
                 ///home/dreamable/a.lql
                 //log_debug(logg, instr);
                 char* r = exec_instr(instr);
-                log_debug(logg, "exec:obtengo respuesta");
+                //log_debug(logg, "exec:obtengo respuesta");
                 printf("%s", r);
 
                 
                 if(superuser){
                     kernel_call->result = r;
                     pthread_cond_broadcast(&kernel_call->cond);
-                    log_debug(logg, "se le debvuelve al kernel su pedido");
+                    //log_debug(logg, "se le debvuelve al kernel su pedido");
                 }
                 //free(r);
                 free(instr);
@@ -71,21 +71,23 @@ void* exec(void *system_queue){
                 voy a buscar otro para mantener el nivel de 
                 multiprogramacion, si no, lo devuelvo a exec*/
                 if(queue_is_empty( program->instr)){
-                    log_debug(logg, "exec:termino programa");
+                    //log_debug(logg, "exec:termino programa");
                     
                     exec_size--;
                    
-                    log_debug(logg, "exec:me voy a buscar otro programa");
+                    //log_debug(logg, "exec:me voy a buscar otro programa");
                     updateTasks(exec_queue);
                     
                     break;
                 }
-
+                pthread_mutex_lock(&config_lock);
+                usleep(config_not->sleep*1000);
+                pthread_mutex_unlock(&config_lock);
 
             }
 
             if(!queue_is_empty( program->instr)){
-                log_debug(logg, "exec: termino quantum");
+                //log_debug(logg, "exec: termino quantum");
                 queue_push(exec_queue, program);
             }else{
                 queue_destroy(program->instr);
@@ -109,14 +111,14 @@ void* exec(void *system_queue){
         
         lock_queue();
         pthread_cond_wait(&queue->cond, &queue->lock);
-        log_debug(logg, "exec:me llego una query");
+        //log_debug(logg, "exec:me llego una query");
         if(!queue_is_empty(syscall_queue->scheduler_queue)){
-            log_debug(logg, "exec:Una syscall libera al procesador ocioso");
+            //log_debug(logg, "exec:Una syscall libera al procesador ocioso");
             unlock_queue(); //Ya que no voy a actualizar la lista la
            goto EXECUTION;
             
         }else{
-            log_debug(logg, "exec:Una instruccion saco al procesador de modo ocioso");
+            //log_debug(logg, "exec:Una instruccion saco al procesador de modo ocioso");
             updateTasks(exec_queue);
         }
         
@@ -131,7 +133,7 @@ void* exec(void *system_queue){
 //la cola ya debe estar bloqueada
 void updateTasks(t_queue* q){
     
-    log_debug(logg, "exec:actualizando cola de exec");
+    //log_debug(logg, "exec:actualizando cola de exec");
     while(exec_size != config->multi_script_level && !queue_is_empty(queue->scheduler_queue)){
         
         t_instr_set* new_program = queue_pop(queue->scheduler_queue);
@@ -139,12 +141,12 @@ void updateTasks(t_queue* q){
         //log_debug(logg, queue_peek(new_program->instr));
         queue_push(exec_queue, new_program);
         exec_size++;
-        log_debug(logg, "exec:agrego un programa");
+        //log_debug(logg, "exec:agrego un programa");
         
         
     }
     unlock_queue();
-    log_debug(logg, "exec:fin de acctualizacion");
+    //log_debug(logg, "exec:fin de acctualizacion");
 
     
 }
