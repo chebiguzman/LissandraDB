@@ -28,3 +28,4 @@ int get_loked_main_memory();
 void check_for_new_memory(char* ip, int port, int id);
 void add_memory_to_any(int id);
 void* memory_finder_service(void* args);
+int get_any_memory();
