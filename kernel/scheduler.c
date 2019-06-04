@@ -92,8 +92,8 @@ void update_scheduler_config(){
         int q = config_get_int_value(fconfig, "QUANTUM");
         long sleep = config_get_long_value(fconfig, "SLEEP_EJECUCION");
         long refresh = config_get_long_value(fconfig, "METADATA_REFRESH");
-        log_debug(logg, "el nuevo es: ");
-        log_debug(logg, string_itoa((int) refresh));
+        //log_debug(logg, "el nuevo es: ");
+        //log_debug(logg, string_itoa((int) refresh));
         pthread_mutex_lock(&config_lock);
         config_not->quantum = q;
         config_not->sleep = sleep;
@@ -127,7 +127,7 @@ void schedule(t_instr_set* instr_set){
 char* ksyscall(char* call){
 
     if(syscall_availity_status){
-        log_debug(logg, "syscall");
+        //log_debug(logg, "syscall");
         t_ksyscall* syscall = malloc( sizeof(t_ksyscall));
         syscall->instr = malloc ( sizeof ( t_instr_set));
 
@@ -159,7 +159,7 @@ char* ksyscall(char* call){
         return res;
 
     }else{
-        log_debug(logg, "Aun no estan disponibles las syscall");
+        //log_debug(logg, "Aun no estan disponibles las syscall");
         return "";
     }
 }

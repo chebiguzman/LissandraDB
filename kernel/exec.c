@@ -17,12 +17,14 @@ void* exec(void *system_queue){
         config->quantum = config_not->quantum;
         pthread_mutex_unlock(&config_lock);
        
-       printf("el nuvel de procesamiento es:%d, y quandum:%ld", config->multi_script_level, config->quantum);
+       //printf("el nuvel de procesamiento es:%d, y quandum:%ld", config->multi_script_level, config->quantum);
 
         while(!queue_is_empty( exec_queue ) && exec_size != 0){
             ///obtengo el proximo programa de la cola de exec
+            int unecesariy =0;
             EXECUTION:
-            log_debug(logg, "exec:obtengo programa");
+            unecesariy++; //la label necesita una linea denajo de ella
+            //log_debug(logg, "exec:obtengo programa");
             t_instr_set* program;
             t_ksyscall* kernel_call;
 

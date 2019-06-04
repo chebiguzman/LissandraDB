@@ -74,14 +74,13 @@ int main(int argc, char const *argv[])
 char* exec_in_memory(int memory_fd, char* payload){
     char* responce = malloc(3000);
     strcpy(responce, "");
-    printf("la fd de mem es: %d\n", memory_fd);
+    
     if ( memory_fd < 0 ){
-      log_error(logger, "No se pudo llevar a cabo la accion select");
+      log_error(logger, "No se pudo llevar a cabo la accion");
       return "";
     }
 
     //ejecutar
-
     if(write(memory_fd,payload, strlen(payload)+1)){
       read(memory_fd, responce, 3000);
       return responce;
@@ -98,7 +97,7 @@ char* action_select(package_select* select_info){
   t_consistency consistency = get_table_consistency(select_info->table_name);
 
   //pedir una memoria
-  int memoryfd = get_loked_memory(consistency);
+  int memoryfd = get_loked_memory(consistency, select_info->table_name);
   char* package = parse_package_select(select_info);
 
   char* responce = exec_in_memory(memoryfd, package); 
@@ -147,33 +146,46 @@ char* action_add(package_add* add_info){
     add_memory_to_sc(add_info->id);
   }else if(add_info->consistency == ANY_CONSISTENCY){
     add_memory_to_any(add_info->id);
+  }else if( add_info->consistency == H_CONSISTENCY){
+    add_memory_to_hc(add_info->id);
   }
   return "";
 }
 
-
 void action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
+  t_consistency consistency = get_table_consistency(insert_info->table_name);
+
 }
 
 void action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
+  int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
+
 }
 
 void action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
+  int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
+
 }
 
 void action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
+  int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
+
 }
 
 void action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
+  int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
+
 }
 
 void action_metrics(package_metrics* metrics_info){
   log_info(logger, "Se recibio una accion metrics");
+  
+
 }
 
 char* action_intern_memory_status(){
@@ -197,8 +209,10 @@ char* action_intern_memory_status(){
   }
   return responce;
 }
+
 //Crea un t_instr con un string
 char* parse_input(char* input){
+  
   t_instr_set* set = malloc(sizeof(t_instr_set));
   t_queue* q = queue_create();
   char* buff = strdup(input);
