@@ -28,8 +28,8 @@ void *console_input_wait(void* args){
 		printf("%s>", self->name);
 		getline(&buffer, &buffer_size, stdin); //llamada bloqueante
 		parse_input(buffer); //los resultados se imprimen en exec.
-		free(buffer);
 		pthread_cond_wait(&self->cond, &self->lock);
+		free(buffer);
 
 	} //se queda en escuhca constantenmente
 	

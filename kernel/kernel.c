@@ -152,40 +152,46 @@ char* action_add(package_add* add_info){
   return "";
 }
 
-void action_insert(package_insert* insert_info){
+char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
-  t_consistency consistency = get_table_consistency(insert_info->table_name);
+  /*t_consistency consistency = get_table_consistency(insert_info->table_name);
+  int memoryfd = get_loked_memory(consistency, insert_info->table_name);
+  char* package = parse_package_insert(select_info);
 
+  char* responce = exec_in_memory(memoryfd, package); 
+ 
+  unlock_memory(memoryfd);*/
+  return "";
 }
 
-void action_create(package_create* create_info){
+char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
-
+  return "";
 }
 
-void action_describe(package_describe* describe_info){
+char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
-
+  return "";
 }
 
-void action_drop(package_drop* drop_info){
+char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
-
+  return "";
 }
 
-void action_journal(package_journal* journal_info){
+char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
-
+  return "";
 }
 
-void action_metrics(package_metrics* metrics_info){
+char* action_metrics(package_metrics* metrics_info){
   log_info(logger, "Se recibio una accion metrics");
   
-
+  return "";
 }
 
 char* action_intern_memory_status(){
@@ -196,7 +202,8 @@ char* action_intern_memory_status(){
   char* responce = exec_in_memory(memfd, "MEMORY");
   unlock_memory(memfd);
   char** memories = string_split(responce, "|");
-  int i = 0;
+  update_memory_finder_service_time(atoi(memories[0]));
+  int i = 1;
 
   while(memories[i]!=NULL){
     char** info = string_split(memories[i], ",");

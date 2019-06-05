@@ -1,6 +1,6 @@
 scheduler_config* config;
 t_queue* exec_queue;
-
+__thread int err_trap = 0;
 int exec_size = 0;
 void* exec(void *system_queue){
     exec_queue = queue_create();
@@ -19,11 +19,11 @@ void* exec(void *system_queue){
        
        //printf("el nuvel de procesamiento es:%d, y quandum:%ld", config->multi_script_level, config->quantum);
 
-        while(!queue_is_empty( exec_queue ) && exec_size != 0){
+        while(!queue_is_empty( exec_queue )){
             ///obtengo el proximo programa de la cola de exec
-            int unecesariy =0;
+
             EXECUTION:
-            unecesariy++; //la label necesita una linea denajo de ella
+            err_trap = 0; //la label necesita una linea denajo de ella
             //log_debug(logg, "exec:obtengo programa");
             t_instr_set* program;
             t_ksyscall* kernel_call;
@@ -55,7 +55,7 @@ void* exec(void *system_queue){
                     printf("%s",instr);
                 }
                 ///home/dreamable/a.lql
-                //log_debug(logg, instr);
+                log_debug(logg, instr);
                 char* r = exec_instr(instr);
                 //log_debug(logg, "exec:obtengo respuesta");
                 printf("%s", r);
@@ -66,31 +66,38 @@ void* exec(void *system_queue){
                     pthread_cond_broadcast(&kernel_call->cond);
                     //log_debug(logg, "se le debvuelve al kernel su pedido");
                 }
-                //free(r);
+
+                if(err_trap != 0){
+                    log_error(logg, "EL programa no puede seguir ejecutando.");
+                    break;
+                }
+           
                 free(instr);
 
                 /* si el programa se termino de ejecutar
                 voy a buscar otro para mantener el nivel de 
                 multiprogramacion, si no, lo devuelvo a exec*/
                 if(queue_is_empty( program->instr)){
-                    //log_debug(logg, "exec:termino programa");
-                    
+                    //log_debug(logg, "exec:termino programa"); 
                     exec_size--;
                    
                     //log_debug(logg, "exec:me voy a buscar otro programa");
+                    lock_queue();
                     updateTasks(exec_queue);
                     
                     break;
                 }
                 pthread_mutex_lock(&config_lock);
-                usleep(config_not->sleep*1000);
+                //usleep(config_not->sleep*1000);
                 pthread_mutex_unlock(&config_lock);
 
             }
 
-            if(!queue_is_empty( program->instr)){
+            if(!queue_is_empty( program->instr) && err_trap==0){
                 //log_debug(logg, "exec: termino quantum");
                 queue_push(exec_queue, program);
+
+
             }else{
                 queue_destroy(program->instr);
                 free(program);
@@ -105,14 +112,17 @@ void* exec(void *system_queue){
         syscall_availity_status = true;
         //devuelvo el control a consola
         pthread_mutex_unlock(&console->lock);
+        lock_queue();
         pthread_cond_broadcast(&console->cond);
+        //log_debug(logg, "exec");
+
+        pthread_cond_wait(&queue->cond, &queue->lock);
+
 
          /*si mi cola de exec se quedo  vacia quiere decir
         que tambien la del scheduler asi que espero una señal
         ya sea una syscal o que añadan una tarea*/ 
         
-        lock_queue();
-        pthread_cond_wait(&queue->cond, &queue->lock);
         //log_debug(logg, "exec:me llego una query");
         if(!queue_is_empty(syscall_queue->scheduler_queue)){
             //log_debug(logg, "exec:Una syscall libera al procesador ocioso");
@@ -140,7 +150,7 @@ void updateTasks(t_queue* q){
         
         t_instr_set* new_program = queue_pop(queue->scheduler_queue);
         //log_debug(logg, "nueva instruccion:");
-        //log_debug(logg, queue_peek(new_program->instr));
+        log_debug(logg, queue_peek(new_program->instr));
         queue_push(exec_queue, new_program);
         exec_size++;
         //log_debug(logg, "exec:agrego un programa");
@@ -151,4 +161,8 @@ void updateTasks(t_queue* q){
     //log_debug(logg, "exec:fin de acctualizacion");
 
     
+}
+
+void exec_err_abort(){
+    err_trap = 1;
 }
