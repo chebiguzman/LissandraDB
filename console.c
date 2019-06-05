@@ -27,8 +27,7 @@ void *console_input_wait(void* args){
 		buffer = (char*)malloc(buffer_size * sizeof(char));
 		printf("%s>", self->name);
 		getline(&buffer, &buffer_size, stdin); //llamada bloqueante
-		char* response = parse_input(buffer); 
-		printf("%s", response);
+		parse_input(buffer); //los resultados se imprimen en exec.
 		free(buffer);
 		pthread_cond_wait(&self->cond, &self->lock);
 
