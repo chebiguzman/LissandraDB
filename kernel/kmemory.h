@@ -28,6 +28,7 @@ void *metadata_service(void* args);
 int get_loked_main_memory();
 void check_for_new_memory(char* ip, int port, int id);
 void* memory_finder_service(void* args);
+void update_memory_finder_service_time(long time);
 
 void add_memory_to_sc(int id);
 void add_memory_to_hc(int id);

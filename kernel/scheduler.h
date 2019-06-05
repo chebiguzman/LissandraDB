@@ -53,3 +53,4 @@ void* exec();
 void updateTasks(t_queue* exec_queue);
 void* config_worker(void* args);
 void update_scheduler_config();
+void exec_err_abort();

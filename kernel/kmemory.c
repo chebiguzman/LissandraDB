@@ -9,10 +9,12 @@
 #include <pthread.h>
 #include <fcntl.h>
 #include <unistd.h>
-#define MEMORY_FINDER_SLEEP 5000000000
+#include <signal.h>
+#include <stdio.h>
+#include <commons/config.h>
 extern scheduler_config* config_not;
 extern pthread_mutex_t config_lock;
-
+long MEMORY_FINDER_SLEEP;
 t_log* logger;
 t_list* tbl_list;   //Lista de tablas (metadata)
 
@@ -67,10 +69,13 @@ void start_kmemory_module(t_log* logg, char* main_memory_ip, int main_memoy_port
     pthread_t tid_metadata_service;
     pthread_create(&tid_metadata_service, NULL,metadata_service, NULL);
 
+    MEMORY_FINDER_SLEEP = 300000;
+
     pthread_t tid_memory_finder_service;
     pthread_create(&tid_memory_finder_service, NULL,memory_finder_service, NULL);
 
     log_info(logger, "kmemory: El modulo kmemory fue inicializado exitosamente");
+
 
 }
 
@@ -427,9 +432,14 @@ t_consistency get_table_consistency(char* table_name){
     t_table* table = list_find(tbl_list, find_table_by_name );
 
     if(table == NULL){
+        exec_err_abort(); //cuano la 
         return ERR_CONSISTENCY;
     }
     return table->consistency;
+}
+
+void update_memory_finder_service_time(long time){
+    MEMORY_FINDER_SLEEP = time;
 }
 
 void *metadata_service(void* args){

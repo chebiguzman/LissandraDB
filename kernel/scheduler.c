@@ -127,7 +127,7 @@ void schedule(t_instr_set* instr_set){
 char* ksyscall(char* call){
 
     if(syscall_availity_status){
-        //log_debug(logg, "syscall");
+        log_debug(logg, "syscall");
         t_ksyscall* syscall = malloc( sizeof(t_ksyscall));
         syscall->instr = malloc ( sizeof ( t_instr_set));
 
@@ -159,8 +159,9 @@ char* ksyscall(char* call){
         return res;
 
     }else{
-        //log_debug(logg, "Aun no estan disponibles las syscall");
+        log_debug(logg, "Aun no estan disponibles las syscall");
         return "";
     }
 }
+
 
