@@ -80,17 +80,40 @@ char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
   //char* response = "Sarasa 2"; //TODO serializar el response
   char* response = parse_package_select(select_info);
-  char* sarasa = "hola";
-  printf("%s SIZE: %d \n", sarasa, sizeof(sarasa));
+  char* sarasa = "respuesta muy inteligente de select\n";
   
-  printf("%s SIZE: %d \n", response, sizeof(response));
-  send(fs_socket, response, sizeof(response), 0);
-
-  return string_new("holis"); //tienen que devolver algo si no se rompe
+  return sarasa; //tienen que devolver algo si no se rompe
 }
 
 void action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
+}
+
+//en esta funcion se devuelve lo 
+//proveniente del gossiping
+//devuelve solo las seeds
+//con esta forma: id,ip,port|id,ip,port|id,ip,port
+char* action_intern_memory_status(){
+  char* res = strdup("");
+  char sep[2] = { ',', '\0' };
+  char div[2] = { '|', '\0' };
+  t_config* config = config_create("config");
+  char** ips = config_get_array_value(config, "IP_SEEDS");
+  char** ports = config_get_array_value(config, "PUERTO_SEEDS");
+
+  int i = 2; //ESto reprecenta el id de las memorias, se consigue como parte del proceso de gossiping.
+  while(*ips != NULL){
+    strcat(res, string_itoa(i));
+    strcat(res,sep);    
+    strcat(res, *ips);
+    strcat(res,sep);
+    strcat(res, *ports);
+    strcat(res,div);
+    ips++;
+    ports++;
+    i++;
+  }
+  return res;
 }
 
 void action_create(package_create* create_info){
@@ -109,7 +132,7 @@ void action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
 }
 
-void action_add(package_add* add_info){
+char* action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion select");
 }
 
@@ -120,6 +143,7 @@ char* action_run(package_run* run_info){
 void action_metrics(package_metrics* metrics_info){
   log_info(logger, "Se recibio una accion metrics");
 }
+
 
 char* parse_input(char* input){
   return exec_instr(input);
