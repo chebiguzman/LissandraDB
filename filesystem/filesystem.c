@@ -18,6 +18,8 @@
 #include <dirent.h>
 #include <errno.h>
 #include "memtable.h"
+#include <sys/stat.h>
+#include <fcntl.h>
 
 //punto de entrada para el programa y el kernel
 t_log* logger;
@@ -87,6 +89,96 @@ char* obtener_key(char* nombreTabla, int key){
   //en esta funcion deberias bscar sobre tus archivos y mem table
   //y devolver ese resultado
   return string_new();
+}
+
+int tables_count() {
+  t_config* config = config_create("config"); //consultar equipo si tengo que abrir config acá tambien.
+  
+  //defino el punto de partida para recorrer las tablas
+  char* MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE");
+  char path_table[300];
+  path_table[0] = '\0';
+  strcat(path_table,MNT_POINT);
+  strcat(path_table,"Tables/");
+
+  int dir_count = 0;
+  struct dirent* dent;
+  DIR* srcdir = opendir(path_table); //abro el directorio /Tables
+
+  if(srcdir == NULL) {
+    log_error(logger, "No se pudo abrir el directorio /Tables");
+  }
+  while((dent = readdir(srcdir)) != NULL) { //mientras el directorio no este vacio
+    struct stat st;
+    if(strcmp(dent->d_name, ".") == 0 || strcmp(dent->d_name, "..") == 0) {
+      continue;
+    }
+    if(fstatat(dirfd(srcdir), dent->d_name, &st, 0) < 0) {
+      log_error(logger, dent->d_name);
+      continue;
+    }
+    if(S_ISDIR(st.st_mode)) {
+      dir_count++;
+      //log_info(logger,dent->d_name);
+    }
+  }
+  closedir(srcdir);
+
+  return dir_count;
+}
+
+char** tables_names(){
+  int tables_cant = tables_count();
+  char** names = malloc(tables_cant * sizeof(char *));
+
+  //aloco memoria para cada nombre de tabla
+  int i;
+  for (i=0; i<tables_cant; i++) {
+    names[i] = (char *) malloc(256);
+  }
+  
+  //cargo todos los nombres
+  t_config* config = config_create("config"); //consultar equipo si tengo que abrir config acá tambien.
+  
+  //defino el punto de partida para recorrer las tablas
+  char* MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE");
+  char path_table[300];
+  path_table[0] = '\0';
+  strcat(path_table,MNT_POINT);
+  strcat(path_table,"Tables/");
+
+  int j = 0;
+  struct dirent* dent;
+  DIR* srcdir = opendir(path_table); //abro el directorio /Tables
+
+  if(srcdir == NULL) {
+    log_error(logger, "No se pudo abrir el directorio /Tables");
+  }
+  while((dent = readdir(srcdir)) != NULL) { //mientras el directorio no este vacio
+    struct stat st;
+    if(strcmp(dent->d_name, ".") == 0 || strcmp(dent->d_name, "..") == 0) {
+      continue;
+    }
+    if(fstatat(dirfd(srcdir), dent->d_name, &st, 0) < 0) {
+      log_error(logger, dent->d_name);
+      continue;
+    }
+    if(S_ISDIR(st.st_mode)) {
+      names[j] = dent->d_name;
+      j++;
+      //log_info(logger,dent->d_name);
+    }
+  }
+  closedir(srcdir);
+
+  //retorno el resultado
+  return names;
+
+  //libero todos los punteros
+  for (i=0; i<tables_cant; i++) {
+    free(names[i]);
+  }
+  free(names);
 }
 
 /* esta funcion es llamada automaticamnte por el servidor.
@@ -201,9 +293,89 @@ void action_create(package_create* create_info){
 char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
 
-  //recorrer el directorio de arboles de las tablas y descubrir cuales son las tablas de las que dispone el sistema
-  //leer los archivos de metadata de cada tabla
+  t_config* config = config_create("config"); //consultar equipo si tengo que abrir config acá tambien.
+  
+  //defino el punto de partida para recorrer las tablas
+  char* MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE");
+  char path_table[300];
+  path_table[0] = '\0';
+  strcat(path_table,MNT_POINT);
+  strcat(path_table,"Tables/");
+
+  char** t_names;
+  int t_count;
+  int flag = 0; //indica si hubo una tabla a describir
+
+  //distingo si cargaron o no una tabla a describir
+  if (describe_info->table_name != NULL) {
+    
+    //TODO si la tabla no existe
+    log_error(logger,"tomo este caminoo");
+    
+    t_names = malloc(sizeof(char *));
+    t_names[0] = (char *) malloc(256);
+    t_names[0] = describe_info->table_name;
+    t_count = 1;
+    flag = 1;
+
+  } else {
+
+    log_error(logger,"tomo este otro");
+
+    t_names = tables_names(); //obtengo los nombres de todas las tablas
+    t_count = tables_count(); //calculo cuantas tablas hay
+  }
+
+  char buff[3000];
+  buff[0] = '\0';
+  
+  int i;
+  for(i=0; i<t_count; i++){ //recorro las tablas y extraigo la metadata
+    char* n = t_names[i];
+
+    strcat(buff,"DESCRIBE");
+    strcat(buff,"\n");
+    strcat(buff,n);
+    strcat(buff,"\n");
+
+    char path_metadata[300];
+    snprintf(path_metadata, 300, "%s", path_table);
+
+    //aca leo la metadata de cada tabla que tengo
+    strcat(path_metadata,n);
+    strcat(path_metadata,"/Metadata.bin"); //path de metadata de la tabla
+
+    //leo y cargo la metadata en buffer
+    FILE* fp_m = fopen(path_metadata,"r");
+
+    char consistency[300];
+    char partitions[300];
+    char compaction_time[300];
+
+    fgets(consistency, 300, fp_m);
+    fgets(partitions, 300, fp_m);
+    fgets(compaction_time, 300, fp_m);
+    
+    strcat(buff,consistency);
+    strcat(buff,partitions);
+    strcat(buff,compaction_time);
+    strcat(buff,"\n");
+
+    fclose(fp_m);
+
+    path_metadata[0] = '\0';
+
+  } 
+
+  log_info(logger,buff);
+
+  if (flag == 1) {
+    free(t_names[0]);
+    free(t_names);
+  }
+
   //retornar el contenido de dichos archivos de metadata
+  return buff;
 
 }
 
