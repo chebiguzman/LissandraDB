@@ -74,13 +74,22 @@ char* exec_instr(char* instr_buff){
         package->value = strdup(get_value_from_buffer(instr_buff, instruction_size+table_name_len+key_len));
         
         //TIMESTAMP
-        char* timestamp_tmp = strdup(get_string_from_buffer(instr_buff,instruction_size+table_name_len+key_len+value_len));
+        /*char* timestamp_tmp = strdup(get_string_from_buffer(instr_buff,instruction_size+table_name_len+key_len+value_len));
         if (timestamp_tmp != '\0') {
             package->timestamp = atoi(timestamp_tmp);
         } else {
             package->timestamp = time(NULL);
         }
-        free(timestamp_tmp);
+        free(timestamp_tmp);*/
+        printf("\n Largo de instr_buff %d", strlen(instr_buff));
+        printf("\n Largo de la suma %d", instruction_size+table_name_len+key_len+value_len);
+
+        if(strlen(instr_buff) == instruction_size+table_name_len+key_len+value_len) {
+            package->timestamp = time(NULL);
+        } else {
+            char* timestamp_tmp = strdup(get_string_from_buffer(instr_buff,instruction_size+table_name_len+key_len+value_len));
+            package->timestamp = atoi(timestamp_tmp);
+        }
     
 
         printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n Value: %s\n Timestamp: %u\n", package->instruction, package->table_name, package->key, package->value, package->timestamp);
@@ -94,7 +103,11 @@ char* exec_instr(char* instr_buff){
         strcpy(package->instruction, instruction);
 
         //TABLE_NAME
-        package->table_name = strdup(get_string_from_buffer(instr_buff, instruction_size));
+        if(strlen(instr_buff) == strlen(instruction)+1) {
+            package->table_name = NULL;
+        } else {
+            package->table_name = strdup(get_string_from_buffer(instr_buff, instruction_size));
+        }
 
         printf("\n Datos de paquete:\n instruction: %s\n table name: %s\n \n", package->instruction, package->table_name);
         char* responce = action_describe(package);
