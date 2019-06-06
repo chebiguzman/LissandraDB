@@ -13,6 +13,9 @@
 #include "../pharser.h"
 #include "../actions.h"
 #include "../console.h"
+#include "../memory_functions.h"
+
+#define VALUE_SIZE 128
 
 //logger global para que lo accedan los threads
 t_log* logger;
@@ -25,27 +28,16 @@ int main_memory_size;
 int PAGE_SIZE = 512;
 int SEGMENT_SIZE = 1024; //TODO obtener el numero posta del handshake con fs
 
-typedef struct{
-  char* name;
-  char* base;
-  int limit;
-  int pages[2];
-}segment_info;
-
-typedef struct segment{
-  segment_info data;
-  struct segment *next;
-}segment;
+segment* SEGMENT_TABLE;
 
 segment* create_segment(){
   segment* temp;
   temp = (segment*)malloc(sizeof(segment));
   temp->next = NULL;
+  temp->data.pages[0] = -1;
+  temp->data.pages[1] = -1;
   return temp;
 }
-
-segment* SEGMENT_TABLE;
-
 
 segment* get_segment(int index){
     segment* temp = SEGMENT_TABLE;
@@ -167,34 +159,58 @@ int find_page(int pages[], int size, int key){
   return -1;
 }
 
-// int get_value(char table_name, int key){
-//   int segment_index = find_table(table_name);
-//   if (segment_index == -1){
-//     return -1;
-//   }
-//   segment* segment = get_segment(segment_index);
-//   int page_index = find_page(segment->data.pages, key);
-//   if(page_index == -1){
-//     return -1;
-//   }
-// }
+int get_free_page(int pages[], int number_of_pages){
+  for(int i = 0; i < number_of_pages; i++){
+    if(pages[i] == -1){
+      return i;
+    }
+  }
+  return 0; //TODO: implementar algoritmo LRU, necesito timestamps?
+}
+
+void add_key_to_table(segment* segment, int index, int key){
+  segment->data.pages[index] = key;
+}
 
 int get_memory_offset(char* base){
   return (int) base - (int) &main_memory[0];
 }
 
-void save_value_to_memory(segment* segment, int page_index){
-  int offset = page_index * PAGE_SIZE;
-  
-  
-  printf("%s: %d\n", "Base memoria", get_memory_offset(segment->data.base));
+void free_memory_space(char* address, int size){
+  memset(address, 0, size);
+}
+
+char* get_page_address(segment* segment, int page_index){
+  int segment_offset = get_memory_offset(segment->data.base);
+  int page_offset = page_index * PAGE_SIZE;
+  int page_address = segment_offset + page_offset; // devuelve la ubicacion de la pagina (segmento + page_size)
+  return main_memory+page_address;
+}
+
+// TODO: find page_index dinamically en vez de pasarla por parametro
+// Busca la direccion de la pagina dentro del segmento y le copia el valor, devuelve esa direccion
+char* save_value_to_memory(segment* segment, int page_index, char* value){
+  char* page_address = get_page_address(segment, page_index);
+  free_memory_space(page_address, PAGE_SIZE);
+  memcpy(page_address, value, VALUE_SIZE); 
+  return page_address;
+}
+
+void save_registry(segment* segment, int key, char* value){
+  // int size = sizeof(segment->data.pages) / PAGE_SIZE;
+  int index = get_free_page(segment->data.pages, 2); //TODO: cambiar el 2 por el size!
+    if(index == -1){
+      // JOURNALIAR ATR
+    }
+  add_key_to_table(segment, index, key);
+  save_value_to_memory(segment, index, value);
 }
 
 char* get_value(segment* segment, int page_index){
-  int offset =  page_index * PAGE_SIZE;
-
+  int page_offset =  page_index * PAGE_SIZE;
+  int segment_base = get_memory_offset(segment->data.base);
+  return main_memory+segment_base+page_offset;
 }
-
 
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
@@ -249,8 +265,8 @@ int main(int argc, char const *argv[])
   segment_info seg_info1;
   seg_info1.limit = SEGMENT_SIZE;
   seg_info1.name = "tabla1";
-  seg_info1.pages[0] = 20;
-  seg_info1.pages[1] = 23;
+  seg_info1.pages[0] = -1;
+  seg_info1.pages[1] = -1;
   segment1->data = seg_info1;
 
   segment* segment2 = create_segment();
@@ -273,20 +289,24 @@ int main(int argc, char const *argv[])
   print_segment_info(get_segment(2));
   print_segment_info(get_segment(3));
 
-  save_value_to_memory(get_segment(2), 1);
+  printf("Pages[0]: %d\n", get_segment(1)->data.pages[0]);
+  printf("Pages[1]: %d\n", get_segment(1)->data.pages[1]);
 
-  char* tabla_a_buscar = "tabla1";
-  printf("Se encuentra %s en memoria?: %d\n", tabla_a_buscar, find_table(tabla_a_buscar));
-  int index_tabla_a_buscar = find_table(tabla_a_buscar);
-  if(index_tabla_a_buscar != -1){
-    segment* test_segment = get_segment(index_tabla_a_buscar);
-    // sizeof(test_segment->data.pages) / PAGE_SIZE;
-    int index_key = find_page(test_segment->data.pages, 2, 23);
-    if(index_key != -1){
-      
-    }
-  }
-
+  save_registry(get_segment(1), 3, "hola");
+  save_registry(get_segment(1), 5, "chau");
+  printf("Pages[0]: %d\n", get_segment(1)->data.pages[0]);
+  printf("Pages[1]: %d\n", get_segment(1)->data.pages[1]);
+  
+  printf("Value: %s\n",  get_value(get_segment(1), 0));
+  printf("Value: %s\n",  get_value(get_segment(1), 1));
+ 
+  save_registry(get_segment(1), 1, "hello");
+  printf("Pages[0]: %d\n", get_segment(1)->data.pages[0]);
+  printf("Pages[1]: %d\n", get_segment(1)->data.pages[1]);
+  
+  printf("Value: %s\n",  get_value(get_segment(1), 0));
+  printf("Value: %s\n",  get_value(get_segment(1), 1));
+ 
   //inicio lectura por consola
   pthread_t tid_console;
   pthread_create(&tid_console, NULL, console_input, "Memory");
