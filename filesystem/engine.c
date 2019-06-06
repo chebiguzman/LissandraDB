@@ -87,12 +87,16 @@ void engine_start(t_log* logger){
     if(meta == NULL){
         meta = fopen(meta_file, "w");
         log_info(logg, "Se crea: %s", meta_file);
-        char* text = "BLOCKS=%s\nBLOCK_SIZE=%s\nMAGIC_NUMBER=LISSANDRA\n";
-        char* a = strdup("60");
-        char* b = strdup("5145");
-        char* r = malloc( strlen(text) + strlen(a) + strlen(b)+1);
+        //char* text = "BLOCKS=%s\nBLOCK_SIZE=%s\nMAGIC_NUMBER=LISSANDRA\n";
+        char* r = strdup("BLOCKS=");
+        strcat(r,"60");
+        strcat(r, "\n");
+        strcat(r,"BLOCK_SIZE=");
+        strcat(r, "5145");
+        strcat(r, "\n");
+        strcat(r, "MAGIC_NUMBER=LISSANDRA\n");
+        printf("%s", r);
 
-        sprintf(r, text, b,a);
         fputs(r, meta);
 
         fclose(meta);
