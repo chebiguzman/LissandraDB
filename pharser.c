@@ -27,27 +27,32 @@ char* exec_instr(char* instr_buff){
     int i = 0;
     int offset = 0;
     bool last_character_was_null = false;
+    bool openText = false;
     while(buff[i+offset] !='\0'){
-        
-    if(buff[i]== '\n' || buff[i]==' '){
+        if(!openText){
+            if(buff[i]== '\n' || buff[i]==' '){
 
-    buff[i]= '|';
-    buff[i] = '|';
+            buff[i]= '|';
+            buff[i] = '|';
 
-    if(last_character_was_null){
-        int len = strlen(buff)+1;
-        char* tmp = string_substring_from(buff,i+1);
-        memcpy(&buff[i], tmp, strlen(tmp)+1);
-        i--;
-    }
+            if(last_character_was_null){
+                int len = strlen(buff)+1;
+                char* tmp = string_substring_from(buff,i+1);
+                memcpy(&buff[i], tmp, strlen(tmp)+1);
+                i--;
+            }
 
-    last_character_was_null = true;
+            last_character_was_null = true;
 
-    }else{
-    buff[i] = buff[i];   
-    last_character_was_null = false;
+            }else{
 
-    }
+                buff[i] = buff[i];   
+                last_character_was_null = false;
+                if(buff[i]=='"') openText = true;
+            }
+        }else{
+            if(buff[i] == '"') openText = false;
+        }
 
     i++;        
     //quito las nuevas lineas 
@@ -57,11 +62,11 @@ char* exec_instr(char* instr_buff){
 
     //printf("es \n%s\n", buff);
 
-
+    
     char** parameters = string_split(buff, "|");
     int parameters_length = 0;
     while (parameters[parameters_length] != NULL){
-    parameters_length++;
+        parameters_length++;
     }
 
     if(!strcmp(instruction,"SELECT")){
