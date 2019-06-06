@@ -64,12 +64,11 @@ void* create_server(void* args){
         log_info(serverInfo->logger, "El servidor se conecto exitosamente");
         while (1){
 
-            log_info(serverInfo->logger, "Servidor esperando mensajes");
-
             if(read(newsockfd, buffer, sizeof(buffer))){
 
                 log_info(serverInfo->logger, buffer);
                 char* responce = parse_input(buffer);
+
                 write(newsockfd,responce,strlen(responce)+1);
 
             }else{

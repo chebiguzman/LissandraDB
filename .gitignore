@@ -38,9 +38,10 @@
 *.m
 *.k
 *.f
-kernel
-memory
-filesystem
+**/kernel/kernel
+**/memory/memory
+**/filesystem/filesystem
+
 
 # Debug files
 *.dSYM/
@@ -49,6 +50,8 @@ filesystem
 *.pdb
 *.log
 *.json
+.*
+!/.gitignore
 
 # Kernel Module Compile Results
 *.mod*
