@@ -22,6 +22,7 @@
 
 //punto de entrada para el programa y el kernel
 t_log* logger;
+t_log* logger_debug;
 int main(int argc, char const *argv[])
 {   
     //set up confg
@@ -36,7 +37,12 @@ int main(int argc, char const *argv[])
    
     //set up log
     logger = log_create(LOGPATH, "Kernel", 1 , LOG_LEVEL_DEBUG);
+    int console = 0;
 
+    if(argc == 2 && !strcmp(argv[1],"-v")){
+      console++;
+    }
+    logger_debug = log_create(LOGPATH, "Kernel", 0, LOG_LEVEL_DEBUG);
   
     pthread_cond_t console_cond;
     pthread_mutex_t console_lock;
@@ -47,9 +53,9 @@ int main(int argc, char const *argv[])
     control->cond = console_cond;
     control->name = strdup("kernel");
 
-    start_sheduler(logger,control);
+    start_sheduler(logger,logger_debug, control);
 
-    start_kmemory_module(logger, MEMORY_IP, MEMORY_PORT);
+    start_kmemory_module(logger,logger_debug, MEMORY_IP, MEMORY_PORT);
         
 
    //inicio lectura por consola
@@ -92,7 +98,7 @@ char* exec_in_memory(int memory_fd, char* payload){
 }
 
 char* action_select(package_select* select_info){
-  log_info(logger, "Se recibio una accion select");
+  log_info(logger_debug, "Se recibio una accion select");
   //get consistency of talble
   t_consistency consistency = get_table_consistency(select_info->table_name);
 
@@ -108,7 +114,7 @@ char* action_select(package_select* select_info){
 }
 
 char* action_run(package_run* run_info){
-  log_info(logger, "Se recibio una accion run");
+  log_info(logger_debug, "Se recibio una accion run");
   char* rt = string_new();
   FILE* fp = fopen(run_info->path, "r");
 
@@ -141,7 +147,7 @@ char* action_run(package_run* run_info){
 }
 
 char* action_add(package_add* add_info){
-  log_info(logger, "Se recibio una accion add");
+  log_info(logger_debug, "Se recibio una accion add");
   if(add_info->consistency == S_CONSISTENCY){
     add_memory_to_sc(add_info->id);
   }else if(add_info->consistency == ANY_CONSISTENCY){
@@ -153,7 +159,7 @@ char* action_add(package_add* add_info){
 }
 
 char* action_insert(package_insert* insert_info){
-  log_info(logger, "Se recibio una accion insert");
+  log_info(logger_debug, "Se recibio una accion insert");
   /*t_consistency consistency = get_table_consistency(insert_info->table_name);
   int memoryfd = get_loked_memory(consistency, insert_info->table_name);
   char* package = parse_package_insert(select_info);
@@ -165,56 +171,63 @@ char* action_insert(package_insert* insert_info){
 }
 
 char* action_create(package_create* create_info){
-  log_info(logger, "Se recibio una accion create");
+  log_info(logger_debug, "Se recibio una accion create");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
   return "";
 }
 
 char* action_describe(package_describe* describe_info){
-  log_info(logger, "Se recibio una accion describe");
+  log_info(logger_debug, "Se recibio una accion describe");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
   return "";
 }
 
 char* action_drop(package_drop* drop_info){
-  log_info(logger, "Se recibio una accion drop");
+  log_info(logger_debug, "Se recibio una accion drop");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
   return "";
 }
 
 char* action_journal(package_journal* journal_info){
-  log_info(logger, "Se recibio una accion select");
+  log_info(logger_debug, "Se recibio una accion select");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
   return "";
 }
 
 char* action_metrics(package_metrics* metrics_info){
-  log_info(logger, "Se recibio una accion metrics");
+  log_info(logger_debug, "Se recibio una accion metrics");
   
   return "";
 }
 
 char* action_intern_memory_status(){
-  log_info(logger, "Se recibio una accion status");
+  log_info(logger_debug, "Se recibio una accion status");
+
   int memfd = get_loked_main_memory();
   
+  if(memfd<0){
+    return "";
+  }
 
   char* responce = exec_in_memory(memfd, "MEMORY");
   unlock_memory(memfd);
+  if(responce == ""){
+    return "";
+  }
   char** memories = string_split(responce, "|");
   update_memory_finder_service_time(atoi(memories[0]));
-  int i = 1;
+    int i = 1;
 
-  while(memories[i]!=NULL){
-    char** info = string_split(memories[i], ",");
-    int id = atoi(info[0]);
-    char* ip = info[1];
-    int port = atoi(info[2]);
+    while(memories[i]!=NULL){
+      char** info = string_split(memories[i], ",");
+      int id = atoi(info[0]);
+      char* ip = info[1];
+      int port = atoi(info[2]);
 
-    check_for_new_memory(ip ,port, id);
-    i++;
-  }
-  return responce;
+      check_for_new_memory(ip ,port, id);
+      i++;
+    }
+    return "";
 }
 
 //Crea un t_instr con un string

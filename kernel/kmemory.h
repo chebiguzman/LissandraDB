@@ -20,7 +20,7 @@ typedef struct{
 t_consistency get_table_consistency(char* table_name);
 int get_loked_memory(t_consistency consistency, char* table_name);
 void unlock_memory(int memoryfd);
-void start_kmemory_module(t_log* logg, char* main_memory_ip, int main_memoy_port);
+void start_kmemory_module(t_log* logg,t_log* logg_debug, char* main_memory_ip, int main_memoy_port);
 int connect_to_memory(char* ip, int port);
 void *metadata_service(void* args);
 

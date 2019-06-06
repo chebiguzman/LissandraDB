@@ -24,15 +24,18 @@ scheduler_queue* queue;
 scheduler_queue* syscall_queue;
 
 t_log* logg;
+t_log* logger_debug;
 t_console_control* console;
 t_config* fconfig;
 
-void start_sheduler(t_log* log, t_console_control* console_control ){
+void start_sheduler(t_log* log,t_log* log_debug, t_console_control* console_control ){
 
-    log_info(log, "se inicia el modulo scheduler");
+    log_info(logger_debug, "se inicia el modulo scheduler");
 
     fconfig = config_create("config");
     logg = log;
+    logger_debug = log_debug;
+
     config_not= malloc(sizeof(scheduler_config));
 
     int m = config_get_int_value(fconfig, "MULTIPROCESAMIENTO");
@@ -63,7 +66,7 @@ void start_sheduler(t_log* log, t_console_control* console_control ){
 }
 
 void* config_worker(void* args){
-    log_info(logg, "se inicia el monitoreo del config");
+    log_info(logger_debug, "se inicia el monitoreo del config");
     int inotifyFd = inotify_init();
     inotify_add_watch(inotifyFd, "config", IN_CLOSE_WRITE);
     char* buf = malloc(EVENT_BUF_LEN);
@@ -78,7 +81,7 @@ void* config_worker(void* args){
         if(event->mask == IN_CLOSE_WRITE){
         //config_destroy(fconfig);
         fconfig = config_create("config");
-        log_info(logg, "ConfigWorker: se modifico el archivo de configuracion");
+        log_info(logger_debug, "ConfigWorker: se modifico el archivo de configuracion");
         update_scheduler_config();
 
         }
@@ -127,7 +130,8 @@ void schedule(t_instr_set* instr_set){
 char* ksyscall(char* call){
 
     if(syscall_availity_status){
-        log_debug(logg, "syscall");
+        log_debug(logger_debug, "syscall");
+        
         t_ksyscall* syscall = malloc( sizeof(t_ksyscall));
         syscall->instr = malloc ( sizeof ( t_instr_set));
 
@@ -147,6 +151,7 @@ char* ksyscall(char* call){
         
         
         pthread_cond_broadcast(&queue->cond);
+        
         pthread_mutex_lock(&syscall->lock);
         pthread_cond_wait(&syscall->cond, &syscall->lock);
         
@@ -155,11 +160,12 @@ char* ksyscall(char* call){
         pthread_cond_destroy(&syscall->cond);
         
         free(syscall);
-
+        
+        
         return res;
 
     }else{
-        log_debug(logg, "Aun no estan disponibles las syscall");
+        log_debug(logger_debug, "Aun no estan disponibles las syscall");
         return "";
     }
 }
