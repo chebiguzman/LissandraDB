@@ -51,7 +51,7 @@ void start_kmemory_module(t_log* logg,t_log* logg_debug, char* main_memory_ip, i
 
     //DEBUG
     table_debug->name = strdup("a");
-    table_debug->consistency = H_CONSISTENCY;
+    table_debug->consistency = ANY_CONSISTENCY;
     list_add(tbl_list,table_debug);
     //mem_list_helper = list_helper_init(mem_list);
     t_kmemory* mp = malloc(sizeof(t_kmemory));
@@ -413,8 +413,8 @@ int connect_to_memory(char* ip, int port){
     if(conection_result<0){
       printf("\r");
       log_error(logger, "kmemory: No se logro establecer coneccion con una memoria");
-      //printf("\rkernel>");
-
+      printf("\rkernel>");
+        fflush(stdout);
       return -1;
     }
     return memoryfd;
@@ -433,6 +433,7 @@ t_consistency get_table_consistency(char* table_name){
     t_table* table = list_find(tbl_list, find_table_by_name );
 
     if(table == NULL){
+        log_error(logger, "No se reconoce la tabla como pertenciente a la base de datos. Intentelo mas tarde");
         exec_err_abort(); //cuano la 
         return ERR_CONSISTENCY;
     }

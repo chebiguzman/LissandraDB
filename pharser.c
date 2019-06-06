@@ -75,7 +75,7 @@ char* exec_instr(char* instr_buff){
         //KEY
         package->key = atoi(parameters[2]);
 
-        printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name,package->key);
+        //printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name,package->key);
         char* responce = action_select(package);
         return responce;
     }
@@ -88,13 +88,13 @@ char* exec_instr(char* instr_buff){
 
         //PATH
         package->path = parameters[1];
-        printf("\n Datos de paquete:\n instruction: %s\n path: %s\n \n", package->instruction, package->path);
+        //printf("\n Datos de paquete:\n instruction: %s\n path: %s\n \n", package->instruction, package->path);
         char* responce = action_run(package);
         return responce;
     }
 
     if(!strcmp(instruction,"ADD")){
-        if(parameters_length != 5) return "Numero de parametros incorrecto";
+        if(parameters_length != 5) return "Numero de parametros incorrecto\n";
 
         package_add* package = malloc(sizeof(package_add));
         package->instruction = parameters[0];
@@ -115,7 +115,7 @@ char* exec_instr(char* instr_buff){
         }else if(!strcmp(c,"HC")){
             package->consistency = H_CONSISTENCY;
         }else{
-            return "Criterio no valido";
+            return "Criterio no valido\n";
         }
         //printf("\n Datos de paquete:\n instruction: %s\n id: %d\ncriterio:%d \n", package->instruction , package->id, package->consistency);
         char* responce = action_add(package);

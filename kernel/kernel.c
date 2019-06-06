@@ -42,7 +42,7 @@ int main(int argc, char const *argv[])
     if(argc == 2 && !strcmp(argv[1],"-v")){
       console++;
     }
-    logger_debug = log_create(LOGPATH, "Kernel", 0, LOG_LEVEL_DEBUG);
+    logger_debug = log_create(LOGPATH, "Kernel", console, LOG_LEVEL_DEBUG);
   
     pthread_cond_t console_cond;
     pthread_mutex_t console_lock;
