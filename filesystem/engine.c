@@ -23,11 +23,11 @@ DIR* open_or_create_dir(char* path){
     DIR* dir = opendir(path);
     if (dir) {
         return dir;
-    } else if (ENOENT == errno) {
+    } else{
        int status = mkdir(path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+        log_info(logg, "se crea: %s", path);
+
        if(status>0) return open_or_create_dir(path);
-    } else {
-        log_error(logg, " fallo opendir()");
     }
 
 }
@@ -38,6 +38,16 @@ void engine_start(t_log* logger){
     t_config* config = config_create("config");
     MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE");
 
+    DIR* mnt_dir = opendir(MNT_POINT);
+
+    if(mnt_dir == NULL){
+        log_error(logger, "Fatal error. El punto de montaje es invalido.");
+        exit(-1);
+    }else{
+        closedir(mnt_dir);
+        
+    }
+
     //Armo los directorios
     char* metadata_dir = strdup(MNT_POINT);
     strcat(metadata_dir, "Metadata/");
@@ -46,10 +56,7 @@ void engine_start(t_log* logger){
     char* blocks_dir = strdup(MNT_POINT);
     strcat(blocks_dir, "Bloques/");
 
-    printf("%s\n",tables_dir);
-    printf("%s\n",blocks_dir);
-    printf("%s\n",metadata_dir);
-   root_dirr = tables_dir;
+    root_dirr = tables_dir;
 
     //directorios abiertos
     open_or_create_dir(metadata_dir);
@@ -66,22 +73,25 @@ void engine_start(t_log* logger){
     //consigo el directorio metadata
     char* meta_file = strdup("");
     strcat(meta_file, metadata_dir);
-    //strcat(meta_file, "Metadata.bin");
-    //printf("%s\n",meta_file);
+    strcat(meta_file, "Metadata.bin");
+    printf("%s\n",meta_file);
 
 
     FILE* bitmap = fopen(bitmap_file,"w");
     FILE* meta = fopen(meta_file, "r");
-    //t_config* metadata_config = config_create(meta_file);
 
     //creo el archivo Metadata/Metadata.bin
     if(meta == NULL){
         meta = fopen(meta_file, "w");
+        log_info(logg, "Se crea: %s", meta_file);
+
         char* a = strdup("60");
         char* b = strdup("5145");
-        char* r;
+        char* r = malloc(3000);
+
         sprintf(r, "BLOCKS=%s\nBLOCK_SIZE=%s\nMAGIC_NUMBER=LISSANDRA\n", b,a);
         fputs(r, meta);
+
         fclose(meta);
 
     }
