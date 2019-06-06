@@ -16,6 +16,7 @@ extern scheduler_config* config_not;
 extern pthread_mutex_t config_lock;
 long MEMORY_FINDER_SLEEP;
 t_log* logger;
+t_log* logger_debug;
 t_list* tbl_list;   //Lista de tablas (metadata)
 
 pthread_mutex_t mem_list_lock = PTHREAD_MUTEX_INITIALIZER;  //mutex para la lista de memorias
@@ -37,8 +38,9 @@ typedef struct{
 }t_table;
 
 
-void start_kmemory_module(t_log* logg, char* main_memory_ip, int main_memoy_port){
+void start_kmemory_module(t_log* logg,t_log* logg_debug, char* main_memory_ip, int main_memoy_port){
     logger = logg;
+    logger_debug = logg_debug;
     mem_list = list_create();
     tbl_list = list_create();
     
@@ -62,7 +64,9 @@ void start_kmemory_module(t_log* logg, char* main_memory_ip, int main_memoy_port
         list_add(mem_list, mp);
         strong_memory = mp;
     }else{
+        printf("\r");
         log_error(logger, "kmemory: No Existe memoria principal");
+        //printf("\rkernel>");
         strong_memory = NULL;
     }
 
@@ -74,25 +78,25 @@ void start_kmemory_module(t_log* logg, char* main_memory_ip, int main_memoy_port
     pthread_t tid_memory_finder_service;
     pthread_create(&tid_memory_finder_service, NULL,memory_finder_service, NULL);
 
-    log_info(logger, "kmemory: El modulo kmemory fue inicializado exitosamente");
+    log_info(logger_debug, "kmemory: El modulo kmemory fue inicializado exitosamente");
 
 
 }
 
 int get_loked_memory(t_consistency consistency, char* table_name){
     if(consistency == S_CONSISTENCY){
-        log_debug(logger, "kmemory: se pide memoria de SC");
+        log_debug(logger_debug, "kmemory: se pide memoria de SC");
         return get_sc_memory();
     }else if( consistency == H_CONSISTENCY){
-        log_debug(logger, "kmemory: se pide memoria de HC");
+        log_debug(logger_debug, "kmemory: se pide memoria de HC");
         return get_hc_memory(table_name);
     }else if (consistency == ANY_CONSISTENCY){
-        log_debug(logger, "kmemory: se pide memoria de EVENTUAL");
+        log_debug(logger_debug, "kmemory: se pide memoria de EVENTUAL");
         return get_any_memory();
     }else if( consistency == ALL_CONSISTENCY){
         return get_memory();
     }else if(consistency == ERR_CONSISTENCY){
-        log_error(logger, "No se reconoce la tabla");
+        log_error(logger_debug, "No se reconoce la tabla");
         return -1;
     }else{
         log_error(logger, "Error fatal. El sitema no reconoce la consitencia de la tabla solicitada");
@@ -105,6 +109,7 @@ int get_loked_main_memory(){
     pthread_mutex_lock(&mem_list_lock);
     t_kmemory* main = list_get(mem_list, 0);
     pthread_mutex_unlock(&mem_list_lock);
+    if(main == NULL) return -1;
     pthread_mutex_lock(&main->lock);
     return main->fd;
 }
@@ -116,7 +121,7 @@ int get_memory(){
     pthread_mutex_unlock(&mem_list_lock);
 
     if(list_s == 0){
-        log_error(logger, "No existen memorias en el criterio.");
+        log_error(logger, "No existen memorias añadidas al kernel. Reiniciar proceso.");
         return -1;
     }
     t_kmemory* memory;
@@ -124,19 +129,15 @@ int get_memory(){
     int i = last_position++;
     if(i > list_s-1) i = 0;
 
-    log_debug(logger, "el tamaño de i es:%d, list_s es: %d",i, list_s);
-
     while(i != last_position){
         pthread_mutex_lock(&mem_list_lock);
         t_kmemory* m = list_get(mem_list, i);
         pthread_mutex_unlock(&mem_list_lock);
         int status = pthread_mutex_trylock(&m->lock);
-    log_debug(logger, "se intetnta en %d, obtenerm emoria con resultado: %d",i, status);
-
+    
         if(status == 0){
             memory = m;
             last_position = i;
-            log_debug(logger, "se obtubo");
             break;
         }else{
             i++;
@@ -172,7 +173,7 @@ int get_sc_memory(){
         log_error(logger, "kmemory: No hay memoria en el citerio principal");
         return -1;
     }
-    log_debug(logger, "kmemory: bloqueo memoria");
+    log_debug(logger_debug, "kmemory: bloqueo memoria");
     pthread_mutex_lock(&strong_memory->lock);
     return strong_memory->fd;
 }
@@ -213,19 +214,16 @@ int get_any_memory(){
     int i = last_position++;
     if(i > list_s-1) i = 0;
 
-    log_debug(logger, "el tamaño de i es:%d, list_s es: %d",i, list_s);
 
     while(i != last_position){
         pthread_mutex_lock(&any_lock);
         t_kmemory* m = list_get(any_list, i);
         pthread_mutex_unlock(&any_lock);
         int status = pthread_mutex_trylock(&m->lock);
-    log_debug(logger, "se intetnta en %d, obtenerm emoria con resultado: %d",i, status);
 
         if(status == 0){
             memory = m;
             last_position = i;
-            log_debug(logger, "se obtubo");
             break;
         }else{
             i++;
@@ -413,7 +411,10 @@ int connect_to_memory(char* ip, int port){
     int conection_result = connect(memoryfd, (struct sockaddr*)&sock_client, sizeof(sock_client));
 
     if(conection_result<0){
+      printf("\r");
       log_error(logger, "kmemory: No se logro establecer coneccion con una memoria");
+      //printf("\rkernel>");
+
       return -1;
     }
     return memoryfd;
@@ -450,7 +451,8 @@ void *metadata_service(void* args){
         usleep( sleep_interval);
         //log_debug(logger, "metadataService: Se actualiza la metadata de las tablas");
         char* r = ksyscall("DESCRIBE");
-        log_debug(logger, r);
+        //log_debug(logger, r);
+        
         
     }
     
@@ -459,9 +461,8 @@ void *metadata_service(void* args){
 void *memory_finder_service(void* args){
     while(true){
         usleep( MEMORY_FINDER_SLEEP);
-        log_debug(logger, "kmemoryService: Se actualiza las memorias");
+        log_debug(logger_debug, "kmemoryService: Se actualiza las memorias");
         char* r = ksyscall("MEMORY");
-        log_debug(logger, r);
     }
 }
 
