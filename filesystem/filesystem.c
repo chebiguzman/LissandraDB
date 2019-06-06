@@ -40,7 +40,7 @@ int main(int argc, char const *argv[])
     //set up log
     logger = log_create(LOGPATH, "Filesystem", 1, LOG_LEVEL_INFO);
 
-    engine_start(logger);
+    //engine_start(logger);
     
     //set up server
     server_info* serverInfo = malloc(sizeof(server_info));
