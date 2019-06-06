@@ -1,5 +1,6 @@
 #include <commons/log.h> //logger
 
+
 //Estructuras necesarias para la memtable:
 
 struct data_node {
@@ -20,4 +21,4 @@ struct table_node{
 //t_table* memtable_first = NULL;
 
 
-void insert_memtable(void* args, struct table_node* memtable_p);
+void insert_to_memtable();

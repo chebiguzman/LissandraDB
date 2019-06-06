@@ -25,7 +25,7 @@ typedef struct {
     char* table_name;
     int key;
     char* value;
-    unsigned timestamp;
+    unsigned long timestamp;
 } package_insert;
 
 //DESCRIBE [NOMBRE_TABLA]?

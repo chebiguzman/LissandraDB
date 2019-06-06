@@ -97,44 +97,29 @@ char* exec_instr(char* instr_buff){
 
 
     if(!strcmp(instruction,"INSERT")){
+        if(parameters_length != 4 && parameters_length != 3) return "Numero de parametros incorrectos\n";
+
         package_insert* package = malloc(sizeof(package_insert));
-        package->instruction = malloc(instruction_size);
-        strcpy(package->instruction, instruction);
+        package->instruction = parameters[0];
         
         //TABLE_NAME
-        int table_name_len = strlen(get_string_from_buffer(instr_buff, instruction_size))+1; //sumo el \o
-        package->table_name = strdup(get_string_from_buffer(instr_buff, instruction_size));
-        
+        package->table_name = parameters[1];        
         //KEY
-        char* key_tmp = strdup(get_string_from_buffer(instr_buff, instruction_size+table_name_len));
-        int key_len = strlen(key_tmp)+1;
-        package->key = atoi(key_tmp);
-        free(key_tmp);
+        package->key = atoi(parameters[2]);
 
         //VALUE
-        int value_len = strlen(get_value_from_buffer(instr_buff, instruction_size+table_name_len+key_len))+3;
-        package->value = strdup(get_value_from_buffer(instr_buff, instruction_size+table_name_len+key_len));
+        package->value = parameters[3];
         
         //TIMESTAMP
-        /*char* timestamp_tmp = strdup(get_string_from_buffer(instr_buff,instruction_size+table_name_len+key_len+value_len));
-        if (timestamp_tmp != '\0') {
-            package->timestamp = atoi(timestamp_tmp);
-        } else {
+        //si hay 4 parmateros me fijo si es un timestamp
+        if(parameters_length == 5){
+            unsigned long timestamp = atoi(parameters[4]);
+            if(timestamp>0) package->timestamp = timestamp;
+        }else{
             package->timestamp = time(NULL);
         }
-        free(timestamp_tmp);*/
-        printf("\n Largo de instr_buff %d", strlen(instr_buff));
-        printf("\n Largo de la suma %d", instruction_size+table_name_len+key_len+value_len);
 
-        if(strlen(instr_buff) == instruction_size+table_name_len+key_len+value_len) {
-            package->timestamp = time(NULL);
-        } else {
-            char* timestamp_tmp = strdup(get_string_from_buffer(instr_buff,instruction_size+table_name_len+key_len+value_len));
-            package->timestamp = atoi(timestamp_tmp);
-        }
-    
-
-        printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n Value: %s\n Timestamp: %u\n", package->instruction, package->table_name, package->key, package->value, package->timestamp);
+        printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n Value: %s\n Timestamp: %lu\n", package->instruction, package->table_name, package->key, package->value, package->timestamp);
         char* responce = action_insert(package);
         return responce;
     }
@@ -230,14 +215,14 @@ char* parse_package_insert(package_insert* package){
     char* buffer; 
     char* instr = strdup(package->instruction);
     char* tbl_n = strdup(package->table_name);
-    char key[16];
-    sprintf(key, "%d", package->key);
+    //char key[16]; //malisima idea llega a ser mas de 15 digitos y rompe
+    char* key = string_itoa(package->key);
     char* val = strdup(package->value);
-    char timestmp[16];
-    sprintf(timestmp, "%u", package->timestamp);
-    int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + strlen(key)+1 + strlen(package->value)+1 + strlen(timestmp)+1;
-    
-    buffer = malloc(tot_len);
+    char* timestmp = string_itoa(package->timestamp);
+    //int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + strlen(key)+1 + strlen(package->value)+1 + strlen(timestmp)+1;
+    //no hace falta, lo hace strcat
+    //buffer = malloc(tot_len);
+
     buffer = string_new();
     buffer = strcat(buffer, instr);
     buffer = strcat(buffer, sep); //emular NULL terminations
