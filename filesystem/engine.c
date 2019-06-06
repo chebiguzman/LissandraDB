@@ -26,8 +26,11 @@ DIR* open_or_create_dir(char* path){
     } else{
        int status = mkdir(path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
         log_info(logg, "se crea: %s", path);
-
-       if(status>0) return open_or_create_dir(path);
+        if(status!=0){
+            log_error(logg, "Fatal error. No se puede escribir en el directorio. root?");
+            exit(-1);
+        }
+       return open_or_create_dir(path);
     }
 
 }
@@ -96,7 +99,7 @@ void engine_start(t_log* logger){
 
     }
 
-    /*tables_name = list_create();
+    tables_name = list_create();
     struct dirent *entry;
      while ((entry = readdir(root)) != NULL) {
          if(entry->d_type == DT_DIR){
@@ -105,7 +108,7 @@ void engine_start(t_log* logger){
                 string_to_upper(entry->d_name);
             list_add(tables_name,entry->d_name );
          }
-     }*/
+     }
 
     
 }
