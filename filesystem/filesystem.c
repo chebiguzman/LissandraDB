@@ -76,8 +76,7 @@ int main(int argc, char const *argv[])
 int tables_count() {
   
   //defino el punto de partida para recorrer las tablas
-  char path_table[300];
-  path_table[0] = '\0';
+  char *path_table = strdup("");
   strcat(path_table,MNT_POINT);
   strcat(path_table,"Tables/");
 
@@ -350,7 +349,7 @@ char* action_describe(package_describe* describe_info){
 
   //retornar el contenido de dichos archivos de metadata
   return "buff";//no podes devolver algo que no sea puntero
-*/
+  */
 return "";
 }
 
