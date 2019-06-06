@@ -1,6 +1,7 @@
 LOG_PATH=filesystem.log
 PORT=5003
-PUNTO_MONTAJE="/mnt/LISSANDRA_FS/"    
+PUNTO_MONTAJE=/mnt/LISSANDRA_FS/
 RETARDO=500
 TAMAÑO_VALUE=4
 TIEMPO_DUMP=5000
+dir="/home/utnso/Escritorio/skerry/tp-2019-1c-Skerry/tables/"
