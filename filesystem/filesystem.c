@@ -235,9 +235,11 @@ char* action_insert(package_insert* insert_info){
   } else if (ENOENT == errno) {
     //directorio no existe
     log_error(logger, "La tabla indicada no existe");
+    return "";
   } else {
     //opendir() fallo por otro motivo
     log_error(logger, "Error al verificar la existencia de la tabla, fallo opendir()");
+    return "";
   }
 
   //obtener la metadata asociada a dicha tabla (tabla1) ??Para que necesito la metadata???
