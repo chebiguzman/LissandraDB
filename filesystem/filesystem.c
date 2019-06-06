@@ -14,7 +14,7 @@
 #include "../actions.h"
 #include "../console.h"
 
-#include "fs_structure.h"
+#include "engine.h"
 #include <dirent.h>
 #include <errno.h>
 #include "memtable.h"
@@ -38,8 +38,10 @@ int main(int argc, char const *argv[])
     int PORT = config_get_int_value(config, "PORT");
 
     //set up log
-    logger = log_create(LOGPATH, "Filesystem", 1, LOG_LEVEL_DEBUG);
-      
+    logger = log_create(LOGPATH, "Filesystem", 1, LOG_LEVEL_INFO);
+
+    engine_start();
+    
     //set up server
     server_info* serverInfo = malloc(sizeof(server_info));
     serverInfo->logger = logger;
@@ -47,13 +49,10 @@ int main(int argc, char const *argv[])
     pthread_t tid;
     pthread_create(&tid, NULL, create_server, (void*) serverInfo);
 
-    //levantar estructura del fileSystem
-    fs_structure_info* fs_structure_info = malloc(sizeof(fs_structure_info));
-    memset(fs_structure_info, 0, sizeof(fs_structure_info));
-    fs_structure_info->logger = logger;
+    /*fs_structure_info->logger = logger;
     pthread_t tid_fs_structure;
-    //lo apague me estass creando los archivos en cualquier lado...
-    //pthread_create(&tid_fs_structure, NULL, setup_fs, (void*) fs_structure_info);
+    no hay necesidad de un thread aca
+    //pthread_create(&tid_fs_structure, NULL, setup_fs, (void*) fs_structure_info);*/
 
     //inicio lectura por consola
     pthread_t tid_console;
@@ -66,7 +65,7 @@ int main(int argc, char const *argv[])
     free(LOGPATH);
     free(logger);
     free(serverInfo);
-    free(fs_structure_info);
+    //free(fs_structure_info);
     config_destroy(config);
 
     return 0;
