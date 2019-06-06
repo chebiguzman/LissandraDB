@@ -24,7 +24,6 @@ DIR* open_or_create_dir(char* path){
     if (dir) {
         return dir;
     } else if (ENOENT == errno) {
-        log_debug(logg, "se crea %s", path);
        int status = mkdir(path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
        if(status>0) return open_or_create_dir(path);
     } else {
@@ -50,11 +49,11 @@ void engine_start(t_log* logger){
     printf("%s\n",tables_dir);
     printf("%s\n",blocks_dir);
     printf("%s\n",metadata_dir);
-    root_dirr = tables_dir;
+   root_dirr = tables_dir;
 
     //directorios abiertos
     open_or_create_dir(metadata_dir);
-    root = open_or_create_dir(tables_dir);
+     root = open_or_create_dir(tables_dir);
     open_or_create_dir(blocks_dir);
 
 
@@ -67,13 +66,13 @@ void engine_start(t_log* logger){
     //consigo el directorio metadata
     char* meta_file = strdup("");
     strcat(meta_file, metadata_dir);
-    strcat(meta_file, "Metadata.bin");
-    printf("%s\n",meta_file);
+    //strcat(meta_file, "Metadata.bin");
+    //printf("%s\n",meta_file);
 
 
-    FILE* bitmap = fopen(bitmap_file,"wr");
+    FILE* bitmap = fopen(bitmap_file,"w");
     FILE* meta = fopen(meta_file, "r");
-    t_config* metadata_config = config_create(meta_file);
+    //t_config* metadata_config = config_create(meta_file);
 
     //creo el archivo Metadata/Metadata.bin
     if(meta == NULL){
@@ -87,7 +86,7 @@ void engine_start(t_log* logger){
 
     }
 
-    tables_name = list_create();
+    /*tables_name = list_create();
     struct dirent *entry;
      while ((entry = readdir(root)) != NULL) {
          if(entry->d_type == DT_DIR){
@@ -96,7 +95,7 @@ void engine_start(t_log* logger){
                 string_to_upper(entry->d_name);
             list_add(tables_name,entry->d_name );
          }
-     }
+     }*/
 
     
 }
