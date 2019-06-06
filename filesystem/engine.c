@@ -62,9 +62,11 @@ void engine_start(t_log* logger){
     root_dirr = tables_dir;
 
     //directorios abiertos
-    open_or_create_dir(metadata_dir);
-     root = open_or_create_dir(tables_dir);
-    open_or_create_dir(blocks_dir);
+    root = open_or_create_dir(metadata_dir);
+    closedir(root);
+    root = open_or_create_dir(blocks_dir);
+    closedir(root);
+    root = open_or_create_dir(tables_dir);
 
 
     //Creo el archivo Metadata/Bitmap.bin
@@ -82,7 +84,7 @@ void engine_start(t_log* logger){
 
     FILE* bitmap = fopen(bitmap_file,"w");
     FILE* meta = fopen(meta_file, "r");
-
+    fclose(bitmap);
     //creo el archivo Metadata/Metadata.bin
     if(meta == NULL){
         meta = fopen(meta_file, "w");
@@ -103,7 +105,7 @@ void engine_start(t_log* logger){
 
     }
 
-    tables_name = list_create();
+    /*tables_name = list_create();
     struct dirent *entry;
      while ((entry = readdir(root)) != NULL) {
          if(entry->d_type == DT_DIR){
@@ -112,7 +114,7 @@ void engine_start(t_log* logger){
                 string_to_upper(entry->d_name);
             list_add(tables_name,entry->d_name );
          }
-     }
+     }*/
 
     
 }
