@@ -3,6 +3,8 @@
 #include <pthread.h>
 #include <string.h>
 
+#define VALUE_SIZE 64
+
 typedef struct{
   char* name;
   char* base;
@@ -14,6 +16,12 @@ typedef struct segment{
   segment_info data;
   struct segment *next;
 }segment;
+
+typedef struct{
+  int timestamp;
+  int key;
+  char value[VALUE_SIZE];
+}page_t;
 
 segment* create_segment();
 segment* get_segment(int index);

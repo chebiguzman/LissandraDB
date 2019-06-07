@@ -15,8 +15,6 @@
 #include "../console.h"
 #include "../memory_functions.h"
 
-#define VALUE_SIZE 128
-
 //logger global para que lo accedan los threads
 t_log* logger;
 int fs_socket;
@@ -142,9 +140,9 @@ void print_segment_info(int index){
   segment* temp = get_segment(index);
   printf("%d) ", index);
   printf("Nombre de tabla: %s\n", temp->data.name);
-  printf("Base de memoria: %p\n", temp->data.base);
-  printf("Tamanio segmento: %d\n", &temp->data.base[temp->data.limit - 1] - temp->data.base + 1);
+  printf("Primer posicion de memoria: %p\n", temp->data.base);
   printf("Ultima posicion de memoria: %p\n", &temp->data.base[temp->data.limit - 1]);
+  printf("Tamanio segmento: %d\n", &temp->data.base[temp->data.limit - 1] - temp->data.base + 1);
   printf("Pages: %d, %d, %d\n\n", temp->data.pages[0], temp->data.pages[1], temp->data.pages[2]);
 }
 
@@ -209,8 +207,8 @@ char* save_value_to_memory(segment* segment, int page_index, char* value){
 }
 
 void save_registry(segment* segment, int key, char* value){
-  int size =  3; //sizeof(segment->data.pages) / PAGE_SIZE;
-  int index = get_free_page(segment->data.pages, size); //TODO: cambiar el 2 por el size!
+  int size =  3; //TODO: reemplazar por   sizeof(segment->data.pages) / PAGE_SIZE;
+  int index = get_free_page(segment->data.pages, size);
     if(index == -1){
       // JOURNALIAR ATR
     }
@@ -229,8 +227,6 @@ void print_segment_table(){
   int i = 1;
   printf("----PRINTING SEGMENT_TABLE----\n");
   while(temp != NULL){
-    // printf("Table index: %d\n", i);
-    // printf("Table name: %s\n", temp->data.name);
     print_segment_info(i);
     i++;
     temp = temp->next;    
@@ -321,6 +317,7 @@ int main(int argc, char const *argv[])
   return 0;
 }
 
+
 //IMPLEMENTACION DE FUNCIONES (Devolver errror fuera del subconjunto)
 char* action_select(package_select* select_info){
   print_segment_table();
@@ -347,16 +344,14 @@ char* action_select(package_select* select_info){
     // }
 
     // si no hay un segmento, lo creo y le asigno al table_index (que era -1), su index
-    printf("Tabla Index: %d\n", table_index);
     if(table_index == -1){
       int number_of_pages = 0;
       segment_info seg_info = create_segment_info(select_info->table_name, number_of_pages);
       table_index = save_segment_to_memory(seg_info);
-      printf("New Tabla Index: %d\n", table_index);    
     }
     char* value = "nuevo value"; //TODO: guardar el valor que retorne fs posta
     save_registry(get_segment(table_index), select_info->key, value); 
-    printf("Value nuevo: %s\n", value);
+    print_segment_table();
     
     return response;
   }
