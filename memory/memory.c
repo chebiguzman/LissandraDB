@@ -345,27 +345,55 @@ char* action_select(package_select* select_info){
   return string_new("holis"); //tienen que devolver algo si no se rompe
 }
 
-void action_insert(package_insert* insert_info){
+char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
 }
 
-void action_create(package_create* create_info){
+//en esta funcion se devuelve lo 
+//proveniente del gossiping
+//devuelve solo las seeds
+//con esta forma: RETARDO_GOSSIPING_DE_ESTA_MEMORIA|id,ip,port|id,ip,port|id,ip,port
+//                                                    seed        seed      seed
+char* action_intern_memory_status(){
+  char* res = strdup("300000000|"); //ya que se puede modificar en tiempo real y yo necesito saber cada cuanto ir a buscar una memoira se le añade como primer elemento el retargo gossiping de la memoria principal.
+  char sep[2] = { ',', '\0' };
+  char div[2] = { '|', '\0' };
+  t_config* config = config_create("config");
+  char** ips = config_get_array_value(config, "IP_SEEDS");
+  char** ports = config_get_array_value(config, "PUERTO_SEEDS");
+
+  int i = 2; //ESto reprecenta el id de las memorias, se consigue como parte del proceso de gossiping.
+  while(*ips != NULL){
+    strcat(res, string_itoa(i));
+    strcat(res,sep);    
+    strcat(res, *ips);
+    strcat(res,sep);
+    strcat(res, *ports);
+    strcat(res,div);
+    ips++;
+    ports++;
+    i++;
+  }
+  return res;
+}
+
+char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
 }
 
-void action_describe(package_describe* describe_info){
+char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
 }
 
-void action_drop(package_drop* drop_info){
+char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
 }
 
-void action_journal(package_journal* journal_info){
+char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
 }
 
-void action_add(package_add* add_info){
+char* action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion select");
 }
 
@@ -373,9 +401,10 @@ char* action_run(package_run* run_info){
   log_info(logger, "Se recibio una accion run");
 }
 
-void action_metrics(package_metrics* metrics_info){
+char* action_metrics(package_metrics* metrics_info){
   log_info(logger, "Se recibio una accion metrics");
 }
+
 
 char* parse_input(char* input){
   return exec_instr(input);
