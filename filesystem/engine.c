@@ -13,12 +13,14 @@
 #include <unistd.h>
 #include <commons/collections/list.h>
 #include <commons/string.h>
- 
+#define BLOCK_SIZE_DEFAULT 128
+#define BLOCKS_AMOUNT_DEFAULT 12
 char* MNT_POINT;
 t_log* logg;
 t_list* tables_name;
 char* root_dirr;
 DIR* root;
+
 void check_or_create_dir(char* path){
     DIR* dir = opendir(path);
     if (dir != NULL) {
@@ -78,19 +80,29 @@ void engine_start(t_log* logger){
     strcpy(meta_path ,metadata_dir_path);
     strcat(meta_path, "Metadata.bin");
  
-    FILE* bitmap = fopen(bitmap_path,"w");
+    FILE* bitmap = fopen(bitmap_path,"r");
+    if(bitmap==NULL){
+
+        FILE* bitmap = fopen(bitmap_path,"w");
+        char* bitearray;
+        bitearray = string_repeat( '0', BLOCKS_AMOUNT_DEFAULT);
+        fputs(bitearray, bitmap);
+
+        fclose(bitmap);
+
+    }
+
     FILE* meta = fopen(meta_path, "r");
-    fclose(bitmap);
     //creo el archivo Metadata/Metadata.bin
     if(meta == NULL){
         meta = fopen(meta_path, "w");
         log_info(logg, "Se crea: %s", meta_path);
         char* text = "BLOCKS=%s\nBLOCK_SIZE=%s\nMAGIC_NUMBER=LISSANDRA\n";
-        char* a = strdup("60");
-        char* b = strdup("5145");
+        char* a = string_itoa(BLOCKS_AMOUNT_DEFAULT);
+        char* b = string_itoa(BLOCK_SIZE_DEFAULT);
         char* r = malloc( strlen(text) + strlen(a) + strlen(b)+1);
 
-        sprintf(r, "BLOCKS=%s\nBLOCK_SIZE=%s\nMAGIC_NUMBER=LISSANDRA\n", b,a);
+        sprintf(r, "BLOCKS=%s\nBLOCK_SIZE=%s\nMAGIC_NUMBER=LISSANDRA\n", a,b);
         sprintf(r, text, b,a);
  
         fputs(r, meta);
@@ -99,7 +111,7 @@ void engine_start(t_log* logger){
  
     }
  
-    DIR* tables_dir = opendir(tables_path);
+    /*DIR* tables_dir = opendir(tables_path);
     tables_name = list_create();
     struct dirent *entry;
      while ((entry = readdir(tables_dir)) != NULL) {
@@ -109,12 +121,15 @@ void engine_start(t_log* logger){
                 string_to_upper(entry->d_name);
             list_add(tables_name,entry->d_name );
          }
-     }
+     }*/
  
    
 }
  
-int generate_new_table(char* table_name, char* consistency, int particiones, long compactation_time){
+ 
+//CREATE [root_dirrTABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]
+int enginet_create_table(char* table_name, char* consistency, int particiones, long compactation_time){
+    
     char* path_dir = strdup(root_dirr);
     strcat(path_dir, table_name);
     char* meta_path = strdup(path_dir);
@@ -123,23 +138,4 @@ int generate_new_table(char* table_name, char* consistency, int particiones, lon
  
     check_or_create_dir(path_dir);
     //crea la carpeta ahora hay que rellenarla
- 
-}
- 
-//CREATE [root_dirrTABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]
-int engineroot_dirr_create_table(char* table_name, char* consistency, int particiones, long compactation_time){
-    bool find_table_by_name(void* table){
-        string_to_upper(table_name);
-        if(!strcmp(table, table_name)){
-           return true;
-        }
-        return false;
-    }
- 
-    char* table = list_find(tables_name, find_table_by_name);
-    if(table == NULL){
-        return generate_new_table(table_name, consistency,  particiones,compactation_time);
-    }else{
-        return -1;
-    }
 }

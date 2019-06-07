@@ -259,9 +259,8 @@ char* parse_package_insert(package_insert* package){
     char* key = string_itoa(package->key);
     char* val = strdup(package->value);
     char* timestmp = string_itoa(package->timestamp);
-    //int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + strlen(key)+1 + strlen(package->value)+1 + strlen(timestmp)+1;
-    //no hace falta, lo hace strcat
-    //buffer = malloc(tot_len);
+    int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + strlen(key)+1 + strlen(package->value)+1 + strlen(timestmp)+1;
+    buffer = malloc(tot_len);
 
     buffer = string_new();
     buffer = strcat(buffer, instr);
@@ -280,7 +279,7 @@ char* parse_package_describe(package_describe* pk){
     char* buffer;
     char* instr = strdup(pk->instruction);
     char* table_name = strdup(pk->table_name);
-    int tot_len = strlen(instr) + strlen(table_name) +2;
+    int tot_len = strlen(instr) + strlen(table_name) +4;
     buffer = malloc(tot_len);
     buffer[0] = '\0';
     strcat(buffer, instr);
