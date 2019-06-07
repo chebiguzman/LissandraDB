@@ -24,7 +24,7 @@ int find_memory_space(int memory_needed);
 void save_segment_to_memory(segment_info segment_info);
 void print_segment_info(segment* temp);
 int find_table(char* table_name);
-int find_page(int pages[], int size, int key);
+int find_page(segment* segment, int size, int key);
 int find_free_page(int pages[], int number_of_pages);
 void add_key_to_table(segment* segment, int index, int key);
 int get_memory_offset(char* base);

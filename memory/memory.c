@@ -25,7 +25,7 @@ int fs_socket;
 char* main_memory;
 int main_memory_size;
 
-int PAGE_SIZE = 512;
+int PAGE_SIZE = 128;
 int SEGMENT_SIZE = 1024; //TODO obtener el numero posta del handshake con fs
 
 segment* SEGMENT_TABLE;
@@ -36,6 +36,7 @@ segment* create_segment(){
   temp->next = NULL;
   temp->data.pages[0] = -1;
   temp->data.pages[1] = -1;
+  temp->data.pages[2] = -1;
   return temp;
 }
 
@@ -63,7 +64,6 @@ void add_segment_to_table(int index, segment* new_segment){ //TODO guardar el va
 }
 
 //devuelve la ultima direccion de memoria del segment, habria que agregarle -1 
-//
 char* get_end_memory_address(int index){
   if(index == 0){
     return &main_memory[0];
@@ -150,9 +150,9 @@ int find_table(char* table_name){
   return -1;
 }
 
-int find_page(int pages[], int size, int key){
+int find_page(segment* segment, int size, int key){
   for (int i = 0; i < size; i++){
-    if(pages[i] == key){
+    if(segment->data.pages[i] == key){
       return i;
     }
   }
@@ -327,8 +327,17 @@ int main(int argc, char const *argv[])
 //IMPLEMENTACION DE FUNCIONES (Devolver errror fuera del subconjunto)
 char* action_select(package_select* select_info){
   log_info(logger, "Memory: Se recibio una accion select");
-  int asd = find_memory_space(400);
-  // printf("Segment index: %d\n", asd);
+  int table_index = find_table(select_info->table_name);
+  if(table_index != -1){
+    segment* segment = get_segment(table_index);
+    int page_index = find_page(segment, 3, select_info->key);
+    if(page_index != -1){
+      char* value = get_value(segment, page_index);
+    }
+  }
+  else{
+
+  }
   char* response = parse_package_select(select_info);
   send(fs_socket, response, strlen(response)+1, 0);
 
