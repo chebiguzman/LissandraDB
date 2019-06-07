@@ -30,13 +30,21 @@ int SEGMENT_SIZE = 1024; //TODO obtener el numero posta del handshake con fs
 
 segment* SEGMENT_TABLE;
 
+segment_info create_segment_info(char* table_name, int number_of_pages){
+  segment_info seg_info;
+  seg_info.name = table_name;
+  seg_info.pages[0] = -1;
+  seg_info.pages[1] = -1;
+  seg_info.pages[2] = -1;
+  seg_info.limit = SEGMENT_SIZE; //TODO: calcular el valor del value por el number_of_pages
+  return seg_info;
+}
+
 segment* create_segment(){
   segment* temp;
   temp = (segment*)malloc(sizeof(segment));
   temp->next = NULL;
-  temp->data.pages[0] = -1;
-  temp->data.pages[1] = -1;
-  temp->data.pages[2] = -1;
+
   return temp;
 }
 
@@ -109,13 +117,13 @@ int find_memory_space(int memory_needed){
   //a[size(a)-1] = 9
   //a[0] = 0
   //si se restan, dan 9, cuando el size es 10, hay que sumar 1
-  return &main_memory[main_memory_size - 1] - base_memory + 1 >= memory_needed ? i - 1 : -1;
+  return &main_memory[main_memory_size - 1] - base_memory + 1 >= memory_needed ? i - 1  : -1;
 }
 // TODO: corroborar que el [temp->data.limit - 1] y el get_end_memory_address(index) + 1 este ok
 
-void save_segment_to_memory(segment_info segment_info){
+int save_segment_to_memory(segment_info segment_info){
   int index = find_memory_space(segment_info.limit);
-  printf("Index to save segment info: %d\n", index);
+  printf("Index to save segment info: %d\n", index); // si es 0 es porque se guarda antes del primero
   // busco espacio en memoria y me devuelve un index
   
   char* base_memory = get_first_memory_address_after(index);
@@ -127,13 +135,17 @@ void save_segment_to_memory(segment_info segment_info){
   segment* new_segment = create_segment();
   new_segment->data = segment_info;
   add_segment_to_table(index, new_segment);
+  return index;
 }
 
-void print_segment_info(segment* temp){
+void print_segment_info(int index){
+  segment* temp = get_segment(index);
+  printf("%d) ", index);
   printf("Nombre de tabla: %s\n", temp->data.name);
   printf("Base de memoria: %p\n", temp->data.base);
   printf("Tamanio segmento: %d\n", &temp->data.base[temp->data.limit - 1] - temp->data.base + 1);
-  printf("Ultima posicion de memoria: %p\n\n", &temp->data.base[temp->data.limit - 1]);
+  printf("Ultima posicion de memoria: %p\n", &temp->data.base[temp->data.limit - 1]);
+  printf("Pages: %d, %d, %d\n\n", temp->data.pages[0], temp->data.pages[1], temp->data.pages[2]);
 }
 
 // devuelve el indice del segmento que contiene el nombre de tabla o -1 si no encuentra
@@ -197,8 +209,8 @@ char* save_value_to_memory(segment* segment, int page_index, char* value){
 }
 
 void save_registry(segment* segment, int key, char* value){
-  // int size = sizeof(segment->data.pages) / PAGE_SIZE;
-  int index = get_free_page(segment->data.pages, 2); //TODO: cambiar el 2 por el size!
+  int size =  3; //sizeof(segment->data.pages) / PAGE_SIZE;
+  int index = get_free_page(segment->data.pages, size); //TODO: cambiar el 2 por el size!
     if(index == -1){
       // JOURNALIAR ATR
     }
@@ -210,6 +222,19 @@ char* get_value(segment* segment, int page_index){
   int page_offset =  page_index * PAGE_SIZE;
   int segment_base = get_memory_offset(segment->data.base);
   return main_memory+segment_base+page_offset;
+}
+
+void print_segment_table(){
+  segment* temp = SEGMENT_TABLE;
+  int i = 1;
+  printf("----PRINTING SEGMENT_TABLE----\n");
+  while(temp != NULL){
+    // printf("Table index: %d\n", i);
+    // printf("Table name: %s\n", temp->data.name);
+    print_segment_info(i);
+    i++;
+    temp = temp->next;    
+  }
 }
 
 //punto de entrada para el programa y el kernel
@@ -255,58 +280,30 @@ int main(int argc, char const *argv[])
   main_memory_size = config_get_int_value(config, "TAM_MEM");
   main_memory = malloc(main_memory_size);
   memset(main_memory, 0, main_memory_size);
-  printf("%s: %p\n", "Puntero a memoria[0]", &main_memory[0]);
-  printf("%s: %p\n", "Puntero a memoria[4096]", &main_memory[main_memory_size -1]);
-  printf("%s: %d\n\n", "Tamanio memoria", &main_memory[main_memory_size -1] - &main_memory[0] + 1);
 
   SEGMENT_TABLE = NULL;
 
-  segment* segment1 = create_segment();
-  segment_info seg_info1;
-  seg_info1.limit = SEGMENT_SIZE;
-  seg_info1.name = "tabla1";
-  seg_info1.pages[0] = -1;
-  seg_info1.pages[1] = -1;
-  segment1->data = seg_info1;
+  // -------------- PRUEBAS --------------
 
-  segment* segment2 = create_segment();
-  segment_info seg_info2;
-  seg_info2.limit = SEGMENT_SIZE;
-  seg_info2.name = "tabla2";
-  segment2->data = seg_info2;
-
-  segment* segment3 = create_segment();
-  segment_info seg_info3;
-  seg_info3.limit = SEGMENT_SIZE;
-  seg_info3.name = "tabla3";
-  segment3->data = seg_info3;
+  segment_info seg_info1 = create_segment_info("tabla1", 0);
+  segment_info seg_info2 = create_segment_info("tabla2", 0);
+  segment_info seg_info3 = create_segment_info("tabla3", 0);
 
   save_segment_to_memory(seg_info1);
   save_segment_to_memory(seg_info2);
   save_segment_to_memory(seg_info3);
 
-  print_segment_info(get_segment(1));
-  print_segment_info(get_segment(2));
-  print_segment_info(get_segment(3));
+  save_registry(get_segment(1), 42, "hello");
+  save_registry(get_segment(2), 42, "helloasd");
+  save_registry(get_segment(3), 42, "helloa");
+  save_registry(get_segment(1), 43, "hello");
+  save_registry(get_segment(1), 45, "hello");
 
-  printf("Pages[0]: %d\n", get_segment(1)->data.pages[0]);
-  printf("Pages[1]: %d\n", get_segment(1)->data.pages[1]);
 
-  save_registry(get_segment(1), 3, "hola");
-  save_registry(get_segment(1), 5, "chau");
-  printf("Pages[0]: %d\n", get_segment(1)->data.pages[0]);
-  printf("Pages[1]: %d\n", get_segment(1)->data.pages[1]);
-  
-  printf("Value: %s\n",  get_value(get_segment(1), 0));
-  printf("Value: %s\n",  get_value(get_segment(1), 1));
- 
-  save_registry(get_segment(1), 1, "hello");
-  printf("Pages[0]: %d\n", get_segment(1)->data.pages[0]);
-  printf("Pages[1]: %d\n", get_segment(1)->data.pages[1]);
-  
-  printf("Value: %s\n",  get_value(get_segment(1), 0));
-  printf("Value: %s\n",  get_value(get_segment(1), 1));
- 
+
+  // -------------- FIN PRUEBAS --------------
+
+
   //inicio lectura por consola
   pthread_t tid_console;
   pthread_create(&tid_console, NULL, console_input, "Memory");
@@ -326,23 +323,44 @@ int main(int argc, char const *argv[])
 
 //IMPLEMENTACION DE FUNCIONES (Devolver errror fuera del subconjunto)
 char* action_select(package_select* select_info){
+  print_segment_table();
+  
   log_info(logger, "Memory: Se recibio una accion select");
   int table_index = find_table(select_info->table_name);
   if(table_index != -1){
+    printf("Tabla Index: %d\n", table_index);
     segment* segment = get_segment(table_index);
     int page_index = find_page(segment, 3, select_info->key);
     if(page_index != -1){
       char* value = get_value(segment, page_index);
+      printf("Value en memoria: %s\n", value);
+      return value;
     }
+  }else{
+    char* buffer = parse_package_select(select_info);
+    char* response = malloc(3000);
+    // if(send(fs_socket, buffer, strlen(buffer)+1, 0)){
+    //   recv(fs_socket, response, 3000, 0);
+    // }else{
+    //   log_error(logger, "No se logo comuniarse con fs");
+    //   return "NO SE ENCTUENTEA FS";
+    // }
+
+    // si no hay un segmento, lo creo y le asigno al table_index (que era -1), su index
+    printf("Tabla Index: %d\n", table_index);
+    if(table_index == -1){
+      int number_of_pages = 0;
+      segment_info seg_info = create_segment_info(select_info->table_name, number_of_pages);
+      table_index = save_segment_to_memory(seg_info);
+      printf("New Tabla Index: %d\n", table_index);    
+    }
+    char* value = "nuevo value"; //TODO: guardar el valor que retorne fs posta
+    save_registry(get_segment(table_index), select_info->key, value); 
+    printf("Value nuevo: %s\n", value);
+    
+    return response;
   }
-  else{
-
-  }
-  char* response = parse_package_select(select_info);
-  send(fs_socket, response, strlen(response)+1, 0);
-
-
-  return string_new("holis"); //tienen que devolver algo si no se rompe
+  return string_new("holiis"); //tienen que devolver algo si no se rompe
 }
 
 char* action_insert(package_insert* insert_info){
