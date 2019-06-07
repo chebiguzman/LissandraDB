@@ -17,7 +17,7 @@ void insert_to_memtable(package_insert* insert_info) {
     
     if (memtable_p == NULL) { //la memtable esta vacia - agrego tabla nueva y cargo la data
         
-        printf("La mem table eesta vacia\n");
+        printf("La mem table esta vacia\n");
         
         struct table_node* new_nodo_table;
         new_nodo_table = (struct table_node*)malloc(sizeof(struct table_node));

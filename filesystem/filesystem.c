@@ -220,11 +220,15 @@ char* action_insert(package_insert* insert_info){
   //borre todos los mTN point salvo el primeroy lo hice global
   
   char* table_name = insert_info->table_name;
-  char* table_path = strdup("");  //lo convierto a puntero para no tener problema de tamaño
+  //char* table_path = strdup("");  //lo convierto a puntero para no tener problema de tamaño
+  char* table_path = malloc(sizeof(table_name)+sizeof(MNT_POINT)+sizeof("Tables/"));
+  table_path[0] = '\0';
   
   strcat(table_path ,MNT_POINT);
   strcat(table_path ,"Tables/");
   strcat(table_path ,table_name);
+
+  log_info(logger, table_path);
 
   log_debug(logger, table_path);//logea para saber que no la estas bardeando
   //verificar que la tabla exista en el fileSystem, en caso q no exista informar y continuar.
@@ -258,6 +262,8 @@ char* action_insert(package_insert* insert_info){
 
   //char* response = "INSERT ok"; imaginate que cada vez que 
   //quieras abrir un programa te aparezca un cartel diciendo "se abrio correctamante"
+
+  free(table_path);
 
   return "";
   
