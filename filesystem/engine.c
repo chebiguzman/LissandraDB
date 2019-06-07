@@ -53,13 +53,13 @@ void engine_start(t_log* logger){
  
     //Armo los directorios
     char* metadata_dir_path = malloc(strlen(MNT_POINT)+strlen("Metadata/")+10);
-    metadata_dir_path = strdup(MNT_POINT);
+    strcpy(metadata_dir_path, MNT_POINT);
     strcat(metadata_dir_path, "Metadata/");
     char* tables_path = malloc(strlen(MNT_POINT)+strlen("Tables/")+1);
-    tables_path = strdup(MNT_POINT);
+    strcpy( tables_path,MNT_POINT);
     strcat(tables_path, "Tables/");
     char* blocks_path = malloc(strlen(MNT_POINT)+strlen("Bloques/")+1);
-    blocks_path = strdup(MNT_POINT);
+    strcpy(blocks_path , MNT_POINT);
     strcat(blocks_path, "Bloques/");
  
  
@@ -70,12 +70,12 @@ void engine_start(t_log* logger){
  
     //Creo el archivo Metadata/Bitmap.bin
     char* bitmap_path = malloc(strlen(metadata_dir_path)+strlen("bitmap")+1);
-    bitmap_path = strdup(metadata_dir_path);
+    strcpy(bitmap_path,metadata_dir_path);
     strcat(bitmap_path,"bitmap");
    
     //consigo el directorio metadata
     char* meta_path = malloc(strlen(metadata_dir_path)+strlen("Metadata.bin")+1);
-    meta_path = strdup(metadata_dir_path);
+    strcpy(meta_path ,metadata_dir_path);
     strcat(meta_path, "Metadata.bin");
  
     FILE* bitmap = fopen(bitmap_path,"w");

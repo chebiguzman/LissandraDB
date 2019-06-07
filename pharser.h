@@ -42,6 +42,16 @@ typedef struct
     t_consistency consistency;
 }package_add;
 
+//CREATE [TABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]
+typedef struct 
+{
+    char* instruction;
+    char* table_name;
+    t_consistency consistency;
+    int partition_number;
+    long compactation_time;
+
+} package_create;
 
 char* exec_instr(char* input);
 char* create_buffer(int argc, char const *argv[]);
