@@ -129,6 +129,40 @@ char* exec_instr(char* instr_buff){
         return responce;
     }
 
+    //CREATE [TABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]
+
+    if(!strcmp(instruction,"CREATE")){
+        if(parameters_length != 5 ) return "Numero de parametros incorrectos\n";
+
+        package_create* package = malloc(sizeof(package_insert));
+        
+        package->instruction = parameters[0];
+        
+        //TABLE_NAME
+        package->table_name = parameters[1];        
+        //CONSISTENCIA
+        char* c =  strdup(parameters[2]); 
+        string_to_upper(c);
+        if(!strcmp(c,"SC")){
+            package->consistency = S_CONSISTENCY;
+        }else if(!strcmp(c,"ANY")){
+            package->consistency = ANY_CONSISTENCY;
+        }else if(!strcmp(c,"HC")){
+            package->consistency = H_CONSISTENCY;
+        }else{
+            return "Criterio no valido";
+        }
+
+        //VALUE
+        package->partition_number = atoi(parameters[3]);
+        
+        package->compactation_time = atoi(parameters[4]);
+
+        printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n cons: %d\n particiones: %d\n comp: %lu\n", package->instruction, package->table_name, package->consistency, package->partition_number, package->compactation_time);
+        char* responce = action_create(package);
+        return responce;
+    }
+
     if(!strcmp(instruction,"DESCRIBE")){
         package_describe* package = malloc(sizeof(package_describe));
         package->instruction = malloc(instruction_size);
@@ -175,10 +209,11 @@ char* exec_instr(char* instr_buff){
         return responce;
     }
 
-     if(!strcmp(instruction,"MEMORY")){
-         char* r =  action_intern_memory_status();
-         return r;
-     }
+
+    if(!strcmp(instruction,"MEMORY")){
+        char* r =  action_intern_memory_status();
+        return r;
+    }
 
 
     char* error_message = strdup("no es una instruccion valida\n");
