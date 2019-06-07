@@ -13,16 +13,16 @@
 #include <unistd.h>
 #include <commons/collections/list.h>
 #include <commons/string.h>
-
+ 
 char* MNT_POINT;
 t_log* logg;
 t_list* tables_name;
 char* root_dirr;
 DIR* root;
-DIR* open_or_create_dir(char* path){
+void check_or_create_dir(char* path){
     DIR* dir = opendir(path);
-    if (dir) {
-        return dir;
+    if (dir != NULL) {
+        closedir(dir);
     } else{
        int status = mkdir(path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
         log_info(logg, "se crea: %s", path);
@@ -30,107 +30,102 @@ DIR* open_or_create_dir(char* path){
             log_error(logg, "Fatal error. No se puede escribir en el directorio. root?");
             exit(-1);
         }
-       return open_or_create_dir(path);
+ 
     }
-
+ 
 }
-
+ 
 void engine_start(t_log* logger){
-     //Punto de montaje.
+
     logg = logger;
     t_config* config = config_create("config");
     MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE");
-
+ 
     DIR* mnt_dir = opendir(MNT_POINT);
-
+ 
     if(mnt_dir == NULL){
         log_error(logger, "Fatal error. El punto de montaje es invalido.");
         exit(-1);
     }else{
         closedir(mnt_dir);
-        
+       
     }
-
+ 
     //Armo los directorios
-    char* metadata_dir = strdup(MNT_POINT);
-    strcat(metadata_dir, "Metadata/");
-    char* tables_dir = strdup(MNT_POINT);
-    strcat(tables_dir, "Tables/");
-    char* blocks_dir = strdup(MNT_POINT);
-    strcat(blocks_dir, "Bloques/");
-
-    root_dirr = tables_dir;
-
-    //directorios abiertos
-    root = open_or_create_dir(metadata_dir);
-    closedir(root);
-    root = open_or_create_dir(blocks_dir);
-    closedir(root);
-    root = open_or_create_dir(tables_dir);
-
-
+    char* metadata_dir_path = malloc(strlen(MNT_POINT)+strlen("Metadata/")+10);
+    metadata_dir_path = strdup(MNT_POINT);
+    strcat(metadata_dir_path, "Metadata/");
+    char* tables_path = malloc(strlen(MNT_POINT)+strlen("Tables/")+1);
+    tables_path = strdup(MNT_POINT);
+    strcat(tables_path, "Tables/");
+    char* blocks_path = malloc(strlen(MNT_POINT)+strlen("Bloques/")+1);
+    blocks_path = strdup(MNT_POINT);
+    strcat(blocks_path, "Bloques/");
+ 
+ 
+    check_or_create_dir(metadata_dir_path);
+    check_or_create_dir(blocks_path);
+    check_or_create_dir(tables_path);
+ 
+ 
     //Creo el archivo Metadata/Bitmap.bin
-    char* bitmap_file = strdup("");
-    strcat(bitmap_file,metadata_dir);
-    strcat(bitmap_file,"bitmap");
-    printf("%s\n",bitmap_file);
-
+    char* bitmap_path = malloc(strlen(metadata_dir_path)+strlen("bitmap")+1);
+    bitmap_path = strdup(metadata_dir_path);
+    strcat(bitmap_path,"bitmap");
+   
     //consigo el directorio metadata
-    char* meta_file = strdup("");
-    strcat(meta_file, metadata_dir);
-    strcat(meta_file, "Metadata.bin");
-    printf("%s\n",meta_file);
-
-
-    FILE* bitmap = fopen(bitmap_file,"w");
-    FILE* meta = fopen(meta_file, "r");
+    char* meta_path = malloc(strlen(metadata_dir_path)+strlen("Metadata.bin")+1);
+    meta_path = strdup(metadata_dir_path);
+    strcat(meta_path, "Metadata.bin");
+ 
+    FILE* bitmap = fopen(bitmap_path,"w");
+    FILE* meta = fopen(meta_path, "r");
     fclose(bitmap);
     //creo el archivo Metadata/Metadata.bin
     if(meta == NULL){
-        meta = fopen(meta_file, "w");
-        log_info(logg, "Se crea: %s", meta_file);
-        //char* text = "BLOCKS=%s\nBLOCK_SIZE=%s\nMAGIC_NUMBER=LISSANDRA\n";
-        char* r = strdup("BLOCKS=");
-        strcat(r,"60");
-        strcat(r, "\n");
-        strcat(r,"BLOCK_SIZE=");
-        strcat(r, "5145");
-        strcat(r, "\n");
-        strcat(r, "MAGIC_NUMBER=LISSANDRA\n");
-        printf("%s", r);
+        meta = fopen(meta_path, "w");
+        log_info(logg, "Se crea: %s", meta_path);
+        char* text = "BLOCKS=%s\nBLOCK_SIZE=%s\nMAGIC_NUMBER=LISSANDRA\n";
+        char* a = strdup("60");
+        char* b = strdup("5145");
+        char* r = malloc( strlen(text) + strlen(a) + strlen(b)+1);
 
+        sprintf(r, "BLOCKS=%s\nBLOCK_SIZE=%s\nMAGIC_NUMBER=LISSANDRA\n", b,a);
+        sprintf(r, text, b,a);
+ 
         fputs(r, meta);
-
+ 
         fclose(meta);
-
+ 
     }
-
-    /*tables_name = list_create();
+ 
+    DIR* tables_dir = opendir(tables_path);
+    tables_name = list_create();
     struct dirent *entry;
-     while ((entry = readdir(root)) != NULL) {
+     while ((entry = readdir(tables_dir)) != NULL) {
          if(entry->d_type == DT_DIR){
              if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
                 continue;
                 string_to_upper(entry->d_name);
             list_add(tables_name,entry->d_name );
          }
-     }*/
-
-    
+     }
+ 
+   
 }
-
+ 
 int generate_new_table(char* table_name, char* consistency, int particiones, long compactation_time){
     char* path_dir = strdup(root_dirr);
     strcat(path_dir, table_name);
     char* meta_path = strdup(path_dir);
-    
+   
     printf("%s\n", path_dir);
-
-    open_or_create_dir(path_dir);
+ 
+    check_or_create_dir(path_dir);
     //crea la carpeta ahora hay que rellenarla
-
+ 
 }
-
+ 
 //CREATE [root_dirrTABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]
 int engineroot_dirr_create_table(char* table_name, char* consistency, int particiones, long compactation_time){
     bool find_table_by_name(void* table){
@@ -140,7 +135,7 @@ int engineroot_dirr_create_table(char* table_name, char* consistency, int partic
         }
         return false;
     }
-
+ 
     char* table = list_find(tables_name, find_table_by_name);
     if(table == NULL){
         return generate_new_table(table_name, consistency,  particiones,compactation_time);
@@ -148,4 +143,3 @@ int engineroot_dirr_create_table(char* table_name, char* consistency, int partic
         return -1;
     }
 }
-
