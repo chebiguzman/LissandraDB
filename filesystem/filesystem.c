@@ -28,8 +28,13 @@ t_log* logger;
 //crear memtable
 char* MNT_POINT;
 
+char *strdups(const char *src);
+void vaciarvector(char* puntero);
+void leerarchivo(FILE* metadata, regg* regmetadata);
+
 int main(int argc, char const *argv[])
 {
+  
     //las estructuras se van al .h para que quede mas limpio
     //set up confg
     t_config* config = config_create("config");
@@ -159,9 +164,80 @@ char** tables_names(){
   free(names);
 }
 
-
+//ruta correcta pero no abre la metadata
 char* action_select(package_select* select_info){
     log_info(logger, "Se recibio una accion select");
+    //defino variables a usar
+    char* auxpart;
+  char* auxkey;
+  char* row;
+  FILE* table=NULL;
+  FILE* metadata=NULL;
+  regg regmetadata[2];
+  regg regpart[2];
+  int numerobloques;
+  int contador= 0;
+  int cont=0;
+  int finded=0;
+  //construyo la ruta para abrir el archivo metadata
+  char* ruta = "MountTest/";
+  char* rutaa= "MountTest/Tables/";//punto de montaje dudoso, arreglar
+  int total= strlen(rutaa)+strlen(select_info->table_name)+13;
+  char* finalmetadata=malloc(total);
+  strcpy(finalmetadata,rutaa);
+  char* nombre=strdup(select_info->table_name);
+  strcat(finalmetadata,nombre);
+  strcat(finalmetadata,"/metadata.txt");
+  //imprimo la ruta por pantalla
+  log_info(logger,finalmetadata);
+  metadata=fopen(finalmetadata,"r+");
+  //la ruta impresa es correcta pero no encuentra el archivo aunque exista
+  if(metadata==NULL){
+    log_info(logger,"no se encontro la metadata");
+    return "metadata no encontrada";
+  }
+log_info(logger,"se encontro la metadata!");
+char charcito[100];
+while(!feof(metadata)){
+fgets(charcito,100,metadata);
+regmetadata[contador].line=strdups(charcito);
+contador++;
+}
+fclose(metadata);
+int partition=atoi(regmetadata[1].line);
+char* check1=strdup(string_itoa(partition));
+char* check2=strdup(string_itoa(select_info->key));
+log_info(logger,check1);
+log_info(logger,check2);
+/*int part=0;// select_info->key % partition;
+auxkey=strdups(string_itoa(part));
+log_info(logger,nombre);
+int totalen= strlen(rutaa)+strlen(nombre)+1 +strlen(auxkey)+5;
+char* final=malloc(totalen);
+  final=strdups(rutaa);
+  strcat(final,nombre);
+  strcat(final,"/");
+  log_info(logger,"memoria malockeada");
+  auxpart=strdups(string_itoa(part));
+  strcat(final,auxpart);
+  strcat(final,".txt");
+  table=fopen(final,"r+");
+  if(table==NULL){
+    log_info(logger,final);
+    return "tabla no encontrada";
+  }
+  
+  log_info(logger,"tabla encontrada");
+char* charcito2= malloc(100);
+FILE* aver=fopen("/home/utnso/Escritorio/git/tp-2019-1c-Skerry/filesystem/MountTest/ayuda.txt","r+");
+log_info(logger,"memoria malockeada");
+fgetc(aver);
+*/
+
+
+  return "yes";
+
+}
     /*char* auxrow;
     FILE* table=NULL;
     FILE* metadata=NULL;
@@ -209,7 +285,7 @@ char* action_select(package_select* select_info){
   char* row=get_string_from_buffer(auxrow,index+index2+1);
   }
   return row;*/
-}
+
 
 //TERMINADO
 char* action_insert(package_insert* insert_info){
@@ -271,7 +347,91 @@ char* action_insert(package_insert* insert_info){
 
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
-  return "";
+  DIR* directori;
+  FILE * metadata= NULL;
+  char * nombre=create_info->table_name;
+  char * ruta="MountTest/Tables/";
+  directori= opendir(ruta);
+  struct dirent * direntp;
+  int iguales=1;
+  log_info(logger,"directorio abierto");
+  while((direntp=readdir(directori)) != NULL && iguales!=0){
+    iguales=strcmp(direntp->d_name,create_info->table_name);
+  }
+  if(iguales==0){
+    log_info(logger,"la tabla ya existe");
+    return "la tabla ya existe";
+  }
+  char* guardado=malloc(50);
+  log_info(logger,"malockeado");
+  strcpy(guardado,"MountTest/Tables/");
+  strcat(guardado,nombre);
+  log_info(logger,guardado);
+  mkdir(guardado,S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+  char* guardado2= strdup(guardado);
+  strcat(guardado,"/metadata.txt");
+  log_info(logger,"hasta aca");
+
+metadata=fopen(guardado,"w+");
+if(metadata!=NULL){
+log_info(logger, "milagro");
+}
+
+char* constante=strdups(string_itoa(create_info->partition_number));
+int util=strlen(constante)+strlen("particiones");
+char* partitions=malloc(util +3);
+strcpy(partitions,"\n");
+strcpy(partitions,constante);
+strcat(partitions,"=particiones\n0");
+log_info(logger,partitions);
+char* constante2= strdups(string_itoa(create_info->compactation_time));
+int util2=strlen(constante2)+strlen("tiempo de compactacion");
+char* compactation= malloc(util2+3);
+strcpy(compactation,"\n");
+strcpy(compactation,constante2);
+strcat(compactation,"=tiempo de compactacion");
+log_info(logger,compactation);
+char* constante3= strdup(string_itoa(create_info->consistency));
+char* consistencia;
+int larg0=strlen("sc=consistency");
+consistencia= malloc(larg0+5);
+switch(atoi(constante3)){
+case 0:
+strcpy(consistencia,"sc=consistency\n0");
+break;
+case 1:
+strcpy(consistencia,"sh=consistency");
+break;
+case 2:
+strcpy(consistencia,"ev=consistency");
+break;
+}
+log_info(logger,consistencia);
+fputs(consistencia,metadata);
+fputs(partitions,metadata);
+fputs(compactation,metadata);
+int c= create_info->partition_number;
+c--;
+
+char* resp=malloc(100);
+while(c>=0){
+char* auxx=NULL;
+auxx=strdup(string_itoa(c));
+strcpy(resp,guardado2);
+strcat(resp,"/");
+strcat(resp,auxx);
+strcat(resp,".bin");
+log_info(logger,resp);
+ fopen(resp,"w+");
+  c--;
+}
+ fclose (metadata); 
+ closedir(directori);
+ free(guardado);
+ free(partitions);
+ free(consistencia);
+ free(resp);
+return "si";
 }
 
 char* action_describe(package_describe* describe_info){
@@ -393,5 +553,19 @@ char* parse_input(char* input){
 
 char* action_intern_memory_status(){ return "";};
 
+char *strdups(const char *src) {
+    char *dst = malloc(strlen (src) + 1);  
+    if (dst == NULL) return NULL;     
+    strcpy(dst, src);                     
+    return dst; 
+}
 
+
+
+void vaciarvector(char* puntero){
+  for(int i=0;i<100;i++){
+  puntero[i]='\0';
+}
+return;
+}
 

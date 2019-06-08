@@ -1,0 +1,3 @@
+sc= consistency
+4=partitions
+500= compacationtime
