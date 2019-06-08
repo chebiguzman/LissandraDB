@@ -1,3 +1,0 @@
-sc=consistency
-03=particiones
-0100=tiempo de compactacion

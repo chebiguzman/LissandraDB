@@ -27,10 +27,14 @@ t_log* logger;
 
 //crear memtable
 char* MNT_POINT;
-
+void buscador(char* ruta,int key, char* retorno, char* row);
 char *strdups(const char *src);
+int contarbloques(char*);
 void vaciarvector(char* puntero);
 void leerarchivo(FILE* metadata, regg* regmetadata);
+void obtenerbloques(char* pointer1, int* pointer2);
+void vaciadobuffer(char* buffer);
+void cortador(char* cortado, char* auxkey);
 
 int main(int argc, char const *argv[])
 {
@@ -174,16 +178,17 @@ char* action_select(package_select* select_info){
   FILE* table=NULL;
   FILE* metadata=NULL;
   regg regmetadata[2];
-  regg regpart[2];
+  regg regpart[3];
   int numerobloques;
   int contador= 0;
+  int contador2=0;
   int cont=0;
   int finded=0;
   //construyo la ruta para abrir el archivo metadata
   char* ruta = "MountTest/";
   char* rutaa= "MountTest/Tables/";//punto de montaje dudoso, arreglar
   int total= strlen(rutaa)+strlen(select_info->table_name)+13;
-  char* finalmetadata=malloc(total);
+  char* finalmetadata=malloc(100);
   strcpy(finalmetadata,rutaa);
   char* nombre=strdup(select_info->table_name);
   strcat(finalmetadata,nombre);
@@ -209,12 +214,12 @@ char* check1=strdup(string_itoa(partition));
 char* check2=strdup(string_itoa(select_info->key));
 log_info(logger,check1);
 log_info(logger,check2);
-/*int part=0;// select_info->key % partition;
+int part= select_info->key % partition;
 auxkey=strdups(string_itoa(part));
-log_info(logger,nombre);
+log_info(logger,auxkey);
 int totalen= strlen(rutaa)+strlen(nombre)+1 +strlen(auxkey)+5;
-char* final=malloc(totalen);
-  final=strdups(rutaa);
+char* final=malloc(100);
+  strcpy(final,rutaa);
   strcat(final,nombre);
   strcat(final,"/");
   log_info(logger,"memoria malockeada");
@@ -227,12 +232,41 @@ char* final=malloc(totalen);
     return "tabla no encontrada";
   }
   
-  log_info(logger,"tabla encontrada");
+  log_info(logger,"particion encontrada");
 char* charcito2= malloc(100);
-FILE* aver=fopen("/home/utnso/Escritorio/git/tp-2019-1c-Skerry/filesystem/MountTest/ayuda.txt","r+");
-log_info(logger,"memoria malockeada");
-fgetc(aver);
-*/
+while(!feof(table)){
+  fgets(charcito2,100,table);
+  regpart[contador2].line=strdups(charcito2);
+  contador2++;
+}
+log_info(logger, "hasta aca!");
+numerobloques=contarbloques(regpart[1].line);
+char* precaucion;
+precaucion= strdup(string_itoa(numerobloques));
+log_info(logger,precaucion);
+int intarray[numerobloques];
+obtenerbloques(regpart[1].line,intarray);
+ pthread_t buscadores[numerobloques];
+ regg regruta[numerobloques];
+char* test1=strdup(string_itoa(intarray[0]));
+char* test2=strdup(string_itoa(intarray[1]));
+char* test3=strdup(string_itoa(intarray[2]));
+log_info(logger,test1);
+log_info(logger,test2);
+log_info(logger,test3);
+log_info(logger,"hasta aca!");
+log_info(logger,ruta);
+int sus=0;
+while(sus<numerobloques){
+regruta[sus].line=malloc(100);
+strcpy(regruta[sus].line,ruta);
+strcat(regruta[sus].line,"Bloques/");
+char* auxb=strdup(string_itoa(intarray[sus]));
+strcat(regruta[sus].line,auxb);
+strcat(regruta[sus].line,".bin");
+log_info(logger,regruta[sus].line);
+sus++;
+}
 
 
   return "yes";
@@ -559,7 +593,47 @@ char *strdups(const char *src) {
     strcpy(dst, src);                     
     return dst; 
 }
+int contarbloques(char* pointer1){
+int pos=8;
+int cantidadbloques=0;
+while(pointer1[pos]!=']'){
+if(pointer1[pos]==','){
+cantidadbloques++;
+}
+pos++;
+}
+cantidadbloques++;
+return cantidadbloques;
+}
 
+void obtenerbloques(char* pointer1, int* pointer2){
+int pos=8;
+int i=0;
+char buffer[5];
+int vec= 0;
+while(pointer1[pos]!=']'){
+if(pointer1[pos]==','){
+pos++;
+}
+while(pointer1[pos]!=',' && pointer1[pos]!=']') {
+buffer[i]= pointer1[pos];
+i++;
+pos++;
+}
+pointer2[vec]=atoi(buffer);
+vec++;
+i=0;
+vaciadobuffer(buffer);
+}
+return;
+}
+
+void vaciadobuffer(char* buffer){
+for(int i=0;i<5;i++){
+buffer[i]='\0';
+}
+return;
+}
 
 
 void vaciarvector(char* puntero){
@@ -569,3 +643,42 @@ void vaciarvector(char* puntero){
 return;
 }
 
+void buscador(char* ruta,int key, char* retorno, char* row){
+FILE* bloque=NULL;
+bloque=fopen(ruta,"r+");
+if(bloque==NULL){
+  log_info(logger,"no se encontro el bloque en");
+  log_info(logger,ruta);
+  return;
+}
+char buffer[100];
+vaciadobuffer(retorno);
+while(!feof(bloque)){
+   fgets(buffer,100,bloque);
+    char* row= strdup(buffer);
+cortador(buffer,retorno);
+if(key==atoi(retorno)){
+    log_info(logger,"encontrada");
+    return;
+}
+vaciadobuffer(retorno);
+}
+log_info(logger, "no es este bloque");
+return;
+}
+
+void cortador(char* cortado, char* auxkey){
+int i=0;
+int j=0;
+while(cortado[i]!=' ' &&cortado[i]!='\n'){
+      i++;
+      }
+i++;
+
+while(cortado[i]!=' ' && cortado[i]!='&'){
+     auxkey[j]=cortado[i];
+     i++;
+     j++;
+      }
+return;
+}
