@@ -3,7 +3,10 @@
 #include <pthread.h>
 #include <string.h>
 
+// TODO: hacer el handshake y obtener el valor real
 #define VALUE_SIZE 64
+#define TABLE_NAME_SIZE 32
+segment* SEGMENT_TABLE2;
 
 typedef struct{
   char* name;
@@ -12,16 +15,36 @@ typedef struct{
   int pages[3];
 }segment_info;
 
-typedef struct segment{
-  segment_info data;
-  struct segment *next;
-}segment;
-
 typedef struct{
   int timestamp;
   int key;
   char value[VALUE_SIZE];
 }page_t;
+
+typedef struct{
+  u_int8_t dirty_bit;
+  page_t* page_ptr;
+}page_table_t;
+
+typedef struct{
+  char name[TABLE_NAME_SIZE];
+  page_t* base;
+  int number_of_pages;
+  page_table_t* pages;
+  int limit;
+}table_info_t;
+
+typedef struct segmentt{
+  table_info_t* table_info;
+  struct segmentt* next;
+}segment_t;
+
+typedef struct segment{
+  segment_info data;
+  struct segment *next;
+}segment;
+
+
 
 segment* create_segment();
 segment* get_segment(int index);
