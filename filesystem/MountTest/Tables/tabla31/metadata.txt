@@ -1,0 +1,1 @@
+sc=consistency1=particiones10=tiempo de compactacion

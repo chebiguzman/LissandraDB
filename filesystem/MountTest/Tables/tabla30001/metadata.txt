@@ -1,0 +1,3 @@
+sc=consistency
+04=particiones
+010=tiempo de compactacion

@@ -1,8 +1,7 @@
- typedef struct{
-      char consistency [2];
-      int apartitions;
-      int compactiont;
-    } metadatareg;
+typedef struct{
+     char* line;
+    } regg;
+
 
     typedef struct{
       int keey;
