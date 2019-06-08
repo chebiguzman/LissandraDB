@@ -173,7 +173,7 @@ void add_key_to_table(segment* segment, int index, int key){
 }
 
 int get_memory_offset(char* base){
-  return (int) base - (int) &main_memory[0];
+  return base - main_memory;
 }
 
 void free_memory_space(char* address, int size){
