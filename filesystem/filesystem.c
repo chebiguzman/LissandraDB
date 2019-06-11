@@ -10,8 +10,8 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
-#include "../pharser.h"
-#include "../actions.h"
+
+
 #include "../console.h"
 
 #include "engine.h"
@@ -50,6 +50,10 @@ int main(int argc, char const *argv[])
     logger = log_create(LOGPATH, "Filesystem", 1, LOG_LEVEL_INFO);
 
     engine_start(logger);
+    enginet_create_table("tabla sc con nombre largo", S_CONSISTENCY, 7, 25555555);
+    enginet_create_table("a145", H_CONSISTENCY, 4, 25555555);
+    enginet_create_table("tabla4", ANY_CONSISTENCY, 26, 8000000);
+
     
     //set up server
     server_info* serverInfo = malloc(sizeof(server_info));
@@ -171,166 +175,125 @@ char** tables_names(){
 //ruta correcta pero no abre la metadata
 char* action_select(package_select* select_info){
     log_info(logger, "Se recibio una accion select");
+    //te juro que lo intente pero no se que haces aca
+    //la idea del engine es no tener que levantar el punto de montaje por
+    //cada select. al ser de alta disponibilidad no tendria que detenerse nunca a mirar
+    //en que bloque esta
+
+    if(!does_table_exist(select_info->table_name)){
+      return "La tabla solicitada no existe.\n";
+    }
+
+
     //defino variables a usar
     char* auxpart;
-  char* auxkey;
-  char* row;
-  FILE* table=NULL;
-  FILE* metadata=NULL;
-  regg regmetadata[2];
-  regg regpart[3];
-  int numerobloques;
-  int contador= 0;
-  int contador2=0;
-  int cont=0;
-  int finded=0;
-  //construyo la ruta para abrir el archivo metadata
-  char* ruta = "MountTest/";
-  char* rutaa= "MountTest/Tables/";//punto de montaje dudoso, arreglar
-  int total= strlen(rutaa)+strlen(select_info->table_name)+13;
-  char* finalmetadata=malloc(100);
-  strcpy(finalmetadata,rutaa);
-  char* nombre=strdup(select_info->table_name);
-  strcat(finalmetadata,nombre);
-  strcat(finalmetadata,"/metadata.txt");
-  //imprimo la ruta por pantalla
-  log_info(logger,finalmetadata);
-  metadata=fopen(finalmetadata,"r+");
-  //la ruta impresa es correcta pero no encuentra el archivo aunque exista
-  if(metadata==NULL){
-    log_info(logger,"no se encontro la metadata");
-    return "metadata no encontrada";
-  }
-log_info(logger,"se encontro la metadata!");
-char charcito[100];
-while(!feof(metadata)){
-fgets(charcito,100,metadata);
-regmetadata[contador].line=strdups(charcito);
-contador++;
-}
-fclose(metadata);
-int partition=atoi(regmetadata[1].line);
-char* check1=strdup(string_itoa(partition));
-char* check2=strdup(string_itoa(select_info->key));
-log_info(logger,check1);
-log_info(logger,check2);
-int part= select_info->key % partition;
-auxkey=strdups(string_itoa(part));
-log_info(logger,auxkey);
-int totalen= strlen(rutaa)+strlen(nombre)+1 +strlen(auxkey)+5;
-char* final=malloc(100);
-  strcpy(final,rutaa);
-  strcat(final,nombre);
-  strcat(final,"/");
-  log_info(logger,"memoria malockeada");
-  auxpart=strdups(string_itoa(part));
-  strcat(final,auxpart);
-  strcat(final,".txt");
-  table=fopen(final,"r+");
-  if(table==NULL){
-    log_info(logger,final);
-    return "tabla no encontrada";
-  }
-  
-  log_info(logger,"particion encontrada");
-char* charcito2= malloc(100);
-while(!feof(table)){
-  fgets(charcito2,100,table);
-  regpart[contador2].line=strdups(charcito2);
-  contador2++;
-}
-log_info(logger, "hasta aca!");
-numerobloques=contarbloques(regpart[1].line);
-char* precaucion;
-precaucion= strdup(string_itoa(numerobloques));
-log_info(logger,precaucion);
-int intarray[numerobloques];
-obtenerbloques(regpart[1].line,intarray);
- pthread_t buscadores[numerobloques];
- regg regruta[numerobloques];
-char* test1=strdup(string_itoa(intarray[0]));
-char* test2=strdup(string_itoa(intarray[1]));
-char* test3=strdup(string_itoa(intarray[2]));
-log_info(logger,test1);
-log_info(logger,test2);
-log_info(logger,test3);
-log_info(logger,"hasta aca!");
-log_info(logger,ruta);
-int sus=0;
-while(sus<numerobloques){
-regruta[sus].line=malloc(100);
-strcpy(regruta[sus].line,ruta);
-strcat(regruta[sus].line,"Bloques/");
-char* auxb=strdup(string_itoa(intarray[sus]));
-strcat(regruta[sus].line,auxb);
-strcat(regruta[sus].line,".bin");
-log_info(logger,regruta[sus].line);
-sus++;
-}
-
-
-  return "yes";
-
-}
-    /*char* auxrow;
+    char* auxkey;
+    char* row;
     FILE* table=NULL;
     FILE* metadata=NULL;
-    readrow rowreg;
+    regg regmetadata[2];
+    regg regpart[3];
+    int numerobloques;
+    int contador= 0;
+    int contador2=0;
+    int cont=0;
     int finded=0;
-    char* ruta=config_get_string_value(config,dir);
-    int total= strlen(ruta)+strlen(select_info->table_name)+13;
-    char* finalmetadata=maloc(total);
-    strcat(finalmetadata,ruta);
-    strcat(finalmetadata,select_info->table_name);
-    strcat(finalmetadata,"metadata.txt");
-    finalmetadata[total]='\0';
-    metadata=fopen(finalmetadata,r+);
-    metadatareg reading;
-    while(!feof(metadata)){
-    fread(reading,sizeof(metadatareg),1,metadata);
-    }
-    fflush(metadata);
-    fclose(metadata);
-    //aca obtendria la posicion del vector donde esta el registro deseado
-    // con ese debo crear la ruta al .bin desado y sabria cual archivo abrir
-    int part= select_info->key % reading.apartitions;
-    char* ruta2= config_get_string_value(config,dir);
-    int totalen= strlen(ruta2)+strlen(select_info->name_table)+1 +strlen((char* select_info->key)+5);
-    char* final=malloc(totalen);
-    strcat(final,ruta2);
-    strcat(final,(char*)part);
-    strcat(final,".bin");
-    final[totalen]='\0';
-    table=fopen(final,r+b);
-  while(finded!=1 && !feof(table)){
-  fgets(auxrow,100,table);
-  if(atoi(auxrow)=select_info->key){
-  finded=1;
-    }
-    }
-  if(finded!=1){
-    log_info(logger,"no se encontro la row solicitada");
-    return "row no encontrada";
+    //construyo la ruta para abrir el archivo metadata
+    char* ruta = "MountTest/";
+    char* rutaa= "MountTest/Tables/";//punto de montaje dudoso, arreglar
+    int total= strlen(rutaa)+strlen(select_info->table_name)+13;
+    char* finalmetadata=malloc(100);
+    strcpy(finalmetadata,rutaa);
+    char* nombre=strdup(select_info->table_name);
+    strcat(finalmetadata,nombre);
+    strcat(finalmetadata,"/metadata");
+    //imprimo la ruta por pantalla
+    log_info(logger,finalmetadata);
+    metadata=fopen(finalmetadata,"r+");
+    //la ruta impresa es correcta pero no encuentra el archivo aunque exista
+    //ahora lo encuentra. No se toma el hecho de que no lo encuentre
+    //xq no puede pasar
+    /*if(metadata==NULL){
+      log_info(logger,"no se encontro la metadata");
+      return "metadata no encontrada";
+    }*/
+  log_info(logger,"se encontro la metadata!");
+  char charcito[100];
+  while(!feof(metadata)){
+  fgets(charcito,100,metadata);
+  regmetadata[contador].line=strdups(charcito);
+  contador++;
   }
-  char* trash= get_string_from_buffer(auxrow,0);
-  int index=strlen(trash);
-  char* trash2= get_string_from_buffer(auxrow,index+1);
-  int index2=strlen(trash2);
-  char* row=get_string_from_buffer(auxrow,index+index2+1);
+  fclose(metadata);
+  int partition=atoi(regmetadata[1].line);
+  char* check1=strdup(string_itoa(partition));
+  char* check2=strdup(string_itoa(select_info->key));
+  log_info(logger,check1);
+  log_info(logger,check2);
+  int part= select_info->key % partition;
+  auxkey=strdups(string_itoa(part));
+  log_info(logger,auxkey);
+  int totalen= strlen(rutaa)+strlen(nombre)+1 +strlen(auxkey)+5;
+  char* final=malloc(100);
+    strcpy(final,rutaa);
+    strcat(final,nombre);
+    strcat(final,"/");
+    log_info(logger,"memoria malockeada");
+    auxpart=strdups(string_itoa(part));
+    strcat(final,auxpart);
+    strcat(final,".txt");
+    table=fopen(final,"r+");
+    if(table==NULL){
+      log_info(logger,final);
+      return "tabla no encontrada";
+    }
+    
+    log_info(logger,"particion encontrada");
+  char* charcito2= malloc(100);
+  while(!feof(table)){
+    fgets(charcito2,100,table);
+    regpart[contador2].line=strdups(charcito2);
+    contador2++;
   }
-  return row;*/
+  log_info(logger, "hasta aca!");
+  numerobloques=contarbloques(regpart[1].line);
+  char* precaucion;
+  precaucion= strdup(string_itoa(numerobloques));
+  log_info(logger,precaucion);
+  int intarray[numerobloques];
+  obtenerbloques(regpart[1].line,intarray);
+  //vos estas mal de la cabeza jajajaj
+  pthread_t buscadores[numerobloques];
+  regg regruta[numerobloques];
+  char* test1=strdup(string_itoa(intarray[0]));
+  char* test2=strdup(string_itoa(intarray[1]));
+  char* test3=strdup(string_itoa(intarray[2]));
+  log_info(logger,test1);
+  log_info(logger,test2);
+  log_info(logger,test3);
+  log_info(logger,"hasta aca!");
+  log_info(logger,ruta);
+  int sus=0;
+  while(sus<numerobloques){
+  regruta[sus].line=malloc(100);
+  strcpy(regruta[sus].line,ruta);
+  strcat(regruta[sus].line,"Bloques/");
+  char* auxb=strdup(string_itoa(intarray[sus]));
+  strcat(regruta[sus].line,auxb);
+  strcat(regruta[sus].line,".bin");
+  log_info(logger,regruta[sus].line);
+  sus++;
+  }
 
 
-//TERMINADO
+  return "no?";
+
+}
+
+
 char* action_insert(package_insert* insert_info){
 
-  //t_config* config = config_create("config"); 
-  //consultar equipo si tengo que abrir config acá tambien.
-  //el punto de montaje es estatico no hace falta
-  //borre todos los mTN point salvo el primeroy lo hice global
-  
   char* table_name = insert_info->table_name;
-  //char* table_path = strdup("");  //lo convierto a puntero para no tener problema de tamaño
   char* table_path = malloc(sizeof(table_name)+sizeof(MNT_POINT)+sizeof("Tables/"));
   table_path[0] = '\0';
   
@@ -340,10 +303,9 @@ char* action_insert(package_insert* insert_info){
 
   log_info(logger, table_path);
 
-  log_debug(logger, table_path);//logea para saber que no la estas bardeando
-  //verificar que la tabla exista en el fileSystem, en caso q no exista informar y continuar.
-  //conviene tener todos los directorios abiertos para no bloquearse abriendo
-  //nada
+  //ya tengamos las tablas guardadas para mayor eficiencia
+  //(preguntar al engine y memtable)(por separado?)
+
   DIR* dir = opendir(table_path);
   if (dir) {
     closedir(dir);
@@ -356,23 +318,9 @@ char* action_insert(package_insert* insert_info){
     log_error(logger, "Error al verificar la existencia de la tabla, fallo opendir()");
     return "";
   }
-
-  //obtener la metadata asociada a dicha tabla (tabla1) ??Para que necesito la metadata???
-  //si vos no sabes...
  
   insert_to_memtable(insert_info);
-
-  //el parametro timestamp es opcional, en caso de que un request no lo provea, se usara el valor actual de epoch
-  //EL TIMESTAMP ACA TIENE QUE ESTAR SI O SI!!!!!!
-  
-  //TODO insertar en la memoria temporal una nueva entrada que contanga los datos del request
-  //esa es la memtable...
-  //debug y
   log_debug(logger, "Se inserto el valor en la memtable");
-
-  //char* response = "INSERT ok"; imaginate que cada vez que 
-  //quieras abrir un programa te aparezca un cartel diciendo "se abrio correctamante"
-
   free(table_path);
 
   return "";
@@ -381,97 +329,21 @@ char* action_insert(package_insert* insert_info){
 
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
-  DIR* directori;
-  FILE * metadata= NULL;
-  char * nombre=create_info->table_name;
-  char * ruta="MountTest/Tables/";
-  directori= opendir(ruta);
-  struct dirent * direntp;
-  int iguales=1;
-  log_info(logger,"directorio abierto");
-  while((direntp=readdir(directori)) != NULL && iguales!=0){
-    iguales=strcmp(direntp->d_name,create_info->table_name);
+  
+  if(does_table_exist(create_info->table_name)){
+    char* err = "Fallo la creacion de una tabla.\n";
+    log_error(logger, err);
+    return "La tabla ya existe";
   }
-  if(iguales==0){
-    log_info(logger,"la tabla ya existe");
-    return "la tabla ya existe";
-  }
-  char* guardado=malloc(50);
-  log_info(logger,"malockeado");
-  strcpy(guardado,"MountTest/Tables/");
-  strcat(guardado,nombre);
-  log_info(logger,guardado);
-  mkdir(guardado,S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-  char* guardado2= strdup(guardado);
-  strcat(guardado,"/metadata.txt");
-  log_info(logger,"hasta aca");
 
-metadata=fopen(guardado,"w+");
-if(metadata!=NULL){
-log_info(logger, "milagro");
-}
-
-char* constante=strdups(string_itoa(create_info->partition_number));
-int util=strlen(constante)+strlen("particiones");
-char* partitions=malloc(util +3);
-strcpy(partitions,"\n");
-strcpy(partitions,constante);
-strcat(partitions,"=particiones\n0");
-log_info(logger,partitions);
-char* constante2= strdups(string_itoa(create_info->compactation_time));
-int util2=strlen(constante2)+strlen("tiempo de compactacion");
-char* compactation= malloc(util2+3);
-strcpy(compactation,"\n");
-strcpy(compactation,constante2);
-strcat(compactation,"=tiempo de compactacion");
-log_info(logger,compactation);
-char* constante3= strdup(string_itoa(create_info->consistency));
-char* consistencia;
-int larg0=strlen("sc=consistency");
-consistencia= malloc(larg0+5);
-switch(atoi(constante3)){
-case 0:
-strcpy(consistencia,"sc=consistency\n0");
-break;
-case 1:
-strcpy(consistencia,"sh=consistency");
-break;
-case 2:
-strcpy(consistencia,"ev=consistency");
-break;
-}
-log_info(logger,consistencia);
-fputs(consistencia,metadata);
-fputs(partitions,metadata);
-fputs(compactation,metadata);
-int c= create_info->partition_number;
-c--;
-
-char* resp=malloc(100);
-while(c>=0){
-char* auxx=NULL;
-auxx=strdup(string_itoa(c));
-strcpy(resp,guardado2);
-strcat(resp,"/");
-strcat(resp,auxx);
-strcat(resp,".bin");
-log_info(logger,resp);
- fopen(resp,"w+");
-  c--;
-}
- fclose (metadata); 
- closedir(directori);
- free(guardado);
- free(partitions);
- free(consistencia);
- free(resp);
-return "si";
+  enginet_create_table(create_info->table_name, create_info->consistency, create_info->partition_number, create_info->compactation_time);
+  
+  return "";
 }
 
 char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
 
-  /*
   //defino el punto de partida para recorrer las tablas
   char path_table[300];
   path_table[0] = '\0';
@@ -550,10 +422,8 @@ char* action_describe(package_describe* describe_info){
     free(t_names);
   }
 
-  //retornar el contenido de dichos archivos de metadata
-  return "buff";//no podes devolver algo que no sea puntero
-  */
-return "";
+  
+  return "";
 }
 
 char* action_drop(package_drop* drop_info){

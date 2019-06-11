@@ -1,3 +1,4 @@
+#include "../pharser.h"
 typedef struct{
      char* line;
     } regg;
