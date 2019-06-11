@@ -1,18 +1,5 @@
-#include <stdlib.h>
-#include <commons/log.h>
-#include <pthread.h>
-#include <string.h>
-#include <commons/config.h>
 #include "engine.h"
-#include <sys/stat.h> //creacion de directorios
-#include <sys/types.h> //creacion de directorios
-#include <stdio.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <errno.h>
-#include <unistd.h>
-#include <commons/collections/list.h>
-#include <commons/string.h>
+
 #define BLOCK_SIZE_DEFAULT 128
 #define BLOCKS_AMOUNT_DEFAULT 12
 char* MNT_POINT;
@@ -200,13 +187,13 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
 
     switch(atoi(constante3)){
     case 0:
-        strcpy(consistencia,"CONSISTENCY=SC\n");
+        strcpy(consistencia,"CONSISTENCY=0\n");
         break;
     case 1:
-        strcpy(consistencia,"CONSISTENCY=SH\n");
+        strcpy(consistencia,"CONSISTENCY=1\n");
         break;
     case 2:
-        strcpy(consistencia,"CONSISTENCY=ANY\n");
+        strcpy(consistencia,"CONSISTENCY=2\n");
         break;
     }
 
@@ -267,7 +254,7 @@ char* get_table_metadata_as_string(char* table_name){
     return meta;
 }
 
-char* get_all_tables_metadata(){
+char* get_all_tables_metadata_as_string(){
     if(list_is_empty(tables_name)) return "";
     int tables_amount = list_size(tables_name);
 
@@ -294,4 +281,26 @@ char* get_all_tables_metadata(){
 
 
     return result;
+}
+
+t_table_metadata* get_table_metadata(char* table_name){
+    t_table_metadata* meta = malloc(sizeof(t_table_metadata));
+    char* meta_path = malloc(strlen(tables_path) + strlen(table_name) + strlen("/metadata") + 1);
+    strcpy(meta_path, tables_path);
+    strcat(meta_path, table_name);
+    strcat(meta_path, "/metadata");
+
+    log_info(logg, meta_path);
+
+    t_config* c = config_create(meta_path);
+    meta->consistency = config_get_int_value(c, "CONSISTENCY");
+    meta->partition_number = config_get_int_value(c, "PARTICIONES");
+    meta->compactation_time = config_get_long_value(c, "COMPACTATION");
+
+    log_error(logg,"la consistencia %d", meta->consistency);
+    log_error(logg, "numero de particiones %d", meta->partition_number);
+    log_error(logg, "comapctation %dl",meta->compactation_time);
+
+
+    return meta;
 }

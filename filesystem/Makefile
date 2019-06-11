@@ -1,6 +1,6 @@
 all: filesystem clean
 
-filesystem: filesystem.o server.o pharser.o console.o engine.o memtable.o
+filesystem: server.o pharser.o console.o memtable.o engine.o filesystem.o
 	gcc -o filesystem filesystem.o server.o pharser.o console.o engine.o memtable.o -lcommons -pthread
 
 filesystem.o: filesystem.c

@@ -210,15 +210,16 @@ char* action_select(package_select* select_info){
     //imprimo la ruta por pantalla
     log_info(logger,finalmetadata);
     metadata=fopen(finalmetadata,"r+");
-    //la ruta impresa es correcta pero no encuentra el archivo aunque exista
-    //ahora lo encuentra. No se toma el hecho de que no lo encuentre
+
+    //No se toma el hecho de que no lo encuentre
     //xq no puede pasar
     /*if(metadata==NULL){
       log_info(logger,"no se encontro la metadata");
       return "metadata no encontrada";
     }*/
   log_info(logger,"se encontro la metadata!");
-  //SUPONE QUE LA METADATA YA LA TENES
+  //ACA ESTA LA METADATA!!!!!!!!!!!!!!
+  t_table_metadata* meta = get_table_metadata(select_info->table_name);
 
   char charcito[100];
   while(!feof(metadata)){
@@ -227,12 +228,13 @@ char* action_select(package_select* select_info){
   contador++;
   }
   fclose(metadata);
-  int partition=atoi(regmetadata[1].line);
+  int partition=meta->partition_number;
   char* check1=strdup(string_itoa(partition));
   char* check2=strdup(string_itoa(select_info->key));
   log_info(logger,check1);
   log_info(logger,check2);
-  int part= select_info->key % partition;
+  int part= select_info->key % meta->partition_number ;
+  log_info(logger, "aca llega");
   auxkey=strdups(string_itoa(part));
   log_info(logger,auxkey);
   int totalen= strlen(rutaa)+strlen(nombre)+1 +strlen(auxkey)+5;
@@ -243,7 +245,7 @@ char* action_select(package_select* select_info){
     log_info(logger,"memoria malockeada");
     auxpart=strdups(string_itoa(part));
     strcat(final,auxpart);
-    strcat(final,".txt");
+    strcat(final,".part");
     table=fopen(final,"r+");
     if(table==NULL){
       log_info(logger,final);
@@ -258,6 +260,7 @@ char* action_select(package_select* select_info){
     contador2++;
   }
   log_info(logger, "hasta aca!");
+  log_info(logger, regpart[1].line);
   numerobloques=contarbloques(regpart[1].line);
   char* precaucion;
   precaucion= strdup(string_itoa(numerobloques));
@@ -282,7 +285,7 @@ char* action_select(package_select* select_info){
   strcat(regruta[sus].line,"Bloques/");
   char* auxb=strdup(string_itoa(intarray[sus]));
   strcat(regruta[sus].line,auxb);
-  strcat(regruta[sus].line,".bin");
+  strcat(regruta[sus].line,".part");
   log_info(logger,regruta[sus].line);
   sus++;
   }
@@ -366,7 +369,7 @@ char* action_describe(package_describe* describe_info){
 
   }
 
-  char* result = get_all_tables_metadata();
+  char* result = get_all_tables_metadata_as_string();
   
   return result;
 }
