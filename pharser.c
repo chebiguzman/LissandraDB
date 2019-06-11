@@ -122,10 +122,10 @@ char* exec_instr(char* instr_buff){
         return responce;
     }
 
-     if(!strcmp(instruction,"MEMORY")){
-         char* r =  action_intern_memory_status();
-         return r;
-     }
+    if(!strcmp(instruction,"MEMORY")){
+        char* r =  action_intern_memory_status();
+        return r;
+    }
 
     char* error_message = strdup("no es una instruccion valida\n");
     return error_message;
@@ -140,8 +140,7 @@ char* parse_package_select(package_select* package){
     int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + strlen(key)+1;
     
     buffer = malloc(tot_len);
-    buffer = string_new();
-    buffer = strcat(buffer, instr);
+    memcpy(buffer, instr, strlen(instr));
     buffer = strcat(buffer, sep); //emular NULL terminations
     buffer = strcat(buffer, tbl_n);
     buffer = strcat(buffer, sep);

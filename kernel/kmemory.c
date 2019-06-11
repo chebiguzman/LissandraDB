@@ -96,7 +96,7 @@ int get_loked_memory(t_consistency consistency, char* table_name){
     }else if( consistency == ALL_CONSISTENCY){
         return get_memory();
     }else if(consistency == ERR_CONSISTENCY){
-        log_error(logger_debug, "No se reconoce la tabla");
+        log_error(logger, "No se reconoce la tabla.");
         return -1;
     }else{
         log_error(logger, "Error fatal. El sitema no reconoce la consitencia de la tabla solicitada");
