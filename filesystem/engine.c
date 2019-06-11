@@ -18,7 +18,7 @@
 char* MNT_POINT;
 t_log* logg;
 t_list* tables_name;
-char* root_dirr;
+char* tables_path;
 DIR* root;
 
 void check_or_create_dir(char* path){
@@ -57,13 +57,13 @@ void engine_start(t_log* logger){
     char* metadata_dir_path = malloc(strlen(MNT_POINT)+strlen("Metadata/")+10);
     strcpy(metadata_dir_path, MNT_POINT);
     strcat(metadata_dir_path, "Metadata/");
-    char* tables_path = malloc(strlen(MNT_POINT)+strlen("Tables/")+1);
+          tables_path = malloc(strlen(MNT_POINT)+strlen("Tables/")+1);
     strcpy( tables_path,MNT_POINT);
     strcat(tables_path, "Tables/");
     char* blocks_path = malloc(strlen(MNT_POINT)+strlen("Bloques/")+1);
     strcpy(blocks_path , MNT_POINT);
     strcat(blocks_path, "Bloques/");
- 
+    
  
     check_or_create_dir(metadata_dir_path);
     check_or_create_dir(blocks_path);
@@ -111,7 +111,7 @@ void engine_start(t_log* logger){
  
     }
  
-    /*DIR* tables_dir = opendir(tables_path);
+    DIR* tables_dir = opendir(tables_path);
     tables_name = list_create();
     struct dirent *entry;
      while ((entry = readdir(tables_dir)) != NULL) {
@@ -119,23 +119,125 @@ void engine_start(t_log* logger){
              if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
                 continue;
                 string_to_upper(entry->d_name);
+            log_info(logg, entry->d_name);
             list_add(tables_name,entry->d_name );
          }
-     }*/
+     }
  
    
 }
  
- 
+
+int does_table_exist(char* table_name){
+    char* q = strdup(table_name);
+    string_to_upper(q);
+
+    bool findTableByName(void* t){
+        if(!strcmp(q, (char*) t)) return true;
+        return false;
+    }
+
+    char* t = list_find(tables_name, findTableByName);
+    free(q);
+    if(t == NULL){
+        return 0;
+    }
+    return 1;
+}
+
 //CREATE [root_dirrTABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]
-int enginet_create_table(char* table_name, char* consistency, int particiones, long compactation_time){
+int enginet_create_table(char* table_name, int consistency, int particiones, long compactation_time){
     
-    char* path_dir = strdup(root_dirr);
+    //creo la carpeta
+    int path_len = strlen(tables_path) + strlen(table_name) +1;
+    char* path_dir =  malloc(path_len);
+
+    strcpy(path_dir, tables_path);
     strcat(path_dir, table_name);
-    char* meta_path = strdup(path_dir);
-   
-    printf("%s\n", path_dir);
+    
+    log_error(logg, tables_path);
  
     check_or_create_dir(path_dir);
+    
     //crea la carpeta ahora hay que rellenarla
+
+
+    FILE * metadata;
+    char* meta_path= malloc( strlen(path_dir) + strlen("metadata")+1);
+    strcpy(meta_path, path_dir);
+    strcat(meta_path,"/metadata");
+    
+    metadata=fopen(meta_path,"w+");
+
+    if(metadata==NULL){
+        log_error(logg, "Error al crear la tabla. Root?");
+        exit(-1);
+    }
+
+    char* constante = strdup(string_itoa(particiones));
+
+    int util=strlen(constante)+strlen("particiones");
+    char* partitions=malloc(util +4);
+    strcpy(partitions,"\n");
+    strcpy(partitions,"PARTICIONES=");
+    strcat(partitions,constante);
+    log_info(logg,partitions);
+    char* constante2= strdup(string_itoa(compactation_time));
+    int util2=strlen(constante2)+strlen("\nCOMPACTATION");
+    char* compactation= malloc(util2+3);
+    strcpy(compactation,"\n");
+    strcpy(compactation,"\nCOMPACTATION=");
+    strcat(compactation,constante2);
+    log_info(logg,compactation);
+    char* constante3= strdup(string_itoa(consistency));
+    char* consistencia;
+    int larg0=strlen("sc=consistency\n");
+    consistencia= malloc(larg0+5);
+
+    switch(atoi(constante3)){
+    case 0:
+        strcpy(consistencia,"CONSISTENCY=SC\n");
+        break;
+    case 1:
+        strcpy(consistencia,"CONSISTENCY=SH\n");
+        break;
+    case 2:
+        strcpy(consistencia,"CONSISTENCY=ANY\n");
+        break;
+    }
+
+    log_info(logg,consistencia);
+    fputs(consistencia,metadata);
+    fputs(partitions,metadata);
+    fputs(compactation,metadata);
+    int c= particiones;
+    c--;
+
+    char* resp=malloc(1000);
+    char* metadata_template = "SIZE=0\nBLOCKS=[]\n";
+
+    while(c>=0){
+        char* auxx=NULL;
+        auxx=strdup(string_itoa(c));
+        strcpy(resp, path_dir);
+        strcat(resp,"/");
+        strcat(resp,auxx);
+        strcat(resp,".part");
+        log_info(logg,resp);
+        FILE* part = fopen(resp,"w+");
+        fputs(metadata_template, part);
+        fclose(part);
+        c--;
+    }
+ 
+    free(resp);
+
+    list_add(tables_name, table_name);
+
+    fclose(metadata); 
+    free(path_dir);
+    free(partitions);
+    free(consistencia);
+    free(meta_path);
+
 }
