@@ -346,86 +346,29 @@ char* action_create(package_create* create_info){
 char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
 
-  //defino el punto de partida para recorrer las tablas
-  char path_table[300];
-  path_table[0] = '\0';
-  strcat(path_table,MNT_POINT);
-  strcat(path_table,"Tables/");
-
-  char** t_names;
-  int t_count;
-  int flag = 0; //indica si hubo una tabla a describir
-
   //distingo si cargaron o no una tabla a describir
+
   if (describe_info->table_name != NULL) {
     
-    //TODO si la tabla no existe
-    log_error(logger,"tomo este caminoo");
-    
-    t_names = malloc(sizeof(char *));
-    t_names[0] = (char *) malloc(256);
-    t_names[0] = describe_info->table_name;
-    t_count = 1;
-    flag = 1;
+    if(!does_table_exist(describe_info->table_name)){
+      log_error(logger, "No se puede completar el describe.");
+      return "La tabla no existe.\n";
+    }
 
-  } else {
+    char* meta = get_table_metadata_as_string(describe_info->table_name);
+    char* result = malloc( strlen(meta) + strlen(describe_info->table_name) +2);
+    strcpy(result, describe_info->table_name);
+    strcat(result, "\n");
+    strcat(result, meta);
+    strcat(result, "\n");
+    free(meta);
+    return result;
 
-    log_error(logger,"tomo este otro");
-
-    t_names = tables_names(); //obtengo los nombres de todas las tablas
-    t_count = tables_count(); //calculo cuantas tablas hay
   }
 
-  char buff[3000];
-  buff[0] = '\0';
+  char* result = get_all_tables_metadata();
   
-  int i;
-  for(i=0; i<t_count; i++){ //recorro las tablas y extraigo la metadata
-    char* n = t_names[i];
-
-    strcat(buff,"DESCRIBE");
-    strcat(buff,"\n");
-    strcat(buff,n);
-    strcat(buff,"\n");
-
-    char path_metadata[300];
-    snprintf(path_metadata, 300, "%s", path_table);
-
-    //aca leo la metadata de cada tabla que tengo
-    strcat(path_metadata,n);
-    strcat(path_metadata,"/Metadata.bin"); //path de metadata de la tabla
-
-    //leo y cargo la metadata en buffer
-    FILE* fp_m = fopen(path_metadata,"r");
-
-    char consistency[300];
-    char partitions[300];
-    char compaction_time[300];
-
-    fgets(consistency, 300, fp_m);
-    fgets(partitions, 300, fp_m);
-    fgets(compaction_time, 300, fp_m);
-    
-    strcat(buff,consistency);
-    strcat(buff,partitions);
-    strcat(buff,compaction_time);
-    strcat(buff,"\n");
-
-    fclose(fp_m);
-
-    path_metadata[0] = '\0';
-
-  } 
-
-  log_info(logger,buff);
-
-  if (flag == 1) {
-    free(t_names[0]);
-    free(t_names);
-  }
-
-  
-  return "";
+  return result;
 }
 
 char* action_drop(package_drop* drop_info){
