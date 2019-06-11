@@ -17,6 +17,7 @@
 #define BLOCKS_AMOUNT_DEFAULT 12
 char* MNT_POINT;
 t_log* logg;
+t_list* tables_upper_name;
 t_list* tables_name;
 char* tables_path;
 DIR* root;
@@ -113,20 +114,24 @@ void engine_start(t_log* logger){
  
     DIR* tables_dir = opendir(tables_path);
     tables_name = list_create();
+    tables_upper_name = list_create();
+
     struct dirent *entry;
      while ((entry = readdir(tables_dir)) != NULL) {
          if(entry->d_type == DT_DIR){
              if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
                 continue;
-                string_to_upper(entry->d_name);
+            char* name = malloc(strlen(entry->d_name) +1);
+            strcpy(name, entry->d_name);
+            list_add(tables_name, name);
+            string_to_upper(entry->d_name);
             log_info(logg, entry->d_name);
-            list_add(tables_name,entry->d_name );
+            list_add(tables_upper_name,entry->d_name );
          }
      }
  
    
 }
- 
 
 int does_table_exist(char* table_name){
     char* q = strdup(table_name);
@@ -137,7 +142,7 @@ int does_table_exist(char* table_name){
         return false;
     }
 
-    char* t = list_find(tables_name, findTableByName);
+    char* t = list_find(tables_upper_name,findTableByName);
     free(q);
     if(t == NULL){
         return 0;
@@ -145,7 +150,6 @@ int does_table_exist(char* table_name){
     return 1;
 }
 
-//CREATE [root_dirrTABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]
 int enginet_create_table(char* table_name, int consistency, int particiones, long compactation_time){
     
     //creo la carpeta
@@ -233,6 +237,9 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     free(resp);
 
     list_add(tables_name, table_name);
+    char* copy = strdup(table_name);
+    string_to_upper(copy);
+    list_add(tables_upper_name, copy);
 
     fclose(metadata); 
     free(path_dir);
@@ -240,4 +247,51 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     free(consistencia);
     free(meta_path);
 
+}
+
+char* get_table_metadata_as_string(char* table_name){
+
+    char* table_path = malloc( strlen(table_name) + strlen(tables_path) + strlen("/metadata") +1);
+    strcpy(table_path, tables_path);
+    strcat(table_path, table_name);
+    strcat(table_path, "/metadata");
+    FILE* f = fopen(table_path, "r");
+    fseek(f, 0L, SEEK_END);
+    int bytes = ftell(f);
+
+    fseek(f, 0l, SEEK_SET);
+    char* meta = (char*)calloc(bytes, sizeof(char));	
+    fread(meta, sizeof(char), bytes, f);
+
+    fclose(f);
+    return meta;
+}
+
+char* get_all_tables_metadata(){
+    if(list_is_empty(tables_name)) return "";
+    int tables_amount = list_size(tables_name);
+
+    char* result = strdup("");
+
+    for (size_t i = 0; i < tables_amount; i++)
+    {   
+
+        result = realloc(result, strlen(result) + strlen(list_get(tables_name,i)));
+
+        strcat(result, list_get(tables_name,i));
+
+        result = realloc(result, strlen(result) + 2);
+        strcat(result, "\n");
+    
+        char* m = get_table_metadata_as_string(list_get(tables_name,i));
+        result = realloc(result, strlen(result) + strlen(m) + 1);
+        strcat(result, m);
+        result = realloc(result, strlen(result) + 4);
+        strcat(result, "\n\n");
+        free(m); 
+    }
+
+
+
+    return result;
 }
