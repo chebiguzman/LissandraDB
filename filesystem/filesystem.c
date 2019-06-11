@@ -218,6 +218,8 @@ char* action_select(package_select* select_info){
       return "metadata no encontrada";
     }*/
   log_info(logger,"se encontro la metadata!");
+  //SUPONE QUE LA METADATA YA LA TENES
+
   char charcito[100];
   while(!feof(metadata)){
   fgets(charcito,100,metadata);
