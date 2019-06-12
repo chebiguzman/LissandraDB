@@ -6,7 +6,6 @@
 // TODO: hacer el handshake y obtener el valor real
 #define VALUE_SIZE 64
 #define TABLE_NAME_SIZE 32
-segment* SEGMENT_TABLE2;
 
 typedef struct{
   char* name;
@@ -21,21 +20,15 @@ typedef struct{
   char value[VALUE_SIZE];
 }page_t;
 
-typedef struct{
+typedef struct page_info{
   u_int8_t dirty_bit;
   page_t* page_ptr;
-}page_table_t;
-
-typedef struct{
-  char name[TABLE_NAME_SIZE];
-  page_t* base;
-  int number_of_pages;
-  page_table_t* pages;
-  int limit;
-}table_info_t;
+  struct page_info* next;
+}page_info_t;
 
 typedef struct segmentt{
-  table_info_t* table_info;
+  char* name;
+  page_info_t* pages;
   struct segmentt* next;
 }segment_t;
 
@@ -43,6 +36,22 @@ typedef struct segment{
   segment_info data;
   struct segment *next;
 }segment;
+
+segment_t* SEGMENT_TABLE2;
+page_t* MAIN_MEMORY;
+int NUMBER_OF_PAGES;
+
+page_t* create_page(int timestamp, int key, char* value);
+page_info_t* create_page_info();
+segment_t* create_segment2(char* table_names);
+int find_free_page2();
+void save_page(segment_t* segment, page_t* page);
+void add_page_to_segment(segment_t* segment, page_info_t* page_info);
+segment_t* get_last_segment(segment_t* SEGMENT_TABLE2);
+page_info_t* get_last_page(page_info_t* page_info);
+void add_segment_to_table2(segment_t* segment);
+segment_t* find_segment(char* table_name);
+
 
 
 
