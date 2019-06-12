@@ -20,6 +20,7 @@ t_log* logger;
 int fs_socket;
 int main_memory_size;
 
+
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
 {
