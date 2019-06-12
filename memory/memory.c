@@ -18,222 +18,7 @@
 //logger global para que lo accedan los threads
 t_log* logger;
 int fs_socket;
-
-//declaro memoria principal
-char* main_memory;
 int main_memory_size;
-
-int PAGE_SIZE = 128;
-int SEGMENT_SIZE = 1024; //TODO obtener el numero posta del handshake con fs
-
-segment* SEGMENT_TABLE;
-
-// TODO: calcular tamanio de memoria principal en paginas: NUMBER_OF_PAGES = MAIN_MEMORY_SIZE / sizeof(page_t )
-
-segment_info create_segment_info(char* table_name, int number_of_pages){
-  segment_info seg_info;
-  seg_info.name = table_name;
-  seg_info.pages[0] = -1;
-  seg_info.pages[1] = -1;
-  seg_info.pages[2] = -1;
-  seg_info.limit = SEGMENT_SIZE; //TODO: calcular el valor del value por el number_of_pages
-  return seg_info;
-}
-
-segment* create_segment(){
-  segment* temp;
-  temp = (segment*)malloc(sizeof(segment));
-  temp->next = NULL;
-
-  return temp;
-}
-
-segment* get_segment(int index){
-    segment* temp = SEGMENT_TABLE;
-    int i = 1;
-    while(i < index){ //itero sobre los segments hasta llegar al index
-      temp = temp->next;
-      i++;
-    }
-    return temp;
-}
-
-void add_segment_to_table(int index, segment* new_segment){ //TODO guardar el value en memoria principal, hasta ahora solo guardo lo demas en la table
-  if(index == 0){
-    segment* temp = SEGMENT_TABLE;
-    SEGMENT_TABLE = new_segment;
-    new_segment->next = temp;
-  } 
-  else{
-    segment* temp = get_segment(index);
-    new_segment->next = temp->next;
-    temp->next = new_segment;
-  }
-}
-
-//devuelve la ultima direccion de memoria del segment, habria que agregarle -1 
-char* get_end_memory_address(int index){
-  if(index == 0){
-    return &main_memory[0];
-  }
-  segment* temp = get_segment(index);
-  return &temp->data.base[temp->data.limit - 1]; //base de memoria del segment con desplazamiento limit
-}
-
-// devuelve la direccion que el nuevo segmento deberia usar de base
-char* get_first_memory_address_after(int index){
-  if(index == 0){
-    return &main_memory[0];
-  }
-  return get_end_memory_address(index) + 0x1;
-}
-
-//retorna el index del segmento que tiene suficiente despues del mismo y el proximo segmento. -1 si no encuentra nada. Si tira -1 hay que hacer lugar.
-int find_memory_space(int memory_needed){
-  char* base_memory = &main_memory[0];  
-  
-  if(memory_needed > main_memory_size){
-    return -1; //TODO hacer que tire error en vez de devolver -1 porque no hay manera de encontrar espacio.
-  }
-
-  //si SEGMENT_TABLE es null, entonces no hay segmentos por lo que memoria esta vacia. Asigno en el primer byte de memoria
-  if(SEGMENT_TABLE == NULL){
-    return 0;
-  }
-
-  segment* temp = SEGMENT_TABLE;
-  int i = 1;
-  while(temp != NULL){
-    if(temp->data.base - base_memory >= memory_needed){
-      return i - 1;
-    }
-    base_memory = get_first_memory_address_after(i); //asigno la base de memoria como la base del segmento mas el desplazamiento para comparar el proximo segmento con esta base
-    temp = temp->next;
-    i++;
-  }
-
-  //estoy en el ultimo segmento, la diferencia entre el utlimo byte de memoria y la base_memory es el espacio de memoria que queda.
-  //a[10] = [0..9]
-  //a[size(a)-1] = 9
-  //a[0] = 0
-  //si se restan, dan 9, cuando el size es 10, hay que sumar 1
-  return &main_memory[main_memory_size - 1] - base_memory + 1 >= memory_needed ? i - 1  : -1;
-}
-// TODO: corroborar que el [temp->data.limit - 1] y el get_end_memory_address(index) + 1 este ok
-
-int save_segment_to_memory(segment_info segment_info){
-  int index = find_memory_space(segment_info.limit);
-  printf("Index to save segment info: %d\n", index); // si es 0 es porque se guarda antes del primero
-  // busco espacio en memoria y me devuelve un index
-  
-  char* base_memory = get_first_memory_address_after(index);
-  printf("Base del nuevo segmento %p\n", base_memory);
-  
-  // traduzco el index al address de memoria
-
-  segment_info.base = base_memory;
-  segment* new_segment = create_segment();
-  new_segment->data = segment_info;
-  add_segment_to_table(index, new_segment);
-  return index;
-}
-
-void print_segment_info(int index){
-  segment* temp = get_segment(index);
-  printf("%d) ", index);
-  printf("Nombre de tabla: %s\n", temp->data.name);
-  printf("Primer posicion de memoria: %p\n", temp->data.base);
-  printf("Ultima posicion de memoria: %p\n", &temp->data.base[temp->data.limit - 1]);
-  printf("Tamanio segmento: %d\n", &temp->data.base[temp->data.limit - 1] - temp->data.base + 1);
-  printf("Pages: %d, %d, %d\n\n", temp->data.pages[0], temp->data.pages[1], temp->data.pages[2]);
-}
-
-// devuelve el indice del segmento que contiene el nombre de tabla o -1 si no encuentra
-int find_table(char* table_name){
-  segment* temp = SEGMENT_TABLE;
-  int index = 1;
-  while(temp != NULL){
-    if(strcmp(temp->data.name, table_name) == 0){
-      return index;
-    }
-    index++;
-    temp = temp->next;
-  }
-  return -1;
-}
-
-int find_page(segment* segment, int size, int key){
-  for (int i = 0; i < size; i++){
-    if(segment->data.pages[i] == key){
-      return i;
-    }
-  }
-  return -1;
-}
-
-int get_free_page(int pages[], int number_of_pages){
-  for(int i = 0; i < number_of_pages; i++){
-    if(pages[i] == -1){
-      return i;
-    }
-  }
-  return 0; //TODO: implementar algoritmo LRU, necesito timestamps?
-}
-
-void add_key_to_table(segment* segment, int index, int key){
-  segment->data.pages[index] = key;
-}
-
-int get_memory_offset(char* base){
-  return base - main_memory;
-}
-
-void free_memory_space(char* address, int size){
-  memset(address, 0, size);
-}
-
-char* get_page_address(segment* segment, int page_index){
-  int segment_offset = get_memory_offset(segment->data.base);
-  int page_offset = page_index * PAGE_SIZE;
-  int page_address = segment_offset + page_offset; // devuelve la ubicacion de la pagina (segmento + page_size)
-  return main_memory+page_address;
-}
-
-// TODO: find page_index dinamically en vez de pasarla por parametro
-// Busca la direccion de la pagina dentro del segmento y le copia el valor, devuelve esa direccion
-char* save_value_to_memory(segment* segment, int page_index, char* value){
-  char* page_address = get_page_address(segment, page_index);
-  free_memory_space(page_address, PAGE_SIZE);
-  memcpy(page_address, value, VALUE_SIZE); 
-  return page_address;
-}
-
-void save_registry(segment* segment, int key, char* value){
-  int size =  3; //TODO: reemplazar por   sizeof(segment->data.pages) / PAGE_SIZE;
-  int index = get_free_page(segment->data.pages, size);
-    if(index == -1){
-      // JOURNALIAR ATR
-    }
-  add_key_to_table(segment, index, key);
-  save_value_to_memory(segment, index, value);
-}
-
-char* get_value(segment* segment, int page_index){
-  int page_offset =  page_index * PAGE_SIZE;
-  int segment_base = get_memory_offset(segment->data.base);
-  return main_memory+segment_base+page_offset;
-}
-
-void print_segment_table(){
-  segment* temp = SEGMENT_TABLE;
-  int i = 1;
-  printf("----PRINTING SEGMENT_TABLE----\n");
-  while(temp != NULL){
-    print_segment_info(i);
-    i++;
-    temp = temp->next;    
-  }
-}
 
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
@@ -274,35 +59,33 @@ int main(int argc, char const *argv[])
   else{
   }
 
-  //reservo memoria contigua para la memoria principal
   main_memory_size = config_get_int_value(config, "TAM_MEM");
-  main_memory = malloc(main_memory_size);
-  memset(main_memory, 0, main_memory_size);
-
-  SEGMENT_TABLE = NULL;
-  SEGMENT_TABLE2 = NULL;
   MAIN_MEMORY = malloc(main_memory_size);
   memset(MAIN_MEMORY, 0, main_memory_size);
 
-  // -------------- PRUEBAS --------------
+  SEGMENT_TABLE = NULL;
+  NUMBER_OF_PAGES = main_memory_size / sizeof(page_t); // la cantidad de paginas que voy a tener con el tamano actual de cada pagina
 
-  page_t* new_page1 = create_page(123, 42, "holis");
-  printf("New page: %s\n", new_page1->value);
+  printf("\n---- Memory info ----\n");
+  printf("Main memory size: %d\n", main_memory_size);
+  printf("Number of pages: %d\n", NUMBER_OF_PAGES);
+  printf("---------------------\n\n");
   
 
-  // segment_info seg_info1 = create_segment_info("tabla1", 0);
-  // segment_info seg_info2 = create_segment_info("tabla2", 0);
-  // segment_info seg_info3 = create_segment_info("tabla3", 0);
+  // -------------- PRUEBAS --------------
 
-  // save_segment_to_memory(seg_info1);
-  // save_segment_to_memory(seg_info2);
-  // save_segment_to_memory(seg_info3);
+  segment_t* segment1 = create_segment("tabla1");
 
-  // save_registry(get_segment(1), 42, "hello");
-  // save_registry(get_segment(2), 42, "helloasd");
-  // save_registry(get_segment(3), 42, "helloa");
-  // save_registry(get_segment(1), 43, "hello");
-  // save_registry(get_segment(1), 45, "hello");
+  page_t* new_page1 = create_page(123, 42, "holis");
+  page_t* new_page2 = create_page(321, 69, "chau");
+
+  segment_t* s1 = find_or_create_segment("tabla1");
+  save_page(s1, new_page1);
+  save_page(s1, new_page2);
+  page_t* page_found = find_page(s1, 42);
+  if(page_found != NULL){
+    print_page(page_found);
+  }
 
   // -------------- FIN PRUEBAS --------------
 
@@ -327,43 +110,23 @@ int main(int argc, char const *argv[])
 
 //IMPLEMENTACION DE FUNCIONES (Devolver errror fuera del subconjunto)
 char* action_select(package_select* select_info){
-
-  // print_segment_table();
-  
-  // log_info(logger, "Memory: Se recibio una accion select");
-  // int table_index = find_table(select_info->table_name);
-  // if(table_index != -1){
-  //   printf("Tabla Index: %d\n", table_index);
-  //   segment* segment = get_segment(table_index);
-  //   int page_index = find_page(segment, 3, select_info->key);
-  //   if(page_index != -1){
-  //     char* value = get_value(segment, page_index);
-  //     printf("Value en memoria: %s\n", value);
-  //     return value;
-  //   }
-  // }else{
-  //   char* buffer = parse_package_select(select_info);
-  //   char* response = malloc(3000);
-  //   // if(send(fs_socket, buffer, strlen(buffer)+1, 0)){
-  //   //   recv(fs_socket, response, 3000, 0);
-  //   // }else{
-  //   //   log_error(logger, "No se logo comuniarse con fs");
-  //   //   return "NO SE ENCTUENTEA FS";
-  //   // }
-
-  //   // si no hay un segmento, lo creo y le asigno al table_index (que era -1), su index
-  //   if(table_index == -1){
-  //     int number_of_pages = 0;
-  //     segment_info seg_info = create_segment_info(select_info->table_name, number_of_pages);
-  //     table_index = save_segment_to_memory(seg_info);
-  //   }
-  //   char* value = "nuevo value"; //TODO: guardar el valor que retorne fs posta
-  //   save_registry(get_segment(table_index), select_info->key, value); 
-  //   print_segment_table();
-    
-  //   return response;
-  // }
-  return string_new("holiis"); //tienen que devolver algo si no se rompe
+  log_info(logger, "Se recibio una accion select");
+  segment_t* segment = find_segment(select_info->table_name);
+  if(segment != NULL){
+    page_t* page = find_page(segment, select_info->key);
+    if(page != NULL){
+      printf("Page found in memory-> Key: %d, Value: %s\n", select_info->key, page->value);
+      return page->value;
+    }
+  }
+  segment = find_or_create_segment(select_info->table_name); // si no existe el segmento lo creo.
+  printf("Table name: %s\n", segment->name);
+  // TODO: mandarle al FS el select request y recibirlo
+  page_t* page = create_page(007, select_info->key, "recien llegado del FS"); // TODO: asignarle los values adecuados que vuelven del FS
+  save_page(segment, page);
+  page_t* page_found = find_page(segment, select_info->key); //uso esta funcion solo para ver que funcione bien
+  printf("Page found in file system-> Key: %d, Value: %s\n", page_found->key, page_found->value);
+  return page->value;
 }
 
 char* action_insert(package_insert* insert_info){
