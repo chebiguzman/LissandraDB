@@ -13,7 +13,7 @@
 #include "../pharser.h"
 #include "../actions.h"
 #include "../console.h"
-#include "../memory_functions.h"
+#include "segments.h"
 
 //logger global para que lo accedan los threads
 t_log* logger;
@@ -28,122 +28,7 @@ int SEGMENT_SIZE = 1024; //TODO obtener el numero posta del handshake con fs
 
 segment* SEGMENT_TABLE;
 
-page_table_t* create_page_table(int number_of_pages){
-  page_table_t* page_table = (page_table_t*)malloc(sizeof(page_table_t) * number_of_pages);
-  return page_table;
-}
-
-table_info_t* create_table_info(char table_name[TABLE_NAME_SIZE], int number_of_pages){
-  table_info_t* table = (table_info_t*)malloc(sizeof(table_info_t));
-  memcpy(table->name, table_name, TABLE_NAME_SIZE);
-  table->pages = create_page_table(number_of_pages);
-  table->limit = table->number_of_pages * sizeof(page_t);
-  return table;
-}
-
-segment_t* create_segment2(char table_name[TABLE_NAME_SIZE], int number_of_pages){
-  segment_t* seg = (segment_t*)malloc(sizeof(segment_t));
-  seg->table_info = create_table_info(table_name, number_of_pages);
-  seg->next = NULL;
-  return seg;
-}
-
-int space_between(char* a, char* b){
-  return b-a;
-}
-
-segment_t* get_segment2(segment_t* head, int index){
-    segment_t* temp = head;
-    int i = 0;
-    while(i < index && temp != NULL){ //itero sobre los segments hasta llegar al index
-      temp = temp->next;
-      i++;
-    }
-    return temp;
-}
-
-void push_first(segment_t* head, segment_t* segment){
-  segment->next = head;
-  head = segment;
-}
-
-segment_t* get_last(segment_t* head){
-  segment_t* temp = head;
-  while(temp->next != NULL){
-    temp = temp->next;
-  }
-  return temp;
-}
-
-// busca espacio suficiente para el segmento y retorna un puntero a esa posicion
-page_t* get_memory_space(page_t* main_memory, segment_t* head, segment_t* segment){
-  int memory_needed = segment->table_info->limit;
-  // me fijo si no excede el tamaño de memoria
-  if(memory_needed > main_memory_size){
-    return NULL;
-  }
-  page_t* base_memory = main_memory;
-  int i = 0;
-  segment_t* temp = head;
-  //primero me fijo si tengo espacio entre el inicio de memoria y el primer segmento
-  if(space_between(temp->table_info->base, base_memory) >= memory_needed){
-    return base_memory;
-  }
-  // me fijo si hay espacio entre segmentos
-  else {
-    base_memory += temp->table_info->limit; 
-    temp = temp->next;
-    while(temp != NULL){
-      if(space_between(temp->table_info->base, base_memory) >= memory_needed){
-        return base_memory;
-      }
-      base_memory += temp->table_info->limit; 
-      temp = temp->next;
-    }
-    // me fijo si hay espacio entre el ultimo segmento y lo que queda de memoria
-    temp = get_last(head);
-    base_memory += temp->table_info->limit;
-    if(space_between(main_memory-1+main_memory_size, base_memory) >= memory_needed){
-      return base_memory;
-    }
-  }
-  // Si no encuentro espacio en memoria tengo que reemplazar o hacer journaling
-  return NULL;
-}
-
-// devuelve el index del nodo despues del cual deberia ir el nodo que se pasa por parametro
-int assign_segment_index(segment_t* head, segment_t* segment){
-  segment_t* temp = head;
-  int i = 0;
-  while(temp->table_info->base < segment->table_info->base && temp != NULL){
-    i++;
-    temp = temp->next;
-  }
-  return i;
-}
-
-void add_segment_to_table2(segment_t* head, segment_t* segment, int index){
-  if(index == 0){
-    push_first(head, segment);
-  }
-  else {
-    segment_t* temp = get_segment2(head, index-1);
-    segment->next = temp->next;
-    temp->next = segment;
-  }
-}
-
-void save_segment_to_memory2(page_t* main_memory, segment_t* head, segment_t* segment){
-  page_t* segment_base = get_memory_space(main_memory, head, segment);
-  if(segment_base != NULL){
-    segment->table_info->base = segment_base;
-    add_segment_to_table2(head, segment, assign_segment_index(head, segment));
-    memset(segment_base, 0, segment->table_info->limit); //seteo el espacio de memoria que va a usar el segmento a 0
-  }
-  else{
-    // reemplazar un segmento o journaling si todos los segmentos estan modificados
-  }
-}
+// TODO: calcular tamanio de memoria principal en paginas: NUMBER_OF_PAGES = MAIN_MEMORY_SIZE / sizeof(page_t )
 
 segment_info create_segment_info(char* table_name, int number_of_pages){
   segment_info seg_info;
@@ -395,24 +280,29 @@ int main(int argc, char const *argv[])
   memset(main_memory, 0, main_memory_size);
 
   SEGMENT_TABLE = NULL;
+  SEGMENT_TABLE2 = NULL;
+  MAIN_MEMORY = malloc(main_memory_size);
+  memset(MAIN_MEMORY, 0, main_memory_size);
 
   // -------------- PRUEBAS --------------
 
-  segment_info seg_info1 = create_segment_info("tabla1", 0);
-  segment_info seg_info2 = create_segment_info("tabla2", 0);
-  segment_info seg_info3 = create_segment_info("tabla3", 0);
+  page_t* new_page1 = create_page(123, 42, "holis");
+  printf("New page: %s\n", new_page1->value);
+  
 
-  save_segment_to_memory(seg_info1);
-  save_segment_to_memory(seg_info2);
-  save_segment_to_memory(seg_info3);
+  // segment_info seg_info1 = create_segment_info("tabla1", 0);
+  // segment_info seg_info2 = create_segment_info("tabla2", 0);
+  // segment_info seg_info3 = create_segment_info("tabla3", 0);
 
-  save_registry(get_segment(1), 42, "hello");
-  save_registry(get_segment(2), 42, "helloasd");
-  save_registry(get_segment(3), 42, "helloa");
-  save_registry(get_segment(1), 43, "hello");
-  save_registry(get_segment(1), 45, "hello");
+  // save_segment_to_memory(seg_info1);
+  // save_segment_to_memory(seg_info2);
+  // save_segment_to_memory(seg_info3);
 
-
+  // save_registry(get_segment(1), 42, "hello");
+  // save_registry(get_segment(2), 42, "helloasd");
+  // save_registry(get_segment(3), 42, "helloa");
+  // save_registry(get_segment(1), 43, "hello");
+  // save_registry(get_segment(1), 45, "hello");
 
   // -------------- FIN PRUEBAS --------------
 
@@ -437,41 +327,42 @@ int main(int argc, char const *argv[])
 
 //IMPLEMENTACION DE FUNCIONES (Devolver errror fuera del subconjunto)
 char* action_select(package_select* select_info){
-  print_segment_table();
-  
-  log_info(logger, "Memory: Se recibio una accion select");
-  int table_index = find_table(select_info->table_name);
-  if(table_index != -1){
-    printf("Tabla Index: %d\n", table_index);
-    segment* segment = get_segment(table_index);
-    int page_index = find_page(segment, 3, select_info->key);
-    if(page_index != -1){
-      char* value = get_value(segment, page_index);
-      printf("Value en memoria: %s\n", value);
-      return value;
-    }
-  }else{
-    char* buffer = parse_package_select(select_info);
-    char* response = malloc(3000);
-    // if(send(fs_socket, buffer, strlen(buffer)+1, 0)){
-    //   recv(fs_socket, response, 3000, 0);
-    // }else{
-    //   log_error(logger, "No se logo comuniarse con fs");
-    //   return "NO SE ENCTUENTEA FS";
-    // }
 
-    // si no hay un segmento, lo creo y le asigno al table_index (que era -1), su index
-    if(table_index == -1){
-      int number_of_pages = 0;
-      segment_info seg_info = create_segment_info(select_info->table_name, number_of_pages);
-      table_index = save_segment_to_memory(seg_info);
-    }
-    char* value = "nuevo value"; //TODO: guardar el valor que retorne fs posta
-    save_registry(get_segment(table_index), select_info->key, value); 
-    print_segment_table();
+  // print_segment_table();
+  
+  // log_info(logger, "Memory: Se recibio una accion select");
+  // int table_index = find_table(select_info->table_name);
+  // if(table_index != -1){
+  //   printf("Tabla Index: %d\n", table_index);
+  //   segment* segment = get_segment(table_index);
+  //   int page_index = find_page(segment, 3, select_info->key);
+  //   if(page_index != -1){
+  //     char* value = get_value(segment, page_index);
+  //     printf("Value en memoria: %s\n", value);
+  //     return value;
+  //   }
+  // }else{
+  //   char* buffer = parse_package_select(select_info);
+  //   char* response = malloc(3000);
+  //   // if(send(fs_socket, buffer, strlen(buffer)+1, 0)){
+  //   //   recv(fs_socket, response, 3000, 0);
+  //   // }else{
+  //   //   log_error(logger, "No se logo comuniarse con fs");
+  //   //   return "NO SE ENCTUENTEA FS";
+  //   // }
+
+  //   // si no hay un segmento, lo creo y le asigno al table_index (que era -1), su index
+  //   if(table_index == -1){
+  //     int number_of_pages = 0;
+  //     segment_info seg_info = create_segment_info(select_info->table_name, number_of_pages);
+  //     table_index = save_segment_to_memory(seg_info);
+  //   }
+  //   char* value = "nuevo value"; //TODO: guardar el valor que retorne fs posta
+  //   save_registry(get_segment(table_index), select_info->key, value); 
+  //   print_segment_table();
     
-    return response;
-  }
+  //   return response;
+  // }
   return string_new("holiis"); //tienen que devolver algo si no se rompe
 }
 
