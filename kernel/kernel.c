@@ -82,7 +82,7 @@ char* exec_in_memory(int memory_fd, char* payload){
     strcpy(responce, "");
     
     if ( memory_fd < 0 ){
-      log_error(logger, "No se pudo llevar a cabo la accion");
+      log_error(logger, "No se pudo llevar a cabo la accion.");
       return "";
     }
 
@@ -114,12 +114,12 @@ char* action_select(package_select* select_info){
 }
 
 char* action_run(package_run* run_info){
-  log_info(logger_debug, "Se recibio una accion run");
+  log_info(logger_debug, "Se recibio una accion run.");
   char* rt = string_new();
   FILE* fp = fopen(run_info->path, "r");
 
   if(fp == NULL){
-    log_error(logger, "El archivo no existe o no se puede leer");
+    log_error(logger, "El archivo no existe o no se puede leer.");
   }else{
     
     t_queue* instruction_set = queue_create();
