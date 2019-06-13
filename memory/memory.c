@@ -130,8 +130,27 @@ char* action_select(package_select* select_info){
   return page->value;
 }
 
+//Necesito saber si es Timestamp lo genera memoria o el Kernel antes de enviarlo.
+// De no haberse ya generado el TS reemplazo <insert_info->timestamp> por <(unsigned)time(NULL)>... CREO.
+
 char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
+  segment_t* segment = find_segment(insert_info->table_name);
+  if(segment != NULL){
+    page_t* page = find_page(segment, insert_info->key);
+    if(page != NULL && insert_info->timestamp > page->timestamp){ //Asumo que el timestamp ya viene O lo genera el kernel
+      page->timestamp = insert_info->timestamp;
+      page->value = insert_info->value; //no se modifica la KEY
+      printf("Page edited> Key: %d, Value: %s\n", insert_info->key, page->value);
+      return page; // TODO: Retornar algo correcto
+    }
+  }
+  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
+  printf("Table name: %s\n", segment->name);
+  page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value); 
+  save_page(segment, page);
+  printf("Page created-> Key: %d, Value: %s\n", page->key, page->value);
+  return page; // TODO: Retornar algo correcto
 }
 
 //en esta funcion se devuelve lo 
