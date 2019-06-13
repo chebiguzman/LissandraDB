@@ -1,7 +1,7 @@
 all: memory clean
 
-memory: memory.o server.o pharser.o console.o
-	gcc -o memory memory.o server.o pharser.o console.o -lcommons -pthread
+memory: memory.o server.o pharser.o console.o segments.o
+	gcc -o memory memory.o server.o pharser.o console.o segments.o -lcommons -pthread
 
 memory.o: 
 	gcc -c memory.c -lcommons
@@ -14,6 +14,9 @@ pharser.o:
 
 console.o:
 	gcc -c ../console.c
+
+segments.o:
+	gcc -c segments.c
 	
 clean: 
 	find . -name "*.o" -type f -delete
