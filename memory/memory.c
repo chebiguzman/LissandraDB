@@ -66,6 +66,7 @@ int main(int argc, char const *argv[])
 
   SEGMENT_TABLE = NULL;
   NUMBER_OF_PAGES = main_memory_size / sizeof(page_t); // la cantidad de paginas que voy a tener con el tamano actual de cada pagina
+  LRU_TABLE = create_LRU_TABLE();
 
   printf("\n---- Memory info ----\n");
   printf("Main memory size: %d\n", main_memory_size);
@@ -83,10 +84,7 @@ int main(int argc, char const *argv[])
   segment_t* s1 = find_or_create_segment("tabla1");
   save_page(s1, new_page1);
   save_page(s1, new_page2);
-  page_t* page_found = find_page(s1, 42);
-  if(page_found != NULL){
-    print_page(page_found);
-  }
+
 
   // -------------- FIN PRUEBAS --------------
 
@@ -113,6 +111,7 @@ int main(int argc, char const *argv[])
 
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
+
 //BUSCO O CREO EL SEGMENTO
   segment_t* segment = find_or_create_segment(select_info->table_name); // si no existe el segmento lo creo.
   printf("Table name: %s\n", segment->name);
@@ -124,10 +123,9 @@ char* action_select(package_select* select_info){
   }
 //SI NO EXISTE LA PAGINA:
   // TODO: mandarle al FS el select request y recibirlo
-  page_t* page = create_page(007, select_info->key, "recien llegado del FS"); // TODO: asignarle los values adecuados que vuelven del FS
+  page_t* page = create_page(007, select_info->key, "nuevoValueFS"); // TODO: asignarle los values adecuados que vuelven del FS
   save_page(segment, page);
-  page_t* page_found = find_page(segment, select_info->key); //uso esta funcion solo para ver que funcione bien
-  printf("Page found in file system-> Key: %d, Value: %s\n", page_found->key, page_found->value);
+  printf("Page found in file system-> Key: %d, Value: %s\n", page->key, page->value);
   return page->value;
 }
 
@@ -136,6 +134,7 @@ char* action_select(package_select* select_info){
 
 char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
+
 //BUSCO O CREO EL SEGMENTO
   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
   printf("Table name: %s\n", segment->name);
@@ -209,7 +208,6 @@ char* action_run(package_run* run_info){
 char* action_metrics(package_metrics* metrics_info){
   log_info(logger, "Se recibio una accion metrics");
 }
-
 
 char* parse_input(char* input){
   return exec_instr(input);

@@ -9,10 +9,10 @@ page_t* create_page(int timestamp, int key, char* value){
 	return page;
 }
 
-page_info_t* create_page_info(){//int dirty_bit){
+page_info_t* create_page_info(int dirty_bit){
   page_info_t* page_info = (page_info_t*)malloc(sizeof(page_info_t));
 	page_info->next = NULL;
-	// page_info->dirty_bit = dirty_bit == 0 ? 0 : 1;
+	page_info->dirty_bit = dirty_bit == 0 ? 0 : 1;
   return page_info;
 }
 
@@ -38,21 +38,43 @@ int find_free_page(){
     // TODO: JOURNALING ATR
 }
 
-/* TODO: capaz conviene hacer que el save_page primero se fije si existe ya una page en ese segmento
-con esa key, y si existe, la modifica y le cambia el dirty bit.
-Estoy pensando en el caso cuando haya varias memorias, si dos threads por alguna razon hacen
-el mismo select, una va a guardarlo en memoria antes que la otra. Si pasa esto vamos a guardar
-dos keys iguales (creo)
-*/
-void save_page(segment_t* segment, page_t* page){//, int dirty_bit){ 
-		page_info_t* page_info = create_page_info();//dirty_bit);
-    int index = find_free_page();
-		if(index == -1){
-			return; // TODO: TIRAR ERROR
+// guarda una pagina en memoria sin dirtybit porque es un select de fs
+void save_page(segment_t* segment, page_t* page){ 
+	page_info_t* page_info = find_page_info(segment, page->key);
+	// si ya existe no hago nada, para modificar una pagina hay que usar el insert_page
+	if(page_info == NULL){
+		save_page_to_memory(segment, page, 0);
+	}
+}
+
+// Agrega una nueva pagina o modifica una a existente siempre con dirtybit
+void insert_page(segment_t* segment, page_t* page){
+	page_info_t* page_info = find_page_info(segment, page->key);
+	// si ya existe la pagina, reemplazo el value y toco el dirtybit
+	if(page_info != NULL){
+		if(page_info->page_ptr->timestamp < page->timestamp){ // si por alguna razon de la vida el timestamp del insert es menor al timestamp que ya tengo en la page, no la modifico
+			memcpy(page_info->page_ptr->value, page->value, sizeof(VALUE_SIZE));
+			page_info->dirty_bit = 1;
 		}
-		page_info->page_ptr = MAIN_MEMORY+index;
-		memcpy(page_info->page_ptr, page, sizeof(page_t));
-		add_page_to_segment(segment, page_info);
+	}
+	// si no existe, creo una nueva con dirtybit (si no tiene dirtybit no se la mando a fs en el journaling)
+	else{
+		save_page_to_memory(segment, page, 1);
+	}
+}
+
+// crea una page_info con o sin dirtybit, se la asigna al segmento, y guarda la pagina en main memory
+void save_page_to_memory(segment_t* segment, page_t* page, int dirty_bit){ 
+	// si no existe la pagina, busco una pagina libre en memoria y le guardo la page
+	page_info_t* page_info = create_page_info(dirty_bit);
+	int index = find_free_page();
+	if(index == -1){
+		return; // TODO: TIRAR ERROR
+	}
+	page_info->page_ptr = MAIN_MEMORY+index;
+	memcpy(page_info->page_ptr, page, sizeof(page_t));
+	add_page_to_segment(segment, page_info);
+	update_LRU(page_info);
 }
 
 segment_t* find_segment(char* table_name){
@@ -66,17 +88,17 @@ segment_t* find_segment(char* table_name){
 	return temp; // si no encontre nada hasta ahora, devuelvo temp que es NULL
 }
 
-page_t* find_page(segment_t* segment, int key){
+page_info_t* find_page_info(segment_t* segment, int key){
 	page_info_t* temp = segment->pages;
 	page_t* page;
 	while(temp != NULL){
-		page = temp->page_ptr;
 		if(temp->page_ptr->key == key){
-			return page;
+			update_LRU(temp);
+			return temp;
 		}
 		temp = temp->next;
 	}
-	return NULL; // si no encontre nada hasta ahora, devuelvo temp que es NULL
+	return temp; // si no encontre nada hasta ahora, devuelvo temp que es NULL
 }
 
 segment_t* find_or_create_segment(char* table_name){
@@ -125,6 +147,58 @@ page_info_t* get_last_page(page_info_t* page_info){
 }
 
 void print_page(page_t* page){
-  printf("timestamp: %d, key:%d, value: %s\n", page->timestamp, page->key, page->value);
-	
+	if(page != NULL){
+  	printf("timestamp: %d, key:%d, value: %s\n", page->timestamp, page->key, page->value);
+	}
+	else {
+		printf("page doesnt exist");
+	}
+}
+
+LRU_TABLE_t* create_LRU_TABLE(){
+	LRU_TABLE_t* lru = (LRU_TABLE_t*)malloc(sizeof(LRU_TABLE_t));
+	lru->current_pages = 0;
+	lru->lru_pages = (page_info_t**)malloc(sizeof(page_info_t*) * NUMBER_OF_PAGES);
+	return lru;
+}
+
+// busca una pagina dentro del LRU TABLE y devuelve su index, sino -1
+int find_page_in_LRU(page_info_t* page_info){
+	page_info_t** lru_page_info;
+	for(int i = 0; i < LRU_TABLE->current_pages; i++){
+		lru_page_info = LRU_TABLE->lru_pages+i;
+		printf("Comparando pages info ptrs: %p vs %p\n", *lru_page_info, page_info);			
+		if(*lru_page_info == page_info){
+			printf("Page found on index: %d\n", i);
+			return i;
+		}
+	}
+	return -1;
+}
+
+void update_LRU(page_info_t* page_info){
+	int index = find_page_in_LRU(page_info);
+	int last_page_index = LRU_TABLE->current_pages-1;
+	printf("Lst page index: %d\n", last_page_index);
+	if(index != -1){ // si ya esta en la tabla, la muevo al final
+		memmove(LRU_TABLE->lru_pages+index, LRU_TABLE->lru_pages+index+1, NUMBER_OF_PAGES-1-index * sizeof(page_info_t*));
+		memcpy(LRU_TABLE->lru_pages+last_page_index, &page_info, sizeof(page_info_t*));
+	}
+	else{ // si no esta en la tabla la agrego
+		page_info_t* temp = page_info;
+		memcpy(LRU_TABLE->lru_pages+last_page_index+1, &temp, sizeof(page_info_t*));
+		LRU_TABLE->current_pages++;
+		printf("LRUTABLE update: adding -%s- to the table\n", page_info->page_ptr->value);
+	}
+	print_LRU_TABLE();
+}
+
+void print_LRU_TABLE(){
+	page_info_t** lru_page_info;
+	printf("Pages in LRU Table (%d): \n", LRU_TABLE->current_pages);
+	for(int i = 0; i < LRU_TABLE->current_pages; i++){
+		lru_page_info = LRU_TABLE->lru_pages+i;
+  	printf("%s ", (*lru_page_info)->page_ptr->value);
+	}
+	printf("\n");
 }
