@@ -6,18 +6,16 @@
 #include "memtable.h"
 #include <errno.h>
 #include "../pharser.h"
+#include <string.h>
 
 //struct table_node* memtable_first = NULL;
 //TODO ACA TIENE QUE USAR SEMAFOTOS
 struct table_node* memtable_p;
 
 void insert_to_memtable(package_insert* insert_info) {
-
-    //Porque tenes copia de los structs???
     
     if (memtable_p == NULL) { //la memtable esta vacia - agrego tabla nueva y cargo la data
         
-        printf("La mem table esta vacia\n");
         
         struct table_node* new_nodo_table;
         new_nodo_table = (struct table_node*)malloc(sizeof(struct table_node));
@@ -38,16 +36,11 @@ void insert_to_memtable(package_insert* insert_info) {
         //agrego la tabla a la memtable
         memtable_p = new_nodo_table;
 
-        /*free(new_nodo_table);
-        free(new_nodo_data);*/ //sensillamente no, es deshacer todo lo que acabas de hacer
-
     } else { //la memtable no esta vacia - busco si existe la tabla
         struct table_node* aux_table;
         aux_table = memtable_p;
-            printf("voy a buscar una tabla\n");
 
         while(aux_table->table_next != NULL) { //si la tabla en la que estoy parado no es
-            printf("encontre una tabla de nombre: %s\n",aux_table->table_name );
             
             if(!strcmp(aux_table->table_name,insert_info->table_name)){
                 break;
@@ -55,17 +48,19 @@ void insert_to_memtable(package_insert* insert_info) {
             aux_table = aux_table->table_next;
 
         }
-            printf("salgo del while: %s\n",aux_table->table_name );
 
         if (!strcmp(aux_table->table_name, insert_info->table_name)) { //Si encontro la tabla - agrego la data ... asi no se comparan strings
             struct data_node* aux_data;
             aux_data = aux_table->data;
-            printf("con los datos:\n");
 
             while (aux_data->data_next != NULL) { //Avanzo hasta el ultimo nodo de data
-                printf("%s\n", aux_data->value);
-                aux_data = aux_data->data_next; //no deberiamos aca descartar los varios  timestamps?
+                aux_data = aux_data->data_next;
                 
+                if(aux_data->key == insert_info->key && aux_data->timestamp < insert_info->timestamp){
+                    aux_data->timestamp = insert_info->timestamp;
+                    aux_data->value = insert_info->value;
+                    return;
+                }
 
             }
             //cargo la data 
@@ -79,7 +74,6 @@ void insert_to_memtable(package_insert* insert_info) {
 
 
         } else { //No encontro la tabla pero llego al final de la memtable - agrego la tabla y la data
-        printf("no encontre la tabla, la inserto al final \n");
 
         struct table_node* new_nodo_table;
         new_nodo_table = (struct table_node*)malloc(sizeof(struct table_node));
@@ -104,4 +98,51 @@ void insert_to_memtable(package_insert* insert_info) {
     }
 
     return;
+}
+
+bool is_data_on_memtable(char* table_name, int key){
+    struct table_node* aux_table;
+    aux_table = memtable_p;
+    while (aux_table!=NULL)
+    {
+        if(!strcmp(aux_table->table_name, table_name)){
+        
+            struct data_node* table_data;
+            table_data = aux_table->data;
+
+            while(table_data!=NULL){
+                if(key == table_data->key) return true;
+                table_data = table_data->data_next;
+            }
+
+        }
+
+        aux_table = aux_table->table_next;
+    }
+    
+    return false;
+}
+
+char* get_value_from_memtable(char* table_name, int key){
+    struct table_node* aux_table;
+    aux_table = memtable_p;
+    while (aux_table!=NULL)
+    {
+        if(!strcmp(aux_table->table_name, table_name)){
+        
+            struct data_node* table_data;
+            table_data = aux_table->data;
+
+            while(table_data!=NULL){
+                if(key == table_data->key) return table_data->value;
+                table_data = table_data->data_next;
+            }
+
+        }
+
+        aux_table = aux_table->table_next;
+    }
+    
+    return false;
+    return "#Error";
 }

@@ -184,7 +184,13 @@ char* action_select(package_select* select_info){
       return "La tabla solicitada no existe.\n";
     }
 
-
+    if(is_data_on_memtable(select_info->table_name, select_info->key)){
+      char* value = get_value_from_memtable(select_info->table_name, select_info->key);
+      char* responce = malloc(strlen(value)+2);
+      strcpy(responce, value);
+      strcat(responce, "\n");
+      return responce;
+    }
     //defino variables a usar
     char* auxpart;
     char* auxkey;
@@ -298,6 +304,10 @@ char* action_select(package_select* select_info){
 
 char* action_insert(package_insert* insert_info){
 
+  if(!does_table_exist(insert_info->table_name)){
+    log_error(logger, "No se puede completar el describe.");
+    return "La tabla no existe.\n";
+  }
   char* table_name = insert_info->table_name;
   char* table_path = malloc(sizeof(table_name)+sizeof(MNT_POINT)+sizeof("Tables/"));
   table_path[0] = '\0';
@@ -308,23 +318,8 @@ char* action_insert(package_insert* insert_info){
 
   log_info(logger, table_path);
 
-  //ya tengamos las tablas guardadas para mayor eficiencia
-  //(preguntar al engine y memtable)(por separado?)
-
-  DIR* dir = opendir(table_path);
-  if (dir) {
-    closedir(dir);
-  } else if (ENOENT == errno) {
-    //directorio no existe
-    log_error(logger, "La tabla indicada no existe");
-    return "";
-  } else {
-    //opendir() fallo por otro motivo
-    log_error(logger, "Error al verificar la existencia de la tabla, fallo opendir()");
-    return "";
-  }
- 
   insert_to_memtable(insert_info);
+ 
   log_debug(logger, "Se inserto el valor en la memtable");
   free(table_path);
 
