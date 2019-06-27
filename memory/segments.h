@@ -17,16 +17,23 @@ typedef struct page_info{
   u_int8_t dirty_bit;
   page_t* page_ptr;
   struct page_info* next;
+  struct page_info* prev;
 }page_info_t;
 
 typedef struct segment{
   char* name;
   page_info_t* pages;
   struct segment* next;
+  struct segment* prev;
 }segment_t;
 
+typedef struct {
+  page_info_t* lru_page;
+  segment_t* segment;
+}lru_page_t;
+
 typedef struct{
-  page_info_t** lru_pages;
+  lru_page_t* lru_pages;
   int current_pages;
 }LRU_TABLE_t;
 
@@ -45,18 +52,25 @@ page_t* create_page(int timestamp, int key, char* value);
 page_info_t* create_page_info();
 segment_t* create_segment(char* table_names);
 page_info_t* find_page_info(segment_t* segment, int key);
-void save_page(segment_t* segment, page_t* page);
-void insert_page(segment_t* segment, page_t* page);
-void save_page_to_memory(segment_t* segment, page_t* page, int dirtybit);
+page_info_t* save_page(segment_t* segment, page_t* page);
+page_info_t* insert_page(segment_t* segment, page_t* page);
+void remove_from_segment(segment_t* segment, page_info_t* page_info);
+page_info_t* save_page_to_memory(segment_t* segment, page_t* page, int dirtybit);
 segment_t* find_segment(char* table_name);
 segment_t* find_or_create_segment(char* table_name);
 int find_free_page();
+void remove_page(lru_page_t* lru_page_info);
 void add_segment_to_table(segment_t* segment);
 void add_page_to_segment(segment_t* segment, page_info_t* page_info);
-segment_t* get_last_segment(segment_t* SEGMENT_TABLE);
+segment_t* get_last_segment();
 page_info_t* get_last_page(page_info_t* page_info);
-void print_page(page_t* page);
+void print_page(page_info_t* page_info);
+void print_segment_table();
+void print_segment_pages(segment_t* segment);
 int find_page_in_LRU(page_info_t* page);
-void update_LRU(page_info_t* page_info);
+void update_LRU(segment_t* segment, page_info_t* page_info);
+void remove_from_LRU(lru_page_t* lru_page_info);
 void print_LRU_TABLE();
+lru_page_t* create_lru_page(segment_t* segment, page_info_t* page_info);
 LRU_TABLE_t* create_LRU_TABLE();
+int is_modified(lru_page_t* page);

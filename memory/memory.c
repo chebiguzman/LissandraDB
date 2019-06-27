@@ -76,24 +76,31 @@ int main(int argc, char const *argv[])
 
   // -------------- PRUEBAS --------------
 
-  segment_t* segment1 = create_segment("tabla1");
+  // segment_t* segment1 = create_segment("tabla1");
+  // segment_t* segment2 = create_segment("tabla2");
+  // page_t* new_page1 = create_page(123, 42, "holis");
+  // page_t* new_page2 = create_page(321, 69, "chau");
 
-  page_t* new_page1 = create_page(123, 42, "holis");
-  page_t* new_page2 = create_page(321, 69, "chau");
+  // segment_t* s1 = find_or_create_segment("tabla1");
+  // page_info_t* page_info1 = save_page(s1, new_page1);
+  // page_info_t* page_info2 = save_page(s1, new_page2);
 
-  segment_t* s1 = find_or_create_segment("tabla1");
-  save_page(s1, new_page1);
-  save_page(s1, new_page2);
+  // update_LRU(s1, page_info1);
+  // print_segment_pages(s1);
 
+  // lru_page_t* lru_page_info1 = LRU_TABLE->lru_pages; 
+  // remove_page(lru_page_info1);
+
+  // print_LRU_TABLE();
+  // print_segment_pages(s1);
 
   // -------------- FIN PRUEBAS --------------
 
 
-  //inicio lectura por consola
+  //inicio lectura por consol
   pthread_t tid_console;
   pthread_create(&tid_console, NULL, console_input, "Memory");
-    
-  
+
   //Espera a que terminen las threads antes de seguir
   pthread_join(tid,NULL);
   
@@ -112,20 +119,21 @@ int main(int argc, char const *argv[])
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
 
-//BUSCO O CREO EL SEGMENTO
+  //BUSCO O CREO EL SEGMENTO
   segment_t* segment = find_or_create_segment(select_info->table_name); // si no existe el segmento lo creo.
   printf("Table name: %s\n", segment->name);
-//SI EXISTE LA PAGINA:
-  page_t* page = find_page(segment, select_info->key);
-  if(page != NULL){
-    printf("Page found in memory-> Key: %d, Value: %s\n", select_info->key, page->value);
-    return page->value;
+  //SI EXISTE LA PAGINA:
+  page_info_t* page_info = find_page_info(segment, select_info->key);
+  if(page_info != NULL){
+    printf("Page found in memory -> Key: %d, Value: %s\n", select_info->key, page_info->page_ptr->value);
+    return page_info->page_ptr->value;
   }
-//SI NO EXISTE LA PAGINA:
+  //SI NO EXISTE LA PAGINA:
   // TODO: mandarle al FS el select request y recibirlo
   page_t* page = create_page(007, select_info->key, "nuevoValueFS"); // TODO: asignarle los values adecuados que vuelven del FS
+  //TODO: ver que pasa si FS no tenia esa key. Me devuelve igual un valor? o directamente tira un error y no vuelve para aca
   save_page(segment, page);
-  printf("Page found in file system-> Key: %d, Value: %s\n", page->key, page->value);
+  printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
   return page->value;
 }
 
@@ -135,22 +143,22 @@ char* action_select(package_select* select_info){
 char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
 
-//BUSCO O CREO EL SEGMENTO
-  segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
-  printf("Table name: %s\n", segment->name);
-//SI EXISTE LA PAGINA:
-  page_t* page = find_page(segment, insert_info->key);
-  if(page != NULL){ //Faltaria && <(insert_info->timestamp > page->timestamp)>??
-    page->timestamp = insert_info->timestamp;
-    page->value = insert_info->value; //TODO: ARREGLAR ESTE PROBLEMA
-    printf("Page edited> Key: %d, Value: %s\n", insert_info->key, page->value);
-    return page; // TODO: Retornar algo correcto
-  }
-//SI NO EXISTE LA PAGINA:
-  page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value); 
-  save_page(segment, page);
-  printf("Page created-> Key: %d, Value: %s\n", page->key, page->value);
-  return page; // TODO: Retornar algo correcto
+// //BUSCO O CREO EL SEGMENTO
+//   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
+//   printf("Table name: %s\n", segment->name);
+// //SI EXISTE LA PAGINA:
+//   page_t* page = find_page(segment, insert_info->key);
+//   if(page != NULL){ //Faltaria && <(insert_info->timestamp > page->timestamp)>??
+//     page->timestamp = insert_info->timestamp;
+//     page->value = insert_info->value; //TODO: ARREGLAR ESTE PROBLEMA
+//     printf("Page edited> Key: %d, Value: %s\n", insert_info->key, page->value);
+//     return page; // TODO: Retornar algo correcto
+//   }
+// //SI NO EXISTE LA PAGINA:
+//   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value); 
+//   save_page(segment, page);
+//   printf("Page created-> Key: %d, Value: %s\n", page->key, page->value);
+//   return page; // TODO: Retornar algo correcto
 }
 
 //en esta funcion se devuelve lo 
