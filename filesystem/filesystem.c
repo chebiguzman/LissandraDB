@@ -270,16 +270,32 @@ char* action_select(package_select* select_info){
   }
   log_info(logger, "hasta aca!");
   log_info(logger, regpart[1].line);
+  //aca comienza lo heavy
+  // regpart[1].line como podes ver por el
+  //log de la linea 272
+  //pose un string con los bloques
+  // por lo que se lo paso a la funcion contar bloques
+  //para saber cuantos bloques hay. guardo ese numero en una varibale
+  // (numero bloques)
   numerobloques=contarbloques(regpart[1].line);
   if(numerobloques==0){
     log_info(logger,"la tabla esta vacia");
     return " ";
   }
+  //si numero bloques es 0 no hay bloques asociados a la tabla
   char* precaucion;
   precaucion= strdup(string_itoa(numerobloques));
   log_info(logger,precaucion);
   int intarray[numerobloques];
+  //aca defino un vector de numeros enteros a medida
+  //ya que tiene tantas posiciones como bloques
+  //el objetivo es guardar en cada posicion de ese vector
+  //un numero de bloque donde debemos buscar
+  //y eso se lo hace con la siguiente funcion
   obtenerbloques(regpart[1].line,intarray);
+  //ya tenemos el array de int lleno con los numero
+  //de bloque
+  
   //vos estas mal de la cabeza jajajaj
   pthread_t buscadores[numerobloques];
   regg regruta[numerobloques];
@@ -291,6 +307,8 @@ char* action_select(package_select* select_info){
   log_info(logger,test3);
   log_info(logger,"hasta aca!");
   log_info(logger,ruta);
+  //chequeo que los numeros de bloque y imprimo por
+  //pantalla
   int sus=0;
   while(sus<numerobloques){
   regruta[sus].line=malloc(100);
@@ -302,6 +320,10 @@ char* action_select(package_select* select_info){
   log_info(logger,regruta[sus].line);
   sus++;
   }
+  //este ciclo arma las rutas para ir a buscar.
+  //regruta seria un vector que en cada posicion
+  //tiene una ruta de un bloque donde debemos buscar
+  //tiene tantas posiciones como cantidad de bloques
   int whilethread=0;
   argumentosthread* parametros [numerobloques];
   while(whilethread<numerobloques){
@@ -311,6 +333,14 @@ char* action_select(package_select* select_info){
   pthread_create(buscadores[whilethread],NULL,buscador,parametros[numerobloques]);
 whilethread++;
   }
+  //este ciclo levanta los threads.
+ //(por eso el vector de threads)
+ //se le pasa una ruta diferente a cada uno
+ //la key que debe buscar y se setea el flag "bolean en 0"
+//esos parametros se los pasa a la funcion buscador
+//que busca en un bloque. en caso de encontrar la row
+//modifica el parametro value del struct que se le pasa
+//y setea el flag bolean en 1 indicando que ese thread lo encontro
   int whileparametro=0;
   while(whileparametro<numerobloques){
     if(parametros[whileparametro]->bolean){
@@ -318,7 +348,14 @@ whilethread++;
     }
     whileparametro++;
   }
+  //aca se recorre el vector de struc buscando algun flag en 1
+  //en caso de encontrar uno seteado en 1 retorna el parametro "value"
+  //de ese thread. si niguno tiene el flag bolean en 1
+  //no se encontro una row en dicha key en ninguno de los
+  //bloques asociados a esa tabla.
   return "key no encontrada";
+  //falta atender los memory leaks, en especial los de los thread.
+
 
 }
 
