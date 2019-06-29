@@ -27,7 +27,16 @@ t_log* logger;
 
 //crear memtable
 char* MNT_POINT;
-void buscador(char* ruta,int key, char* retorno, char* row);
+typedef struct {
+  char* ruta;
+  int key;
+  char* retorno;
+  char* row;
+  char value [100];
+  int bolean;
+}argumentosthread;
+void obtengovalue(char* row, char* value);
+void* buscador(void* args);
 char *strdups(const char *src);
 int contarbloques(char*);
 void vaciarvector(char* puntero);
@@ -262,6 +271,10 @@ char* action_select(package_select* select_info){
   log_info(logger, "hasta aca!");
   log_info(logger, regpart[1].line);
   numerobloques=contarbloques(regpart[1].line);
+  if(numerobloques==0){
+    log_info(logger,"la tabla esta vacia");
+    return " ";
+  }
   char* precaucion;
   precaucion= strdup(string_itoa(numerobloques));
   log_info(logger,precaucion);
@@ -289,9 +302,23 @@ char* action_select(package_select* select_info){
   log_info(logger,regruta[sus].line);
   sus++;
   }
-
-
-  return "no?";
+  int whilethread=0;
+  argumentosthread* parametros [numerobloques];
+  while(whilethread<numerobloques){
+  parametros[whilethread]->bolean=0;
+  parametros[whilethread]->ruta=strdup(regruta[whilethread].line);
+  parametros[whilethread]->key=select_info->key;
+  pthread_create(buscadores[whilethread],NULL,buscador,parametros[numerobloques]);
+whilethread++;
+  }
+  int whileparametro=0;
+  while(whileparametro<numerobloques){
+    if(parametros[whileparametro]->bolean){
+      return parametros[whileparametro]->value;
+    }
+    whileparametro++;
+  }
+  return "key no encontrada";
 
 }
 
@@ -420,6 +447,9 @@ cantidadbloques++;
 }
 pos++;
 }
+if(pointer1[8]==']'){
+  return 0;
+}
 cantidadbloques++;
 return cantidadbloques;
 }
@@ -461,25 +491,29 @@ void vaciarvector(char* puntero){
 return;
 }
 
-void buscador(char* ruta,int key, char* retorno, char* row){
+void * buscador(void* args){
+argumentosthread* parametros;
+parametros= args;
 FILE* bloque=NULL;
-bloque=fopen(ruta,"r+");
+bloque=fopen(parametros->ruta,"r+");
 if(bloque==NULL){
   log_info(logger,"no se encontro el bloque en");
-  log_info(logger,ruta);
+  log_info(logger,parametros->ruta);
   return;
 }
 char buffer[100];
-vaciadobuffer(retorno);
+vaciadobuffer(parametros->retorno);
 while(!feof(bloque)){
    fgets(buffer,100,bloque);
-    char* row= strdup(buffer);
-cortador(buffer,retorno);
-if(key==atoi(retorno)){
+    parametros->row= strdup(buffer);
+cortador(buffer,parametros->retorno);
+if(parametros->key==atoi(parametros->retorno)){
+  obtengovalue(parametros->row,parametros->value);
     log_info(logger,"encontrada");
+    parametros->bolean=1;
     return;
 }
-vaciadobuffer(retorno);
+vaciadobuffer(parametros->retorno);
 }
 log_info(logger, "no es este bloque");
 return;
@@ -488,15 +522,40 @@ return;
 void cortador(char* cortado, char* auxkey){
 int i=0;
 int j=0;
-while(cortado[i]!=' ' &&cortado[i]!='\n'){
+while(cortado[i]!=' ' && cortado[i]!='\n'){
       i++;
       }
 i++;
 
-while(cortado[i]!=' ' && cortado[i]!='&'){
+while(cortado[i]!=' ' && cortado[i]!='\n'){
      auxkey[j]=cortado[i];
      i++;
      j++;
       }
 return;
 }
+
+void obtengovalue(char* row, char* value){
+  int largo=strlen(row);
+    int i= 0;
+    int j= 0;
+    int veces=0;
+    while(row[i]!=' ' && row[i]!='\n'){
+        i++;
+    }
+    i++;
+while(row[i]!=' ' && row[i]!='\n'){
+        i++;
+}
+i++;
+int colocar= largo - i;
+while(i<largo){
+        value[j]=row[i];
+  i++;
+  j++;
+  }
+value[colocar]='\0';
+return;
+}
+
+
