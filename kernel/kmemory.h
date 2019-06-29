@@ -1,7 +1,8 @@
 #include <pthread.h>
 #include <commons/log.h>
 #include <stdlib.h>
-
+#ifndef kmemory.h
+#define kmemory.h
 typedef enum {
     S_CONSISTENCY,
     H_CONSISTENCY,
@@ -40,3 +41,5 @@ int get_hc_memory(char* table_name);
 int get_memory();
 
 int hash(char* string);
+
+#endif kmemory.h
