@@ -10,10 +10,7 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
-
-
 #include "../console.h"
-
 #include "engine.h"
 #include <dirent.h>
 #include <errno.h>
@@ -21,24 +18,12 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "filesystem.h"
-
+#include <pthread.h>
 //punto de entrada para el programa y el kernel
 t_log* logger;
 
-//crear memtable
-char* MNT_POINT;
-void buscador(char* ruta,int key, char* retorno, char* row);
-char *strdups(const char *src);
-int contarbloques(char*);
-void vaciarvector(char* puntero);
-void leerarchivo(FILE* metadata, regg* regmetadata);
-void obtenerbloques(char* pointer1, int* pointer2);
-void vaciadobuffer(char* buffer);
-void cortador(char* cortado, char* auxkey);
-
-int main(int argc, char const *argv[])
-{
-  
+int main(int argc, char const *argv[]){
+    
     //las estructuras se van al .h para que quede mas limpio
     //set up confg
     t_config* config = config_create("config");
@@ -50,18 +35,14 @@ int main(int argc, char const *argv[])
     logger = log_create(LOGPATH, "Filesystem", 1, LOG_LEVEL_INFO);
 
     engine_start(logger);
-    enginet_create_table("tabla sc con nombre largo", S_CONSISTENCY, 7, 25555555);
-    enginet_create_table("a145", H_CONSISTENCY, 4, 25555555);
-    enginet_create_table("tabla4", ANY_CONSISTENCY, 26, 8000000);
-
-    
+        
     //set up server
     server_info* serverInfo = malloc(sizeof(server_info));
     serverInfo->logger = logger;
     serverInfo->portNumber = PORT;
     pthread_t tid;
     pthread_create(&tid, NULL, create_server, (void*) serverInfo);
-
+ 
     /*fs_structure_info->logger = logger;
     pthread_t tid_fs_structure;
     no hay necesidad de un thread aca
@@ -87,218 +68,94 @@ int main(int argc, char const *argv[])
 
 //IMPLEMENTACION DE ACCIONES (Devolver error fuera del subconjunto)
 
-int tables_count() {
-  
-  //defino el punto de partida para recorrer las tablas
-  char *path_table = strdup("");
-  strcat(path_table,MNT_POINT);
-  strcat(path_table,"Tables/");
-
-  int dir_count = 0;
-  struct dirent* dent;
-  DIR* srcdir = opendir(path_table); //abro el directorio /Tables
-
-  if(srcdir == NULL) {
-    log_error(logger, "No se pudo abrir el directorio /Tables");
-  }
-  while((dent = readdir(srcdir)) != NULL) { //mientras el directorio no este vacio
-    struct stat st;
-    if(strcmp(dent->d_name, ".") == 0 || strcmp(dent->d_name, "..") == 0) {
-      continue;
-    }
-    if(fstatat(dirfd(srcdir), dent->d_name, &st, 0) < 0) {
-      log_error(logger, dent->d_name);
-      continue;
-    }
-    if(S_ISDIR(st.st_mode)) {
-      dir_count++;
-      //log_info(logger,dent->d_name);
-    }
-  }
-  closedir(srcdir);
-
-  return dir_count;
-}
-
-char** tables_names(){
-  int tables_cant = tables_count();
-  char** names = malloc(tables_cant * sizeof(char *));
-
-  //aloco memoria para cada nombre de tabla
-  int i;
-  for (i=0; i<tables_cant; i++) {
-    names[i] = (char *) malloc(256);
-  }
-  
-  //cargo todos los nombres
-  
-  //defino el punto de partida para recorrer las tablas
-  char path_table[300];
-  path_table[0] = '\0';
-  strcat(path_table,MNT_POINT);
-  strcat(path_table,"Tables/");
-
-  int j = 0;
-  struct dirent* dent;
-  DIR* srcdir = opendir(path_table); //abro el directorio /Tables
-
-  if(srcdir == NULL) {
-    log_error(logger, "No se pudo abrir el directorio /Tables");
-  }
-  while((dent = readdir(srcdir)) != NULL) { //mientras el directorio no este vacio
-    struct stat st;
-    if(strcmp(dent->d_name, ".") == 0 || strcmp(dent->d_name, "..") == 0) {
-      continue;
-    }
-    if(fstatat(dirfd(srcdir), dent->d_name, &st, 0) < 0) {
-      log_error(logger, dent->d_name);
-      continue;
-    }
-    if(S_ISDIR(st.st_mode)) {
-      names[j] = dent->d_name;
-      j++;
-      //log_info(logger,dent->d_name);
-    }
-  }
-  closedir(srcdir);
-
-  //retorno el resultado
-  return names;
-
-  //libero todos los punteros
-  for (i=0; i<tables_cant; i++) {
-    free(names[i]);
-  }
-  free(names);
-}
-
-//ruta correcta pero no abre la metadata
 char* action_select(package_select* select_info){
-    log_info(logger, "Se recibio una accion select");
-    //te juro que lo intente pero no se que haces aca
-    //la idea del engine es no tener que levantar el punto de montaje por
-    //cada select. al ser de alta disponibilidad no tendria que detenerse nunca a mirar
-    //en que bloque esta
+  log_info(logger, "Se recibio una accion select");
 
-    if(!does_table_exist(select_info->table_name)){
-      return "La tabla solicitada no existe.\n";
-    }
 
-    if(is_data_on_memtable(select_info->table_name, select_info->key)){
-      char* value = get_value_from_memtable(select_info->table_name, select_info->key);
-      char* responce = malloc(strlen(value)+2);
-      strcpy(responce, value);
-      strcat(responce, "\n");
-      return responce;
-    }
-    //defino variables a usar
-    char* auxpart;
-    char* auxkey;
-    char* row;
-    FILE* table=NULL;
-    FILE* metadata=NULL;
-    regg regmetadata[2];
-    regg regpart[3];
-    int numerobloques;
-    int contador= 0;
-    int contador2=0;
-    int cont=0;
-    int finded=0;
-    //construyo la ruta para abrir el archivo metadata
-    char* ruta = "MountTest/";
-    char* rutaa= "MountTest/Tables/";//punto de montaje dudoso, arreglar
-    int total= strlen(rutaa)+strlen(select_info->table_name)+13;
-    char* finalmetadata=malloc(100);
-    strcpy(finalmetadata,rutaa);
-    char* nombre=strdup(select_info->table_name);
-    strcat(finalmetadata,nombre);
-    strcat(finalmetadata,"/metadata");
-    //imprimo la ruta por pantalla
-    log_info(logger,finalmetadata);
-    metadata=fopen(finalmetadata,"r+");
+  if(!does_table_exist(select_info->table_name)){
+    return "La tabla solicitada no existe.\n";
+  }
 
-    //No se toma el hecho de que no lo encuentre
-    //xq no puede pasar
-    /*if(metadata==NULL){
-      log_info(logger,"no se encontro la metadata");
-      return "metadata no encontrada";
-    }*/
-  log_info(logger,"se encontro la metadata!");
-  //ACA ESTA LA METADATA!!!!!!!!!!!!!!
   t_table_metadata* meta = get_table_metadata(select_info->table_name);
 
-  char charcito[100];
-  while(!feof(metadata)){
-  fgets(charcito,100,metadata);
-  regmetadata[contador].line=strdups(charcito);
-  contador++;
+  //nro particion
+  int table_partition_number = select_info->key % meta->partition_number ;
+
+  t_table_partiton* partition = get_table_partition(select_info->table_name, table_partition_number);
+
+  
+  int block_amount = 0;
+  char* first_block = partition->blocks[0];
+  while(*partition->blocks){
+    block_amount++;
+    *partition->blocks++;
   }
-  fclose(metadata);
-  int partition=meta->partition_number;
-  char* check1=strdup(string_itoa(partition));
-  char* check2=strdup(string_itoa(select_info->key));
-  log_info(logger,check1);
-  log_info(logger,check2);
-  int part= select_info->key % meta->partition_number ;
-  log_info(logger, "aca llega");
-  auxkey=strdups(string_itoa(part));
-  log_info(logger,auxkey);
-  int totalen= strlen(rutaa)+strlen(nombre)+1 +strlen(auxkey)+5;
-  char* final=malloc(100);
-    strcpy(final,rutaa);
-    strcat(final,nombre);
-    strcat(final,"/");
-    log_info(logger,"memoria malockeada");
-    auxpart=strdups(string_itoa(part));
-    strcat(final,auxpart);
-    strcat(final,".part");
-    table=fopen(final,"r+");
-    if(table==NULL){
-      log_info(logger,final);
-      return "tabla no encontrada";
-    }
+  *partition->blocks = first_block;
+
+   if(block_amount==0)return "Key invalida\n";
+  
+  pthread_t buscadores[block_amount];
+  regg regruta[block_amount];
+
+  int i = 0;
+  while(i<block_amount){
+    regruta[i].line=malloc(100);
+    strcpy(regruta[i].line,"MountTest/");
+    strcat(regruta[i].line,"Bloques/");
+    strcat(regruta[i].line,partition->blocks[i]);
+
+    strcat(regruta[i].line,".bin");
     
-    log_info(logger,"particion encontrada");
-  char* charcito2= malloc(100);
-  while(!feof(table)){
-    fgets(charcito2,100,table);
-    regpart[contador2].line=strdups(charcito2);
-    contador2++;
-  }
-  log_info(logger, "hasta aca!");
-  log_info(logger, regpart[1].line);
-  numerobloques=contarbloques(regpart[1].line);
-  char* precaucion;
-  precaucion= strdup(string_itoa(numerobloques));
-  log_info(logger,precaucion);
-  int intarray[numerobloques];
-  obtenerbloques(regpart[1].line,intarray);
-  //vos estas mal de la cabeza jajajaj
-  pthread_t buscadores[numerobloques];
-  regg regruta[numerobloques];
-  char* test1=strdup(string_itoa(intarray[0]));
-  char* test2=strdup(string_itoa(intarray[1]));
-  char* test3=strdup(string_itoa(intarray[2]));
-  log_info(logger,test1);
-  log_info(logger,test2);
-  log_info(logger,test3);
-  log_info(logger,"hasta aca!");
-  log_info(logger,ruta);
-  int sus=0;
-  while(sus<numerobloques){
-  regruta[sus].line=malloc(100);
-  strcpy(regruta[sus].line,ruta);
-  strcat(regruta[sus].line,"Bloques/");
-  char* auxb=strdup(string_itoa(intarray[sus]));
-  strcat(regruta[sus].line,auxb);
-  strcat(regruta[sus].line,".part");
-  log_info(logger,regruta[sus].line);
-  sus++;
+    log_info(logger,regruta[i].line);
+    i++;
   }
 
 
-  return "no?";
+  pthread_mutex_t lock;
+  pthread_cond_t cond;
+  pthread_mutex_init(&lock, NULL);
+  pthread_cond_init(&cond, NULL);
 
+  int whilethread=0;
+  argumentosthread* parametros [block_amount];
+  int* number_of_threads = malloc(sizeof(int));
+  *number_of_threads = block_amount;
+
+  while(whilethread<block_amount){
+    argumentosthread* args = malloc(sizeof(argumentosthread));
+    args->bolean=0;
+    args->ruta = strdup(regruta[whilethread].line);
+    args->key=select_info->key;
+    args->cond = &cond;
+    args->lock = lock;
+    args->number_of_running_threads = number_of_threads;
+    parametros[whilethread] = args;
+    pthread_create(&buscadores[whilethread],NULL,buscador,args);
+    pthread_detach(buscadores[whilethread]);
+    whilethread++;
+  }
+
+  pthread_mutex_lock(&lock);
+  pthread_cond_wait(&cond, &lock);
+  int whileparametro=0;
+  while(whileparametro<block_amount){
+    if(parametros[whileparametro]->bolean){
+      char* r = malloc( strlen(parametros[whileparametro]->value) + 2);
+      strcpy(r, parametros[whileparametro]->value);
+      strcat(r, "\n");
+      return r;
+    }
+    whileparametro++;
+  }
+
+  pthread_mutex_destroy(&lock);
+  pthread_cond_destroy(&cond);
+
+  return "Key invalida\n";
+  //falta atender los memory leaks, en especial los de los thread.
+
+
+return "";
 }
 
 
@@ -370,7 +227,12 @@ char* action_describe(package_describe* describe_info){
 }
 
 char* action_drop(package_drop* drop_info){
-  log_info(logger, "Se recibio una accion drop");
+
+  if(!does_table_exist(drop_info->table_name)){
+    return "La tabla solicitada no existe.\n";
+  }
+  engine_drop_table(drop_info->table_name);
+
   return "";
 }
 
@@ -406,47 +268,6 @@ char *strdups(const char *src) {
     strcpy(dst, src);                     
     return dst; 
 }
-int contarbloques(char* pointer1){
-int pos=8;
-int cantidadbloques=0;
-while(pointer1[pos]!=']'){
-if(pointer1[pos]==','){
-cantidadbloques++;
-}
-pos++;
-}
-cantidadbloques++;
-return cantidadbloques;
-}
-
-void obtenerbloques(char* pointer1, int* pointer2){
-int pos=8;
-int i=0;
-char buffer[5];
-int vec= 0;
-while(pointer1[pos]!=']'){
-if(pointer1[pos]==','){
-pos++;
-}
-while(pointer1[pos]!=',' && pointer1[pos]!=']') {
-buffer[i]= pointer1[pos];
-i++;
-pos++;
-}
-pointer2[vec]=atoi(buffer);
-vec++;
-i=0;
-vaciadobuffer(buffer);
-}
-return;
-}
-
-void vaciadobuffer(char* buffer){
-for(int i=0;i<5;i++){
-buffer[i]='\0';
-}
-return;
-}
 
 
 void vaciarvector(char* puntero){
@@ -456,42 +277,89 @@ void vaciarvector(char* puntero){
 return;
 }
 
-void buscador(char* ruta,int key, char* retorno, char* row){
-FILE* bloque=NULL;
-bloque=fopen(ruta,"r+");
-if(bloque==NULL){
-  log_info(logger,"no se encontro el bloque en");
-  log_info(logger,ruta);
-  return;
-}
-char buffer[100];
-vaciadobuffer(retorno);
-while(!feof(bloque)){
-   fgets(buffer,100,bloque);
-    char* row= strdup(buffer);
-cortador(buffer,retorno);
-if(key==atoi(retorno)){
-    log_info(logger,"encontrada");
-    return;
-}
-vaciadobuffer(retorno);
-}
-log_info(logger, "no es este bloque");
-return;
+void* buscador(void* args){
+  argumentosthread* parametros;
+  parametros= (argumentosthread*) args;
+  FILE* bloque=NULL;
+
+  void kill_thread(){
+    pthread_mutex_lock(&parametros->lock);
+    parametros->number_of_running_threads--;
+    int amount = *parametros->number_of_running_threads;
+    pthread_mutex_unlock(&parametros->lock);
+    if(amount==0) pthread_cond_broadcast(parametros->cond);
+  }
+
+  bloque=fopen(parametros->ruta,"r+");
+  if(bloque==NULL){
+    log_error(logger,"El sistema de bloques de archivos presenta una inconcistencia en el bloque:");
+    log_error(logger,parametros->ruta);
+    log_error(logger, "el archivo no existe.");
+    kill_thread();
+  
+    return NULL;
+  }
+
+  char buffer[100];
+  parametros->retorno = strdup("");
+  while(!feof(bloque)){
+    fgets(buffer,100,bloque);
+    parametros->row= strdup(buffer);
+    //devuelve key
+
+    cortador(buffer,parametros->retorno);
+    if(parametros->key==atoi(parametros->retorno)){
+      obtengovalue(parametros->row,parametros->value);
+      parametros->bolean=1;
+      pthread_cond_broadcast(parametros->cond);
+      fclose(bloque);
+      return NULL;
+    }
+    parametros->retorno = strdup("");
+  }
+  kill_thread();
+
+  fclose(bloque);
+  return NULL;
 }
 
 void cortador(char* cortado, char* auxkey){
 int i=0;
 int j=0;
-while(cortado[i]!=' ' &&cortado[i]!='\n'){
+while(cortado[i]!=';' && cortado[i]!='\n'){
       i++;
       }
 i++;
 
-while(cortado[i]!=' ' && cortado[i]!='&'){
+while(cortado[i]!=';' && cortado[i]!='\n'){
      auxkey[j]=cortado[i];
      i++;
      j++;
       }
 return;
 }
+
+void obtengovalue(char* row, char* value){
+  int largo=strlen(row);
+    int i= 0;
+    int j= 0;
+    int veces=0;
+    while(row[i]!=';' && row[i]!='\n'){
+        i++;
+    }
+    i++;
+while(row[i]!=';' && row[i]!='\n'){
+        i++;
+}
+i++;
+int colocar= largo - i;
+while(i<largo){
+        value[j]=row[i];
+  i++;
+  j++;
+  }
+value[colocar]='\0';
+return;
+}
+
+

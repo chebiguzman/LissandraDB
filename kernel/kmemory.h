@@ -4,6 +4,9 @@
 #include <pthread.h>
 #include <commons/log.h>
 #include <stdlib.h>
+#ifndef KMEMORY_H
+#define KMEMORY_H
+
 
 typedef enum {
     S_CONSISTENCY,
@@ -44,4 +47,5 @@ int get_memory();
 
 int hash(char* string);
 
-#endif /* KMEMORY_H_ */
+#endif /* KMEMORY_H */
+
