@@ -215,6 +215,15 @@ char* exec_instr(char* instr_buff){
         return r;
     }
 
+    if(!strcmp(instruction, "DROP")){
+        if(parameters_length != 2) return "Numero de parametros incorrecto";
+
+        package_drop* package = malloc(sizeof(package_drop));
+        package->table_name = parameters[1];
+
+
+        return action_drop(package);
+    }
 
     char* error_message = strdup("no es una instruccion valida\n");
     return error_message;
