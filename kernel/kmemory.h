@@ -1,11 +1,10 @@
-#ifndef KMEMORY_H_
-#define KMEMORY_H_
+#ifndef KMEMORY_H
+#define KMEMORY_H
 
 #include <pthread.h>
 #include <commons/log.h>
 #include <stdlib.h>
-#ifndef KMEMORY_H
-#define KMEMORY_H
+
 
 
 typedef enum {
