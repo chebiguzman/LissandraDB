@@ -1,5 +1,7 @@
 #include "engine.h"
-
+ #include <sys/types.h>
+       #include <sys/stat.h>
+       #include <fts.h>
 #define BLOCK_SIZE_DEFAULT 128
 #define BLOCKS_AMOUNT_DEFAULT 12
 char* MNT_POINT;
@@ -24,7 +26,82 @@ void check_or_create_dir(char* path){
     }
  
 }
- 
+
+void check_or_create_file(char* path){
+    FILE* file = fopen(path,"r");
+    if(file==NULL){
+        file = fopen(path,"w");
+        log_info(logg, "se crea: %s", path);
+    }
+
+    fclose(file);
+}
+
+int recursive_delete(const char *dir){
+    int ret = 0;
+    FTS *ftsp = NULL;
+    FTSENT *curr;
+
+    // Cast needed (in C) because fts_open() takes a "char * const *", instead
+    // of a "const char * const *", which is only allowed in C++. fts_open()
+    // does not modify the argument.
+    char *files[] = { (char *) dir, NULL };
+
+    // FTS_NOCHDIR  - Avoid changing cwd, which could cause unexpected behavior
+    //                in multithreaded programs
+    // FTS_PHYSICAL - Don't follow symlinks. Prevents deletion of files outside
+    //                of the specified directory
+    // FTS_XDEV     - Don't cross filesystem boundaries
+    ftsp = fts_open(files, FTS_NOCHDIR | FTS_PHYSICAL | FTS_XDEV, NULL);
+    if (!ftsp) {
+        fprintf(stderr, "%s: fts_open failed: %s\n", dir, strerror(errno));
+        ret = -1;
+        goto finish;
+    }
+
+    while ((curr = fts_read(ftsp))) {
+        switch (curr->fts_info) {
+        case FTS_NS:
+        case FTS_DNR:
+        case FTS_ERR:
+            fprintf(stderr, "%s: fts_read error: %s\n",
+                    curr->fts_accpath, strerror(curr->fts_errno));
+            break;
+
+        case FTS_DC:
+        case FTS_DOT:
+        case FTS_NSOK:
+            // Not reached unless FTS_LOGICAL, FTS_SEEDOT, or FTS_NOSTAT were
+            // passed to fts_open()
+            break;
+
+        case FTS_D:
+            // Do nothing. Need depth-first search, so directories are deleted
+            // in FTS_DP
+            break;
+
+        case FTS_DP:
+        case FTS_F:
+        case FTS_SL:
+        case FTS_SLNONE:
+        case FTS_DEFAULT:
+            if (remove(curr->fts_accpath) < 0) {
+                fprintf(stderr, "%s: Failed to remove: %s\n",
+                        curr->fts_path, strerror(errno));
+                ret = -1;
+            }
+            break;
+        }
+    }
+
+    finish:
+        if (ftsp) {
+            fts_close(ftsp);
+        }
+
+        return ret;
+}
+
 void engine_start(t_log* logger){
 
     logg = logger;
@@ -97,6 +174,19 @@ void engine_start(t_log* logger){
  
         fclose(meta);
  
+    }
+
+    
+    t_config* meta_config = config_create(meta_path);
+    int block_amount = config_get_int_value(meta_config, "BLOCKS");
+
+    for(int i = 0; i < block_amount;i++){
+        char* p = malloc(strlen(blocks_path)+strlen(string_itoa(block_amount))+5);
+        strcpy(p, blocks_path);
+        strcat(p, string_itoa(i));
+        strcat(p, ".bin");
+        check_or_create_file(p);
+        free(p);
     }
  
     DIR* tables_dir = opendir(tables_path);
@@ -236,6 +326,22 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
 
 }
 
+void engine_drop_table(char* table_name){
+    char* q = strdup(table_name);
+    string_to_upper(q);
+    bool findTableByName(void* t){
+        if(!strcmp(q, (char*) t)) return true;
+        return false;
+    }
+
+    list_remove_by_condition(tables_upper_name,findTableByName);
+    char* path = malloc(strlen(tables_path) + strlen(table_name) + 5);
+    strcpy(path, tables_path);
+    strcat(path, table_name);
+    recursive_delete(path);
+
+}
+
 char* get_table_metadata_as_string(char* table_name){
 
     char* table_path = malloc( strlen(table_name) + strlen(tables_path) + strlen("/metadata") +1);
@@ -283,6 +389,27 @@ char* get_all_tables_metadata_as_string(){
     return result;
 }
 
+t_table_partiton* get_table_partition(char* table_name, int table_partition_number){
+    char* partition_name = strdup(string_itoa(table_partition_number));
+    char* partition_path =malloc(strlen(tables_path) + strlen(table_name) + 1 + strlen(partition_name)+ strlen(".part") + 5);
+    strcpy(partition_path ,tables_path);
+
+    strcat(partition_path,table_name);
+    strcat(partition_path,"/");
+    strcat(partition_path, partition_name);
+    strcat(partition_path, ".part");
+
+    t_table_partiton* parition = malloc(sizeof(t_table_partiton));
+    t_config* c = config_create(partition_path);
+    printf("assasd %s\n", partition_path);
+
+    parition->blocks_size = config_get_long_value(c, "SIZE");
+
+    parition->blocks = config_get_array_value(c, "BLOCKS");
+
+    return parition;
+}
+
 t_table_metadata* get_table_metadata(char* table_name){
     t_table_metadata* meta = malloc(sizeof(t_table_metadata));
     char* meta_path = malloc(strlen(tables_path) + strlen(table_name) + strlen("/metadata") + 1);
@@ -291,7 +418,7 @@ t_table_metadata* get_table_metadata(char* table_name){
     strcat(meta_path, "/metadata");
 
     log_info(logg, meta_path);
-
+    
     t_config* c = config_create(meta_path);
     meta->consistency = config_get_int_value(c, "CONSISTENCY");
     meta->partition_number = config_get_int_value(c, "PARTICIONES");
