@@ -81,7 +81,7 @@ char* exec_instr(char* instr_buff){
         //KEY
         package->key = atoi(parameters[2]);
 
-        printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name,package->key);
+        //printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name,package->key);
         char* responce = action_select(package);
         return responce;
     }
@@ -102,7 +102,7 @@ char* exec_instr(char* instr_buff){
 
 
     if(!strcmp(instruction,"INSERT")){
-        if(parameters_length != 4 && parameters_length != 3) return "Numero de parametros incorrectos\n";
+        if(parameters_length != 4 && parameters_length != 5) return "Numero de parametros incorrectos\n";
 
         package_insert* package = malloc(sizeof(package_insert));
         package->instruction = parameters[0];
@@ -124,7 +124,7 @@ char* exec_instr(char* instr_buff){
             package->timestamp = time(NULL);
         }
 
-        printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n Value: %s\n Timestamp: %lu\n", package->instruction, package->table_name, package->key, package->value, package->timestamp);
+       // printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n Value: %s\n Timestamp: %lu\n", package->instruction, package->table_name, package->key, package->value, package->timestamp);
         char* responce = action_insert(package);
         return responce;
     }
@@ -158,7 +158,7 @@ char* exec_instr(char* instr_buff){
         
         package->compactation_time = atoi(parameters[4]);
 
-        printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n cons: %d\n particiones: %d\n comp: %lu\n", package->instruction, package->table_name, package->consistency, package->partition_number, package->compactation_time);
+        //printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n cons: %d\n particiones: %d\n comp: %lu\n", package->instruction, package->table_name, package->consistency, package->partition_number, package->compactation_time);
         char* responce = action_create(package);
         return responce;
     }
