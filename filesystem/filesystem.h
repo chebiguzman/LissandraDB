@@ -4,10 +4,10 @@ typedef struct{
     } regg;
 
 
-    typedef struct{
-      int keey;
-      char value [20];
-    } readrow;
+typedef struct{
+  int keey;
+  char value [20];
+} readrow;
 
 typedef struct {
   char* ruta;
