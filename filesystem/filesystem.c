@@ -154,8 +154,6 @@ char* action_select(package_select* select_info){
   return "Key invalida\n";
   //falta atender los memory leaks, en especial los de los thread.
 
-
-return "";
 }
 
 
