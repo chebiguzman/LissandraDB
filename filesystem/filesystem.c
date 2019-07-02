@@ -156,7 +156,6 @@ char* action_select(package_select* select_info){
 
 }
 
-
 char* action_insert(package_insert* insert_info){
 
   if(!does_table_exist(insert_info->table_name)){
@@ -170,8 +169,6 @@ char* action_insert(package_insert* insert_info){
   strcat(table_path ,MNT_POINT);
   strcat(table_path ,"Tables/");
   strcat(table_path ,table_name);
-
-  log_info(logger, table_path);
 
   insert_to_memtable(insert_info);
  
@@ -236,6 +233,7 @@ char* action_drop(package_drop* drop_info){
 
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
+  
   return "";
 }
 
@@ -246,6 +244,8 @@ char* action_add(package_add* add_info){
 
 char* action_run(package_run* run_info){
   log_info(logger, "Se recibio una accion run");
+  dump_memtable();
+  return "";
 }
 
 char* action_metrics(package_metrics* metrics_info){
