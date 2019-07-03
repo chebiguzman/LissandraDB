@@ -6,7 +6,6 @@
 #define BLOCKS_AMOUNT_DEFAULT 12
 char* MNT_POINT;
 t_log* logg;
-t_list* tables_upper_name;
 t_list* tables_name;
 char* tables_path;
 DIR* root;
@@ -191,7 +190,6 @@ void engine_start(t_log* logger){
  
     DIR* tables_dir = opendir(tables_path);
     tables_name = list_create();
-    tables_upper_name = list_create();
 
     struct dirent *entry;
      while ((entry = readdir(tables_dir)) != NULL) {
@@ -203,7 +201,6 @@ void engine_start(t_log* logger){
             list_add(tables_name, name);
             string_to_upper(entry->d_name);
             log_info(logg, entry->d_name);
-            list_add(tables_upper_name,entry->d_name );
          }
      }
  
@@ -215,11 +212,17 @@ int does_table_exist(char* table_name){
     string_to_upper(q);
 
     bool findTableByName(void* t){
-        if(!strcmp(q, (char*) t)) return true;
+        char* cmp = strdup((char*) t);
+        string_to_upper(cmp);
+        if(!strcmp(q, cmp)){
+            free(cmp);
+            return true;
+        } 
+        free(cmp); 
         return false;
     }
 
-    char* t = list_find(tables_upper_name,findTableByName);
+    char* t = list_find(tables_name,findTableByName);
     free(q);
     if(t == NULL){
         return 0;
@@ -316,7 +319,6 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     list_add(tables_name, table_name);
     char* copy = strdup(table_name);
     string_to_upper(copy);
-    list_add(tables_upper_name, copy);
 
     fclose(metadata); 
     free(path_dir);
@@ -329,12 +331,19 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
 void engine_drop_table(char* table_name){
     char* q = strdup(table_name);
     string_to_upper(q);
+
     bool findTableByName(void* t){
-        if(!strcmp(q, (char*) t)) return true;
+        char* cmp = strdup((char*) t);
+        string_to_upper(cmp);
+        if(!strcmp(q, cmp)){
+            free(cmp);
+            return true;
+        } 
+        free(cmp); 
         return false;
     }
 
-    list_remove_by_condition(tables_upper_name,findTableByName);
+    list_remove_by_condition(tables_name,findTableByName);
     char* path = malloc(strlen(tables_path) + strlen(table_name) + 5);
     strcpy(path, tables_path);
     strcat(path, table_name);
@@ -430,4 +439,10 @@ t_table_metadata* get_table_metadata(char* table_name){
 
 
     return meta;
+}
+
+void dump_to_table(char* table_name, char* dump){
+    if(!does_table_exist(table_name)) return;
+
+
 }
