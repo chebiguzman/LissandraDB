@@ -185,7 +185,7 @@ char* action_create(package_create* create_info){
   if(does_table_exist(create_info->table_name)){
     char* err = "Fallo la creacion de una tabla.\n";
     log_error(logger, err);
-    return "La tabla ya existe";
+    return "La tabla ya existe\n";
   }
 
   enginet_create_table(create_info->table_name, create_info->consistency, create_info->partition_number, create_info->compactation_time);
