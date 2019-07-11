@@ -48,6 +48,11 @@ int main(int argc, char const *argv[]){
     no hay necesidad de un thread aca
     //pthread_create(&tid_fs_structure, NULL, setup_fs, (void*) fs_structure_info);*/
 
+    //set up dump
+    int TIEMPO_DUMP = config_get_int_value(config, "TIEMPO_DUMP");
+    pthread_t tid_dump;
+    pthread_create(&tid_dump, NULL, dump_cron, (void*) TIEMPO_DUMP);
+
     //inicio lectura por consola
     pthread_t tid_console;
     pthread_create(&tid_console, NULL, console_input, "fileSystem");
@@ -322,42 +327,47 @@ void* buscador(void* args){
 }
 
 void cortador(char* cortado, char* auxkey){
-int i=0;
-int j=0;
-while(cortado[i]!=';' && cortado[i]!='\n'){
+  int i=0;
+  int j=0;
+  while(cortado[i]!=';' && cortado[i]!='\n'){
       i++;
-      }
-i++;
+  }
+  i++;
 
-while(cortado[i]!=';' && cortado[i]!='\n'){
+  while(cortado[i]!=';' && cortado[i]!='\n'){
      auxkey[j]=cortado[i];
      i++;
      j++;
-      }
-return;
+  }
+  return;
 }
 
 void obtengovalue(char* row, char* value){
   int largo=strlen(row);
-    int i= 0;
-    int j= 0;
-    int veces=0;
-    while(row[i]!=';' && row[i]!='\n'){
-        i++;
-    }
-    i++;
-while(row[i]!=';' && row[i]!='\n'){
-        i++;
-}
-i++;
-int colocar= largo - i;
-while(i<largo){
-        value[j]=row[i];
-  i++;
-  j++;
+  int i= 0;
+  int j= 0;
+  int veces=0;
+  while(row[i]!=';' && row[i]!='\n'){
+      i++;
   }
-value[colocar]='\0';
-return;
+  i++;
+  while(row[i]!=';' && row[i]!='\n'){
+      i++;
+  }
+  i++;
+  int colocar= largo - i;
+  while(i<largo){
+      value[j]=row[i];
+      i++;
+      j++;
+  }
+  value[colocar]='\0';
+  return;
 }
 
-
+void* dump_cron(void* TIEMPO_DUMP) {
+  while(1) {
+    sleep((int) TIEMPO_DUMP);
+    dump_memtable();
+  }
+}
