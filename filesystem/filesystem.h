@@ -31,4 +31,5 @@ void leerarchivo(FILE* metadata, regg* regmetadata);
 void obtenerbloques(char* pointer1, int* pointer2);
 void vaciadobuffer(char* buffer);
 void cortador(char* cortado, char* auxkey);
+void* dump_cron(void* TIEMPO_DUMP);
 char* MNT_POINT;

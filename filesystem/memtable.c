@@ -7,6 +7,7 @@
 #include <errno.h>
 #include "../pharser.h"
 #include <string.h>
+#include "engine.h"
 
 //struct table_node* memtable_first = NULL;
 //TODO ACA TIENE QUE USAR SEMAFOTOS
@@ -157,7 +158,12 @@ char* get_value_from_memtable(char* table_name, int key){
 void dump_memtable(){
     while(memtable_p!=NULL){
         char* table_dump = dump_table(memtable_p);
+        //consigo nombre de la tabla que estoy dumpeando
+        char* table_name = memtable_p->table_name;
+
         //send to engine
+        engine_dump_table(table_name , table_dump);
+
         printf("------------------------\n");
         memtable_p = memtable_p->table_next;
     }
