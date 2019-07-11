@@ -35,6 +35,12 @@ int main(int argc, char const *argv[]){
     logger = log_create(LOGPATH, "Filesystem", 1, LOG_LEVEL_INFO);
 
     engine_start(logger);
+
+
+    //set up dump
+    int TIEMPO_DUMP = config_get_int_value(config, "TIEMPO_DUMP");
+    pthread_t tid_dump;
+    pthread_create(&tid_dump, NULL, dump_cron, (void*) TIEMPO_DUMP);
         
     //set up server
     server_info* serverInfo = malloc(sizeof(server_info));
@@ -47,11 +53,6 @@ int main(int argc, char const *argv[]){
     pthread_t tid_fs_structure;
     no hay necesidad de un thread aca
     //pthread_create(&tid_fs_structure, NULL, setup_fs, (void*) fs_structure_info);*/
-
-    //set up dump
-    int TIEMPO_DUMP = config_get_int_value(config, "TIEMPO_DUMP");
-    pthread_t tid_dump;
-    pthread_create(&tid_dump, NULL, dump_cron, (void*) TIEMPO_DUMP);
 
     //inicio lectura por consola
     pthread_t tid_console;
@@ -367,7 +368,7 @@ void obtengovalue(char* row, char* value){
 
 void* dump_cron(void* TIEMPO_DUMP) {
   while(1) {
-    sleep((int) TIEMPO_DUMP);
+    sleep((int) TIEMPO_DUMP / 1000);
     dump_memtable();
   }
 }
