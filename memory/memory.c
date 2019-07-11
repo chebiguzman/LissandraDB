@@ -201,9 +201,44 @@ char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
 }
 
+
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
+
+//VOY AL ULTIMO SEGMENTO
+  segment_t* segmentTemp = get_last_segment();
+  int contador = 0;
+  while(segmentTemp != NULL){
+    //VOY A LA ULTIMA PAGINA
+    page_info_t* pageTemp =  get_last_page(segmentTemp -> pages);
+    
+    while(segmentTemp != NULL){
+      //CHEQUEO DIRTY BIT EN 1
+      if(pageTemp -> dirty_bit = 1){
+        //TODO:ENVIAR LA PAGINA AL FS
+        package_insert* insertTemp;
+        insertTemp->table_name = segmentTemp->name;
+        insertTemp->key = pageTemp->page_ptr->key;
+        insertTemp->value = pageTemp->page_ptr->value;
+        insertTemp->timestamp = pageTemp->page_ptr->timestamp;
+        action_insert(insertTemp);
+        
+        
+        contador++;
+      }
+      //ELIMINO PAGINA Y REDIRECCIONO A LA PREVIA
+      page_info_t* pageTemp2 = pageTemp;
+      remove_from_segment(segmentTemp, pageTemp);
+      pageTemp = pageTemp2 -> prev;
+      //TODO: ELIMINO DE TABLA LRU
+    }
+    //EL SEGMENTO LO TENGO QUE ELIMINAR?
+    //REDIRECCIONO A SEGMENTO PREVIO
+    segmentTemp = segmentTemp -> prev;
+  }
+  printf("Journal finalizado, Paginas enviadas a FS : %d \n", contador);
 }
+
 
 char* action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion select");
@@ -220,3 +255,29 @@ char* action_metrics(package_metrics* metrics_info){
 char* parse_input(char* input){
   return exec_instr(input);
 }
+
+/*
+
+--FEO--
+
+char* action_journal(package_journal* journal_info){
+  log_info(logger, "Se recibio una accion select");
+
+//LEO TODOS LOS SEGMENTOS
+	segment_t* tempSegment = SEGMENT_TABLE;
+	while(tempSegment != NULL){
+	//LEO TODAS LAS PAGINAS	
+    page_info_t* tempPage = tempSegment->pages
+	  while(tempPage != NULL){
+      //FILTRO LAS PAGINAS CON BIT MODIFICADO
+		  if(tempPage->dirty_bit = 1){
+        //FUNCION. send(tempPage->page_ptr, FS) ?? Como envio toda la estructura ((page_t* page_ptr)) ??
+        }
+		  }
+		  tempPage = tempPage->next;
+		}
+		tempSegment = tempSegment->next;
+	}
+
+}
+*/
