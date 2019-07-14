@@ -324,6 +324,7 @@ void print_LRU_TABLE(){
 	printf("\n\n");
 }
 
+
 // lru table tiene un array de los indices de las paginas en uso para accederlos mas rapido, cada vez que se toca la lru hay que actualizarlo. 
 int* update_used_pages(){ 
 	lru_page_t* lru_page_info = LRU_TABLE->lru_pages;
@@ -341,4 +342,24 @@ int page_is_on_use(int index){
 		}
 	}
 	return 0;
+
+char* exec_in_memory(int memory_fd, char* payload){
+    char* responce = malloc(3000);
+    strcpy(responce, "");
+    
+    if ( memory_fd < 0 ){
+      log_error(logger, "No se pudo llevar a cabo la accion.");
+      return "";
+    }
+
+    //ejecutar
+    if(write(memory_fd,payload, strlen(payload)+1)){
+      read(memory_fd, responce, 3000);
+      return responce;
+    }else{
+      log_error(logger, "No se logo comuniarse con FS");
+      return "NO SE ENCUENTRA FS";
+    }  
+    return "algo sale mal";
+
 }
