@@ -1,10 +1,11 @@
 #include "segments.h"
 
-page_t* create_page(int timestamp, int key, char* value){
+page_t* create_page(int timestamp, int key, char* value, int val_size){
 	//TODO: LEVANTAR EXCEPCION SI EL VALUE ES MUY GRANDE????
 	page_t* page = (page_t*)malloc(sizeof(page_t));
 	page->timestamp = timestamp;
 	page->key = key;
+	page->value = malloc(val_size);
 	strcpy(page->value, value);
 	return page;
 }
@@ -82,12 +83,12 @@ page_info_t* save_page(segment_t* segment, page_t* page){
 }
 
 // Agrega una nueva pagina o modifica una a existente siempre con dirtybit
-page_info_t* insert_page(segment_t* segment, page_t* page){
+page_info_t* insert_page(segment_t* segment, page_t* page, int val_size){
 	page_info_t* page_info = find_page_info(segment, page->key);
 	// si ya existe la pagina, reemplazo el value y toco el dirtybit
 	if(page_info != NULL){
 		if(page_info->page_ptr->timestamp < page->timestamp){ // si por alguna razon de la vida el timestamp del insert es menor al timestamp que ya tengo en la page, no la modifico
-			memcpy(page_info->page_ptr->value, page->value, sizeof(VALUE_SIZE));
+			memcpy(page_info->page_ptr->value, page->value, val_size);
 			page_info->dirty_bit = 1;
 		}
 	}
@@ -114,23 +115,7 @@ page_info_t* save_page_to_memory(segment_t* segment, page_t* page, int dirty_bit
 	return page_info;
 }
 
-void remove_from_segment(segment_t* segment, page_info_t* page_info){
-	page_info_t* temp;
-	if(page_info->prev == NULL){ // si es la primer page del segmento..
-		printf("-- Removing %s (first node) from table %s --\n", page_info->page_ptr->value, segment->name);
-		temp = NULL; // si es el unico elemento, solo asigno segment->pages a temp que es NULL
-		if(page_info->next != NULL){ 
-			temp = page_info->next;
-			temp->prev = NULL;
-		}
-		segment->pages = temp;
-	}
-	else {
-		printf("-- Removing %s from %s --\n", page_info->page_ptr->value, segment->name);		
-		temp = page_info->prev;
-		temp->next = page_info->next;
-	}
-}
+
 
 void remove_page(lru_page_t* lru_page_info){
 	if(!is_modified(lru_page_info)){
@@ -158,12 +143,13 @@ void remove_segment(char* table_name){
 
 	//free(segmentTemp);
 
+	}
 }
 
 void remove_from_segment(segment_t* segment, page_info_t* page_info){
 	page_info_t* temp;
 	if(page_info->prev == NULL){ // si es la primer page del segmento..
-		printf("-- Removing %s (first node) from %s --\n", page_info->page_ptr->value, segment->name);
+		printf("-- Removing %s (first node) from table %s --\n", page_info->page_ptr->value, segment->name);
 		temp = NULL; // si es el unico elemento, solo asigno segment->pages a temp que es NULL
 		if(page_info->next != NULL){ 
 			temp = page_info->next;
@@ -380,6 +366,7 @@ int page_is_on_use(int index){
 		}
 	}
 	return 0;
+}
 
 char* exec_in_fs(int memory_fd, char* payload){
     char* responce = malloc(3000);
@@ -399,5 +386,7 @@ char* exec_in_fs(int memory_fd, char* payload){
       return "NO SE ENCUENTRA FS";
     }  
     return "algo sale mal";
-}
 
+
+
+}

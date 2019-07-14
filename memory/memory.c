@@ -16,15 +16,15 @@
 #include "segments.h"
 
 //logger global para que lo accedan los threads
-t_log* logger;
 int fs_socket;
 int main_memory_size;
-
+int value_size = 0;
 
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
 {
   //set up config  
+  printf("hola\n\n");
   t_config* config = config_create("config");
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
   int PORT = config_get_int_value(config, "PORT");
@@ -58,6 +58,11 @@ int main(int argc, char const *argv[])
     log_error(logger, "No se logro establecer la conexion con el File System");   
   }
   else{
+    char* handshake = malloc(16);
+    write(fs_socket, "MEMORY", strlen("MEMORY"));
+    read(fs_socket, handshake, 4);
+    value_size = atoi(handshake);
+    log_info(logger, "La memory se conecto con fs. El hanshake dio como value size %d", value_size);
   }
 
   main_memory_size = config_get_int_value(config, "TAM_MEM");
@@ -233,8 +238,7 @@ char* action_journal(package_journal* journal_info){
         char* packageTemp = parse_package_insert(insertTemp);
         char* responce = exec_in_memory(fs_socket, packageTemp); 
  
-      //  unlock_memory(fs_socket);
-         return responce;
+        return responce;
        
         contador++;
       }

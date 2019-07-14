@@ -112,18 +112,21 @@ char* exec_instr(char* instr_buff){
         package->key = atoi(parameters[2]);
 
         //VALUE
-        char* value = malloc(strlen(parameters[3]));
+        package->value = parameters[3];
 
+        char* value = malloc(strlen(parameters[3]));
         if(parameters[3][0] == '"'){
             int value_length = strlen(parameters[3]);
             if(parameters[3][value_length-1]=='"'){
                 memcpy(value, parameters[3]+1, value_length-2);
+                package->value = value;
             }else{
+                free(value);
                 return "Parametro value malformado.\n";
             }
         }
-        package->value = value;
         
+    
         //TIMESTAMP
         //si hay 4 parmateros me fijo si es un timestamp
         if(parameters_length == 5){
