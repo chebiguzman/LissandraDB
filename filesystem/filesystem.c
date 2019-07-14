@@ -21,7 +21,7 @@
 #include <pthread.h>
 //punto de entrada para el programa y el kernel
 t_log* logger;
-char* VALUE_SIZE;
+int VALUE_SIZE;
 int main(int argc, char const *argv[]){
     
     //las estructuras se van al .h para que quede mas limpio
@@ -29,7 +29,7 @@ int main(int argc, char const *argv[]){
     t_config* config = config_create("config");
     char* LOGPATH = config_get_string_value(config, "LOG_PATH");
     MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE");
-    VALUE_SIZE = config_get_string_value(config, "TAMAÑO_VALUE");
+    VALUE_SIZE = config_get_int_value(config, "TAMAÑO_VALUE");
     int PORT = config_get_int_value(config, "PORT");
 
     //set up log
@@ -183,6 +183,13 @@ char* action_insert(package_insert* insert_info){
   strcat(table_path ,"Tables/");
   strcat(table_path ,table_name);
 
+   char* sliced_value = malloc(VALUE_SIZE+2);
+  memcpy(sliced_value, insert_info->value, VALUE_SIZE);
+  strcpy(sliced_value+VALUE_SIZE, "\0");
+  printf("%s\n", sliced_value);
+  free(insert_info->value);
+  insert_info->value = sliced_value;
+
   insert_to_memtable(insert_info);
  
   log_debug(logger, "Se inserto el valor en la memtable");
@@ -272,7 +279,7 @@ char* parse_input(char* input){
 }
 
 char* action_intern__status(){ 
-  return VALUE_SIZE;
+  return string_itoa(VALUE_SIZE);
 };
 
 char *strdups(const char *src) {

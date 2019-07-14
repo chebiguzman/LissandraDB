@@ -18,6 +18,7 @@
 //logger global para que lo accedan los threads
 int fs_socket;
 int main_memory_size;
+int value_size = 0;
 
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
@@ -57,6 +58,11 @@ int main(int argc, char const *argv[])
     log_error(logger, "No se logro establecer la conexion con el File System");   
   }
   else{
+    char* handshake = malloc(16);
+    write(fs_socket, "MEMORY", strlen("MEMORY"));
+    read(fs_socket, handshake, 4);
+    value_size = atoi(handshake);
+    log_info(logger, "La memory se conecto con fs. El hanshake dio como value size %d", value_size);
   }
 
   main_memory_size = config_get_int_value(config, "TAM_MEM");
@@ -125,14 +131,16 @@ char* action_select(package_select* select_info){
     return page_info->page_ptr->value;
   }
   //SI NO EXISTE LA PAGINA:
-  // TODO: mandarle al FS el select request y recibirlo
-  page_t* page = create_page(007, select_info->key, "newValue"); // TODO: asignarle los values adecuados que vuelven del FS
-  //TODO: ver que pasa si FS no tenia esa key. Me devuelve igual un valor? o directamente tira un error y no vuelve para aca
-  save_page(segment, page);
-  printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
-  return page->value;
+  // ENVIO AL FILESYSTEM
+  char* packageTemp = parse_package_insert(select_info);
+  char* responce = exec_in_fs(fs_socket, packageTemp); 
+  if(responce =! "Key invalida."){
+    page_t* page = create_page(007, select_info->key, responce); //CUIDADO TIMESTAMP
+    save_page(segment, page);
+    printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
+    return page->value;
+  }
 }
-
 //Necesito saber si es Timestamp lo genera memoria o el Kernel antes de enviarlo.
 // De no haberse ya generado el TS reemplazo <insert_info->timestamp> por <(unsigned)time(NULL)>... CREO.
 
@@ -142,7 +150,6 @@ char* action_insert(package_insert* insert_info){
   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
   page_info_t* page_info = insert_page(segment, page);
-
 //   printf("Table name: %s\n", segment->name);
 // //SI EXISTE LA PAGINA:
 //   page_t* page = find_page(segment, insert_info->key);
@@ -189,14 +196,21 @@ char* action_intern__status(){
 
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
+  char* responce = exec_in_memory(fs_socket, create_info); 
+  return responce;
 }
 
 char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
+  char* responce = exec_in_memory(fs_socket, describe_info); 
+  return responce;
 }
 
 char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
+  void remove_segment(char* table_name);//ELIMINA LA TABLA
+  char* responce = exec_in_memory(fs_socket, drop_info); 
+  return responce; 
 }
 
 
@@ -225,8 +239,7 @@ char* action_journal(package_journal* journal_info){
         char* packageTemp = parse_package_insert(insertTemp);
         char* responce = exec_in_memory(fs_socket, packageTemp); 
  
-        // unlock_memory(fs_socket);
-         return responce;
+        return responce;
        
         contador++;
       }
@@ -235,9 +248,12 @@ char* action_journal(package_journal* journal_info){
       remove_from_segment(segmentTemp, pageTemp);
       pageTemp = pageTemp2 -> prev;
     }
-    //EL SEGMENTO LO TENGO QUE ELIMINAR?
     //REDIRECCIONO A SEGMENTO PREVIO
+    segment_t * segmentTemp2;
+    segmentTemp2 = segmentTemp;
     segmentTemp = segmentTemp -> prev;
+    //ELIMINO EL SEGMENTO ANTERIOR
+    remove_segment(segmentTemp2);
   }
   printf("Journal finalizado, Paginas enviadas a FS : %d \n", contador);
 }
