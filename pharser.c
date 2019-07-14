@@ -63,6 +63,7 @@ char* exec_instr(char* instr_buff){
 
     
     char** parameters = string_split(buff, "|");
+    
     int parameters_length = 0;
     while (parameters[parameters_length] != NULL){
         parameters_length++;
@@ -111,7 +112,17 @@ char* exec_instr(char* instr_buff){
         package->key = atoi(parameters[2]);
 
         //VALUE
-        package->value = parameters[3];
+        char* value = malloc(strlen(parameters[3]));
+
+        if(parameters[3][0] == '"'){
+            int value_length = strlen(parameters[3]);
+            if(parameters[3][value_length-1]=='"'){
+                memcpy(value, parameters[3]+1, value_length-2);
+            }else{
+                return "Parametro value malformado.\n";
+            }
+        }
+        package->value = value;
         
         //TIMESTAMP
         //si hay 4 parmateros me fijo si es un timestamp
@@ -208,7 +219,7 @@ char* exec_instr(char* instr_buff){
     }
 
     if(!strcmp(instruction,"MEMORY")){
-        char* r =  action_intern_memory_status();
+        char* r =  action_intern__status();
         return r;
     }
 
