@@ -75,3 +75,4 @@ lru_page_t* create_lru_page(segment_t* segment, page_info_t* page_info);
 LRU_TABLE_t* create_LRU_TABLE();
 int is_modified(lru_page_t* page);
 char* exec_in_memory(int memory_fd, char* payload);
+void remove_segment(char* table_name);

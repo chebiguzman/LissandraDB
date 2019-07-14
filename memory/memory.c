@@ -191,14 +191,21 @@ char* action_intern_memory_status(){
 
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
+  char* responce = exec_in_memory(fs_socket, create_info); 
+  return responce;
 }
 
 char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
+  char* responce = exec_in_memory(fs_socket, describe_info); 
+  return responce;
 }
 
 char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
+  void remove_segment(char* table_name);//ELIMINA LA TABLA
+  char* responce = exec_in_memory(fs_socket, drop_info); 
+  return responce; 
 }
 
 
@@ -237,9 +244,12 @@ char* action_journal(package_journal* journal_info){
       remove_from_segment(segmentTemp, pageTemp);
       pageTemp = pageTemp2 -> prev;
     }
-    //EL SEGMENTO LO TENGO QUE ELIMINAR?
     //REDIRECCIONO A SEGMENTO PREVIO
+    segment_t * segmentTemp2;
+    segmentTemp2 = segmentTemp;
     segmentTemp = segmentTemp -> prev;
+    //ELIMINO EL SEGMENTO ANTERIOR
+    remove_segment(segmentTemp2);
   }
   printf("Journal finalizado, Paginas enviadas a FS : %d \n", contador);
 }
