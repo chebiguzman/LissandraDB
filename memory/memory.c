@@ -215,20 +215,20 @@ char* action_journal(package_journal* journal_info){
     while(segmentTemp != NULL){
       //CHEQUEO DIRTY BIT EN 1
       if(pageTemp -> dirty_bit = 1){
-        //TODO:ENVIAR LA PAGINA AL FS
+        //ENVIO AL FILESYSTEM
         package_insert* insertTemp;
         insertTemp->table_name = segmentTemp->name;
         insertTemp->key = pageTemp->page_ptr->key;
         insertTemp->value = pageTemp->page_ptr->value;
         insertTemp->timestamp = pageTemp->page_ptr->timestamp;
-        char* package = parse_package_insert(insertTemp);
+       
+        //FS_SOCKET es global e unica?
 
-        /*
-        char* responce = exec_in_memory(memoryfd, package); 
+        char* packageTemp = parse_package_insert(insertTemp);
+        char* responce = exec_in_memory(fs_socket, packageTemp); 
  
-        unlock_memory(memoryfd);
-        return responce;
-        */
+        unlock_memory(fs_socket);
+         return responce;
        
         contador++;
       }
@@ -236,7 +236,6 @@ char* action_journal(package_journal* journal_info){
       page_info_t* pageTemp2 = pageTemp;
       remove_from_segment(segmentTemp, pageTemp);
       pageTemp = pageTemp2 -> prev;
-      //TODO: ELIMINO DE TABLA LRU
     }
     //EL SEGMENTO LO TENGO QUE ELIMINAR?
     //REDIRECCIONO A SEGMENTO PREVIO
