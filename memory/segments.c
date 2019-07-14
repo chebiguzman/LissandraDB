@@ -1,11 +1,6 @@
 #include "segments.h"
 
-<<<<<<< HEAD
 page_t* create_page(int timestamp, int key, char* value, int val_size){
-=======
-
-page_t* create_page(int timestamp, int key, char* value){
->>>>>>> 6f6de239339bf22130af2a21da163c6f60752eb7
 	//TODO: LEVANTAR EXCEPCION SI EL VALUE ES MUY GRANDE????
 	page_t* page = (page_t*)malloc(sizeof(page_t));
 	page->timestamp = timestamp;
