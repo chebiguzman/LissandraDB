@@ -19,7 +19,7 @@
 t_log* logger;
 int fs_socket;
 int main_memory_size;
-
+int value_size = 0;
 
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
@@ -58,6 +58,11 @@ int main(int argc, char const *argv[])
     log_error(logger, "No se logro establecer la conexion con el File System");   
   }
   else{
+    char* handshake = malloc(16);
+    write(fs_socket, "MEMORY", strlen("MEMORY"));
+    read(fs_socket, handshake, 4);
+    value_size = atoi(handshake);
+    log_info(logger, "La memory se conecto con fs. El hanshake dio como value size %d", value_size);
   }
 
   main_memory_size = config_get_int_value(config, "TAM_MEM");

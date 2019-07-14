@@ -4,13 +4,13 @@
 #include <string.h>
 
 // TODO: hacer el handshake y obtener el valor real
-#define VALUE_SIZE 64
+
 #define TABLE_NAME_SIZE 3
 
 typedef struct{
   int timestamp;
   int key;
-  char value[VALUE_SIZE];
+  char* value;
 }page_t;
 
 typedef struct page_info{
