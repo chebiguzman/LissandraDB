@@ -16,7 +16,6 @@
 #include "segments.h"
 
 //logger global para que lo accedan los threads
-t_log* logger;
 int fs_socket;
 int main_memory_size;
 
@@ -227,7 +226,7 @@ char* action_journal(package_journal* journal_info){
         char* packageTemp = parse_package_insert(insertTemp);
         char* responce = exec_in_memory(fs_socket, packageTemp); 
  
-        unlock_memory(fs_socket);
+        // unlock_memory(fs_socket);
          return responce;
        
         contador++;
