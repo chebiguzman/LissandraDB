@@ -21,7 +21,7 @@
 #include <pthread.h>
 //punto de entrada para el programa y el kernel
 t_log* logger;
-
+char* VALUE_SIZE;
 int main(int argc, char const *argv[]){
     
     //las estructuras se van al .h para que quede mas limpio
@@ -29,6 +29,7 @@ int main(int argc, char const *argv[]){
     t_config* config = config_create("config");
     char* LOGPATH = config_get_string_value(config, "LOG_PATH");
     MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE");
+    VALUE_SIZE = config_get_string_value(config, "TAMAÑO_VALUE");
     int PORT = config_get_int_value(config, "PORT");
 
     //set up log
@@ -49,11 +50,7 @@ int main(int argc, char const *argv[]){
     pthread_t tid;
     pthread_create(&tid, NULL, create_server, (void*) serverInfo);
  
-    /*fs_structure_info->logger = logger;
-    pthread_t tid_fs_structure;
-    no hay necesidad de un thread aca
-    //pthread_create(&tid_fs_structure, NULL, setup_fs, (void*) fs_structure_info);*/
-
+ 
     //inicio lectura por consola
     pthread_t tid_console;
     pthread_create(&tid_console, NULL, console_input, "fileSystem");
@@ -264,7 +261,9 @@ char* parse_input(char* input){
   return exec_instr(input);
 }
 
-char* action_intern_memory_status(){ return "";};
+char* action_intern__status(){ 
+  return VALUE_SIZE;
+};
 
 char *strdups(const char *src) {
     char *dst = malloc(strlen (src) + 1);  
