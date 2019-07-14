@@ -163,7 +163,7 @@ char* action_insert(package_insert* insert_info){
 //devuelve solo las seeds
 //con esta forma: RETARDO_GOSSIPING_DE_ESTA_MEMORIA|id,ip,port|id,ip,port|id,ip,port
 //                                                    seed        seed      seed
-char* action_intern_memory_status(){
+char* action_intern__status(){
   char* res = strdup("300000000|"); //ya que se puede modificar en tiempo real y yo necesito saber cada cuanto ir a buscar una memoira se le añade como primer elemento el retargo gossiping de la memoria principal.
   char sep[2] = { ',', '\0' };
   char div[2] = { '|', '\0' };
@@ -198,9 +198,49 @@ char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
 }
 
+
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
+
+//VOY AL ULTIMO SEGMENTO
+  segment_t* segmentTemp = get_last_segment();
+  int contador = 0;
+  while(segmentTemp != NULL){
+    //VOY A LA ULTIMA PAGINA
+    page_info_t* pageTemp =  get_last_page(segmentTemp -> pages);
+    
+    while(segmentTemp != NULL){
+      //CHEQUEO DIRTY BIT EN 1
+      if(pageTemp -> dirty_bit = 1){
+        //ENVIO AL FILESYSTEM
+        package_insert* insertTemp;
+        insertTemp->table_name = segmentTemp->name;
+        insertTemp->key = pageTemp->page_ptr->key;
+        insertTemp->value = pageTemp->page_ptr->value;
+        insertTemp->timestamp = pageTemp->page_ptr->timestamp;
+       
+        //FS_SOCKET es global e unica?
+
+        char* packageTemp = parse_package_insert(insertTemp);
+        char* responce = exec_in_memory(fs_socket, packageTemp); 
+ 
+        unlock_memory(fs_socket);
+         return responce;
+       
+        contador++;
+      }
+      //ELIMINO PAGINA Y REDIRECCIONO A LA PREVIA
+      page_info_t* pageTemp2 = pageTemp;
+      remove_from_segment(segmentTemp, pageTemp);
+      pageTemp = pageTemp2 -> prev;
+    }
+    //EL SEGMENTO LO TENGO QUE ELIMINAR?
+    //REDIRECCIONO A SEGMENTO PREVIO
+    segmentTemp = segmentTemp -> prev;
+  }
+  printf("Journal finalizado, Paginas enviadas a FS : %d \n", contador);
 }
+
 
 char* action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion select");
@@ -217,3 +257,29 @@ char* action_metrics(package_metrics* metrics_info){
 char* parse_input(char* input){
   return exec_instr(input);
 }
+
+/*
+
+--FEO--
+
+char* action_journal(package_journal* journal_info){
+  log_info(logger, "Se recibio una accion select");
+
+//LEO TODOS LOS SEGMENTOS
+	segment_t* tempSegment = SEGMENT_TABLE;
+	while(tempSegment != NULL){
+	//LEO TODAS LAS PAGINAS	
+    page_info_t* tempPage = tempSegment->pages
+	  while(tempPage != NULL){
+      //FILTRO LAS PAGINAS CON BIT MODIFICADO
+		  if(tempPage->dirty_bit = 1){
+        //FUNCION. send(tempPage->page_ptr, FS) ?? Como envio toda la estructura ((page_t* page_ptr)) ??
+        }
+		  }
+		  tempPage = tempPage->next;
+		}
+		tempSegment = tempSegment->next;
+	}
+
+}
+*/
