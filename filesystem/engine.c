@@ -1,12 +1,13 @@
 #include "engine.h"
- #include <sys/types.h>
-       #include <sys/stat.h>
-       #include <fts.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fts.h>
+#include <commons/bitarray.h>
+
 #define BLOCK_SIZE_DEFAULT 128
 #define BLOCKS_AMOUNT_DEFAULT 12
 char* MNT_POINT;
 t_log* logg;
-t_list* tables_upper_name;
 t_list* tables_name;
 char* tables_path;
 DIR* root;
@@ -191,7 +192,6 @@ void engine_start(t_log* logger){
  
     DIR* tables_dir = opendir(tables_path);
     tables_name = list_create();
-    tables_upper_name = list_create();
 
     struct dirent *entry;
      while ((entry = readdir(tables_dir)) != NULL) {
@@ -203,7 +203,6 @@ void engine_start(t_log* logger){
             list_add(tables_name, name);
             string_to_upper(entry->d_name);
             log_info(logg, entry->d_name);
-            list_add(tables_upper_name,entry->d_name );
          }
      }
  
@@ -215,11 +214,17 @@ int does_table_exist(char* table_name){
     string_to_upper(q);
 
     bool findTableByName(void* t){
-        if(!strcmp(q, (char*) t)) return true;
+        char* cmp = strdup((char*) t);
+        string_to_upper(cmp);
+        if(!strcmp(q, cmp)){
+            free(cmp);
+            return true;
+        } 
+        free(cmp); 
         return false;
     }
 
-    char* t = list_find(tables_upper_name,findTableByName);
+    char* t = list_find(tables_name,findTableByName);
     free(q);
     if(t == NULL){
         return 0;
@@ -316,7 +321,6 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     list_add(tables_name, table_name);
     char* copy = strdup(table_name);
     string_to_upper(copy);
-    list_add(tables_upper_name, copy);
 
     fclose(metadata); 
     free(path_dir);
@@ -329,12 +333,19 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
 void engine_drop_table(char* table_name){
     char* q = strdup(table_name);
     string_to_upper(q);
+
     bool findTableByName(void* t){
-        if(!strcmp(q, (char*) t)) return true;
+        char* cmp = strdup((char*) t);
+        string_to_upper(cmp);
+        if(!strcmp(q, cmp)){
+            free(cmp);
+            return true;
+        } 
+        free(cmp); 
         return false;
     }
 
-    list_remove_by_condition(tables_upper_name,findTableByName);
+    list_remove_by_condition(tables_name,findTableByName);
     char* path = malloc(strlen(tables_path) + strlen(table_name) + 5);
     strcpy(path, tables_path);
     strcat(path, table_name);
@@ -430,4 +441,144 @@ t_table_metadata* get_table_metadata(char* table_name){
 
 
     return meta;
+}
+
+void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene que tomar el dump de cada table y llevarla al fs
+    
+    if(!does_table_exist(table_name)){ //chequeo que la tabla existe
+        log_error(logg,"La tabla no existe");
+        exit(-1);
+    }
+
+    //agrego los datos a uno o mas bloques -> ver bitmap
+    int block = find_free_block(); //elijo un bloque libre
+    //cargo la data en un bloque:
+
+    //armo el path del bloque:
+    char* block_name = string_itoa(block);
+
+    char* block_path = malloc(sizeof(block_name)+sizeof(MNT_POINT)+sizeof("Bloques/")+sizeof(".bin"));
+    
+    strcpy(block_path, "\0");
+    strcat(block_path ,MNT_POINT);
+    strcat(block_path ,"Bloques/");
+    strcat(block_path ,block_name);
+    strcat(block_path ,".bin");
+
+    //escribo el dump en el bloque
+    FILE* block_file = fopen(block_path,"w");
+
+    fwrite(table_dump,sizeof(table_dump),1,block_file);
+
+    fclose(block_file);
+
+    set_block_as_occupied(block);//marco el bloque como ocupado en el bitmap
+
+    //creo los archivos tmp -> ver como nombro los archivos
+    //chequeo si existen archivos con el nombre 0.tmp , 1.tmp, 2.tmp, etc... hasta encontrar uno que no exista
+    char* tmp_path = malloc(sizeof(MNT_POINT)+sizeof("Tables/")+sizeof(table_name)+sizeof("/.tmp")+2);
+   
+    strcpy(tmp_path,"\0");
+    strcat(tmp_path ,MNT_POINT);
+    strcat(tmp_path ,"Tables/");
+    strcat(tmp_path ,table_name);
+    strcat(tmp_path ,"/");
+
+    for(int i=0; i<20; i++){
+        char* tmp_name = string_itoa(i);
+
+        strcat(tmp_path ,tmp_name);
+        strcat(tmp_path ,".tmp");
+
+        if (!does_file_exist(tmp_path)) {
+            
+            FILE* tmp_file = fopen(tmp_path,"w+");//creo el archivo .tmp
+
+            //cargo el archivo .tmp
+            char* text = "SIZE=%s\nBLOCKS=%s\n";
+            char* a = string_itoa(10); //TODO ver que es size
+            char* b = string_itoa(block);
+            char* r = malloc( strlen(text) + strlen(a) + strlen(b)+1);
+
+            sprintf(r, "SIZE=%s\nBLOCKS=[%s]\n", a,b);
+            sprintf(r, text, b,a);
+    
+            fputs(r, tmp_file);
+
+            fclose(tmp_file);
+
+            return;
+        }
+    }
+
+    log_error(logg, "demasiados archivos temporales");
+    exit(-1);
+}
+
+int find_free_block() {
+
+    //armo el path del bitmap
+    char* bitmap_path = malloc(sizeof("bitmap")+sizeof(MNT_POINT)+sizeof("Metadata/"));
+    bitmap_path[0] = '\0';
+    
+    strcat(bitmap_path ,MNT_POINT);
+    strcat(bitmap_path ,"Metadata/");
+    strcat(bitmap_path ,"bitmap");
+      
+    FILE* bitmap_file = fopen(bitmap_path,"r+");
+    char bitmap[BLOCK_SIZE_DEFAULT];
+
+    fread(bitmap,BLOCK_SIZE_DEFAULT+1,1,bitmap_file);
+
+    t_bitarray* bitmap_array = bitarray_create(bitmap,BLOCK_SIZE_DEFAULT); //convierto la lectura en un bitarray
+
+    fclose(bitmap_file);
+    free(bitmap_path);
+
+    for(int i = 0; i<BLOCK_SIZE_DEFAULT ;i++) {
+        if(!bitarray_test_bit(bitmap_array,i)) { //recorro todo el bitmap buscando un 0
+            return i; //devuelvo el indice del primer bloque libre que encuentro -> es el numero de bloque libre
+        }
+    }    
+
+    log_error(logg,"No hay bloques libres");
+    exit(-1); //ver bien que hacer cuando no hay bloques libres
+}
+
+void set_block_as_occupied(int block_number) {
+    
+    //armo el path del bitmap
+    char* bitmap_path = malloc(sizeof("bitmap")+sizeof(MNT_POINT)+sizeof("Metadata/"));
+    bitmap_path[0] = '\0';
+    
+    strcat(bitmap_path ,MNT_POINT);
+    strcat(bitmap_path ,"Metadata/");
+    strcat(bitmap_path ,"bitmap");
+      
+    FILE* bitmap_file = fopen(bitmap_path,"w+");
+    char bitmap[BLOCK_SIZE_DEFAULT];
+
+    fread(bitmap,BLOCK_SIZE_DEFAULT+1,1,bitmap_file);
+
+    t_bitarray* bitmap_array = bitarray_create(bitmap,BLOCK_SIZE_DEFAULT); //convierto la lectura en un bitarray
+
+    bitarray_set_bit(bitmap_array, block_number);
+
+    fwrite(bitmap_array->bitarray,sizeof(bitmap_array->bitarray),1,bitmap_file);
+
+    fclose(bitmap_file);
+    return;
+}
+
+int does_file_exist(char* file_path){
+    
+    FILE* file = fopen(file_path, "r");
+    
+    if(file == NULL){
+        fclose(file);
+        return 0;
+    }
+
+    fclose(file);
+    return 1;
 }

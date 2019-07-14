@@ -17,6 +17,7 @@ typedef struct{
 typedef struct page_info{
   u_int8_t dirty_bit;
   page_t* page_ptr;
+  int index;
   struct page_info* next;
   struct page_info* prev;
 }page_info_t;
@@ -28,13 +29,14 @@ typedef struct segment{
   struct segment* prev;
 }segment_t;
 
-typedef struct {
+typedef struct lru_page{
   page_info_t* lru_page;
   segment_t* segment;
 }lru_page_t;
 
 typedef struct{
   lru_page_t* lru_pages;
+  int* used_pages;
   int current_pages;
 }LRU_TABLE_t;
 
@@ -77,4 +79,11 @@ void print_LRU_TABLE();
 lru_page_t* create_lru_page(segment_t* segment, page_info_t* page_info);
 LRU_TABLE_t* create_LRU_TABLE();
 int is_modified(lru_page_t* page);
+
+int* get_used_pages();
+int* update_used_pages();
+int page_is_on_use(int index);
+int find_unmodified_page();
+
 char* exec_in_memory(int memory_fd, char* payload);
+
