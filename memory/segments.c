@@ -381,7 +381,7 @@ int page_is_on_use(int index){
 	}
 	return 0;
 
-char* exec_in_memory(int memory_fd, char* payload){
+char* exec_in_fs(int memory_fd, char* payload){
     char* responce = malloc(3000);
     strcpy(responce, "");
     
