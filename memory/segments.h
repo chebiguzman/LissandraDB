@@ -2,15 +2,16 @@
 #include <commons/log.h>
 #include <pthread.h>
 #include <string.h>
+#include <unistd.h>
 
 // TODO: hacer el handshake y obtener el valor real
-#define VALUE_SIZE 64
+
 #define TABLE_NAME_SIZE 3
 
 typedef struct{
   int timestamp;
   int key;
-  char value[VALUE_SIZE];
+  char* value;
 }page_t;
 
 typedef struct page_info{
@@ -46,16 +47,18 @@ segment_t* SEGMENT_TABLE;
 page_t* MAIN_MEMORY; 
 LRU_TABLE_t* LRU_TABLE;
 int NUMBER_OF_PAGES;
- 
+t_log* logger;
+
+
 // --------------------------
 
 
-page_t* create_page(int timestamp, int key, char* value);
+page_t* create_page(int timestamp, int key, char* value, int val_size);
 page_info_t* create_page_info();
 segment_t* create_segment(char* table_names);
 page_info_t* find_page_info(segment_t* segment, int key);
 page_info_t* save_page(segment_t* segment, page_t* page);
-page_info_t* insert_page(segment_t* segment, page_t* page);
+page_info_t* insert_page(segment_t* segment, page_t* page, int val_size);
 void remove_from_segment(segment_t* segment, page_info_t* page_info);
 page_info_t* save_page_to_memory(segment_t* segment, page_t* page, int dirtybit);
 segment_t* find_segment(char* table_name);
