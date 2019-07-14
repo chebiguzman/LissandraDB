@@ -21,7 +21,7 @@
 #include <pthread.h>
 //punto de entrada para el programa y el kernel
 t_log* logger;
-
+char* VALUE_SIZE;
 int main(int argc, char const *argv[]){
     
     //las estructuras se van al .h para que quede mas limpio
@@ -29,13 +29,21 @@ int main(int argc, char const *argv[]){
     t_config* config = config_create("config");
     char* LOGPATH = config_get_string_value(config, "LOG_PATH");
     MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE");
+    VALUE_SIZE = config_get_string_value(config, "TAMAÑO_VALUE");
     int PORT = config_get_int_value(config, "PORT");
 
     //set up log
     logger = log_create(LOGPATH, "Filesystem", 1, LOG_LEVEL_INFO);
 
     engine_start(logger);
-        
+
+
+    //set up dump
+    int dump_time_buffer = config_get_int_value(config, "TIEMPO_DUMP"); 
+    int *TIEMPO_DUMP = &dump_time_buffer;
+
+    pthread_t tid_dump;
+    pthread_create(&tid_dump, NULL, dump_cron, (void*) TIEMPO_DUMP);
     //set up server
     server_info* serverInfo = malloc(sizeof(server_info));
     serverInfo->logger = logger;
@@ -43,11 +51,7 @@ int main(int argc, char const *argv[]){
     pthread_t tid;
     pthread_create(&tid, NULL, create_server, (void*) serverInfo);
  
-    /*fs_structure_info->logger = logger;
-    pthread_t tid_fs_structure;
-    no hay necesidad de un thread aca
-    //pthread_create(&tid_fs_structure, NULL, setup_fs, (void*) fs_structure_info);*/
-
+ 
     //inicio lectura por consola
     pthread_t tid_console;
     pthread_create(&tid_console, NULL, console_input, "fileSystem");
@@ -156,7 +160,6 @@ char* action_select(package_select* select_info){
 
 }
 
-
 char* action_insert(package_insert* insert_info){
 
   if(!does_table_exist(insert_info->table_name)){
@@ -170,8 +173,6 @@ char* action_insert(package_insert* insert_info){
   strcat(table_path ,MNT_POINT);
   strcat(table_path ,"Tables/");
   strcat(table_path ,table_name);
-
-  log_info(logger, table_path);
 
   insert_to_memtable(insert_info);
  
@@ -188,7 +189,7 @@ char* action_create(package_create* create_info){
   if(does_table_exist(create_info->table_name)){
     char* err = "Fallo la creacion de una tabla.\n";
     log_error(logger, err);
-    return "La tabla ya existe";
+    return "La tabla ya existe\n";
   }
 
   enginet_create_table(create_info->table_name, create_info->consistency, create_info->partition_number, create_info->compactation_time);
@@ -236,6 +237,7 @@ char* action_drop(package_drop* drop_info){
 
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
+  
   return "";
 }
 
@@ -246,6 +248,8 @@ char* action_add(package_add* add_info){
 
 char* action_run(package_run* run_info){
   log_info(logger, "Se recibio una accion run");
+  dump_memtable();
+  return "";
 }
 
 char* action_metrics(package_metrics* metrics_info){
@@ -258,7 +262,9 @@ char* parse_input(char* input){
   return exec_instr(input);
 }
 
-char* action_intern_memory_status(){ return "";};
+char* action_intern__status(){ 
+  return VALUE_SIZE;
+};
 
 char *strdups(const char *src) {
     char *dst = malloc(strlen (src) + 1);  
@@ -322,42 +328,49 @@ void* buscador(void* args){
 }
 
 void cortador(char* cortado, char* auxkey){
-int i=0;
-int j=0;
-while(cortado[i]!=';' && cortado[i]!='\n'){
+  int i=0;
+  int j=0;
+  while(cortado[i]!=';' && cortado[i]!='\n'){
       i++;
-      }
-i++;
+  }
+  i++;
 
-while(cortado[i]!=';' && cortado[i]!='\n'){
+  while(cortado[i]!=';' && cortado[i]!='\n'){
      auxkey[j]=cortado[i];
      i++;
      j++;
-      }
-return;
+  }
+  return;
 }
 
 void obtengovalue(char* row, char* value){
   int largo=strlen(row);
-    int i= 0;
-    int j= 0;
-    int veces=0;
-    while(row[i]!=';' && row[i]!='\n'){
-        i++;
-    }
-    i++;
-while(row[i]!=';' && row[i]!='\n'){
-        i++;
-}
-i++;
-int colocar= largo - i;
-while(i<largo){
-        value[j]=row[i];
-  i++;
-  j++;
+  int i= 0;
+  int j= 0;
+  int veces=0;
+  while(row[i]!=';' && row[i]!='\n'){
+      i++;
   }
-value[colocar]='\0';
-return;
+  i++;
+  while(row[i]!=';' && row[i]!='\n'){
+      i++;
+  }
+  i++;
+  int colocar= largo - i;
+  while(i<largo){
+      value[j]=row[i];
+      i++;
+      j++;
+  }
+  value[colocar]='\0';
+  return;
 }
 
-
+void* dump_cron(void* TIEMPO_DUMP) {
+  printf("el tiempo de dump es: %d", *((int*) TIEMPO_DUMP));
+  fflush(stdout);
+  while(1) {
+    sleep(*((int*) TIEMPO_DUMP) / 1000);
+    dump_memtable();
+  }
+}
