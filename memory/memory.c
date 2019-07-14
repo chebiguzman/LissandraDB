@@ -64,7 +64,7 @@ int main(int argc, char const *argv[])
   memset(MAIN_MEMORY, 0, main_memory_size);
 
   SEGMENT_TABLE = NULL;
-  NUMBER_OF_PAGES = main_memory_size / sizeof(page_t); // la cantidad de paginas que voy a tener con el tamano actual de cada pagina
+  NUMBER_OF_PAGES = main_memory_size / (sizeof(page_t) - sizeof(char*) + VALUE_SIZE); // la cantidad de paginas que voy a tener con el tamano actual de cada pagina
   LRU_TABLE = create_LRU_TABLE();
 
   printf("\n---- Memory info ----\n");
@@ -138,9 +138,11 @@ char* action_select(package_select* select_info){
 
 char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
+  //BUSCO O CREO EL SEGMENTO
+  segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
+  page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
+  page_info_t* page_info = insert_page(segment, page);
 
-// //BUSCO O CREO EL SEGMENTO
-//   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
 //   printf("Table name: %s\n", segment->name);
 // //SI EXISTE LA PAGINA:
 //   page_t* page = find_page(segment, insert_info->key);

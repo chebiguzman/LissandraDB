@@ -88,7 +88,8 @@ page_info_t* insert_page(segment_t* segment, page_t* page){
 	// si ya existe la pagina, reemplazo el value y toco el dirtybit
 	if(page_info != NULL){
 		if(page_info->page_ptr->timestamp < page->timestamp){ // si por alguna razon de la vida el timestamp del insert es menor al timestamp que ya tengo en la page, no la modifico
-			memcpy(page_info->page_ptr->value, page->value, sizeof(VALUE_SIZE));
+			memcpy(page_info->page_ptr->value, page->value, VALUE_SIZE);
+			memcpy(page_info->page_ptr->timestamp, page->timestamp, VALUE_SIZE);
 			page_info->dirty_bit = 1;
 		}
 	}
@@ -158,7 +159,6 @@ segment_t* find_segment(char* table_name){
 
 page_info_t* find_page_info(segment_t* segment, int key){
 	page_info_t* temp = segment->pages;
-	page_t* page;
 	while(temp != NULL){
 		if(temp->page_ptr->key == key){
 			update_LRU(segment, temp);
