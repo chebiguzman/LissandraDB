@@ -39,10 +39,11 @@ int main(int argc, char const *argv[]){
 
 
     //set up dump
-    int TIEMPO_DUMP = config_get_int_value(config, "TIEMPO_DUMP");
+    int dump_time_buffer = config_get_int_value(config, "TIEMPO_DUMP"); 
+    int *TIEMPO_DUMP = &dump_time_buffer;
+
     pthread_t tid_dump;
     pthread_create(&tid_dump, NULL, dump_cron, (void*) TIEMPO_DUMP);
-        
     //set up server
     server_info* serverInfo = malloc(sizeof(server_info));
     serverInfo->logger = logger;
@@ -366,8 +367,10 @@ void obtengovalue(char* row, char* value){
 }
 
 void* dump_cron(void* TIEMPO_DUMP) {
+  printf("el tiempo de dump es: %d", *((int*) TIEMPO_DUMP));
+  fflush(stdout);
   while(1) {
-    sleep((int) TIEMPO_DUMP / 1000);
+    sleep(*((int*) TIEMPO_DUMP) / 1000);
     dump_memtable();
   }
 }
