@@ -82,5 +82,5 @@ int* get_used_pages();
 int* update_used_pages();
 int page_is_on_use(int index);
 int find_unmodified_page();
-char* exec_in_memory(int memory_fd, char* payload);
+char* exec_in_fs(int memory_fd, char* payload);
 
