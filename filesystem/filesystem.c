@@ -42,8 +42,10 @@ int main(int argc, char const *argv[]){
     int dump_time_buffer = config_get_int_value(config, "TIEMPO_DUMP"); 
     int *TIEMPO_DUMP = &dump_time_buffer;
 
-    pthread_t tid_dump;
-    pthread_create(&tid_dump, NULL, dump_cron, (void*) TIEMPO_DUMP);
+     pthread_t tid_dump;
+    //pthread_create(&tid_dump, NULL, dump_cron, (void*) TIEMPO_DUMP);
+    
+    
     //set up server
     server_info* serverInfo = malloc(sizeof(server_info));
     serverInfo->logger = logger;
@@ -78,6 +80,13 @@ char* action_select(package_select* select_info){
 
   if(!does_table_exist(select_info->table_name)){
     return "La tabla solicitada no existe.\n";
+  }
+
+  if(is_data_on_memtable(select_info->table_name, select_info->key)){
+      char* r = malloc(strlen(get_value_from_memtable(select_info->table_name, select_info->key) + 2));
+      strcpy(r, get_value_from_memtable(select_info->table_name, select_info->key));
+      strcat(r, "\n");
+    return r;
   }
 
   t_table_metadata* meta = get_table_metadata(select_info->table_name);
