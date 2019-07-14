@@ -200,7 +200,7 @@ char* action_metrics(package_metrics* metrics_info){
   return "";
 }
 
-char* action_intern_memory_status(){
+char* action_intern__status(){
   log_info(logger_debug, "Se recibio una accion status");
 
   int memfd = get_loked_main_memory();

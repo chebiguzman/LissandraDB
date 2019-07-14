@@ -7,6 +7,7 @@
 #include <errno.h>
 #include "../pharser.h"
 #include <string.h>
+#include "engine.h"
 
 //struct table_node* memtable_first = NULL;
 //TODO ACA TIENE QUE USAR SEMAFOTOS
@@ -53,8 +54,14 @@ void insert_to_memtable(package_insert* insert_info) {
             struct data_node* aux_data;
             aux_data = aux_table->data;
 
+            if(aux_data->key == insert_info->key && aux_data->timestamp < insert_info->timestamp){
+                    aux_data->timestamp = insert_info->timestamp;
+                    aux_data->value = insert_info->value;
+                    return;
+                }
+
+
             while (aux_data->data_next != NULL) { //Avanzo hasta el ultimo nodo de data
-                aux_data = aux_data->data_next;
                 
                 if(aux_data->key == insert_info->key && aux_data->timestamp < insert_info->timestamp){
                     aux_data->timestamp = insert_info->timestamp;
@@ -62,6 +69,7 @@ void insert_to_memtable(package_insert* insert_info) {
                     return;
                 }
 
+                aux_data = aux_data->data_next;
             }
             //cargo la data 
             struct data_node* new_nodo_data;
@@ -71,6 +79,7 @@ void insert_to_memtable(package_insert* insert_info) {
             new_nodo_data->value = insert_info->value;
             new_nodo_data->data_next = NULL;
             aux_data->data_next = new_nodo_data;
+
 
 
         } else { //No encontro la tabla pero llego al final de la memtable - agrego la tabla y la data
@@ -144,5 +153,43 @@ char* get_value_from_memtable(char* table_name, int key){
     }
     
     return false;
-    return "#Error";
+}
+
+void dump_memtable(){
+    while(memtable_p!=NULL){
+        char* table_dump = dump_table(memtable_p);
+        //consigo nombre de la tabla que estoy dumpeando
+        char* table_name = memtable_p->table_name;
+
+        //send to engine
+        engine_dump_table(table_name , table_dump);
+
+        printf("------------------------\n");
+        memtable_p = memtable_p->table_next;
+    }
+}
+
+char* dump_table(struct table_node* table){
+    char* table_dump = strdup("");
+
+    struct data_node* table_data;
+    table_data = table->data;
+
+    while (table_data != NULL)
+    {
+        char* data_buffer = malloc(sizeof(unsigned) + 1 + sizeof(int) + 1 + strlen(table_data->value) + 5);
+        sprintf(data_buffer, "%u;%d;%s\n",table_data->timestamp, table_data->key, table_data->value );
+        
+        char* table_buffer = malloc(strlen(table_dump) + strlen(data_buffer) +5);
+        strcpy(table_buffer, table_dump);
+        strcat(table_buffer, data_buffer);
+
+        free(table_dump);
+        free(data_buffer);
+        table_dump = table_buffer;
+        table_data = table_data->data_next;
+    }
+    printf("%s", table_dump);
+    return table_dump;
+    
 }

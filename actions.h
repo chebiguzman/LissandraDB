@@ -22,6 +22,6 @@ char* action_run(package_run* run_info);
 
 char* action_metrics(package_metrics* metrics_info);
 
-char* action_intern_memory_status();
+char* action_intern__status();
 
 #endif

@@ -208,7 +208,7 @@ char* exec_instr(char* instr_buff){
     }
 
     if(!strcmp(instruction,"MEMORY")){
-        char* r =  action_intern_memory_status();
+        char* r =  action_intern__status();
         return r;
     }
 
