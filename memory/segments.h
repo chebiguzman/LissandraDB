@@ -2,6 +2,7 @@
 #include <commons/log.h>
 #include <pthread.h>
 #include <string.h>
+#include <unistd.h>
 
 // TODO: hacer el handshake y obtener el valor real
 #define VALUE_SIZE 64
@@ -46,7 +47,9 @@ segment_t* SEGMENT_TABLE;
 page_t* MAIN_MEMORY; 
 LRU_TABLE_t* LRU_TABLE;
 int NUMBER_OF_PAGES;
- 
+t_log* logger;
+
+
 // --------------------------
 
 
