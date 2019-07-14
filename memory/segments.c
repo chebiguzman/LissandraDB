@@ -1,11 +1,11 @@
 #include "segments.h"
 
-
-page_t* create_page(int timestamp, int key, char* value){
+page_t* create_page(int timestamp, int key, char* value, int val_size){
 	//TODO: LEVANTAR EXCEPCION SI EL VALUE ES MUY GRANDE????
 	page_t* page = (page_t*)malloc(sizeof(page_t));
 	page->timestamp = timestamp;
 	page->key = key;
+	page->value = malloc(val_size);
 	strcpy(page->value, value);
 	return page;
 }
@@ -83,7 +83,7 @@ page_info_t* save_page(segment_t* segment, page_t* page){
 }
 
 // Agrega una nueva pagina o modifica una a existente siempre con dirtybit
-page_info_t* insert_page(segment_t* segment, page_t* page){
+page_info_t* insert_page(segment_t* segment, page_t* page, int val_size){
 	page_info_t* page_info = find_page_info(segment, page->key);
 	// si ya existe la pagina, reemplazo el value y toco el dirtybit
 	if(page_info != NULL){
@@ -116,6 +116,37 @@ page_info_t* save_page_to_memory(segment_t* segment, page_t* page, int dirty_bit
 	return page_info;
 }
 
+
+
+void remove_page(lru_page_t* lru_page_info){
+	if(!is_modified(lru_page_info)){
+		remove_from_LRU(lru_page_info);
+		remove_from_segment(lru_page_info->segment, lru_page_info->lru_page);
+		// sacar de memoria (setearla a 0), hace falta??? o simplemente sobreescribo la page
+	}
+}
+
+void remove_segment(char* table_name){
+	segment_t* segmentTemp = find_segment(table_name);
+	segment_t* temp;
+	
+	if(segmentTemp->prev == NULL){ // si es el primer segmento
+		printf("-- Removing %s (first segment) --\n", segmentTemp->name);
+		temp = NULL;
+		if(segmentTemp->next != NULL){ 
+			temp = segmentTemp->next;
+			temp->prev = NULL;
+		}
+	}
+	else {	
+		temp = segmentTemp->prev;
+		temp->next = segmentTemp->next;
+
+	//free(segmentTemp);
+
+	}
+}
+
 void remove_from_segment(segment_t* segment, page_info_t* page_info){
 	page_info_t* temp;
 	if(page_info->prev == NULL){ // si es la primer page del segmento..
@@ -131,14 +162,6 @@ void remove_from_segment(segment_t* segment, page_info_t* page_info){
 		printf("-- Removing %s from %s --\n", page_info->page_ptr->value, segment->name);		
 		temp = page_info->prev;
 		temp->next = page_info->next;
-	}
-}
-
-void remove_page(lru_page_t* lru_page_info){
-	if(!is_modified(lru_page_info)){
-		remove_from_LRU(lru_page_info);
-		remove_from_segment(lru_page_info->segment, lru_page_info->lru_page);
-		// sacar de memoria (setearla a 0), hace falta??? o simplemente sobreescribo la page
 	}
 }
 
@@ -345,7 +368,7 @@ int page_is_on_use(int index){
 	return 0;
 }
 
-char* exec_in_memory(int memory_fd, char* payload){
+char* exec_in_fs(int memory_fd, char* payload){
     char* responce = malloc(3000);
     strcpy(responce, "");
     
@@ -363,5 +386,7 @@ char* exec_in_memory(int memory_fd, char* payload){
       return "NO SE ENCUENTRA FS";
     }  
     return "algo sale mal";
+
+
 
 }
