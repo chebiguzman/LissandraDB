@@ -111,6 +111,44 @@ void remove_page(lru_page_t* lru_page_info){
 	}
 }
 
+void remove_segment(char* table_name){
+	segment_t* segmentTemp = find_segment(table_name);
+	segment_t* temp;
+	
+	if(segmentTemp->prev == NULL){ // si es el primer segmento
+		printf("-- Removing %s (first segment) --\n", segmentTemp->name);
+		temp = NULL;
+		if(segmentTemp->next != NULL){ 
+			temp = segmentTemp->next;
+			temp->prev = NULL;
+		}
+	}
+	else {	
+		temp = segmentTemp->prev;
+		temp->next = segmentTemp->next;
+
+	//free(segmentTemp);
+
+}
+
+void remove_from_segment(segment_t* segment, page_info_t* page_info){
+	page_info_t* temp;
+	if(page_info->prev == NULL){ // si es la primer page del segmento..
+		printf("-- Removing %s (first node) from %s --\n", page_info->page_ptr->value, segment->name);
+		temp = NULL; // si es el unico elemento, solo asigno segment->pages a temp que es NULL
+		if(page_info->next != NULL){ 
+			temp = page_info->next;
+			temp->prev = NULL;
+		}
+		segment->pages = temp;
+	}
+	else {
+		printf("-- Removing %s from %s --\n", page_info->page_ptr->value, segment->name);		
+		temp = page_info->prev;
+		temp->next = page_info->next;
+	}
+}
+
 int is_modified(lru_page_t* page){
 	return page->lru_page->dirty_bit == 0 ? 0 : 1;
 }
@@ -302,3 +340,4 @@ char* exec_in_memory(int memory_fd, char* payload){
     }  
     return "algo sale mal";
 }
+
