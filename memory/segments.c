@@ -254,7 +254,7 @@ void update_LRU(segment_t* segment, page_info_t* page_info){
 	int last_index = LRU_TABLE->current_pages-1;
 	if(index != -1){ // si ya esta en la tabla, la muevo al final
 		lru_page_t temp = *(LRU_TABLE->lru_pages+index);		
-		memmove(LRU_TABLE->lru_pages+index, LRU_TABLE->lru_pages+index+1, NUMBER_OF_PAGES-1-index * sizeof(page_info_t));		
+		memmove(LRU_TABLE->lru_pages+index, LRU_TABLE->lru_pages+index+1, NUMBER_OF_PAGES-1-index * sizeof(lru_page_t));		
 		memcpy(LRU_TABLE->lru_pages+last_index, &temp, sizeof(lru_page_t));
 	}
 	else{ // si no esta en la tabla la agrego
