@@ -131,36 +131,38 @@ char* action_select(package_select* select_info){
     return page_info->page_ptr->value;
   }
   //SI NO EXISTE LA PAGINA:
-  // TODO: mandarle al FS el select request y recibirlo
-  page_t* page = create_page(007, select_info->key, "newValue", value_size); // TODO: asignarle los values adecuados que vuelven del FS
-  //TODO: ver que pasa si FS no tenia esa key. Me devuelve igual un valor? o directamente tira un error y no vuelve para aca
-  save_page(segment, page);
-  printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
-  return page->value;
+  // ENVIO AL FILESYSTEM
+  char* packageTemp = parse_package_insert(select_info);
+  char* responce = exec_in_fs(fs_socket, packageTemp); 
+  if(responce =! "Key invalida."){
+    page_t* page = create_page(007, select_info->key, responce); //CUIDADO TIMESTAMP
+    save_page(segment, page);
+    printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
+    return page->value;
+  }
 }
-
 //Necesito saber si es Timestamp lo genera memoria o el Kernel antes de enviarlo.
 // De no haberse ya generado el TS reemplazo <insert_info->timestamp> por <(unsigned)time(NULL)>... CREO.
 
 char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
 
-// //BUSCO O CREO EL SEGMENTO
-//   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
-//   printf("Table name: %s\n", segment->name);
-// //SI EXISTE LA PAGINA:
-//   page_t* page = find_page(segment, insert_info->key);
-//   if(page != NULL){ //Faltaria && <(insert_info->timestamp > page->timestamp)>??
-//     page->timestamp = insert_info->timestamp;
-//     page->value = insert_info->value; //TODO: ARREGLAR ESTE PROBLEMA
-//     printf("Page edited> Key: %d, Value: %s\n", insert_info->key, page->value);
-//     return page; // TODO: Retornar algo correcto
-//   }
-// //SI NO EXISTE LA PAGINA:
-//   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value); 
-//   save_page(segment, page);
-//   printf("Page created-> Key: %d, Value: %s\n", page->key, page->value);
-//   return page; // TODO: Retornar algo correcto
+ //BUSCO O CREO EL SEGMENTO
+   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
+   printf("Table name: %s\n", segment->name);
+ //SI EXISTE LA PAGINA:
+   page_t* page = find_page(segment, insert_info->key);
+   if(page != NULL){ //Faltaria && <(insert_info->timestamp > page->timestamp)>??
+     page->timestamp = insert_info->timestamp;
+     page->value = insert_info->value; //TODO: ARREGLAR ESTE PROBLEMA
+     printf("Page edited> Key: %d, Value: %s\n", insert_info->key, page->value);
+     return page; // TODO: Retornar algo correcto
+   }
+ //SI NO EXISTE LA PAGINA:
+   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value); 
+   save_page(segment, page);
+   printf("Page created-> Key: %d, Value: %s\n", page->key, page->value);
+   return page; // TODO: Retornar algo correcto
 }
 
 //en esta funcion se devuelve lo 
@@ -236,8 +238,7 @@ char* action_journal(package_journal* journal_info){
         char* packageTemp = parse_package_insert(insertTemp);
         char* responce = exec_in_memory(fs_socket, packageTemp); 
  
-        // unlock_memory(fs_socket);
-         return responce;
+        return responce;
        
         contador++;
       }
