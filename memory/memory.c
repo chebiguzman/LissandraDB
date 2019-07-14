@@ -221,9 +221,15 @@ char* action_journal(package_journal* journal_info){
         insertTemp->key = pageTemp->page_ptr->key;
         insertTemp->value = pageTemp->page_ptr->value;
         insertTemp->timestamp = pageTemp->page_ptr->timestamp;
-        action_insert(insertTemp);
-        
-        
+        char* package = parse_package_insert(insertTemp);
+
+        /*
+        char* responce = exec_in_memory(memoryfd, package); 
+ 
+        unlock_memory(memoryfd);
+        return responce;
+        */
+       
         contador++;
       }
       //ELIMINO PAGINA Y REDIRECCIONO A LA PREVIA
