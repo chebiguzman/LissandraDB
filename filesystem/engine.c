@@ -459,7 +459,7 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
 
     char* block_path = malloc(sizeof(block_name)+sizeof(MNT_POINT)+sizeof("Bloques/")+sizeof(".bin"));
     
-    strcpy(block_path, '\0');
+    strcpy(block_path, "\0");
     strcat(block_path ,MNT_POINT);
     strcat(block_path ,"Bloques/");
     strcat(block_path ,block_name);
@@ -478,7 +478,7 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
     //chequeo si existen archivos con el nombre 0.tmp , 1.tmp, 2.tmp, etc... hasta encontrar uno que no exista
     char* tmp_path = malloc(sizeof(MNT_POINT)+sizeof("Tables/")+sizeof(table_name)+sizeof("/.tmp")+2);
    
-    strcpy(tmp_path,'\0');
+    strcpy(tmp_path,"\0");
     strcat(tmp_path ,MNT_POINT);
     strcat(tmp_path ,"Tables/");
     strcat(tmp_path ,table_name);
