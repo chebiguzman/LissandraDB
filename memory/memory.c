@@ -132,7 +132,7 @@ char* action_select(package_select* select_info){
   }
   //SI NO EXISTE LA PAGINA:
   // TODO: mandarle al FS el select request y recibirlo
-  page_t* page = create_page(007, select_info->key, "newValue"); // TODO: asignarle los values adecuados que vuelven del FS
+  page_t* page = create_page(007, select_info->key, "newValue", value_size); // TODO: asignarle los values adecuados que vuelven del FS
   //TODO: ver que pasa si FS no tenia esa key. Me devuelve igual un valor? o directamente tira un error y no vuelve para aca
   save_page(segment, page);
   printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
