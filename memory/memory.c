@@ -18,10 +18,7 @@
 //logger global para que lo accedan los threads
 int fs_socket;
 int main_memory_size;
-<<<<<<< HEAD
 int value_size = 0;
-=======
->>>>>>> 6f6de239339bf22130af2a21da163c6f60752eb7
 
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
