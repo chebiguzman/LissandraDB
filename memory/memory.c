@@ -16,15 +16,18 @@
 #include "segments.h"
 
 //logger global para que lo accedan los threads
-t_log* logger;
 int fs_socket;
 int main_memory_size;
+<<<<<<< HEAD
 int value_size = 0;
+=======
+>>>>>>> 6f6de239339bf22130af2a21da163c6f60752eb7
 
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
 {
   //set up config  
+  printf("hola\n\n");
   t_config* config = config_create("config");
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
   int PORT = config_get_int_value(config, "PORT");
@@ -90,14 +93,11 @@ int main(int argc, char const *argv[])
   // page_info_t* page_info1 = save_page(s1, new_page1);
   // page_info_t* page_info2 = save_page(s1, new_page2);
 
-  // update_LRU(s1, page_info1);
   // print_segment_pages(s1);
 
-  // lru_page_t* lru_page_info1 = LRU_TABLE->lru_pages; 
-  // remove_page(lru_page_info1);
+  // lru_page_t* lru_page_info1 = create_lru_page(s1,page_info1); 
+  // lru_page_t* lru_page_info2 = create_lru_page(s1,page_info2); 
 
-  // print_LRU_TABLE();
-  // print_segment_pages(s1);
 
   // -------------- FIN PRUEBAS --------------
 
@@ -125,17 +125,17 @@ char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
 
   //BUSCO O CREO EL SEGMENTO
+  // tengo 
   segment_t* segment = find_or_create_segment(select_info->table_name); // si no existe el segmento lo creo.
-  printf("Table name: %s\n", segment->name);
   //SI EXISTE LA PAGINA:
-  page_info_t* page_info = find_page_info(segment, select_info->key);
+  page_info_t* page_info = find_page_info(segment, select_info->key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
   if(page_info != NULL){
     printf("Page found in memory -> Key: %d, Value: %s\n", select_info->key, page_info->page_ptr->value);
     return page_info->page_ptr->value;
   }
   //SI NO EXISTE LA PAGINA:
   // TODO: mandarle al FS el select request y recibirlo
-  page_t* page = create_page(007, select_info->key, "nuevoValueFS"); // TODO: asignarle los values adecuados que vuelven del FS
+  page_t* page = create_page(007, select_info->key, "newValue"); // TODO: asignarle los values adecuados que vuelven del FS
   //TODO: ver que pasa si FS no tenia esa key. Me devuelve igual un valor? o directamente tira un error y no vuelve para aca
   save_page(segment, page);
   printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
@@ -196,14 +196,21 @@ char* action_intern__status(){
 
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
+  char* responce = exec_in_memory(fs_socket, create_info); 
+  return responce;
 }
 
 char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
+  char* responce = exec_in_memory(fs_socket, describe_info); 
+  return responce;
 }
 
 char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
+  void remove_segment(char* table_name);//ELIMINA LA TABLA
+  char* responce = exec_in_memory(fs_socket, drop_info); 
+  return responce; 
 }
 
 
@@ -232,7 +239,7 @@ char* action_journal(package_journal* journal_info){
         char* packageTemp = parse_package_insert(insertTemp);
         char* responce = exec_in_memory(fs_socket, packageTemp); 
  
-        unlock_memory(fs_socket);
+        // unlock_memory(fs_socket);
          return responce;
        
         contador++;
@@ -242,9 +249,12 @@ char* action_journal(package_journal* journal_info){
       remove_from_segment(segmentTemp, pageTemp);
       pageTemp = pageTemp2 -> prev;
     }
-    //EL SEGMENTO LO TENGO QUE ELIMINAR?
     //REDIRECCIONO A SEGMENTO PREVIO
+    segment_t * segmentTemp2;
+    segmentTemp2 = segmentTemp;
     segmentTemp = segmentTemp -> prev;
+    //ELIMINO EL SEGMENTO ANTERIOR
+    remove_segment(segmentTemp2);
   }
   printf("Journal finalizado, Paginas enviadas a FS : %d \n", contador);
 }
