@@ -18,7 +18,6 @@
 //logger global para que lo accedan los threads
 int fs_socket;
 int main_memory_size;
-int value_size = 0;
 
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
@@ -61,8 +60,8 @@ int main(int argc, char const *argv[])
     char* handshake = malloc(16);
     write(fs_socket, "MEMORY", strlen("MEMORY"));
     read(fs_socket, handshake, 4);
-    value_size = atoi(handshake);
-    log_info(logger, "La memory se conecto con fs. El hanshake dio como value size %d", value_size);
+    VALUE_SIZE = atoi(handshake);
+    log_info(logger, "La memory se conecto con fs. El hanshake dio como value size %d", VALUE_SIZE);
   }
 
   main_memory_size = config_get_int_value(config, "TAM_MEM");
@@ -132,7 +131,7 @@ char* action_select(package_select* select_info){
   }
   //SI NO EXISTE LA PAGINA:
   // ENVIO AL FILESYSTEM
-  char* packageTemp = parse_package_insert(select_info);
+  char* packageTemp = parse_package_select(select_info);
   char* responce = exec_in_fs(fs_socket, packageTemp); 
 
   if(responce =! "Key invalida."){
