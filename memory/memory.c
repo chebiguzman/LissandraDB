@@ -134,6 +134,7 @@ char* action_select(package_select* select_info){
   // ENVIO AL FILESYSTEM
   char* packageTemp = parse_package_insert(select_info);
   char* responce = exec_in_fs(fs_socket, packageTemp); 
+
   if(responce =! "Key invalida."){
     page_t* page = create_page(007, select_info->key, responce); //CUIDADO TIMESTAMP
     save_page(segment, page);
@@ -196,21 +197,27 @@ char* action_intern__status(){
 
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
-  char* responce = exec_in_memory(fs_socket, create_info); 
+  char* packageTemp = parse_package_create(create_info);
+  char* responce = exec_in_fs(fs_socket, packageTemp); 
+  
   return responce;
 }
 
 char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
-  char* responce = exec_in_memory(fs_socket, describe_info); 
+  char* packageTemp = parse_package_describe(describe_info);
+  char* responce = exec_in_fs(fs_socket, packageTemp); 
+  
   return responce;
 }
 
 char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
   void remove_segment(char* table_name);//ELIMINA LA TABLA
-  char* responce = exec_in_memory(fs_socket, drop_info); 
-  return responce; 
+  char* packageTemp = parse_package_drop(describe_info);
+  char* responce = exec_in_fs(fs_socket, packageTemp); 
+  
+  return responce;
 }
 
 
@@ -234,10 +241,8 @@ char* action_journal(package_journal* journal_info){
         insertTemp->value = pageTemp->page_ptr->value;
         insertTemp->timestamp = pageTemp->page_ptr->timestamp;
        
-        //FS_SOCKET es global e unica?
-
         char* packageTemp = parse_package_insert(insertTemp);
-        char* responce = exec_in_memory(fs_socket, packageTemp); 
+        char* responce = exec_in_fs(fs_socket, packageTemp); 
  
         return responce;
        
@@ -261,42 +266,19 @@ char* action_journal(package_journal* journal_info){
 
 char* action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion select");
+  return "Pertenece a FS";
 }
 
 char* action_run(package_run* run_info){
   log_info(logger, "Se recibio una accion run");
+  return "Pertenece a FS";
 }
 
 char* action_metrics(package_metrics* metrics_info){
   log_info(logger, "Se recibio una accion metrics");
+  return "Pertenece a FS";
 }
 
 char* parse_input(char* input){
   return exec_instr(input);
 }
-
-/*
-
---FEO--
-
-char* action_journal(package_journal* journal_info){
-  log_info(logger, "Se recibio una accion select");
-
-//LEO TODOS LOS SEGMENTOS
-	segment_t* tempSegment = SEGMENT_TABLE;
-	while(tempSegment != NULL){
-	//LEO TODAS LAS PAGINAS	
-    page_info_t* tempPage = tempSegment->pages
-	  while(tempPage != NULL){
-      //FILTRO LAS PAGINAS CON BIT MODIFICADO
-		  if(tempPage->dirty_bit = 1){
-        //FUNCION. send(tempPage->page_ptr, FS) ?? Como envio toda la estructura ((page_t* page_ptr)) ??
-        }
-		  }
-		  tempPage = tempPage->next;
-		}
-		tempSegment = tempSegment->next;
-	}
-
-}
-*/
