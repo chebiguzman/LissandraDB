@@ -488,6 +488,7 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
         exit(-1);
     }
     char* blocks = strdup("");
+    int dump_size = strlen(table_dump);
     while(table_dump[0] != '\0'){
         printf("el table dump antes del dp: %s\n", table_dump);
         char* r = get_blocksize_table_rows(table_dump);
@@ -524,7 +525,7 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
             blocks = blocks_buffer;
         }
         
-        
+        dump_size++; //por cada iteracion se agrega un \0
 
     }
     
@@ -556,7 +557,7 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
             //cargo el archivo .tmp
 
             char* text = "SIZE=%s\nBLOCKS=[%s]\n";
-            char* a = string_itoa(10); //TODO ver que es size
+            char* a = string_itoa(dump_size); //TODO ver que es size
             char* r = malloc( strlen(text) + strlen(a) + strlen(blocks)+1);
 
             sprintf(r, text, a,blocks);
