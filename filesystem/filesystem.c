@@ -43,7 +43,7 @@ int main(int argc, char const *argv[]){
     int *TIEMPO_DUMP = &dump_time_buffer;
 
      pthread_t tid_dump;
-    //pthread_create(&tid_dump, NULL, dump_cron, (void*) TIEMPO_DUMP);
+     pthread_create(&tid_dump, NULL, dump_cron, (void*) TIEMPO_DUMP);
     
     
     //set up server

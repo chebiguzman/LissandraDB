@@ -189,6 +189,7 @@ char* dump_table(struct table_node* table){
         table_dump = table_buffer;
         table_data = table_data->data_next;
     }
+    
     printf("%s", table_dump);
     return table_dump;
     
