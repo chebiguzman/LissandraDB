@@ -1,11 +1,11 @@
 #include "segments.h"
 
-page_t* create_page(int timestamp, int key, char* value, int val_size){
+page_t* create_page(int timestamp, int key, char* value){
 	//TODO: LEVANTAR EXCEPCION SI EL VALUE ES MUY GRANDE????
 	page_t* page = (page_t*)malloc(sizeof(page_t));
 	page->timestamp = timestamp;
 	page->key = key;
-	page->value = malloc(val_size);
+	*(page->value) = (char*)malloc(VALUE_SIZE);
 	strcpy(page->value, value);
 	return page;
 }
@@ -83,12 +83,13 @@ page_info_t* save_page(segment_t* segment, page_t* page){
 }
 
 // Agrega una nueva pagina o modifica una a existente siempre con dirtybit
-page_info_t* insert_page(segment_t* segment, page_t* page, int val_size){
+page_info_t* insert_page(segment_t* segment, page_t* page){
 	page_info_t* page_info = find_page_info(segment, page->key);
 	// si ya existe la pagina, reemplazo el value y toco el dirtybit
 	if(page_info != NULL){
 		if(page_info->page_ptr->timestamp < page->timestamp){ // si por alguna razon de la vida el timestamp del insert es menor al timestamp que ya tengo en la page, no la modifico
-			memcpy(page_info->page_ptr->value, page->value, val_size);
+			memcpy(page_info->page_ptr->value, page->value, VALUE_SIZE);
+			memcpy(page_info->page_ptr->timestamp, page->timestamp, sizeof(page->timestamp));
 			page_info->dirty_bit = 1;
 		}
 	}
@@ -181,7 +182,6 @@ segment_t* find_segment(char* table_name){
 
 page_info_t* find_page_info(segment_t* segment, int key){
 	page_info_t* temp = segment->pages;
-	page_t* page;
 	while(temp != NULL){
 		if(temp->page_ptr->key == key){
 			update_LRU(segment, temp);
@@ -368,7 +368,7 @@ int page_is_on_use(int index){
 	return 0;
 }
 
-char* exec_in_memory(int memory_fd, char* payload){
+char* exec_in_fs(int memory_fd, char* payload){
     char* responce = malloc(3000);
     strcpy(responce, "");
     
