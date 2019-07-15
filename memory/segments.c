@@ -5,7 +5,7 @@ page_t* create_page(int timestamp, int key, char* value){
 	page_t* page = (page_t*)malloc(sizeof(page_t));
 	page->timestamp = timestamp;
 	page->key = key;
-	*(page->value) = (char*)malloc(VALUE_SIZE);
+	page->value = (char*)malloc(VALUE_SIZE);
 	strcpy(page->value, value);
 	return page;
 }
@@ -89,7 +89,7 @@ page_info_t* insert_page(segment_t* segment, page_t* page){
 	if(page_info != NULL){
 		if(page_info->page_ptr->timestamp < page->timestamp){ // si por alguna razon de la vida el timestamp del insert es menor al timestamp que ya tengo en la page, no la modifico
 			memcpy(page_info->page_ptr->value, page->value, VALUE_SIZE);
-			memcpy(page_info->page_ptr->timestamp, page->timestamp, sizeof(page->timestamp));
+			memcpy((&page_info->page_ptr->timestamp), &page->timestamp, sizeof(page->timestamp));
 			page_info->dirty_bit = 1;
 		}
 	}
@@ -126,12 +126,26 @@ void remove_page(lru_page_t* lru_page_info){
 	}
 }
 
+void force_remove_page(lru_page_t* lru_page_info){
+	remove_from_LRU(lru_page_info);
+	remove_from_segment(lru_page_info->segment, lru_page_info->lru_page);
+	// sacar de memoria (setearla a 0), hace falta??? o simplemente sobreescribo la pages
+}
+
+void remove_all_pages_from_segment(segment_t* segment){
+	while(segment->pages != NULL){
+		force_remove_page(segment->pages);
+	}
+}
+
 void remove_segment(char* table_name){
 	segment_t* segmentTemp = find_segment(table_name);
+	remove_all_pages_from_segment(segmentTemp);
 	segment_t* temp;
 	
 	if(segmentTemp->prev == NULL){ // si es el primer segmento
 		printf("-- Removing %s (first segment) --\n", segmentTemp->name);
+		SEGMENT_TABLE = segmentTemp->next;
 		temp = NULL;
 		if(segmentTemp->next != NULL){ 
 			temp = segmentTemp->next;

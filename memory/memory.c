@@ -134,7 +134,7 @@ char* action_select(package_select* select_info){
   char* packageTemp = parse_package_select(select_info);
   char* responce = exec_in_fs(fs_socket, packageTemp); 
 
-  if(responce =! "Key invalida."){
+  if(strcmp(responce, "Key invalida.") != 0){
     page_t* page = create_page(007, select_info->key, responce); //CUIDADO TIMESTAMP
     save_page(segment, page);
     printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
@@ -196,10 +196,6 @@ char* action_intern__status(){
 
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
-  char* packageTemp = parse_package_create(create_info);
-  char* responce = exec_in_fs(fs_socket, packageTemp); 
-  
-  return responce;
 }
 
 char* action_describe(package_describe* describe_info){
@@ -212,11 +208,6 @@ char* action_describe(package_describe* describe_info){
 
 char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
-  void remove_segment(char* table_name);//ELIMINA LA TABLA
-  char* packageTemp = parse_package_drop(describe_info);
-  char* responce = exec_in_fs(fs_socket, packageTemp); 
-  
-  return responce;
 }
 
 
@@ -242,14 +233,12 @@ char* action_journal(package_journal* journal_info){
        
         char* packageTemp = parse_package_insert(insertTemp);
         char* responce = exec_in_fs(fs_socket, packageTemp); 
- 
-        return responce;
-       
+        
         contador++;
       }
       //ELIMINO PAGINA Y REDIRECCIONO A LA PREVIA
       page_info_t* pageTemp2 = pageTemp;
-      remove_from_segment(segmentTemp, pageTemp);
+      force_remove_page(pageTemp);
       pageTemp = pageTemp2 -> prev;
     }
     //REDIRECCIONO A SEGMENTO PREVIO
@@ -257,7 +246,7 @@ char* action_journal(package_journal* journal_info){
     segmentTemp2 = segmentTemp;
     segmentTemp = segmentTemp -> prev;
     //ELIMINO EL SEGMENTO ANTERIOR
-    remove_segment(segmentTemp2);
+    remove_segment(segmentTemp2->name);
   }
   printf("Journal finalizado, Paginas enviadas a FS : %d \n", contador);
 }
