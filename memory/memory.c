@@ -18,7 +18,6 @@
 //logger global para que lo accedan los threads
 int fs_socket;
 int main_memory_size;
-int value_size = 0;
 
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
@@ -61,8 +60,8 @@ int main(int argc, char const *argv[])
     char* handshake = malloc(16);
     write(fs_socket, "MEMORY", strlen("MEMORY"));
     read(fs_socket, handshake, 4);
-    value_size = atoi(handshake);
-    log_info(logger, "La memory se conecto con fs. El hanshake dio como value size %d", value_size);
+    VALUE_SIZE = atoi(handshake);
+    log_info(logger, "La memory se conecto con fs. El hanshake dio como value size %d", VALUE_SIZE);
   }
 
   main_memory_size = config_get_int_value(config, "TAM_MEM");
@@ -70,7 +69,7 @@ int main(int argc, char const *argv[])
   memset(MAIN_MEMORY, 0, main_memory_size);
 
   SEGMENT_TABLE = NULL;
-  NUMBER_OF_PAGES = main_memory_size / sizeof(page_t); // la cantidad de paginas que voy a tener con el tamano actual de cada pagina
+  NUMBER_OF_PAGES = main_memory_size / (sizeof(page_t) - sizeof(char*) + VALUE_SIZE); // la cantidad de paginas que voy a tener con el tamano actual de cada pagina
   LRU_TABLE = create_LRU_TABLE();
 
   printf("\n---- Memory info ----\n");
@@ -131,22 +130,26 @@ char* action_select(package_select* select_info){
     return page_info->page_ptr->value;
   }
   //SI NO EXISTE LA PAGINA:
-  // TODO: mandarle al FS el select request y recibirlo
-  page_t* page = create_page(007, select_info->key, "newValue", value_size); // TODO: asignarle los values adecuados que vuelven del FS
-  //TODO: ver que pasa si FS no tenia esa key. Me devuelve igual un valor? o directamente tira un error y no vuelve para aca
-  save_page(segment, page);
-  printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
-  return page->value;
-}
+  // ENVIO AL FILESYSTEM
+  char* packageTemp = parse_package_select(select_info);
+  char* responce = exec_in_fs(fs_socket, packageTemp); 
 
+  if(responce =! "Key invalida."){
+    page_t* page = create_page(007, select_info->key, responce); //CUIDADO TIMESTAMP
+    save_page(segment, page);
+    printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
+    return page->value;
+  }
+}
 //Necesito saber si es Timestamp lo genera memoria o el Kernel antes de enviarlo.
 // De no haberse ya generado el TS reemplazo <insert_info->timestamp> por <(unsigned)time(NULL)>... CREO.
 
 char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
-
-// //BUSCO O CREO EL SEGMENTO
-//   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
+  //BUSCO O CREO EL SEGMENTO
+  segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
+  page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
+  page_info_t* page_info = insert_page(segment, page);
 //   printf("Table name: %s\n", segment->name);
 // //SI EXISTE LA PAGINA:
 //   page_t* page = find_page(segment, insert_info->key);
@@ -193,21 +196,27 @@ char* action_intern__status(){
 
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
-  char* responce = exec_in_memory(fs_socket, create_info); 
+  char* packageTemp = parse_package_create(create_info);
+  char* responce = exec_in_fs(fs_socket, packageTemp); 
+  
   return responce;
 }
 
 char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
-  char* responce = exec_in_memory(fs_socket, describe_info); 
+  char* packageTemp = parse_package_describe(describe_info);
+  char* responce = exec_in_fs(fs_socket, packageTemp); 
+  
   return responce;
 }
 
 char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
   void remove_segment(char* table_name);//ELIMINA LA TABLA
-  char* responce = exec_in_memory(fs_socket, drop_info); 
-  return responce; 
+  char* packageTemp = parse_package_drop(describe_info);
+  char* responce = exec_in_fs(fs_socket, packageTemp); 
+  
+  return responce;
 }
 
 
@@ -231,13 +240,10 @@ char* action_journal(package_journal* journal_info){
         insertTemp->value = pageTemp->page_ptr->value;
         insertTemp->timestamp = pageTemp->page_ptr->timestamp;
        
-        //FS_SOCKET es global e unica?
-
         char* packageTemp = parse_package_insert(insertTemp);
-        char* responce = exec_in_memory(fs_socket, packageTemp); 
+        char* responce = exec_in_fs(fs_socket, packageTemp); 
  
-        // unlock_memory(fs_socket);
-         return responce;
+        return responce;
        
         contador++;
       }
@@ -259,42 +265,19 @@ char* action_journal(package_journal* journal_info){
 
 char* action_add(package_add* add_info){
   log_info(logger, "Se recibio una accion select");
+  return "Pertenece a FS";
 }
 
 char* action_run(package_run* run_info){
   log_info(logger, "Se recibio una accion run");
+  return "Pertenece a FS";
 }
 
 char* action_metrics(package_metrics* metrics_info){
   log_info(logger, "Se recibio una accion metrics");
+  return "Pertenece a FS";
 }
 
 char* parse_input(char* input){
   return exec_instr(input);
 }
-
-/*
-
---FEO--
-
-char* action_journal(package_journal* journal_info){
-  log_info(logger, "Se recibio una accion select");
-
-//LEO TODOS LOS SEGMENTOS
-	segment_t* tempSegment = SEGMENT_TABLE;
-	while(tempSegment != NULL){
-	//LEO TODAS LAS PAGINAS	
-    page_info_t* tempPage = tempSegment->pages
-	  while(tempPage != NULL){
-      //FILTRO LAS PAGINAS CON BIT MODIFICADO
-		  if(tempPage->dirty_bit = 1){
-        //FUNCION. send(tempPage->page_ptr, FS) ?? Como envio toda la estructura ((page_t* page_ptr)) ??
-        }
-		  }
-		  tempPage = tempPage->next;
-		}
-		tempSegment = tempSegment->next;
-	}
-
-}
-*/
