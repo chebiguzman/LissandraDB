@@ -62,6 +62,7 @@ segment_t* find_segment(char* table_name);
 segment_t* find_or_create_segment(char* table_name);
 int find_free_page();
 void remove_page(lru_page_t* lru_page_info);
+void force_remove_page(lru_page_t* lru_page_info);
 void add_segment_to_table(segment_t* segment);
 void add_page_to_segment(segment_t* segment, page_info_t* page_info);
 segment_t* get_last_segment();
