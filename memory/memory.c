@@ -120,20 +120,16 @@ int main(int argc, char const *argv[])
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
 
-  //BUSCO O CREO EL SEGMENTO
-  // tengo 
-  segment_t* segment = find_or_create_segment(select_info->table_name); // si no existe el segmento lo creo.
-  //SI EXISTE LA PAGINA:
   page_info_t* page_info = find_page_info(select_info->table_name, select_info->key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
   if(page_info != NULL){
     printf("Page found in memory -> Key: %d, Value: %s\n", select_info->key, page_info->page_ptr->value);
     return page_info->page_ptr->value;
   }
-  //SI NO EXISTE LA PAGINA:
-  // ENVIO AL FILESYSTEM
+
+  // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
   char* packageTemp = parse_package_select(select_info);
   char* responce = exec_in_fs(fs_socket, packageTemp); 
-
+  
   if(strcmp(responce, "Key invalida.") != 0){
     page_t* page = create_page(007, select_info->key, responce); //CUIDADO TIMESTAMP
     save_page(select_info->table_name, page);
@@ -141,8 +137,6 @@ char* action_select(package_select* select_info){
     return string_new("%s\n", page->value);
   }
 }
-//Necesito saber si es Timestamp lo genera memoria o el Kernel antes de enviarlo.
-// De no haberse ya generado el TS reemplazo <insert_info->timestamp> por <(unsigned)time(NULL)>... CREO.
 
 char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
@@ -151,6 +145,44 @@ char* action_insert(package_insert* insert_info){
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
   page_info_t* page_info = insert_page(insert_info->table_name, page);
   return "\n";
+}
+
+char* action_create(package_create* create_info){
+  log_info(logger, "Se recibio una accion create");
+  return exec_in_fs(fs_socket, parse_package_create(create_info)); // retorno el response de fs
+}
+
+char* action_describe(package_describe* describe_info){
+  log_info(logger, "Se recibio una accion describe");
+  return exec_in_fs(fs_socket, parse_package_describe(describe_info)); // retorno el response de fs
+}
+
+char* action_drop(package_drop* drop_info){
+  log_info(logger, "Se recibio una accion drop");
+  segment_t* segment = find_segment(drop_info->table_name);
+  if(segment != NULL) remove_segment(drop_info->table_name, 0);
+  return exec_in_fs(fs_socket, parse_package_drop(drop_info)); // retorno el response de fs
+}
+
+char* action_journal(package_journal* journal_info){
+  log_info(logger, "Se recibio una accion select");
+  journal();
+  return "Journaling done\n";
+}
+
+char* action_add(package_add* add_info){
+  log_info(logger, "Se recibio una accion select");
+  return "Pertenece a FS";
+}
+
+char* action_run(package_run* run_info){
+  log_info(logger, "Se recibio una accion run");
+  return "Pertenece a FS";
+}
+
+char* action_metrics(package_metrics* metrics_info){
+  log_info(logger, "Se recibio una accion metrics");
+  return "Pertenece a FS";
 }
 
 //en esta funcion se devuelve lo 
@@ -179,85 +211,6 @@ char* action_intern__status(){
     i++;
   }
   return res;
-}
-
-char* action_create(package_create* create_info){
-  log_info(logger, "Se recibio una accion create");
-  char* response = exec_in_fs(fs_socket, parse_package_create(create_info));
-  return response;
-}
-
-char* action_describe(package_describe* describe_info){
-  log_info(logger, "Se recibio una accion describe");
-  char* packageTemp = parse_package_describe(describe_info);
-  char* responce = exec_in_fs(fs_socket, packageTemp); 
-  
-  return responce;
-}
-
-char* action_drop(package_drop* drop_info){
-  log_info(logger, "Se recibio una accion drop");
-  segment_t* segment = find_segment(drop_info->table_name);
-  if(segment != NULL) remove_segment(drop_info->table_name, 0);
-  // TODO: exec_in_fs drop info
-}
-
-
-char* action_journal(package_journal* journal_info){
-  log_info(logger, "Se recibio una accion select");
-  journal();
-  return "Journaling done\n";
-// //VOY AL ULTIMO SEGMENTO
-//   segment_t* segmentTemp = get_last_segment();
-//   int contador = 0;
-//   while(segmentTemp != NULL){
-//     //VOY A LA ULTIMA PAGINA
-//     page_info_t* pageTemp =  get_last_page(segmentTemp -> pages);
-    
-//     while(segmentTemp != NULL){
-//       //CHEQUEO DIRTY BIT EN 1
-//       if(pageTemp -> dirty_bit = 1){
-//         //ENVIO AL FILESYSTEM
-//         package_insert* insertTemp;
-//         insertTemp->table_name = segmentTemp->name;
-//         insertTemp->key = pageTemp->page_ptr->key;
-//         insertTemp->value = pageTemp->page_ptr->value;
-//         insertTemp->timestamp = pageTemp->page_ptr->timestamp;
-       
-//         char* packageTemp = parse_package_insert(insertTemp);
-//         char* responce = exec_in_fs(fs_socket, packageTemp); 
-        
-//         contador++;
-//       }
-//       //ELIMINO PAGINA Y REDIRECCIONO A LA PREVIA
-//       page_info_t* pageTemp2 = pageTemp;
-//       force_remove_page(pageTemp);
-//       pageTemp = pageTemp2 -> prev;
-//     }
-//     //REDIRECCIONO A SEGMENTO PREVIO
-//     segment_t * segmentTemp2;
-//     segmentTemp2 = segmentTemp;
-//     segmentTemp = segmentTemp -> prev;
-//     //ELIMINO EL SEGMENTO ANTERIOR
-//     remove_segment(segmentTemp2->name);
-//   }
-//   printf("Journal finalizado, Paginas enviadas a FS : %d \n", contador);
-}
-
-
-char* action_add(package_add* add_info){
-  log_info(logger, "Se recibio una accion select");
-  return "Pertenece a FS";
-}
-
-char* action_run(package_run* run_info){
-  log_info(logger, "Se recibio una accion run");
-  return "Pertenece a FS";
-}
-
-char* action_metrics(package_metrics* metrics_info){
-  log_info(logger, "Se recibio una accion metrics");
-  return "Pertenece a FS";
 }
 
 char* parse_input(char* input){
