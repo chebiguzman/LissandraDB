@@ -134,7 +134,7 @@ char* action_select(package_select* select_info){
   char* packageTemp = parse_package_select(select_info);
   char* responce = exec_in_fs(fs_socket, packageTemp); 
 
-  if(responce =! "Key invalida."){
+  if(strcmp(responce, "Key invalida.") != 0){
     page_t* page = create_page(007, select_info->key, responce); //CUIDADO TIMESTAMP
     save_page(segment, page);
     printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
@@ -150,20 +150,7 @@ char* action_insert(package_insert* insert_info){
   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
   page_info_t* page_info = insert_page(segment, page);
-//   printf("Table name: %s\n", segment->name);
-// //SI EXISTE LA PAGINA:
-//   page_t* page = find_page(segment, insert_info->key);
-//   if(page != NULL){ //Faltaria && <(insert_info->timestamp > page->timestamp)>??
-//     page->timestamp = insert_info->timestamp;
-//     page->value = insert_info->value; //TODO: ARREGLAR ESTE PROBLEMA
-//     printf("Page edited> Key: %d, Value: %s\n", insert_info->key, page->value);
-//     return page; // TODO: Retornar algo correcto
-//   }
-// //SI NO EXISTE LA PAGINA:
-//   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value); 
-//   save_page(segment, page);
-//   printf("Page created-> Key: %d, Value: %s\n", page->key, page->value);
-//   return page; // TODO: Retornar algo correcto
+  return page_info->page_ptr->value;
 }
 
 //en esta funcion se devuelve lo 
@@ -196,10 +183,6 @@ char* action_intern__status(){
 
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
-  char* packageTemp = parse_package_create(create_info);
-  char* responce = exec_in_fs(fs_socket, packageTemp); 
-  
-  return responce;
 }
 
 char* action_describe(package_describe* describe_info){
@@ -212,54 +195,47 @@ char* action_describe(package_describe* describe_info){
 
 char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
-  void remove_segment(char* table_name);//ELIMINA LA TABLA
-  char* packageTemp = parse_package_drop(describe_info);
-  char* responce = exec_in_fs(fs_socket, packageTemp); 
-  
-  return responce;
 }
 
 
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
-
-//VOY AL ULTIMO SEGMENTO
-  segment_t* segmentTemp = get_last_segment();
-  int contador = 0;
-  while(segmentTemp != NULL){
-    //VOY A LA ULTIMA PAGINA
-    page_info_t* pageTemp =  get_last_page(segmentTemp -> pages);
+  
+// //VOY AL ULTIMO SEGMENTO
+//   segment_t* segmentTemp = get_last_segment();
+//   int contador = 0;
+//   while(segmentTemp != NULL){
+//     //VOY A LA ULTIMA PAGINA
+//     page_info_t* pageTemp =  get_last_page(segmentTemp -> pages);
     
-    while(segmentTemp != NULL){
-      //CHEQUEO DIRTY BIT EN 1
-      if(pageTemp -> dirty_bit = 1){
-        //ENVIO AL FILESYSTEM
-        package_insert* insertTemp;
-        insertTemp->table_name = segmentTemp->name;
-        insertTemp->key = pageTemp->page_ptr->key;
-        insertTemp->value = pageTemp->page_ptr->value;
-        insertTemp->timestamp = pageTemp->page_ptr->timestamp;
+//     while(segmentTemp != NULL){
+//       //CHEQUEO DIRTY BIT EN 1
+//       if(pageTemp -> dirty_bit = 1){
+//         //ENVIO AL FILESYSTEM
+//         package_insert* insertTemp;
+//         insertTemp->table_name = segmentTemp->name;
+//         insertTemp->key = pageTemp->page_ptr->key;
+//         insertTemp->value = pageTemp->page_ptr->value;
+//         insertTemp->timestamp = pageTemp->page_ptr->timestamp;
        
-        char* packageTemp = parse_package_insert(insertTemp);
-        char* responce = exec_in_fs(fs_socket, packageTemp); 
- 
-        return responce;
-       
-        contador++;
-      }
-      //ELIMINO PAGINA Y REDIRECCIONO A LA PREVIA
-      page_info_t* pageTemp2 = pageTemp;
-      remove_from_segment(segmentTemp, pageTemp);
-      pageTemp = pageTemp2 -> prev;
-    }
-    //REDIRECCIONO A SEGMENTO PREVIO
-    segment_t * segmentTemp2;
-    segmentTemp2 = segmentTemp;
-    segmentTemp = segmentTemp -> prev;
-    //ELIMINO EL SEGMENTO ANTERIOR
-    remove_segment(segmentTemp2);
-  }
-  printf("Journal finalizado, Paginas enviadas a FS : %d \n", contador);
+//         char* packageTemp = parse_package_insert(insertTemp);
+//         char* responce = exec_in_fs(fs_socket, packageTemp); 
+        
+//         contador++;
+//       }
+//       //ELIMINO PAGINA Y REDIRECCIONO A LA PREVIA
+//       page_info_t* pageTemp2 = pageTemp;
+//       force_remove_page(pageTemp);
+//       pageTemp = pageTemp2 -> prev;
+//     }
+//     //REDIRECCIONO A SEGMENTO PREVIO
+//     segment_t * segmentTemp2;
+//     segmentTemp2 = segmentTemp;
+//     segmentTemp = segmentTemp -> prev;
+//     //ELIMINO EL SEGMENTO ANTERIOR
+//     remove_segment(segmentTemp2->name);
+//   }
+//   printf("Journal finalizado, Paginas enviadas a FS : %d \n", contador);
 }
 
 

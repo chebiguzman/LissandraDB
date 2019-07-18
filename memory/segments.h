@@ -61,7 +61,8 @@ page_info_t* save_page_to_memory(segment_t* segment, page_t* page, int dirtybit)
 segment_t* find_segment(char* table_name);
 segment_t* find_or_create_segment(char* table_name);
 int find_free_page();
-void remove_page(lru_page_t* lru_page_info);
+void remove_page(page_info_t* page_info);
+void force_remove_page(page_info_t* page_info);
 void add_segment_to_table(segment_t* segment);
 void add_page_to_segment(segment_t* segment, page_info_t* page_info);
 segment_t* get_last_segment();
@@ -75,7 +76,7 @@ void remove_from_LRU(lru_page_t* lru_page_info);
 void print_LRU_TABLE();
 lru_page_t* create_lru_page(segment_t* segment, page_info_t* page_info);
 LRU_TABLE_t* create_LRU_TABLE();
-int is_modified(lru_page_t* page);
+int is_modified(page_info_t* page_info);
 char* exec_in_memory(int memory_fd, char* payload);
 void remove_segment(char* table_name);
 int* get_used_pages();
