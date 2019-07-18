@@ -33,17 +33,17 @@ int main(int argc, char const *argv[])
 
     char* MEMORY_IP = config_get_string_value(config, "MEMORY_IP");
     int MEMORY_PORT = config_get_int_value(config, "MEMORY_PORT");
-
-   
-    //set up log
-    logger = log_create(LOGPATH, "Kernel", 1 , LOG_LEVEL_DEBUG);
+    logger = log_create(LOGPATH, "Kernel", 1 , LOG_LEVEL_INFO);
     int console = 0;
-
-    if(argc == 2 && !strcmp(argv[1],"-v")){
+      if(argc == 2 && !strcmp(argv[1],"-v")){
       console++;
     }
-    logger_debug = log_create(LOGPATH, "Kernel", console, LOG_LEVEL_DEBUG);
+    logger_debug = log_create("log.debug", "Kernel", console, LOG_LEVEL_DEBUG);
   
+    //set up log
+    
+
+ 
     pthread_cond_t console_cond;
     pthread_mutex_t console_lock;
     pthread_mutex_init(&console_lock, NULL);
@@ -63,14 +63,14 @@ int main(int argc, char const *argv[])
     pthread_create(&tid_console, NULL, console_input_wait, control);
     
     signal(SIGPIPE, SIG_IGN); //Ignorar error de write
-    metrics_start();
+    metrics_start(logger);
     //JOIN THREADS
     //pthread_join(tid,NULL);
     pthread_join(tid_console,NULL);
     
     //FREE MEMORY
     free(LOGPATH);
-    free(logger);
+    //free(logger);
     //free(serverInfo);
     config_destroy(config);
 
@@ -83,6 +83,8 @@ char* exec_in_memory(int memory_fd, char* payload){
     
     if ( memory_fd < 0 ){
       log_error(logger, "No se pudo llevar a cabo la accion.");
+      log_debug(logger_debug, "se obtubo e");
+
       return "";
     }
 
@@ -101,13 +103,18 @@ char* action_select(package_select* select_info){
   log_info(logger_debug, "Se recibio una accion select");
   //get consistency of talble
   t_consistency consistency = get_table_consistency(select_info->table_name);
+  log_info(logger_debug, "Se obtiene consistencia accion select");
 
   //pedir una memoria
   int memoryfd = get_loked_memory(consistency, select_info->table_name);
+  log_info(logger_debug, "Se obtiene memoria accion select");
+
   char* package = parse_package_select(select_info);
+  log_info(logger_debug, "Se parcea accion select");
 
   char* responce = exec_in_memory(memoryfd, package); 
- 
+  log_info(logger_debug, "Se ejecuta en memoria accion select");
+  
   unlock_memory(memoryfd);
   return responce;
 
@@ -169,10 +176,18 @@ char* action_insert(package_insert* insert_info){
 }
 
 char* action_create(package_create* create_info){
+
+
   log_info(logger_debug, "Se recibio una accion create");
+        
+  
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
+  log_debug(logger_debug, "se obtubo el memfd %d", memoryfd);
+  
   char* package = parse_package_create(create_info);
+  
   char* responce = exec_in_memory(memoryfd, package);
+  
   unlock_memory(memoryfd);
   return responce;
 }
