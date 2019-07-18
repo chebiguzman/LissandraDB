@@ -183,6 +183,8 @@ char* action_intern__status(){
 
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
+  char* response = exec_in_fs(fs_socket, parse_package_create(create_info));
+  return response;
 }
 
 char* action_describe(package_describe* describe_info){
