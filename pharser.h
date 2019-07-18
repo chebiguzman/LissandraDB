@@ -62,6 +62,22 @@ typedef struct
 
 } package_create;
 
+//JOURNAL
+typedef struct
+{
+    char *instruction;
+
+} package_journal;
+
+
+//METRICS
+typedef struct
+{
+    char *instruction;
+
+} package_metrics;
+
+
 char* exec_instr(char* input);
 char* create_buffer(int argc, char const *argv[]);
 char* get_string_from_buffer(char* buffer, int index);
@@ -72,5 +88,7 @@ char* parse_package_describe(package_describe* package);
 char* parse_package_drop(package_drop* package);
 char* parse_package_create(package_create* package);
 char* parse_package_run(package_run* package);
+char* parse_package_journal(package_journal* pk);
 char* parse_input(char* input);
 
+char *ltoa(long N, char *str, int base);

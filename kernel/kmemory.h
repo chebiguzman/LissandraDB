@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <commons/log.h>
 #include <stdlib.h>
+#include <commons/collections/dictionary.h>
 
 
 
@@ -28,7 +29,7 @@ void unlock_memory(int memoryfd);
 void start_kmemory_module(t_log* logg,t_log* logg_debug, char* main_memory_ip, int main_memoy_port);
 int connect_to_memory(char* ip, int port);
 void *metadata_service(void* args);
-
+void kmemory_set_active_tables(t_dictionary* dic);
 
 int get_loked_main_memory();
 void check_for_new_memory(char* ip, int port, int id);

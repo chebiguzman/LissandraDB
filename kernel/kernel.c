@@ -10,7 +10,7 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
-
+#include <commons/collections/dictionary.h>
 #include "../pharser.h"
 #include "../actions.h"
 #include "../console.h"
@@ -18,7 +18,7 @@
 #include <commons/string.h>
 #include <commons/collections/queue.h>
 #include <signal.h>
-
+#include "metrics_worker.h"
 
 //punto de entrada para el programa y el kernel
 t_log* logger;
@@ -42,7 +42,7 @@ int main(int argc, char const *argv[])
     if(argc == 2 && !strcmp(argv[1],"-v")){
       console++;
     }
-    logger_debug = log_create(LOGPATH, "Kernel", 0, LOG_LEVEL_DEBUG);
+    logger_debug = log_create(LOGPATH, "Kernel", console, LOG_LEVEL_DEBUG);
   
     pthread_cond_t console_cond;
     pthread_mutex_t console_lock;
@@ -63,7 +63,7 @@ int main(int argc, char const *argv[])
     pthread_create(&tid_console, NULL, console_input_wait, control);
     
     signal(SIGPIPE, SIG_IGN); //Ignorar error de write
-
+    metrics_start();
     //JOIN THREADS
     //pthread_join(tid,NULL);
     pthread_join(tid_console,NULL);
@@ -160,44 +160,80 @@ char* action_add(package_add* add_info){
 
 char* action_insert(package_insert* insert_info){
   log_info(logger_debug, "Se recibio una accion insert");
-  /*t_consistency consistency = get_table_consistency(insert_info->table_name);
+  t_consistency consistency = get_table_consistency(insert_info->table_name);
   int memoryfd = get_loked_memory(consistency, insert_info->table_name);
-  char* package = parse_package_insert(select_info);
-
+  char* package = parse_package_insert(insert_info);
   char* responce = exec_in_memory(memoryfd, package); 
- 
-  unlock_memory(memoryfd);*/
-  return "";
+  unlock_memory(memoryfd);
+  return responce;
 }
 
 char* action_create(package_create* create_info){
   log_info(logger_debug, "Se recibio una accion create");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
-  return "";
+  char* package = parse_package_create(create_info);
+  char* responce = exec_in_memory(memoryfd, package);
+  unlock_memory(memoryfd);
+  return responce;
 }
 
 char* action_describe(package_describe* describe_info){
   log_info(logger_debug, "Se recibio una accion describe");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
-  return "";
+  char* package = parse_package_describe(describe_info);
+  char* responce = exec_in_memory(memoryfd, package);
+
+  return"";
+  char** buffer = string_split(responce, "\n\n");
+  t_dictionary* tables_dic = dictionary_create();
+
+  while(*buffer){
+    char** lines = string_split(*buffer, "\n");
+    t_dictionary* dic = dictionary_create();
+    void add_cofiguration(char *line) {
+      if (!string_starts_with(line, "#")) {
+        char** keyAndValue = string_n_split(line, 2, "=");
+        string_to_upper(keyAndValue[1]);
+        dictionary_put(dic,  keyAndValue[0], keyAndValue[1]);
+        free(keyAndValue[0]);
+        free(keyAndValue);
+      }
+    }
+    string_iterate_lines(lines, add_cofiguration);
+    string_iterate_lines(lines, (void*) free);
+    dictionary_put(tables_dic, dictionary_get(dic, "NOMBRE"), dictionary_get(dic, "CONSISTENCY") );
+    free(lines);
+    free(dic);
+
+    buffer++;
+  }
+  kmemory_set_active_tables(tables_dic);
+  unlock_memory(memoryfd);
+  return responce;
 }
 
 char* action_drop(package_drop* drop_info){
   log_info(logger_debug, "Se recibio una accion drop");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
-  return "";
+  char* package = parse_package_drop(drop_info);
+  char* responce = exec_in_memory(memoryfd, package);
+  unlock_memory(memoryfd);
+  return responce;
 }
 
 char* action_journal(package_journal* journal_info){
   log_info(logger_debug, "Se recibio una accion select");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
-  return "";
+  char* package = parse_package_journal(journal_info);
+  char* responce = exec_in_memory(memoryfd, package);
+  unlock_memory(memoryfd);
+  return responce;
 }
 
 char* action_metrics(package_metrics* metrics_info){
   log_info(logger_debug, "Se recibio una accion metrics");
   
-  return "";
+  return get_metrics();
 }
 
 char* action_intern__status(){
