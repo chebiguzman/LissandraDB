@@ -195,6 +195,9 @@ char* action_describe(package_describe* describe_info){
 
 char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
+  segment_t* segment = find_segment(drop_info->table_name);
+  if(segment != NULL) remove_segment(drop_info->table_name, 0);
+  // TODO: exec_in_fs drop info
 }
 
 
