@@ -5,7 +5,7 @@ page_t* create_page(int timestamp, int key, char* value){
 	page_t* page = (page_t*)malloc(sizeof(page_t));
 	page->timestamp = timestamp;
 	page->key = key;
-	*(page->value) = (char*)malloc(VALUE_SIZE);
+	page->value = (char*)malloc(VALUE_SIZE);
 	strcpy(page->value, value);
 	return page;
 }
@@ -62,9 +62,9 @@ int find_unmodified_page(){
 	lru_page_t* to_be_replaced_page;
 	for(int i = 0; i < LRU_TABLE->current_pages; i++){ 
 		to_be_replaced_page = LRU_TABLE->lru_pages+i;
-		if(!is_modified(to_be_replaced_page)){
+		if(!is_modified(to_be_replaced_page->lru_page)){
 			int index = to_be_replaced_page->lru_page->index;
-			remove_page(to_be_replaced_page);
+			remove_page(to_be_replaced_page->lru_page);
 			return index;
 		}
 	}
@@ -88,8 +88,8 @@ page_info_t* insert_page(segment_t* segment, page_t* page){
 	// si ya existe la pagina, reemplazo el value y toco el dirtybit
 	if(page_info != NULL){
 		if(page_info->page_ptr->timestamp < page->timestamp){ // si por alguna razon de la vida el timestamp del insert es menor al timestamp que ya tengo en la page, no la modifico
-			memcpy(page_info->page_ptr->value, page->value, VALUE_SIZE);
-			memcpy(page_info->page_ptr->timestamp, page->timestamp, sizeof(page->timestamp));
+			printf("Updating value %s->%s\n", page_info->page_ptr->value, page->value);
+			memcpy(page_info->page_ptr, page, sizeof(page_t));
 			page_info->dirty_bit = 1;
 		}
 	}
@@ -116,22 +116,34 @@ page_info_t* save_page_to_memory(segment_t* segment, page_t* page, int dirty_bit
 	return page_info;
 }
 
+void remove_page(page_info_t* page_info){
+	if(!is_modified(page_info)){
+		force_remove_page(page_info);
+	}
+}
 
+void force_remove_page(page_info_t* page_info){
+	// busco la pagina en la lru table (para saber el segmento al que pertenece)
+	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
+	remove_from_LRU(lru_page_info);
+	remove_from_segment(lru_page_info->segment, lru_page_info->lru_page);
+	// sacar de memoria (setearla a 0), hace falta??? o simplemente sobreescribo la pages
+}
 
-void remove_page(lru_page_t* lru_page_info){
-	if(!is_modified(lru_page_info)){
-		remove_from_LRU(lru_page_info);
-		remove_from_segment(lru_page_info->segment, lru_page_info->lru_page);
-		// sacar de memoria (setearla a 0), hace falta??? o simplemente sobreescribo la page
+void remove_all_pages_from_segment(segment_t* segment){
+	while(segment->pages != NULL){
+		force_remove_page(segment->pages);
 	}
 }
 
 void remove_segment(char* table_name){
 	segment_t* segmentTemp = find_segment(table_name);
+	remove_all_pages_from_segment(segmentTemp);
 	segment_t* temp;
 	
 	if(segmentTemp->prev == NULL){ // si es el primer segmento
 		printf("-- Removing %s (first segment) --\n", segmentTemp->name);
+		SEGMENT_TABLE = segmentTemp->next;
 		temp = NULL;
 		if(segmentTemp->next != NULL){ 
 			temp = segmentTemp->next;
@@ -165,8 +177,8 @@ void remove_from_segment(segment_t* segment, page_info_t* page_info){
 	}
 }
 
-int is_modified(lru_page_t* page){
-	return page->lru_page->dirty_bit == 0 ? 0 : 1;
+int is_modified(page_info_t* page){
+	return page->dirty_bit == 0 ? 0 : 1;
 }
 
 segment_t* find_segment(char* table_name){
@@ -343,7 +355,7 @@ void print_LRU_TABLE(){
 	printf("Pages in LRU Table (%d): \n", LRU_TABLE->current_pages);
 	for(int i = 0; i < LRU_TABLE->current_pages; i++){
 		lru_page_info = LRU_TABLE->lru_pages+i;
-  		printf("%s-%d-(%p) ", lru_page_info->lru_page->page_ptr->value, lru_page_info->lru_page->index, lru_page_info->segment);
+  		printf("%d- %s(Table: %s) ", lru_page_info->lru_page->index, lru_page_info->lru_page->page_ptr->value, lru_page_info->segment->name);
 	}
 	printf("\n\n");
 }
