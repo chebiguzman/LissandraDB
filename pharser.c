@@ -146,7 +146,6 @@ char* exec_instr(char* instr_buff){
         if(parameters_length != 5 ) return "Numero de parametros incorrectos\n";
 
         package_create* package = malloc(sizeof(package_insert));
-        
         package->instruction = parameters[0];
         
         //TABLE_NAME
@@ -170,7 +169,9 @@ char* exec_instr(char* instr_buff){
         package->compactation_time = atol(parameters[4]);
 
         //printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n cons: %d\n particiones: %d\n comp: %lu\n", package->instruction, package->table_name, package->consistency, package->partition_number, package->compactation_time);
-        char* responce = action_create(package);
+        
+        char* responce =action_create(package);
+ 
         return responce;
     }
 
@@ -213,7 +214,7 @@ char* exec_instr(char* instr_buff){
         }else if(!strcmp(c,"HC")){
             package->consistency = H_CONSISTENCY;
         }else{
-            return "Criterio no valido";
+            return "Criterio no valido\n";
         }
         //printf("\n Datos de paquete:\n instruction: %s\n id: %d\ncriterio:%d \n", package->instruction , package->id, package->consistency);
         char* responce = action_add(package);
@@ -365,8 +366,11 @@ char *ltoa(long N, char *str, int base)
 }
 
 char* parse_package_create(package_create* pk){
+    
+ 
     char* buffer = malloc( strlen(pk->instruction) + strlen(pk->table_name) + 3 /*consistencia */ + strlen(string_itoa(pk->partition_number) + 22 + 9));
-    buffer = strdup(pk->instruction);
+     
+    strcpy(buffer, pk->instruction);
     strcat(buffer, sep);
     strcat(buffer, pk->table_name);
     strcat(buffer, sep);
@@ -390,6 +394,7 @@ char* parse_package_create(package_create* pk){
     strcat(buffer, sep);
     strcat(buffer, string_itoa(pk->partition_number));
     strcat(buffer, sep);
+
     char* buff = malloc(30);
     ltoa(pk->compactation_time, buff, 10);
 
@@ -400,7 +405,7 @@ char* parse_package_create(package_create* pk){
 
 char* parse_package_drop(package_drop* pk){
     char* bff = malloc( strlen(pk->instruction) + strlen(pk->table_name) + 4);
-    bff = strdup(pk->instruction);
+    strcpy(bff, pk->instruction);
     strcat(bff, sep);
     strcat(bff, pk->table_name);
     return bff;
