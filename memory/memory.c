@@ -200,7 +200,8 @@ char* action_drop(package_drop* drop_info){
 
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
-  
+  journal();
+  return "Journaling done\n";
 // //VOY AL ULTIMO SEGMENTO
 //   segment_t* segmentTemp = get_last_segment();
 //   int contador = 0;
