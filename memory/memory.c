@@ -138,7 +138,7 @@ char* action_select(package_select* select_info){
     page_t* page = create_page(007, select_info->key, responce); //CUIDADO TIMESTAMP
     save_page(segment, page);
     printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
-    return page->value;
+    return string_new("%s\n", page->value);
   }
 }
 //Necesito saber si es Timestamp lo genera memoria o el Kernel antes de enviarlo.
@@ -150,7 +150,7 @@ char* action_insert(package_insert* insert_info){
   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
   page_info_t* page_info = insert_page(segment, page);
-  return page_info->page_ptr->value;
+  return "\n";
 }
 
 //en esta funcion se devuelve lo 
@@ -200,7 +200,8 @@ char* action_drop(package_drop* drop_info){
 
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
-  
+  journal();
+  return "Journaling done\n";
 // //VOY AL ULTIMO SEGMENTO
 //   segment_t* segmentTemp = get_last_segment();
 //   int contador = 0;
