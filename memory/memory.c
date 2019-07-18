@@ -150,20 +150,7 @@ char* action_insert(package_insert* insert_info){
   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
   page_info_t* page_info = insert_page(segment, page);
-//   printf("Table name: %s\n", segment->name);
-// //SI EXISTE LA PAGINA:
-//   page_t* page = find_page(segment, insert_info->key);
-//   if(page != NULL){ //Faltaria && <(insert_info->timestamp > page->timestamp)>??
-//     page->timestamp = insert_info->timestamp;
-//     page->value = insert_info->value; //TODO: ARREGLAR ESTE PROBLEMA
-//     printf("Page edited> Key: %d, Value: %s\n", insert_info->key, page->value);
-//     return page; // TODO: Retornar algo correcto
-//   }
-// //SI NO EXISTE LA PAGINA:
-//   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value); 
-//   save_page(segment, page);
-//   printf("Page created-> Key: %d, Value: %s\n", page->key, page->value);
-//   return page; // TODO: Retornar algo correcto
+  return page_info->page_ptr->value;
 }
 
 //en esta funcion se devuelve lo 
@@ -213,42 +200,42 @@ char* action_drop(package_drop* drop_info){
 
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
-
-//VOY AL ULTIMO SEGMENTO
-  segment_t* segmentTemp = get_last_segment();
-  int contador = 0;
-  while(segmentTemp != NULL){
-    //VOY A LA ULTIMA PAGINA
-    page_info_t* pageTemp =  get_last_page(segmentTemp -> pages);
+  
+// //VOY AL ULTIMO SEGMENTO
+//   segment_t* segmentTemp = get_last_segment();
+//   int contador = 0;
+//   while(segmentTemp != NULL){
+//     //VOY A LA ULTIMA PAGINA
+//     page_info_t* pageTemp =  get_last_page(segmentTemp -> pages);
     
-    while(segmentTemp != NULL){
-      //CHEQUEO DIRTY BIT EN 1
-      if(pageTemp -> dirty_bit = 1){
-        //ENVIO AL FILESYSTEM
-        package_insert* insertTemp;
-        insertTemp->table_name = segmentTemp->name;
-        insertTemp->key = pageTemp->page_ptr->key;
-        insertTemp->value = pageTemp->page_ptr->value;
-        insertTemp->timestamp = pageTemp->page_ptr->timestamp;
+//     while(segmentTemp != NULL){
+//       //CHEQUEO DIRTY BIT EN 1
+//       if(pageTemp -> dirty_bit = 1){
+//         //ENVIO AL FILESYSTEM
+//         package_insert* insertTemp;
+//         insertTemp->table_name = segmentTemp->name;
+//         insertTemp->key = pageTemp->page_ptr->key;
+//         insertTemp->value = pageTemp->page_ptr->value;
+//         insertTemp->timestamp = pageTemp->page_ptr->timestamp;
        
-        char* packageTemp = parse_package_insert(insertTemp);
-        char* responce = exec_in_fs(fs_socket, packageTemp); 
+//         char* packageTemp = parse_package_insert(insertTemp);
+//         char* responce = exec_in_fs(fs_socket, packageTemp); 
         
-        contador++;
-      }
-      //ELIMINO PAGINA Y REDIRECCIONO A LA PREVIA
-      page_info_t* pageTemp2 = pageTemp;
-      force_remove_page(pageTemp);
-      pageTemp = pageTemp2 -> prev;
-    }
-    //REDIRECCIONO A SEGMENTO PREVIO
-    segment_t * segmentTemp2;
-    segmentTemp2 = segmentTemp;
-    segmentTemp = segmentTemp -> prev;
-    //ELIMINO EL SEGMENTO ANTERIOR
-    remove_segment(segmentTemp2->name);
-  }
-  printf("Journal finalizado, Paginas enviadas a FS : %d \n", contador);
+//         contador++;
+//       }
+//       //ELIMINO PAGINA Y REDIRECCIONO A LA PREVIA
+//       page_info_t* pageTemp2 = pageTemp;
+//       force_remove_page(pageTemp);
+//       pageTemp = pageTemp2 -> prev;
+//     }
+//     //REDIRECCIONO A SEGMENTO PREVIO
+//     segment_t * segmentTemp2;
+//     segmentTemp2 = segmentTemp;
+//     segmentTemp = segmentTemp -> prev;
+//     //ELIMINO EL SEGMENTO ANTERIOR
+//     remove_segment(segmentTemp2->name);
+//   }
+//   printf("Journal finalizado, Paginas enviadas a FS : %d \n", contador);
 }
 
 
