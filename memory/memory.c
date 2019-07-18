@@ -124,7 +124,7 @@ char* action_select(package_select* select_info){
   // tengo 
   segment_t* segment = find_or_create_segment(select_info->table_name); // si no existe el segmento lo creo.
   //SI EXISTE LA PAGINA:
-  page_info_t* page_info = find_page_info(segment, select_info->key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
+  page_info_t* page_info = find_page_info(select_info->table_name, select_info->key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
   if(page_info != NULL){
     printf("Page found in memory -> Key: %d, Value: %s\n", select_info->key, page_info->page_ptr->value);
     return page_info->page_ptr->value;
@@ -136,9 +136,9 @@ char* action_select(package_select* select_info){
 
   if(strcmp(responce, "Key invalida.") != 0){
     page_t* page = create_page(007, select_info->key, responce); //CUIDADO TIMESTAMP
-    save_page(segment, page);
+    save_page(select_info->table_name, page);
     printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
-    return page->value;
+    return string_new("%s\n", page->value);
   }
 }
 //Necesito saber si es Timestamp lo genera memoria o el Kernel antes de enviarlo.
@@ -149,8 +149,8 @@ char* action_insert(package_insert* insert_info){
   //BUSCO O CREO EL SEGMENTO
   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
-  page_info_t* page_info = insert_page(segment, page);
-  return page_info->page_ptr->value;
+  page_info_t* page_info = insert_page(insert_info->table_name, page);
+  return "\n";
 }
 
 //en esta funcion se devuelve lo 
@@ -195,12 +195,16 @@ char* action_describe(package_describe* describe_info){
 
 char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
+  segment_t* segment = find_segment(drop_info->table_name);
+  if(segment != NULL) remove_segment(drop_info->table_name, 0);
+  // TODO: exec_in_fs drop info
 }
 
 
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
-  
+  journal();
+  return "Journaling done\n";
 // //VOY AL ULTIMO SEGMENTO
 //   segment_t* segmentTemp = get_last_segment();
 //   int contador = 0;
