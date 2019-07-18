@@ -52,8 +52,6 @@ int find_free_page(){
 			return index_to_replace;
 		}
 	}
-    // TODO: JOURNALING ATR
-	journal();
 	return -1;
 }
 
@@ -76,19 +74,19 @@ int find_unmodified_page(){
 }
 
 // guarda una pagina en memoria sin dirtybit porque es un select de fs
-page_info_t* save_page(segment_t* segment, page_t* page){ 
-	page_info_t* page_info = find_page_info(segment, page->key);
+page_info_t* save_page(char* table_name, page_t* page){ 
+	page_info_t* page_info = find_page_info(table_name, page->key);
 	
 	// si ya existe no hago nada, para modificar una pagina hay que usar el insert_page
 	if(page_info == NULL){
-		page_info = save_page_to_memory(segment, page, 0);
+		page_info = save_page_to_memory(table_name, page, 0);
 	}
 	return page_info;
 }
 
 // Agrega una nueva pagina o modifica una a existente siempre con dirtybit
-page_info_t* insert_page(segment_t* segment, page_t* page){
-	page_info_t* page_info = find_page_info(segment, page->key);
+page_info_t* insert_page(char* table_name, page_t* page){
+	page_info_t* page_info = find_page_info(table_name, page->key);
 	// si ya existe la pagina, reemplazo el value y toco el dirtybit
 	if(page_info != NULL){
 		if(page_info->page_ptr->timestamp < page->timestamp){ // si por alguna razon de la vida el timestamp del insert es menor al timestamp que ya tengo en la page, no la modifico
@@ -99,20 +97,21 @@ page_info_t* insert_page(segment_t* segment, page_t* page){
 	}
 	// si no existe, creo una nueva con dirtybit (si no tiene dirtybit no se la mando a fs en el journaling)
 	else{
-		save_page_to_memory(segment, page, 1);
+		save_page_to_memory(table_name, page, 1);
 	}
 	return page_info;
 }
 
 // crea una page_info con o sin dirtybit, se la asigna al segmento, y guarda la pagina en main memory
-page_info_t* save_page_to_memory(segment_t* segment, page_t* page, int dirty_bit){ 
+page_info_t* save_page_to_memory(char* table_name, page_t* page, int dirty_bit){ 
 	// si no existe la pagina, busco una pagina libre en memoria y le guardo la page
 	int index = find_free_page();
 	page_info_t* page_info = create_page_info(dirty_bit);
 	if(index == -1){
-		printf("Algo salio muy mal y el dia esta arruinado\n");
-		return NULL; // TODO: TIRAR ERROR ya que siempre deberia encontrar una pagina (reemplazo o journaling)
+		journal(); // vacio memoria y vuelvo a buscar un index, deberia ser 0
+		index = find_free_page();
 	}
+	segment_t* segment = find_or_create_segment(table_name); 
 	page_info->index = index;
 	page_info->page_ptr = MAIN_MEMORY+index;
 	memcpy(page_info->page_ptr, page, sizeof(page_t));
@@ -201,7 +200,9 @@ segment_t* find_segment(char* table_name){
 	return temp; // si no encontre nada hasta ahora, devuelvo temp que es NULL
 }
 
-page_info_t* find_page_info(segment_t* segment, int key){
+page_info_t* find_page_info(char* table_name, int key){
+	segment_t* segment = find_segment(table_name);
+	if(segment == NULL) return NULL;
 	page_info_t* temp = segment->pages;
 	while(temp != NULL){
 		if(temp->page_ptr->key == key){
@@ -316,7 +317,7 @@ lru_page_t* create_lru_page(segment_t* segment, page_info_t* page_info){
 	lru_page_t* lru_page_info = (lru_page_t*)malloc(sizeof(lru_page_t));
 	lru_page_info->lru_page = page_info;
 	lru_page_info->segment = segment;
-	printf("Creating page -> value: %s, segment: %p\n", lru_page_info->lru_page->page_ptr->value, lru_page_info->segment);
+	printf("Creating page... Index %d, Value: %s, Table: %s\n", lru_page_info->lru_page->index, lru_page_info->lru_page->page_ptr->value, lru_page_info->segment->name);
 	return lru_page_info;
 }
 
@@ -366,7 +367,7 @@ void print_LRU_TABLE(){
 			// printf("%d ", lru_page_info->lru_page->index, lru_page_info->lru_page->page_ptr->value, lru_page_info->segment->name);
 		}
 	}
-	printf("\n\n");
+	printf("\n");
 }
 
 
