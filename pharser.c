@@ -99,7 +99,6 @@ char* exec_instr(char* instr_buff){
         return responce;
     }
 
-
     if(!strcmp(instruction,"INSERT")){
         if(parameters_length != 4 && parameters_length != 5) return "Numero de parametros incorrectos\n";
 
@@ -157,7 +156,7 @@ char* exec_instr(char* instr_buff){
         string_to_upper(c);
         if(!strcmp(c,"SC")){
             package->consistency = S_CONSISTENCY;
-        }else if(!strcmp(c,"ANY")){
+        }else if(!strcmp(c,"EC")){
             package->consistency = ANY_CONSISTENCY;
         }else if(!strcmp(c,"HC")){
             package->consistency = H_CONSISTENCY;
@@ -168,7 +167,7 @@ char* exec_instr(char* instr_buff){
         //VALUE
         package->partition_number = atoi(parameters[3]);
         
-        package->compactation_time = atoi(parameters[4]);
+        package->compactation_time = atol(parameters[4]);
 
         //printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n cons: %d\n particiones: %d\n comp: %lu\n", package->instruction, package->table_name, package->consistency, package->partition_number, package->compactation_time);
         char* responce = action_create(package);
@@ -209,7 +208,7 @@ char* exec_instr(char* instr_buff){
         string_to_upper(c);
         if(!strcmp(c,"SC")){
             package->consistency = S_CONSISTENCY;
-        }else if(!strcmp(c,"ANY")){
+        }else if(!strcmp(c,"EC")){
             package->consistency = ANY_CONSISTENCY;
         }else if(!strcmp(c,"HC")){
             package->consistency = H_CONSISTENCY;
@@ -236,8 +235,26 @@ char* exec_instr(char* instr_buff){
         return action_drop(package);
     }
 
+    if(!strcmp(instruction, "JOURNAL")){
+        if(parameters_length != 1) return "Numero de parametros incorrecto";
+
+        package_journal* pakage = malloc(sizeof(package_journal));
+        pakage->instruction = strdup("JOURNAL");
+        return action_journal(pakage);
+    }
+
+    if(!strcmp(instruction, "METRICS")){
+        if(parameters_length != 1) return "Numero de parametros incorrecto";
+        package_metrics* pk = malloc(sizeof(package_metrics));
+        pk->instruction = strdup("METRICS");
+        
+
+        return action_metrics(pk);
+    }
+
     char* error_message = strdup("no es una instruccion valida\n");
     return error_message;
+    
 }
 
 char* parse_package_select(package_select* package){
@@ -295,16 +312,101 @@ char* parse_package_insert(package_insert* package){
 }
 
 char* parse_package_describe(package_describe* pk){
-    char* buffer;
-    char* instr = strdup(pk->instruction);
-    char* table_name = strdup(pk->table_name);
-    int tot_len = strlen(instr) + strlen(table_name) +4;
-    buffer = malloc(tot_len);
-    buffer[0] = '\0';
-    strcat(buffer, instr);
+
+    if(pk->table_name == NULL){
+        char* buffer = malloc(strlen(pk->instruction) +4);
+    
+        strcat(buffer, pk->instruction);
+        return buffer;
+    }
+    char* buffer = malloc(strlen(pk->instruction) + strlen(pk->table_name) +4);
+    
+    strcat(buffer, pk->instruction);
     strcat(buffer,sep);
-    strcat(buffer,table_name);
+    strcat(buffer,pk->table_name);
     return buffer;
+}
+#define BUFSIZE (sizeof(long) * 8 + 1)
+
+char *ltoa(long N, char *str, int base)
+{
+      register int i = 2;
+      long uarg;
+      char *tail, *head = str, buf[BUFSIZE];
+
+      if (36 < base || 2 > base)
+            base = 10;                    /* can only use 0-9, A-Z        */
+      tail = &buf[BUFSIZE - 1];           /* last character position      */
+      *tail-- = '\0';
+
+      if (10 == base && N < 0L)
+      {
+            *head++ = '-';
+            uarg    = -N;
+      }
+      else  uarg = N;
+
+      if (uarg)
+      {
+            for (i = 1; uarg; ++i)
+            {
+                  register ldiv_t r;
+
+                  r       = ldiv(uarg, base);
+                  *tail-- = (char)(r.rem + ((9L < r.rem) ?
+                                  ('A' - 10L) : '0'));
+                  uarg    = r.quot;
+            }
+      }
+      else  *tail-- = '0';
+
+      memcpy(head, ++tail, i);
+      return str;
+}
+
+char* parse_package_create(package_create* pk){
+    char* buffer = malloc( strlen(pk->instruction) + strlen(pk->table_name) + 3 /*consistencia */ + strlen(string_itoa(pk->partition_number) + 22 + 9));
+    buffer = strdup(pk->instruction);
+    strcat(buffer, sep);
+    strcat(buffer, pk->table_name);
+    strcat(buffer, sep);
+    char* consistency = malloc(4);
+    switch (pk->consistency)
+    {
+    case S_CONSISTENCY:
+        consistency = strdup("SC");
+        break;
+    case H_CONSISTENCY:
+        consistency = strdup("HC");
+    case ANY_CONSISTENCY:
+        consistency = strdup("EC");
+    
+    default:
+        consistency = strdup("ERR");
+        break;
+    }
+    strcat(buffer, consistency );
+    free(consistency);
+    strcat(buffer, sep);
+    strcat(buffer, string_itoa(pk->partition_number));
+    strcat(buffer, sep);
+    char* buff = malloc(30);
+    ltoa(pk->compactation_time, buff, 10);
+
+    strcat(buffer, buff );
+    free(buff);
+    return buffer;
+}
+
+char* parse_package_drop(package_drop* pk){
+    char* bff = malloc( strlen(pk->instruction) + strlen(pk->table_name) + 4);
+    bff = strdup(pk->instruction);
+    strcat(bff, sep);
+    strcat(bff, pk->table_name);
+    return bff;
+}
+char* parse_package_journal(package_journal* pk){
+    return strdup(pk->instruction);
 }
 
 char* create_buffer(int argc, char const *argv[]){

@@ -23,20 +23,7 @@ typedef enum { EVENTUAL_CONSISTENCY, STRONG_CONSISTENCY, STRONG_HASH_CONSISTENCY
 
 
 
-//JOURNAL
-typedef struct
-{
-    char instruction[INSTRUCTION_BYTE_SIZE];
 
-} package_journal;
-
-
-//METRICS
-typedef struct
-{
-    char instruction[INSTRUCTION_BYTE_SIZE];
-
-} package_metrics;
 
 
 //SERVER

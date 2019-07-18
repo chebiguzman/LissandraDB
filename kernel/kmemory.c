@@ -12,12 +12,14 @@
 #include <signal.h>
 #include <stdio.h>
 #include <commons/config.h>
+#include <commons/collections/dictionary.h>
+#include <commons/string.h>
 extern scheduler_config* config_not;
 extern pthread_mutex_t config_lock;
 long MEMORY_FINDER_SLEEP;
 t_log* logger;
 t_log* logger_debug;
-t_list* tbl_list;   //Lista de tablas (metadata)
+t_dictionary* tbl_list;   //Lista de tablas (metadata)
 
 pthread_mutex_t mem_list_lock = PTHREAD_MUTEX_INITIALIZER;  //mutex para la lista de memorias
 t_list* mem_list;   //Lista de memorias
@@ -42,18 +44,21 @@ void start_kmemory_module(t_log* logg,t_log* logg_debug, char* main_memory_ip, i
     logger = logg;
     logger_debug = logg_debug;
     mem_list = list_create();
-    tbl_list = list_create();
+    tbl_list = dictionary_create();
     
     hc_list = list_create();
     any_list = list_create();
 
     t_table* table_debug = malloc(sizeof(t_table));
 
-    //DEBUG
-    table_debug->name = strdup("a");
-    table_debug->consistency = H_CONSISTENCY;
-    list_add(tbl_list,table_debug);
-    //mem_list_helper = list_helper_init(mem_list);
+    //DEBUG 
+    int* sad = malloc(sizeof(int));
+    *sad = 0;
+    log_debug(logg_debug, "el valor del puntero es: %d \n", *sad);
+    dictionary_put(tbl_list, "A",(void*) sad );
+    int* rs = dictionary_get(tbl_list, "A");
+    log_debug(logg_debug, "lo que queda luego de ingresarlo %d \n", *rs);
+    log_debug(logg_debug, "mismo puntero %d \n", *sad);
     t_kmemory* mp = malloc(sizeof(t_kmemory));
     
     mp->id = 0;
@@ -73,7 +78,7 @@ void start_kmemory_module(t_log* logg,t_log* logg_debug, char* main_memory_ip, i
     pthread_t tid_metadata_service;
     pthread_create(&tid_metadata_service, NULL,metadata_service, NULL);
 
-    MEMORY_FINDER_SLEEP = 300000;
+    MEMORY_FINDER_SLEEP = 99999999999;
 
     pthread_t tid_memory_finder_service;
     pthread_create(&tid_memory_finder_service, NULL,memory_finder_service, NULL);
@@ -167,6 +172,9 @@ int get_memory(){
     return memory->fd;
 }
 
+void kmemory_set_active_tables(t_dictionary* dic){
+    //tbl_list = dic;
+}
 int get_sc_memory(){
 
     if(strong_memory == NULL){
@@ -421,22 +429,34 @@ int connect_to_memory(char* ip, int port){
 }
 
 t_consistency get_table_consistency(char* table_name){
-
-    bool find_table_by_name(void * t){
+    char* name = strdup(table_name);
+    string_to_upper(name);
+    /*bool find_table_by_name(void * t){
         t_table* tb = t;
         if( !strcmp(tb->name, table_name ) ){
             return true;
         }
         return false;
-    }
+    }*/
 
-    t_table* table = list_find(tbl_list, find_table_by_name );
+    
 
-    if(table == NULL){
-        exec_err_abort(); //cuano la 
+    if(!dictionary_has_key(tbl_list, name)){
+       exec_err_abort(); //cuano la 
         return ERR_CONSISTENCY;
     }
-    return table->consistency;
+    int r =*((int *) dictionary_get(tbl_list, "A"));
+    
+    switch (r)
+    {
+    case 0: return S_CONSISTENCY; break;
+    case 1: return H_CONSISTENCY; break;
+    case 2: return ANY_CONSISTENCY; break;
+    default: return ERR_CONSISTENCY; break;
+    }
+    
+    
+    return ERR_CONSISTENCY;
 }
 
 void update_memory_finder_service_time(long time){
@@ -451,7 +471,7 @@ void *metadata_service(void* args){
         usleep( sleep_interval);
         //log_debug(logger, "metadataService: Se actualiza la metadata de las tablas");
         char* r = ksyscall("DESCRIBE");
-        //log_debug(logger, r);
+        log_debug(logger, r);
         
         
     }

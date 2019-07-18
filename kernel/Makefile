@@ -1,7 +1,7 @@
 all: kernel clean
 
-kernel: kernel.o server.o pharser.o scheduler.o kmemory.o console.o
-	gcc -o kernel kernel.o server.o pharser.o scheduler.o kmemory.o console.o -lcommons -pthread
+kernel: kernel.o server.o pharser.o scheduler.o kmemory.o console.o metrics.o
+	gcc -o kernel kernel.o server.o pharser.o scheduler.o kmemory.o metrics_worker.o console.o -lcommons -pthread
 
 kernel.o: 
 	gcc -c kernel.c -lcommons
@@ -20,6 +20,9 @@ exec.o:
 
 kmemory.o:
 	gcc -c kmemory.c 
+
+metrics.o:
+	gcc -c metrics_worker.c
 
 console.o:
 	gcc -c ../console.c
