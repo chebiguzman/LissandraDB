@@ -66,7 +66,7 @@ int find_unmodified_page(){
 		to_be_replaced_page = LRU_TABLE->lru_pages+i;
 		if(!is_modified(to_be_replaced_page->lru_page)){
 			int index = to_be_replaced_page->lru_page->index;
-			remove_page(to_be_replaced_page->lru_page);
+			remove_page(to_be_replaced_page->lru_page, 0);
 			printf("Yes\n");
 			return index;
 		}
@@ -129,17 +129,36 @@ void remove_page(page_info_t* page_info){
 	// sacar de memoria (setearla a 0), hace falta??? o simplemente sobreescribo la pages
 }
 
-void remove_all_pages_from_segment(segment_t* segment){
+void remove_and_save_page(page_info_t* page_info){
+	// busco la pagina en la lru table (para saber el segmento al que pertenece)
+	if(page_info->dirty_bit == 0){
+		printf("Saving page to fs");
+		// TODO: mandar la pagina al fs para que la guarde
+	}
+	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
+	remove_from_segment(lru_page_info->segment, page_info);
+	remove_from_LRU(lru_page_info);	
+}
+
+void remove_all_pages_from_segment(segment_t* segment, int save_to_fs_bit){
 	printf("--- REMOVING PAGES FROM SEGMENT ---\n");
-	while(segment->pages != NULL){
-		remove_page(segment->pages);
+	if(save_to_fs_bit != 0){
+		while(segment->pages != NULL){
+			remove_page(segment->pages);
+		}
+	}
+	else{
+		while(segment->pages != NULL){
+			remove_and_save_page(segment->pages);
+		}
 	}
 }
 
-void remove_segment(char* table_name){
+// remueve el segmento y todas sus paginas, si el save_to_fs_bit es != 0, manda las paginas al fs 
+void remove_segment(char* table_name, int save_to_fs_bit){
 	segment_t* temp = find_segment(table_name);	
 	printf("--- REMOVING SEGMENT: %s ---\n", temp->name);
-	remove_all_pages_from_segment(temp);
+	remove_all_pages_from_segment(temp, save_to_fs_bit);
 	if(temp->next != NULL){ // si no es el ultimo..
 		temp->next->prev = temp->prev; // le asigno al siguiente de temp, su anterior, o null en caso de que sea el primero
 	}
@@ -151,26 +170,6 @@ void remove_segment(char* table_name){
 	}
 	printf("--- SEGMENT REMOVED ---\n\n");	
 	free(temp);
-
-	// segment_t* temp = find_segment(table_name);
-	// printf("--- REMOVING SEGMENT: %s ---\n", temp->name);
-	// remove_all_pages_from_segment(temp);
-	// segment_t* temp2;
-	
-	// if(temp->prev == NULL){ // si es el primer segmento
-	// 	SEGMENT_TABLE = temp->next;
-	// 	temp2 = NULL;
-	// 	if(temp->next != NULL){ 
-	// 		temp2 = temp->next;
-	// 		temp2->prev = NULL;
-	// 	}
-	// }
-	// else {	
-	// 	temp2 = temp->prev;
-	// 	temp2->next = temp->next;
-	// }
-	// printf("--- SEGMENT REMOVED ---\n\n");	
-	// //free(temp);
 }
 
 void remove_from_segment(segment_t* segment, page_info_t* temp){
@@ -415,7 +414,7 @@ void journal(){
 	print_everything();
 	segment_t* temp = SEGMENT_TABLE;
 	while(temp != NULL){
-		remove_segment(temp->name);
+		remove_segment(temp->name, 1);
 		temp = SEGMENT_TABLE;
 	}
 	print_segment_table();
