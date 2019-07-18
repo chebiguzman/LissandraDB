@@ -66,7 +66,7 @@ int find_unmodified_page(){
 		to_be_replaced_page = LRU_TABLE->lru_pages+i;
 		if(!is_modified(to_be_replaced_page->lru_page)){
 			int index = to_be_replaced_page->lru_page->index;
-			remove_page(to_be_replaced_page->lru_page, 0);
+			remove_page(to_be_replaced_page->lru_page);
 			printf("Yes\n");
 			return index;
 		}
