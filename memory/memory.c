@@ -124,7 +124,7 @@ char* action_select(package_select* select_info){
   // tengo 
   segment_t* segment = find_or_create_segment(select_info->table_name); // si no existe el segmento lo creo.
   //SI EXISTE LA PAGINA:
-  page_info_t* page_info = find_page_info(segment, select_info->key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
+  page_info_t* page_info = find_page_info(select_info->table_name, select_info->key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
   if(page_info != NULL){
     printf("Page found in memory -> Key: %d, Value: %s\n", select_info->key, page_info->page_ptr->value);
     return page_info->page_ptr->value;
@@ -136,7 +136,7 @@ char* action_select(package_select* select_info){
 
   if(strcmp(responce, "Key invalida.") != 0){
     page_t* page = create_page(007, select_info->key, responce); //CUIDADO TIMESTAMP
-    save_page(segment, page);
+    save_page(select_info->table_name, page);
     printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
     return string_new("%s\n", page->value);
   }
@@ -149,7 +149,7 @@ char* action_insert(package_insert* insert_info){
   //BUSCO O CREO EL SEGMENTO
   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
-  page_info_t* page_info = insert_page(segment, page);
+  page_info_t* page_info = insert_page(insert_info->table_name, page);
   return "\n";
 }
 

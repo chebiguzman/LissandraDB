@@ -52,12 +52,12 @@ int VALUE_SIZE;
 
 page_t* create_page(int timestamp, int key, char* value);
 page_info_t* create_page_info();
-segment_t* create_segment(char* table_names);
-page_info_t* find_page_info(segment_t* segment, int key);
-page_info_t* save_page(segment_t* segment, page_t* page);
-page_info_t* insert_page(segment_t* segment, page_t* page);
+segment_t* create_segment(char* table_name);
+page_info_t* find_page_info(char* table_name, int key);
+page_info_t* save_page(char* table_name, page_t* page);
+page_info_t* insert_page(char* table_name, page_t* page);
 void remove_from_segment(segment_t* segment, page_info_t* page_info);
-page_info_t* save_page_to_memory(segment_t* segment, page_t* page, int dirtybit);
+page_info_t* save_page_to_memory(char* table_name, page_t* page, int dirtybit);
 segment_t* find_segment(char* table_name);
 segment_t* find_or_create_segment(char* table_name);
 int find_free_page();
