@@ -6101,3 +6101,829 @@
 [INFO] 19:08:58:526 Kernel/(3087:3090): Se recibio una accion insert
 [DEBUG] 19:08:58:527 Kernel/(3087:3090): kmemory: se pide memoria de SC
 [DEBUG] 19:08:58:527 Kernel/(3087:3090): kmemory: bloqueo memoria
+[INFO] 19:15:00:776 Kernel/(3844:3844): se inicia el modulo scheduler
+[DEBUG] 19:15:00:777 Kernel/(3844:3844): el valor del puntero es: 0 
+
+[INFO] 19:15:00:777 Kernel/(3844:3845): se inicia el monitoreo del config
+[DEBUG] 19:15:00:778 Kernel/(3844:3844): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:15:00:778 Kernel/(3844:3844): mismo puntero 0 
+
+[INFO] 19:15:00:778 Kernel/(3844:3844): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:22:43:203 Kernel/(4685:4685): se inicia el modulo scheduler
+[DEBUG] 19:22:43:204 Kernel/(4685:4685): el valor del puntero es: 0 
+
+[INFO] 19:22:43:204 Kernel/(4685:4687): se inicia el monitoreo del config
+[DEBUG] 19:22:43:204 Kernel/(4685:4685): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:22:43:204 Kernel/(4685:4685): mismo puntero 0 
+
+[INFO] 19:22:43:205 Kernel/(4685:4685): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:22:58:900 Kernel/(4685:4688): Se recibio una accion run.
+[INFO] 19:22:58:901 Kernel/(4685:4688): Se recibio una accion create
+[INFO] 19:22:58:907 Kernel/(4685:4688): Se recibio una accion describe
+[INFO] 19:22:58:912 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:58:916 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:58:916 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:58:920 Kernel/(4685:4688): Se recibio una accion create
+[INFO] 19:22:58:935 Kernel/(4685:4688): Se recibio una accion create
+[INFO] 19:22:59:58 Kernel/(4685:4688): Se recibio una accion describe
+[INFO] 19:22:59:60 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:60 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:60 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:63 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:63 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:64 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:67 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:67 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:67 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:70 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:70 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:70 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:72 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:72 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:73 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:75 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:75 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:75 Kernel/(4685:4688): kmemory: bloqueo memoria
+[DEBUG] 19:22:59:77 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:77 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:79 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:79 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:79 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:81 Kernel/(4685:4688): Se recibio una accion describe
+[INFO] 19:22:59:84 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:84 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:84 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:87 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:87 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:87 Kernel/(4685:4688): kmemory: bloqueo memoria
+[DEBUG] 19:22:59:89 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:89 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:91 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:91 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:91 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:93 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:93 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:93 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:96 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:96 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:96 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:98 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:98 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:98 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:100 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:100 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:100 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:102 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:102 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:103 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:105 Kernel/(4685:4688): Se recibio una accion describe
+[INFO] 19:22:59:107 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:107 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:107 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:109 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:109 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:109 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:111 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:111 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:111 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:113 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:114 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:114 Kernel/(4685:4688): kmemory: bloqueo memoria
+[DEBUG] 19:22:59:116 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:116 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:118 Kernel/(4685:4688): Se recibio una accion describe
+[INFO] 19:22:59:120 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:120 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:120 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:122 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:122 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:123 Kernel/(4685:4688): kmemory: bloqueo memoria
+[DEBUG] 19:22:59:125 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:125 Kernel/(4685:4688): kmemory: bloqueo memoria
+[DEBUG] 19:22:59:127 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:127 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:130 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:130 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:130 Kernel/(4685:4688): kmemory: bloqueo memoria
+[DEBUG] 19:22:59:132 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:132 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:134 Kernel/(4685:4688): Se recibio una accion describe
+[DEBUG] 19:22:59:136 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:136 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:138 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:139 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:139 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:141 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:141 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:141 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:143 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:143 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:143 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:145 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:145 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:145 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:148 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:148 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:148 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:150 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:150 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:150 Kernel/(4685:4688): kmemory: bloqueo memoria
+[DEBUG] 19:22:59:152 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:152 Kernel/(4685:4688): kmemory: bloqueo memoria
+[DEBUG] 19:22:59:154 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:154 Kernel/(4685:4688): kmemory: bloqueo memoria
+[DEBUG] 19:22:59:157 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:157 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:22:59:159 Kernel/(4685:4688): Se recibio una accion describe
+[INFO] 19:22:59:161 Kernel/(4685:4688): Se recibio una accion insert
+[DEBUG] 19:22:59:161 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:161 Kernel/(4685:4688): kmemory: bloqueo memoria
+[DEBUG] 19:22:59:163 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:163 Kernel/(4685:4688): kmemory: bloqueo memoria
+[DEBUG] 19:22:59:165 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:165 Kernel/(4685:4688): kmemory: bloqueo memoria
+[DEBUG] 19:22:59:168 Kernel/(4685:4688): kmemory: se pide memoria de SC
+[DEBUG] 19:22:59:168 Kernel/(4685:4688): kmemory: bloqueo memoria
+[INFO] 19:27:14:940 Kernel/(6587:6587): se inicia el modulo scheduler
+[DEBUG] 19:27:14:941 Kernel/(6587:6587): el valor del puntero es: 0 
+
+[DEBUG] 19:27:14:941 Kernel/(6587:6587): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:27:14:942 Kernel/(6587:6587): mismo puntero 0 
+
+[INFO] 19:27:14:941 Kernel/(6587:6588): se inicia el monitoreo del config
+[INFO] 19:27:14:942 Kernel/(6587:6587): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:27:26:963 Kernel/(6587:6589): Se recibio una accion run.
+[INFO] 19:27:26:964 Kernel/(6587:6589): Se recibio una accion run.
+[INFO] 19:27:26:967 Kernel/(6587:6589): Se recibio una accion run.
+[INFO] 19:27:26:977 Kernel/(6587:6589): Se recibio una accion run.
+[INFO] 19:27:26:980 Kernel/(6587:6589): Se recibio una accion run.
+[INFO] 19:27:26:988 Kernel/(6587:6589): Se recibio una accion run.
+[INFO] 19:27:26:990 Kernel/(6587:6589): Se recibio una accion run.
+[INFO] 19:27:26:993 Kernel/(6587:6589): Se recibio una accion run.
+[INFO] 19:27:26:995 Kernel/(6587:6589): Se recibio una accion create
+[INFO] 19:28:51:972 Kernel/(6702:6702): se inicia el modulo scheduler
+[INFO] 19:28:51:972 Kernel/(6702:6706): se inicia el monitoreo del config
+[DEBUG] 19:28:51:972 Kernel/(6702:6702): el valor del puntero es: 0 
+
+[DEBUG] 19:28:51:972 Kernel/(6702:6702): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:28:51:972 Kernel/(6702:6702): mismo puntero 0 
+
+[INFO] 19:28:51:973 Kernel/(6702:6702): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:29:11:80 Kernel/(6702:6707): Se recibio una accion run.
+[INFO] 19:29:11:81 Kernel/(6702:6707): Se recibio una accion run.
+[INFO] 19:29:11:84 Kernel/(6702:6707): Se recibio una accion run.
+[INFO] 19:29:11:86 Kernel/(6702:6707): Se recibio una accion run.
+[INFO] 19:29:11:89 Kernel/(6702:6707): Se recibio una accion run.
+[INFO] 19:29:11:92 Kernel/(6702:6707): Se recibio una accion run.
+[INFO] 19:29:11:95 Kernel/(6702:6707): Se recibio una accion run.
+[INFO] 19:29:11:98 Kernel/(6702:6707): Se recibio una accion run.
+[INFO] 19:29:11:100 Kernel/(6702:6707): Se recibio una accion create
+[INFO] 19:34:22:644 Kernel/(7207:7207): se inicia el modulo scheduler
+[DEBUG] 19:34:22:645 Kernel/(7207:7207): el valor del puntero es: 0 
+
+[INFO] 19:34:22:645 Kernel/(7207:7208): se inicia el monitoreo del config
+[DEBUG] 19:34:22:646 Kernel/(7207:7207): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:34:22:646 Kernel/(7207:7207): mismo puntero 0 
+
+[INFO] 19:34:22:647 Kernel/(7207:7207): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:34:42:694 Kernel/(7207:7209): Se recibio una accion run.
+[INFO] 19:34:42:695 Kernel/(7207:7209): Se recibio una accion run.
+[INFO] 19:34:42:697 Kernel/(7207:7209): Se recibio una accion run.
+[INFO] 19:34:42:700 Kernel/(7207:7209): Se recibio una accion run.
+[INFO] 19:34:42:702 Kernel/(7207:7209): Se recibio una accion run.
+[INFO] 19:34:42:704 Kernel/(7207:7209): Se recibio una accion run.
+[INFO] 19:34:42:707 Kernel/(7207:7209): Se recibio una accion run.
+[INFO] 19:34:42:709 Kernel/(7207:7209): Se recibio una accion run.
+[INFO] 19:34:42:711 Kernel/(7207:7209): Se recibio una accion create
+[INFO] 19:34:50:436 Kernel/(7239:7239): se inicia el modulo scheduler
+[DEBUG] 19:34:50:437 Kernel/(7239:7239): el valor del puntero es: 0 
+
+[DEBUG] 19:34:50:437 Kernel/(7239:7239): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:34:50:437 Kernel/(7239:7239): mismo puntero 0 
+
+[INFO] 19:34:50:437 Kernel/(7239:7240): se inicia el monitoreo del config
+[INFO] 19:34:50:438 Kernel/(7239:7239): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:34:58:854 Kernel/(7239:7241): Se recibio una accion create
+[INFO] 19:35:11:613 Kernel/(7239:7241): Se recibio una accion create
+[INFO] 19:38:06:566 Kernel/(7588:7588): se inicia el modulo scheduler
+[DEBUG] 19:38:06:566 Kernel/(7588:7588): el valor del puntero es: 0 
+
+[DEBUG] 19:38:06:566 Kernel/(7588:7588): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:38:06:567 Kernel/(7588:7588): mismo puntero 0 
+
+[INFO] 19:38:06:567 Kernel/(7588:7588): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:38:06:566 Kernel/(7588:7589): se inicia el monitoreo del config
+[INFO] 19:38:48:109 Kernel/(7657:7657): se inicia el modulo scheduler
+[DEBUG] 19:38:48:110 Kernel/(7657:7657): el valor del puntero es: 0 
+
+[INFO] 19:38:48:110 Kernel/(7657:7658): se inicia el monitoreo del config
+[DEBUG] 19:38:48:110 Kernel/(7657:7657): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:38:48:110 Kernel/(7657:7657): mismo puntero 0 
+
+[INFO] 19:38:48:110 Kernel/(7657:7657): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:39:05:101 Kernel/(7795:7795): se inicia el modulo scheduler
+[DEBUG] 19:39:05:102 Kernel/(7795:7795): el valor del puntero es: 0 
+
+[DEBUG] 19:39:05:102 Kernel/(7795:7795): lo que queda luego de ingresarlo 0 
+
+[INFO] 19:39:05:102 Kernel/(7795:7796): se inicia el monitoreo del config
+[DEBUG] 19:39:05:102 Kernel/(7795:7795): mismo puntero 0 
+
+[INFO] 19:39:05:103 Kernel/(7795:7795): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 19:39:12:382 Kernel/(7795:7797): kmemory: se pide memoria de SC
+[DEBUG] 19:39:12:382 Kernel/(7795:7797): kmemory: bloqueo memoria
+[INFO] 19:39:25:118 Kernel/(7795:7797): Se recibio una accion run.
+[INFO] 19:39:25:118 Kernel/(7795:7797): Se recibio una accion run.
+[INFO] 19:39:25:121 Kernel/(7795:7797): Se recibio una accion run.
+[INFO] 19:39:25:124 Kernel/(7795:7797): Se recibio una accion run.
+[INFO] 19:39:25:127 Kernel/(7795:7797): Se recibio una accion run.
+[INFO] 19:39:25:130 Kernel/(7795:7797): Se recibio una accion run.
+[INFO] 19:39:25:132 Kernel/(7795:7797): Se recibio una accion run.
+[INFO] 19:39:25:136 Kernel/(7795:7797): Se recibio una accion run.
+[INFO] 19:39:25:138 Kernel/(7795:7797): Se recibio una accion create
+[INFO] 19:46:46:960 Kernel/(8531:8531): se inicia el modulo scheduler
+[DEBUG] 19:46:46:960 Kernel/(8531:8531): el valor del puntero es: 0 
+
+[DEBUG] 19:46:46:961 Kernel/(8531:8531): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:46:46:961 Kernel/(8531:8531): mismo puntero 0 
+
+[INFO] 19:46:46:961 Kernel/(8531:8531): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:46:46:960 Kernel/(8531:8532): se inicia el monitoreo del config
+[DEBUG] 19:46:53:8 Kernel/(8531:8533): kmemory: se pide memoria de SC
+[DEBUG] 19:46:53:9 Kernel/(8531:8533): kmemory: bloqueo memoria
+[INFO] 19:53:55:849 Kernel/(9070:9070): se inicia el modulo scheduler
+[DEBUG] 19:53:55:850 Kernel/(9070:9070): el valor del puntero es: 0 
+
+[INFO] 19:53:55:850 Kernel/(9070:9071): se inicia el monitoreo del config
+[DEBUG] 19:53:55:850 Kernel/(9070:9070): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:53:55:851 Kernel/(9070:9070): mismo puntero 0 
+
+[INFO] 19:53:55:851 Kernel/(9070:9070): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 19:54:00:315 Kernel/(9070:9072): kmemory: se pide memoria de SC
+[DEBUG] 19:54:00:316 Kernel/(9070:9072): kmemory: bloqueo memoria
+[INFO] 19:54:15:17 Kernel/(9108:9108): se inicia el modulo scheduler
+[DEBUG] 19:54:15:18 Kernel/(9108:9108): el valor del puntero es: 0 
+
+[DEBUG] 19:54:15:18 Kernel/(9108:9108): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:54:15:18 Kernel/(9108:9108): mismo puntero 0 
+
+[INFO] 19:54:15:19 Kernel/(9108:9108): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:54:15:18 Kernel/(9108:9109): se inicia el monitoreo del config
+[INFO] 19:55:23:134 Kernel/(9250:9250): se inicia el modulo scheduler
+[DEBUG] 19:55:23:135 Kernel/(9250:9250): el valor del puntero es: 0 
+
+[INFO] 19:55:23:135 Kernel/(9250:9251): se inicia el monitoreo del config
+[DEBUG] 19:55:23:135 Kernel/(9250:9250): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:55:23:135 Kernel/(9250:9250): mismo puntero 0 
+
+[INFO] 19:55:23:136 Kernel/(9250:9250): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:55:46:663 Kernel/(9321:9321): se inicia el modulo scheduler
+[INFO] 19:55:46:664 Kernel/(9321:9322): se inicia el monitoreo del config
+[DEBUG] 19:55:46:664 Kernel/(9321:9321): el valor del puntero es: 0 
+
+[DEBUG] 19:55:46:665 Kernel/(9321:9321): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:55:46:665 Kernel/(9321:9321): mismo puntero 0 
+
+[INFO] 19:55:46:665 Kernel/(9321:9321): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:55:53:854 Kernel/(9389:9389): se inicia el modulo scheduler
+[DEBUG] 19:55:53:855 Kernel/(9389:9389): el valor del puntero es: 0 
+
+[INFO] 19:55:53:855 Kernel/(9389:9390): se inicia el monitoreo del config
+[DEBUG] 19:55:53:855 Kernel/(9389:9389): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:55:53:855 Kernel/(9389:9389): mismo puntero 0 
+
+[INFO] 19:55:53:856 Kernel/(9389:9389): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:56:13:791 Kernel/(9389:9391): Se recibio una accion describe
+[DEBUG] 19:56:31:407 Kernel/(9389:9391): kmemory: se pide memoria de SC
+[DEBUG] 19:56:31:407 Kernel/(9389:9391): kmemory: bloqueo memoria
+[DEBUG] 19:58:23:428 Kernel/(9389:9391): kmemory: se pide memoria de SC
+[DEBUG] 19:58:23:428 Kernel/(9389:9391): kmemory: bloqueo memoria
+[INFO] 19:59:42:279 Kernel/(9760:9760): se inicia el modulo scheduler
+[DEBUG] 19:59:42:280 Kernel/(9760:9760): el valor del puntero es: 0 
+
+[INFO] 19:59:42:280 Kernel/(9760:9761): se inicia el monitoreo del config
+[DEBUG] 19:59:42:281 Kernel/(9760:9760): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:59:42:281 Kernel/(9760:9760): mismo puntero 0 
+
+[INFO] 19:59:42:281 Kernel/(9760:9760): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:00:42:483 Kernel/(9899:9899): se inicia el modulo scheduler
+[DEBUG] 20:00:42:484 Kernel/(9899:9899): el valor del puntero es: 0 
+
+[DEBUG] 20:00:42:484 Kernel/(9899:9899): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:00:42:484 Kernel/(9899:9899): mismo puntero 0 
+
+[INFO] 20:00:42:484 Kernel/(9899:9899): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:00:42:484 Kernel/(9899:9900): se inicia el monitoreo del config
+[DEBUG] 20:00:45:188 Kernel/(9899:9901): kmemory: se pide memoria de SC
+[DEBUG] 20:00:45:188 Kernel/(9899:9901): kmemory: bloqueo memoria
+[INFO] 20:03:37:214 Kernel/(10201:10201): se inicia el modulo scheduler
+[DEBUG] 20:03:37:214 Kernel/(10201:10201): el valor del puntero es: 0 
+
+[INFO] 20:03:37:214 Kernel/(10201:10202): se inicia el monitoreo del config
+[DEBUG] 20:03:37:214 Kernel/(10201:10201): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:03:37:214 Kernel/(10201:10201): mismo puntero 0 
+
+[INFO] 20:03:37:217 Kernel/(10201:10201): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 20:03:40:418 Kernel/(10201:10203): kmemory: se pide memoria de SC
+[DEBUG] 20:03:40:419 Kernel/(10201:10203): kmemory: bloqueo memoria
+[INFO] 20:04:19:241 Kernel/(10302:10302): se inicia el modulo scheduler
+[DEBUG] 20:04:19:242 Kernel/(10302:10302): el valor del puntero es: 0 
+
+[INFO] 20:04:19:242 Kernel/(10302:10303): se inicia el monitoreo del config
+[DEBUG] 20:04:19:242 Kernel/(10302:10302): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:04:19:243 Kernel/(10302:10302): mismo puntero 0 
+
+[INFO] 20:04:19:243 Kernel/(10302:10302): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:04:45:330 Kernel/(10398:10398): se inicia el modulo scheduler
+[DEBUG] 20:04:45:331 Kernel/(10398:10398): el valor del puntero es: 0 
+
+[INFO] 20:04:45:331 Kernel/(10398:10399): se inicia el monitoreo del config
+[DEBUG] 20:04:45:331 Kernel/(10398:10398): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:04:45:331 Kernel/(10398:10398): mismo puntero 0 
+
+[INFO] 20:04:45:332 Kernel/(10398:10398): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:05:12:923 Kernel/(10501:10501): se inicia el modulo scheduler
+[DEBUG] 20:05:12:924 Kernel/(10501:10501): el valor del puntero es: 0 
+
+[DEBUG] 20:05:12:924 Kernel/(10501:10501): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:05:12:924 Kernel/(10501:10501): mismo puntero 0 
+
+[INFO] 20:05:12:924 Kernel/(10501:10502): se inicia el monitoreo del config
+[INFO] 20:05:12:925 Kernel/(10501:10501): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:05:40:765 Kernel/(10501:10503): Se recibio una accion describe
+[DEBUG] 20:05:50:573 Kernel/(10501:10503): kmemory: se pide memoria de SC
+[DEBUG] 20:05:50:574 Kernel/(10501:10503): kmemory: bloqueo memoria
+[INFO] 20:06:19:212 Kernel/(10719:10719): se inicia el modulo scheduler
+[DEBUG] 20:06:19:213 Kernel/(10719:10719): el valor del puntero es: 0 
+
+[DEBUG] 20:06:19:213 Kernel/(10719:10719): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:06:19:213 Kernel/(10719:10719): mismo puntero 0 
+
+[INFO] 20:06:19:213 Kernel/(10719:10720): se inicia el monitoreo del config
+[INFO] 20:06:19:214 Kernel/(10719:10719): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:06:39:366 Kernel/(10719:10721): Se recibio una accion describe
+[INFO] 20:08:38:184 Kernel/(10877:10877): se inicia el modulo scheduler
+[DEBUG] 20:08:38:184 Kernel/(10877:10877): el valor del puntero es: 0 
+
+[INFO] 20:08:38:184 Kernel/(10877:10878): se inicia el monitoreo del config
+[DEBUG] 20:08:38:184 Kernel/(10877:10877): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:08:38:184 Kernel/(10877:10877): mismo puntero 0 
+
+[INFO] 20:08:38:184 Kernel/(10877:10877): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:08:40:622 Kernel/(10938:10938): se inicia el modulo scheduler
+[DEBUG] 20:08:40:623 Kernel/(10938:10938): el valor del puntero es: 0 
+
+[INFO] 20:08:40:623 Kernel/(10938:10939): se inicia el monitoreo del config
+[DEBUG] 20:08:40:623 Kernel/(10938:10938): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:08:40:623 Kernel/(10938:10938): mismo puntero 0 
+
+[INFO] 20:08:40:623 Kernel/(10938:10938): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 20:08:43:24 Kernel/(10938:10940): kmemory: se pide memoria de SC
+[DEBUG] 20:08:43:24 Kernel/(10938:10940): kmemory: bloqueo memoria
+[INFO] 20:08:52:56 Kernel/(10938:10940): Se recibio una accion add
+[INFO] 20:09:34:174 Kernel/(11091:11091): se inicia el modulo scheduler
+[DEBUG] 20:09:34:175 Kernel/(11091:11091): el valor del puntero es: 0 
+
+[DEBUG] 20:09:34:175 Kernel/(11091:11091): lo que queda luego de ingresarlo 0 
+
+[INFO] 20:09:34:175 Kernel/(11091:11092): se inicia el monitoreo del config
+[DEBUG] 20:09:34:175 Kernel/(11091:11091): mismo puntero 0 
+
+[INFO] 20:09:34:176 Kernel/(11091:11091): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:09:39:366 Kernel/(11159:11159): se inicia el modulo scheduler
+[DEBUG] 20:09:39:367 Kernel/(11159:11159): el valor del puntero es: 0 
+
+[DEBUG] 20:09:39:367 Kernel/(11159:11159): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:09:39:367 Kernel/(11159:11159): mismo puntero 0 
+
+[INFO] 20:09:39:367 Kernel/(11159:11160): se inicia el monitoreo del config
+[INFO] 20:09:39:368 Kernel/(11159:11159): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:09:52:648 Kernel/(11159:11161): Se recibio una accion run.
+[INFO] 20:09:52:649 Kernel/(11159:11161): Se recibio una accion run.
+[INFO] 20:09:52:652 Kernel/(11159:11161): Se recibio una accion run.
+[INFO] 20:09:52:656 Kernel/(11159:11161): Se recibio una accion run.
+[INFO] 20:09:52:659 Kernel/(11159:11161): Se recibio una accion run.
+[INFO] 20:09:52:662 Kernel/(11159:11161): Se recibio una accion run.
+[INFO] 20:09:52:664 Kernel/(11159:11161): Se recibio una accion run.
+[INFO] 20:09:52:667 Kernel/(11159:11161): Se recibio una accion run.
+[INFO] 20:09:52:670 Kernel/(11159:11161): Se recibio una accion create
+[INFO] 20:09:52:803 Kernel/(11159:11161): Se recibio una accion describe
+[INFO] 20:09:52:806 Kernel/(11159:11161): Se recibio una accion insert
+[DEBUG] 20:09:52:806 Kernel/(11159:11161): kmemory: se pide memoria de SC
+[DEBUG] 20:09:52:806 Kernel/(11159:11161): kmemory: bloqueo memoria
+[INFO] 20:09:52:808 Kernel/(11159:11161): Se recibio una accion create
+[INFO] 20:09:52:810 Kernel/(11159:11161): Se recibio una accion create
+[INFO] 20:10:56:934 Kernel/(11332:11332): se inicia el modulo scheduler
+[INFO] 20:10:56:935 Kernel/(11332:11336): se inicia el monitoreo del config
+[DEBUG] 20:10:56:935 Kernel/(11332:11332): el valor del puntero es: 0 
+
+[DEBUG] 20:10:56:935 Kernel/(11332:11332): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:10:56:935 Kernel/(11332:11332): mismo puntero 0 
+
+[INFO] 20:10:56:935 Kernel/(11332:11332): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:11:10:408 Kernel/(11332:11337): Se recibio una accion run.
+[INFO] 20:11:10:409 Kernel/(11332:11337): Se recibio una accion run.
+[INFO] 20:11:10:412 Kernel/(11332:11337): Se recibio una accion run.
+[INFO] 20:11:10:414 Kernel/(11332:11337): Se recibio una accion run.
+[INFO] 20:11:10:417 Kernel/(11332:11337): Se recibio una accion run.
+[INFO] 20:11:10:421 Kernel/(11332:11337): Se recibio una accion run.
+[INFO] 20:11:10:423 Kernel/(11332:11337): Se recibio una accion run.
+[INFO] 20:11:10:426 Kernel/(11332:11337): Se recibio una accion run.
+[INFO] 20:11:10:429 Kernel/(11332:11337): Se recibio una accion create
+[INFO] 20:11:10:430 Kernel/(11332:11337): Se recibio una accion create
+[INFO] 20:11:10:430 Kernel/(11332:11337): Se recibio una accion create
+[INFO] 20:11:10:431 Kernel/(11332:11337): Se recibio una accion create
+[INFO] 20:11:10:432 Kernel/(11332:11337): Se recibio una accion create
+[INFO] 20:11:32:439 Kernel/(11364:11364): se inicia el modulo scheduler
+[INFO] 20:11:32:440 Kernel/(11364:11365): se inicia el monitoreo del config
+[DEBUG] 20:11:32:440 Kernel/(11364:11364): el valor del puntero es: 0 
+
+[DEBUG] 20:11:32:440 Kernel/(11364:11364): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:11:32:440 Kernel/(11364:11364): mismo puntero 0 
+
+[INFO] 20:11:32:440 Kernel/(11364:11364): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:11:44:505 Kernel/(11364:11366): Se recibio una accion run.
+[INFO] 20:11:44:505 Kernel/(11364:11366): Se recibio una accion run.
+[INFO] 20:11:44:508 Kernel/(11364:11366): Se recibio una accion run.
+[INFO] 20:11:44:511 Kernel/(11364:11366): Se recibio una accion run.
+[INFO] 20:11:44:514 Kernel/(11364:11366): Se recibio una accion run.
+[INFO] 20:11:44:517 Kernel/(11364:11366): Se recibio una accion run.
+[INFO] 20:11:44:519 Kernel/(11364:11366): Se recibio una accion run.
+[INFO] 20:11:44:522 Kernel/(11364:11366): Se recibio una accion run.
+[INFO] 20:11:44:525 Kernel/(11364:11366): Se recibio una accion create
+[INFO] 20:11:44:529 Kernel/(11364:11366): Se recibio una accion describe
+[INFO] 20:11:44:533 Kernel/(11364:11366): Se recibio una accion insert
+[DEBUG] 20:11:44:533 Kernel/(11364:11366): kmemory: se pide memoria de SC
+[DEBUG] 20:11:44:533 Kernel/(11364:11366): kmemory: bloqueo memoria
+[INFO] 20:11:44:536 Kernel/(11364:11366): Se recibio una accion create
+[INFO] 20:11:44:540 Kernel/(11364:11366): Se recibio una accion create
+[INFO] 20:23:06:99 Kernel/(12482:12482): se inicia el modulo scheduler
+[DEBUG] 20:23:06:100 Kernel/(12482:12482): el valor del puntero es: 0 
+
+[INFO] 20:23:06:100 Kernel/(12482:12483): se inicia el monitoreo del config
+[DEBUG] 20:23:06:101 Kernel/(12482:12482): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:23:06:101 Kernel/(12482:12482): mismo puntero 0 
+
+[INFO] 20:23:06:102 Kernel/(12482:12482): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 20:23:10:637 Kernel/(12482:12484): kmemory: se pide memoria de SC
+[DEBUG] 20:23:10:637 Kernel/(12482:12484): kmemory: bloqueo memoria
+[INFO] 20:23:24:908 Kernel/(12482:12484): Se recibio una accion run.
+[INFO] 20:23:24:909 Kernel/(12482:12484): Se recibio una accion run.
+[INFO] 20:23:24:912 Kernel/(12482:12484): Se recibio una accion run.
+[INFO] 20:23:24:914 Kernel/(12482:12484): Se recibio una accion run.
+[INFO] 20:23:24:917 Kernel/(12482:12484): Se recibio una accion run.
+[INFO] 20:23:24:920 Kernel/(12482:12484): Se recibio una accion run.
+[INFO] 20:23:24:924 Kernel/(12482:12484): Se recibio una accion run.
+[INFO] 20:23:24:927 Kernel/(12482:12484): Se recibio una accion run.
+[INFO] 20:23:58:576 Kernel/(12553:12553): se inicia el modulo scheduler
+[INFO] 20:23:58:576 Kernel/(12553:12554): se inicia el monitoreo del config
+[DEBUG] 20:23:58:576 Kernel/(12553:12553): el valor del puntero es: 0 
+
+[DEBUG] 20:23:58:576 Kernel/(12553:12553): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:23:58:576 Kernel/(12553:12553): mismo puntero 0 
+
+[INFO] 20:23:58:577 Kernel/(12553:12553): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:24:12:890 Kernel/(12594:12594): se inicia el modulo scheduler
+[INFO] 20:24:12:891 Kernel/(12594:12605): se inicia el monitoreo del config
+[DEBUG] 20:24:12:891 Kernel/(12594:12594): el valor del puntero es: 0 
+
+[DEBUG] 20:24:12:891 Kernel/(12594:12594): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:24:12:891 Kernel/(12594:12594): mismo puntero 0 
+
+[INFO] 20:24:12:891 Kernel/(12594:12594): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:24:24:812 Kernel/(12594:12606): Se recibio una accion run.
+[INFO] 20:24:24:812 Kernel/(12594:12606): Se recibio una accion run.
+[INFO] 20:24:24:815 Kernel/(12594:12606): Se recibio una accion run.
+[INFO] 20:24:24:818 Kernel/(12594:12606): Se recibio una accion run.
+[INFO] 20:24:24:823 Kernel/(12594:12606): Se recibio una accion run.
+[INFO] 20:24:24:826 Kernel/(12594:12606): Se recibio una accion run.
+[INFO] 20:24:24:828 Kernel/(12594:12606): Se recibio una accion run.
+[INFO] 20:24:24:831 Kernel/(12594:12606): Se recibio una accion run.
+[INFO] 20:26:20:844 Kernel/(12732:12732): se inicia el modulo scheduler
+[INFO] 20:26:20:844 Kernel/(12732:12733): se inicia el monitoreo del config
+[DEBUG] 20:26:20:844 Kernel/(12732:12732): el valor del puntero es: 0 
+
+[DEBUG] 20:26:20:844 Kernel/(12732:12732): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:26:20:844 Kernel/(12732:12732): mismo puntero 0 
+
+[INFO] 20:26:20:845 Kernel/(12732:12732): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:27:35:72 Kernel/(12863:12863): se inicia el modulo scheduler
+[DEBUG] 20:27:35:72 Kernel/(12863:12863): el valor del puntero es: 0 
+
+[DEBUG] 20:27:35:73 Kernel/(12863:12863): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:27:35:73 Kernel/(12863:12863): mismo puntero 0 
+
+[INFO] 20:27:35:73 Kernel/(12863:12863): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:27:35:72 Kernel/(12863:12864): se inicia el monitoreo del config
+[INFO] 20:28:00:304 Kernel/(12902:12902): se inicia el modulo scheduler
+[DEBUG] 20:28:00:305 Kernel/(12902:12902): el valor del puntero es: 0 
+
+[INFO] 20:28:00:305 Kernel/(12902:12903): se inicia el monitoreo del config
+[DEBUG] 20:28:00:305 Kernel/(12902:12902): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:28:00:305 Kernel/(12902:12902): mismo puntero 0 
+
+[INFO] 20:28:00:306 Kernel/(12902:12902): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:29:18:943 Kernel/(13035:13035): se inicia el modulo scheduler
+[DEBUG] 20:29:18:944 Kernel/(13035:13035): el valor del puntero es: 0 
+
+[DEBUG] 20:29:18:945 Kernel/(13035:13035): lo que queda luego de ingresarlo 0 
+
+[INFO] 20:29:18:945 Kernel/(13035:13036): se inicia el monitoreo del config
+[DEBUG] 20:29:18:945 Kernel/(13035:13035): mismo puntero 0 
+
+[INFO] 20:29:18:945 Kernel/(13035:13035): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 20:29:26:776 Kernel/(13035:13037): kmemory: se pide memoria de SC
+[DEBUG] 20:29:26:776 Kernel/(13035:13037): kmemory: bloqueo memoria
+[INFO] 20:29:49:606 Kernel/(13121:13121): se inicia el modulo scheduler
+[DEBUG] 20:29:49:607 Kernel/(13121:13121): el valor del puntero es: 0 
+
+[INFO] 20:29:49:607 Kernel/(13121:13122): se inicia el monitoreo del config
+[DEBUG] 20:29:49:607 Kernel/(13121:13121): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:29:49:607 Kernel/(13121:13121): mismo puntero 0 
+
+[INFO] 20:29:49:607 Kernel/(13121:13121): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:30:00:512 Kernel/(13121:13123): Se recibio una accion run.
+[INFO] 20:30:00:512 Kernel/(13121:13123): Se recibio una accion run.
+[INFO] 20:30:00:515 Kernel/(13121:13123): Se recibio una accion run.
+[INFO] 20:30:00:518 Kernel/(13121:13123): Se recibio una accion run.
+[INFO] 20:30:00:521 Kernel/(13121:13123): Se recibio una accion run.
+[INFO] 20:30:00:524 Kernel/(13121:13123): Se recibio una accion run.
+[INFO] 20:30:00:526 Kernel/(13121:13123): Se recibio una accion run.
+[INFO] 20:30:00:529 Kernel/(13121:13123): Se recibio una accion run.
+[INFO] 20:30:00:532 Kernel/(13121:13123): Se recibio una accion create
+[INFO] 20:30:00:659 Kernel/(13121:13123): Se recibio una accion describe
+[INFO] 20:30:00:661 Kernel/(13121:13123): Se recibio una accion insert
+[DEBUG] 20:30:00:661 Kernel/(13121:13123): kmemory: se pide memoria de SC
+[DEBUG] 20:30:00:661 Kernel/(13121:13123): kmemory: bloqueo memoria
+[INFO] 20:30:00:663 Kernel/(13121:13123): Se recibio una accion create
+[INFO] 20:30:00:666 Kernel/(13121:13123): Se recibio una accion create
+[INFO] 20:30:48:306 Kernel/(13252:13252): se inicia el modulo scheduler
+[INFO] 20:30:48:307 Kernel/(13252:13256): se inicia el monitoreo del config
+[DEBUG] 20:30:48:307 Kernel/(13252:13252): el valor del puntero es: 0 
+
+[DEBUG] 20:30:48:307 Kernel/(13252:13252): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:30:48:307 Kernel/(13252:13252): mismo puntero 0 
+
+[INFO] 20:30:48:307 Kernel/(13252:13252): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:31:05:50 Kernel/(13276:13276): se inicia el modulo scheduler
+[INFO] 20:31:05:50 Kernel/(13276:13277): se inicia el monitoreo del config
+[DEBUG] 20:31:05:50 Kernel/(13276:13276): el valor del puntero es: 0 
+
+[DEBUG] 20:31:05:50 Kernel/(13276:13276): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:31:05:50 Kernel/(13276:13276): mismo puntero 0 
+
+[INFO] 20:31:05:51 Kernel/(13276:13276): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:31:16:399 Kernel/(13276:13278): Se recibio una accion run.
+[INFO] 20:31:16:399 Kernel/(13276:13278): Se recibio una accion run.
+[INFO] 20:31:16:402 Kernel/(13276:13278): Se recibio una accion run.
+[INFO] 20:31:16:405 Kernel/(13276:13278): Se recibio una accion run.
+[INFO] 20:31:16:408 Kernel/(13276:13278): Se recibio una accion run.
+[INFO] 20:31:16:411 Kernel/(13276:13278): Se recibio una accion run.
+[INFO] 20:31:16:413 Kernel/(13276:13278): Se recibio una accion run.
+[INFO] 20:31:16:416 Kernel/(13276:13278): Se recibio una accion run.
+[INFO] 20:31:16:419 Kernel/(13276:13278): Se recibio una accion create
+[INFO] 20:31:16:423 Kernel/(13276:13278): Se recibio una accion describe
+[INFO] 20:31:16:427 Kernel/(13276:13278): Se recibio una accion insert
+[DEBUG] 20:31:16:427 Kernel/(13276:13278): kmemory: se pide memoria de SC
+[DEBUG] 20:31:16:427 Kernel/(13276:13278): kmemory: bloqueo memoria
+[INFO] 20:31:16:430 Kernel/(13276:13278): Se recibio una accion create
+[INFO] 20:31:16:436 Kernel/(13276:13278): Se recibio una accion create
+[INFO] 20:32:01:540 Kernel/(13355:13355): se inicia el modulo scheduler
+[DEBUG] 20:32:01:540 Kernel/(13355:13355): el valor del puntero es: 0 
+
+[INFO] 20:32:01:540 Kernel/(13355:13356): se inicia el monitoreo del config
+[DEBUG] 20:32:01:540 Kernel/(13355:13355): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:32:01:540 Kernel/(13355:13355): mismo puntero 0 
+
+[INFO] 20:32:01:540 Kernel/(13355:13355): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:32:03:820 Kernel/(13355:13357): Se recibio una accion metrics
+[INFO] 20:32:15:508 Kernel/(13355:13357): Se recibio una accion run.
+[INFO] 20:32:22:521 Kernel/(13425:13425): se inicia el modulo scheduler
+[DEBUG] 20:32:22:522 Kernel/(13425:13425): el valor del puntero es: 0 
+
+[INFO] 20:32:22:522 Kernel/(13425:13426): se inicia el monitoreo del config
+[DEBUG] 20:32:22:522 Kernel/(13425:13425): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:32:22:522 Kernel/(13425:13425): mismo puntero 0 
+
+[INFO] 20:32:22:523 Kernel/(13425:13425): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:32:36:419 Kernel/(13425:13427): Se recibio una accion run.
+[INFO] 20:32:36:419 Kernel/(13425:13427): Se recibio una accion run.
+[INFO] 20:32:36:422 Kernel/(13425:13427): Se recibio una accion run.
+[INFO] 20:32:36:425 Kernel/(13425:13427): Se recibio una accion run.
+[INFO] 20:32:36:427 Kernel/(13425:13427): Se recibio una accion run.
+[INFO] 20:32:36:429 Kernel/(13425:13427): Se recibio una accion run.
+[INFO] 20:32:36:431 Kernel/(13425:13427): Se recibio una accion run.
+[INFO] 20:32:36:434 Kernel/(13425:13427): Se recibio una accion run.
+[INFO] 20:32:36:436 Kernel/(13425:13427): Se recibio una accion create
+[INFO] 20:32:36:545 Kernel/(13425:13427): Se recibio una accion describe
+[INFO] 20:32:36:547 Kernel/(13425:13427): Se recibio una accion insert
+[DEBUG] 20:32:36:547 Kernel/(13425:13427): kmemory: se pide memoria de SC
+[DEBUG] 20:32:36:547 Kernel/(13425:13427): kmemory: bloqueo memoria
+[INFO] 20:32:36:549 Kernel/(13425:13427): Se recibio una accion create
+[INFO] 20:32:36:551 Kernel/(13425:13427): Se recibio una accion create
+[INFO] 20:32:36:554 Kernel/(13425:13427): Se recibio una accion create
+[INFO] 20:32:36:556 Kernel/(13425:13427): Se recibio una accion describe
+[INFO] 20:32:36:558 Kernel/(13425:13427): Se recibio una accion insert
+[DEBUG] 20:32:36:558 Kernel/(13425:13427): kmemory: se pide memoria de SC
+[DEBUG] 20:32:36:558 Kernel/(13425:13427): kmemory: bloqueo memoria
+[INFO] 20:32:36:560 Kernel/(13425:13427): Se recibio una accion create
+[INFO] 20:32:36:563 Kernel/(13425:13427): Se recibio una accion create
+[INFO] 20:32:36:565 Kernel/(13425:13427): Se recibio una accion create
+[INFO] 20:32:36:567 Kernel/(13425:13427): Se recibio una accion describe
+[INFO] 20:32:36:569 Kernel/(13425:13427): Se recibio una accion insert
+[DEBUG] 20:32:36:569 Kernel/(13425:13427): kmemory: se pide memoria de SC
+[DEBUG] 20:32:36:569 Kernel/(13425:13427): kmemory: bloqueo memoria
+[INFO] 20:32:36:571 Kernel/(13425:13427): Se recibio una accion create
+[INFO] 20:32:36:573 Kernel/(13425:13427): Se recibio una accion describe
+[INFO] 20:32:36:576 Kernel/(13425:13427): Se recibio una accion create
+[INFO] 20:32:36:578 Kernel/(13425:13427): Se recibio una accion describe
+[INFO] 20:32:36:580 Kernel/(13425:13427): Se recibio una accion insert
+[DEBUG] 20:32:36:580 Kernel/(13425:13427): kmemory: se pide memoria de SC
+[DEBUG] 20:32:36:580 Kernel/(13425:13427): kmemory: bloqueo memoria
+[INFO] 20:32:36:582 Kernel/(13425:13427): Se recibio una accion insert
+[DEBUG] 20:32:36:582 Kernel/(13425:13427): kmemory: se pide memoria de SC
+[DEBUG] 20:32:36:582 Kernel/(13425:13427): kmemory: bloqueo memoria
+[INFO] 20:32:36:584 Kernel/(13425:13427): Se recibio una accion insert
+[DEBUG] 20:32:36:585 Kernel/(13425:13427): kmemory: se pide memoria de SC
+[DEBUG] 20:32:36:585 Kernel/(13425:13427): kmemory: bloqueo memoria
+[INFO] 20:32:36:587 Kernel/(13425:13427): Se recibio una accion create
+[INFO] 20:33:08:208 Kernel/(13533:13533): se inicia el modulo scheduler
+[INFO] 20:33:08:208 Kernel/(13533:13537): se inicia el monitoreo del config
+[DEBUG] 20:33:08:208 Kernel/(13533:13533): el valor del puntero es: 0 
+
+[DEBUG] 20:33:08:208 Kernel/(13533:13533): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:33:08:208 Kernel/(13533:13533): mismo puntero 0 
+
+[INFO] 20:33:08:209 Kernel/(13533:13533): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:33:19:913 Kernel/(13533:13538): Se recibio una accion run.
+[INFO] 20:33:19:913 Kernel/(13533:13538): Se recibio una accion run.
+[INFO] 20:33:19:917 Kernel/(13533:13538): Se recibio una accion run.
+[INFO] 20:33:19:920 Kernel/(13533:13538): Se recibio una accion run.
+[INFO] 20:33:19:924 Kernel/(13533:13538): Se recibio una accion run.
+[INFO] 20:33:19:928 Kernel/(13533:13538): Se recibio una accion run.
+[INFO] 20:33:19:930 Kernel/(13533:13538): Se recibio una accion run.
+[INFO] 20:33:19:934 Kernel/(13533:13538): Se recibio una accion run.
+[INFO] 20:33:19:936 Kernel/(13533:13538): Se recibio una accion create
+[INFO] 20:33:19:937 Kernel/(13533:13538): Se recibio una accion create
+[INFO] 20:33:19:940 Kernel/(13533:13538): Se recibio una accion create
+[INFO] 20:33:19:940 Kernel/(13533:13538): Se recibio una accion create
+[INFO] 20:33:19:941 Kernel/(13533:13538): Se recibio una accion create
+[INFO] 20:34:22:14 Kernel/(13644:13644): se inicia el modulo scheduler
+[INFO] 20:34:22:14 Kernel/(13644:13645): se inicia el monitoreo del config
+[DEBUG] 20:34:22:14 Kernel/(13644:13644): el valor del puntero es: 0 
+
+[DEBUG] 20:34:22:14 Kernel/(13644:13644): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:34:22:14 Kernel/(13644:13644): mismo puntero 0 
+
+[INFO] 20:34:22:15 Kernel/(13644:13644): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:34:36:645 Kernel/(13644:13646): Se recibio una accion run.
+[INFO] 20:34:36:646 Kernel/(13644:13646): Se recibio una accion create
+[INFO] 20:34:36:650 Kernel/(13644:13646): Se recibio una accion describe
+[INFO] 20:34:36:655 Kernel/(13644:13646): Se recibio una accion insert
+[DEBUG] 20:34:36:656 Kernel/(13644:13646): kmemory: se pide memoria de SC
+[DEBUG] 20:34:36:656 Kernel/(13644:13646): kmemory: bloqueo memoria
+[INFO] 20:34:36:663 Kernel/(13644:13646): Se recibio una accion create
+[INFO] 20:34:36:668 Kernel/(13644:13646): Se recibio una accion create
+[INFO] 20:34:36:789 Kernel/(13644:13646): Se recibio una accion describe
+[INFO] 20:34:36:791 Kernel/(13644:13646): Se recibio una accion insert
+[DEBUG] 20:34:36:791 Kernel/(13644:13646): kmemory: se pide memoria de SC
+[DEBUG] 20:34:36:791 Kernel/(13644:13646): kmemory: bloqueo memoria
+[INFO] 20:35:27:392 Kernel/(13719:13719): se inicia el modulo scheduler
+[INFO] 20:35:27:392 Kernel/(13719:13720): se inicia el monitoreo del config
+[DEBUG] 20:35:27:392 Kernel/(13719:13719): el valor del puntero es: 0 
+
+[DEBUG] 20:35:27:392 Kernel/(13719:13719): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:35:27:392 Kernel/(13719:13719): mismo puntero 0 
+
+[INFO] 20:35:27:392 Kernel/(13719:13719): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:35:42:915 Kernel/(13719:13721): Se recibio una accion run.
+[INFO] 20:35:42:915 Kernel/(13719:13721): Se recibio una accion run.
+[INFO] 20:35:42:918 Kernel/(13719:13721): Se recibio una accion run.
+[INFO] 20:35:42:921 Kernel/(13719:13721): Se recibio una accion run.
+[INFO] 20:35:42:924 Kernel/(13719:13721): Se recibio una accion run.
+[INFO] 20:35:42:927 Kernel/(13719:13721): Se recibio una accion run.
+[INFO] 20:35:42:930 Kernel/(13719:13721): Se recibio una accion run.
+[INFO] 20:35:42:933 Kernel/(13719:13721): Se recibio una accion run.
+[INFO] 20:35:42:935 Kernel/(13719:13721): Se recibio una accion create
+[INFO] 20:35:42:940 Kernel/(13719:13721): Se recibio una accion describe
+[INFO] 20:35:42:944 Kernel/(13719:13721): Se recibio una accion insert
+[DEBUG] 20:35:42:945 Kernel/(13719:13721): kmemory: se pide memoria de SC
+[DEBUG] 20:35:42:945 Kernel/(13719:13721): kmemory: bloqueo memoria
+[INFO] 20:35:42:948 Kernel/(13719:13721): Se recibio una accion create
+[INFO] 20:35:42:951 Kernel/(13719:13721): Se recibio una accion create
+[INFO] 20:35:43:76 Kernel/(13719:13721): Se recibio una accion create
+[INFO] 20:35:43:78 Kernel/(13719:13721): Se recibio una accion describe
+[INFO] 20:39:42:592 Kernel/(14163:14163): se inicia el modulo scheduler
+[DEBUG] 20:39:42:593 Kernel/(14163:14163): el valor del puntero es: 0 
+
+[DEBUG] 20:39:42:593 Kernel/(14163:14163): lo que queda luego de ingresarlo 0 
+
+[INFO] 20:39:42:593 Kernel/(14163:14164): se inicia el monitoreo del config
+[DEBUG] 20:39:42:593 Kernel/(14163:14163): mismo puntero 0 
+
+[INFO] 20:39:42:593 Kernel/(14163:14163): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:39:52:498 Kernel/(14163:14165): Se recibio una accion run.
+[INFO] 20:39:52:499 Kernel/(14163:14165): Se recibio una accion run.
+[INFO] 20:39:52:502 Kernel/(14163:14165): Se recibio una accion run.
+[INFO] 20:39:52:504 Kernel/(14163:14165): Se recibio una accion run.
+[INFO] 20:39:52:507 Kernel/(14163:14165): Se recibio una accion run.
+[INFO] 20:39:52:510 Kernel/(14163:14165): Se recibio una accion run.
+[INFO] 20:39:52:513 Kernel/(14163:14165): Se recibio una accion run.
+[INFO] 20:39:52:516 Kernel/(14163:14165): Se recibio una accion run.
+[INFO] 20:39:52:518 Kernel/(14163:14165): Se recibio una accion create
+[INFO] 20:39:52:523 Kernel/(14163:14165): Se recibio una accion describe
+[INFO] 20:39:52:527 Kernel/(14163:14165): Se recibio una accion insert
+[DEBUG] 20:39:52:527 Kernel/(14163:14165): kmemory: se pide memoria de SC
+[DEBUG] 20:39:52:528 Kernel/(14163:14165): kmemory: bloqueo memoria
+[INFO] 20:39:52:531 Kernel/(14163:14165): Se recibio una accion create
+[INFO] 20:39:52:651 Kernel/(14163:14165): Se recibio una accion create
+[INFO] 20:39:52:653 Kernel/(14163:14165): Se recibio una accion create
+[INFO] 20:39:52:656 Kernel/(14163:14165): Se recibio una accion describe
+[INFO] 20:39:52:658 Kernel/(14163:14165): Se recibio una accion insert
+[DEBUG] 20:39:52:658 Kernel/(14163:14165): kmemory: se pide memoria de SC
+[DEBUG] 20:39:52:658 Kernel/(14163:14165): kmemory: bloqueo memoria
+[INFO] 20:39:52:660 Kernel/(14163:14165): Se recibio una accion create
+[INFO] 20:39:52:662 Kernel/(14163:14165): Se recibio una accion create
+[INFO] 20:39:52:665 Kernel/(14163:14165): Se recibio una accion create
+[INFO] 20:39:52:667 Kernel/(14163:14165): Se recibio una accion describe
+[INFO] 20:39:52:669 Kernel/(14163:14165): Se recibio una accion insert
+[DEBUG] 20:39:52:669 Kernel/(14163:14165): kmemory: se pide memoria de SC
+[DEBUG] 20:39:52:669 Kernel/(14163:14165): kmemory: bloqueo memoria
+[INFO] 20:39:52:671 Kernel/(14163:14165): Se recibio una accion create
+[INFO] 20:39:52:673 Kernel/(14163:14165): Se recibio una accion describe
+[INFO] 20:39:52:676 Kernel/(14163:14165): Se recibio una accion create
+[INFO] 20:39:52:678 Kernel/(14163:14165): Se recibio una accion describe
+[INFO] 20:39:52:680 Kernel/(14163:14165): Se recibio una accion insert
+[DEBUG] 20:39:52:680 Kernel/(14163:14165): kmemory: se pide memoria de SC
+[DEBUG] 20:39:52:680 Kernel/(14163:14165): kmemory: bloqueo memoria
+[INFO] 20:39:52:682 Kernel/(14163:14165): Se recibio una accion insert
+[DEBUG] 20:39:52:682 Kernel/(14163:14165): kmemory: se pide memoria de SC
+[DEBUG] 20:39:52:682 Kernel/(14163:14165): kmemory: bloqueo memoria
+[INFO] 20:39:52:684 Kernel/(14163:14165): Se recibio una accion insert
+[DEBUG] 20:39:52:684 Kernel/(14163:14165): kmemory: se pide memoria de SC
+[DEBUG] 20:39:52:684 Kernel/(14163:14165): kmemory: bloqueo memoria
+[INFO] 20:39:52:687 Kernel/(14163:14165): Se recibio una accion create
+[INFO] 20:41:02:258 Kernel/(14353:14353): se inicia el modulo scheduler
+[INFO] 20:41:02:258 Kernel/(14353:14357): se inicia el monitoreo del config
+[DEBUG] 20:41:02:258 Kernel/(14353:14353): el valor del puntero es: 0 
+
+[DEBUG] 20:41:02:258 Kernel/(14353:14353): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 20:41:02:258 Kernel/(14353:14353): mismo puntero 0 
+
+[INFO] 20:41:02:259 Kernel/(14353:14353): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 20:41:11:664 Kernel/(14353:14358): Se recibio una accion run.
+[INFO] 20:41:11:664 Kernel/(14353:14358): Se recibio una accion run.
+[INFO] 20:41:11:667 Kernel/(14353:14358): Se recibio una accion run.
+[INFO] 20:41:11:670 Kernel/(14353:14358): Se recibio una accion run.
+[INFO] 20:41:11:673 Kernel/(14353:14358): Se recibio una accion run.
+[INFO] 20:41:11:676 Kernel/(14353:14358): Se recibio una accion run.
+[INFO] 20:41:11:679 Kernel/(14353:14358): Se recibio una accion run.
+[INFO] 20:41:11:682 Kernel/(14353:14358): Se recibio una accion run.
+[INFO] 20:41:11:684 Kernel/(14353:14358): Se recibio una accion create
+[INFO] 20:41:11:688 Kernel/(14353:14358): Se recibio una accion describe
+[INFO] 20:41:11:691 Kernel/(14353:14358): Se recibio una accion insert
+[DEBUG] 20:41:11:691 Kernel/(14353:14358): kmemory: se pide memoria de SC
+[DEBUG] 20:41:11:691 Kernel/(14353:14358): kmemory: bloqueo memoria
+[INFO] 20:41:11:696 Kernel/(14353:14358): Se recibio una accion create
+[INFO] 20:41:11:824 Kernel/(14353:14358): Se recibio una accion create
