@@ -69,36 +69,17 @@ int main(int argc, char const *argv[])
   memset(MAIN_MEMORY, 0, main_memory_size);
 
   SEGMENT_TABLE = NULL;
-  NUMBER_OF_PAGES = main_memory_size / (sizeof(page_t) - sizeof(char*) + VALUE_SIZE); // la cantidad de paginas que voy a tener con el tamano actual de cada pagina
+  PAGE_SIZE = sizeof(page_t) - sizeof(char*) + VALUE_SIZE;
+  NUMBER_OF_PAGES = main_memory_size / PAGE_SIZE;
   LRU_TABLE = create_LRU_TABLE();
 
   printf("\n---- Memory info ----\n");
   printf("Main memory size: %d\n", main_memory_size);
+  printf("Page size: %d\n", PAGE_SIZE);
   printf("Number of pages: %d\n", NUMBER_OF_PAGES);
   printf("---------------------\n\n");
   
-
-  // -------------- PRUEBAS --------------
-
-  // segment_t* segment1 = create_segment("tabla1");
-  // segment_t* segment2 = create_segment("tabla2");
-  // page_t* new_page1 = create_page(123, 42, "holis");
-  // page_t* new_page2 = create_page(321, 69, "chau");
-
-  // segment_t* s1 = find_or_create_segment("tabla1");
-  // page_info_t* page_info1 = save_page(s1, new_page1);
-  // page_info_t* page_info2 = save_page(s1, new_page2);
-
-  // print_segment_pages(s1);
-
-  // lru_page_t* lru_page_info1 = create_lru_page(s1,page_info1); 
-  // lru_page_t* lru_page_info2 = create_lru_page(s1,page_info2); 
-
-
-  // -------------- FIN PRUEBAS --------------
-
-
-  //inicio lectura por consol
+  //inicio lectura por consola
   pthread_t tid_console;
   pthread_create(&tid_console, NULL, console_input, "Memory");
 
@@ -127,21 +108,16 @@ char* action_select(package_select* select_info){
   }
 
   // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
-  printf("PIDO KEY:%d AL FS", select_info->key);
-  char* packageTemp = parse_package_select(select_info);
-  
- // printf("EL SELECT TIENE -> INSTRUCTION: %s, TABLENAME: %s, KEY: %d \n", select_info->instruction, select_info->table_name, select_info->key);
-  printf("PACKAGE ENVIADO AL FS: %s -.\n", packageTemp);
-  
-  char* responce = exec_in_fs(fs_socket, packageTemp); 
-  
-  if(strcmp(responce, "Key invalida.") != 0){
-    printf("Respuesta del FS: %s -.\n", responce);
-    page_t* page = create_page(007, select_info->key, responce); //CUIDADO TIMESTAMP
+  printf("Buscando en FileSystem. Tabla: %s, Key:%d...\n", select_info->table_name, select_info->key);  
+  char* response = exec_in_fs(fs_socket, parse_package_select(select_info)); 
+  printf("Respuesta del FileSystem: %s", response);  
+  if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0){
+    page_t* page = create_page(007, select_info->key, response); //CUIDADO TIMESTAMP
     save_page(select_info->table_name, page);
-    printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
+    printf("Page found in file system. Table: %s, Key: %d, Value: %s\n", select_info->table_name, page->key, page->value);
     return string_new("%s\n", page->value);
   }
+  return response;
 }
 
 char* action_insert(package_insert* insert_info){
