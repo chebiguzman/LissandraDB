@@ -3,6 +3,9 @@
 #include <pthread.h>
 #include <string.h>
 #include <unistd.h>
+#include "../pharser.h"
+#include "../actions.h"
+#include "../console.h"
 
 typedef struct{
   unsigned long timestamp;
@@ -46,7 +49,7 @@ int NUMBER_OF_PAGES;
 int PAGE_SIZE;
 t_log* logger;
 int VALUE_SIZE;
-
+int fs_socket;
 
 // --------------------------
 
