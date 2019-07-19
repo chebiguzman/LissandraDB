@@ -109,7 +109,7 @@ char* action_select(package_select* select_info){
   char* response = exec_in_fs(fs_socket, parse_package_select(select_info)); 
   printf("Respuesta del FileSystem: %s", response);  
   if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0){
-    page_t* page = create_page(007, select_info->key, response); //CUIDADO TIMESTAMP
+    page_t* page = create_page((unsigned)time(NULL), select_info->key, response);
     save_page(select_info->table_name, page);
     printf("Page found in file system. Table: %s, Key: %d, Value: %s\n", select_info->table_name, page->key, page->value);
     return string_new("%s\n", page->value);
