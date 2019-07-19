@@ -118,7 +118,7 @@ int main(int argc, char const *argv[])
 //IMPLEMENTACION DE FUNCIONES (Devolver errror fuera del subconjunto)
 
 char* action_select(package_select* select_info){
-  log_info(logger, "Se recibio una accion select");
+//  log_info(logger, "Se recibio una accion select");
 
   page_info_t* page_info = find_page_info(select_info->table_name, select_info->key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
   if(page_info != NULL){
@@ -127,10 +127,16 @@ char* action_select(package_select* select_info){
   }
 
   // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
+  printf("PIDO KEY:%d AL FS", select_info->key);
   char* packageTemp = parse_package_select(select_info);
+  
+ // printf("EL SELECT TIENE -> INSTRUCTION: %s, TABLENAME: %s, KEY: %d \n", select_info->instruction, select_info->table_name, select_info->key);
+  printf("PACKAGE ENVIADO AL FS: %s -.\n", packageTemp);
+  
   char* responce = exec_in_fs(fs_socket, packageTemp); 
   
   if(strcmp(responce, "Key invalida.") != 0){
+    printf("Respuesta del FS: %s -.\n", responce);
     page_t* page = create_page(007, select_info->key, responce); //CUIDADO TIMESTAMP
     save_page(select_info->table_name, page);
     printf("Page found in file system -> Key: %d, Value: %s\n", page->key, page->value);
