@@ -132,8 +132,6 @@ void remove_page(page_info_t* page_info){
 	
 	remove_from_segment(lru_page_info->segment, page_info);
 	remove_from_LRU(lru_page_info);
-	printf("(test)---- Page %s removed from table and lru ----\n",page_info->page_ptr->value);
-
 	//memset(page_info->page_ptr, 0, PAGE_SIZE-1); // seteo a 0 la page en main memory
 }
 
