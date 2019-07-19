@@ -360,6 +360,7 @@ void engine_drop_table(char* table_name){
 char* get_table_metadata_as_string(char* table_name){
 
     char* table_path = malloc( strlen(table_name) + strlen(tables_path) + strlen("/metadata") +1);
+    
     strcpy(table_path, tables_path);
     strcat(table_path, table_name);
     strcat(table_path, "/metadata");
@@ -384,8 +385,8 @@ char* get_all_tables_metadata_as_string(){
     for (size_t i = 0; i < tables_amount; i++)
     {   
 
-        result = realloc(result, strlen(result) + strlen(list_get(tables_name,i)));
-
+        result = realloc(result, strlen(result) + strlen(list_get(tables_name,i))+ 8);
+        strcat(result, "NOMBRE=");
         strcat(result, list_get(tables_name,i));
 
         result = realloc(result, strlen(result) + 2);
@@ -395,7 +396,7 @@ char* get_all_tables_metadata_as_string(){
         result = realloc(result, strlen(result) + strlen(m) + 1);
         strcat(result, m);
         result = realloc(result, strlen(result) + 4);
-        strcat(result, "\n\n");
+        strcat(result, ";\n\n");
         free(m); 
     }
 

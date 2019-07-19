@@ -308,7 +308,6 @@ char* parse_package_insert(package_insert* package){
     char* buff = malloc(30);
     strcat(buffer, ltoa(package->timestamp,buff, 10 ));
     free(buff);
-    printf("paquete parsado %s", buffer);
     return buffer;
 }
 

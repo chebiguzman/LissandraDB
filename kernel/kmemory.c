@@ -176,6 +176,7 @@ int get_memory(){
 
 void kmemory_set_active_tables(t_dictionary* dic){
     tbl_list = dic;
+    printf("tiene el dic la tabla tabla? %d", dictionary_has_key(tbl_list, "tabla"));
 }
 int get_sc_memory(){
 
@@ -432,7 +433,9 @@ int connect_to_memory(char* ip, int port){
     }
     return memoryfd;
 }
-
+void kmemory_add_table(char* name, t_consistency* cons){
+    dictionary_put(tbl_list, name, cons);
+}
 t_consistency get_table_consistency(char* table_name){
     char* name = strdup(table_name);
     string_to_upper(name);

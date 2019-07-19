@@ -79,7 +79,7 @@ int main(int argc, char const *argv[])
 
 char* exec_in_memory(int memory_fd, char* payload){
    
-    char* responce = calloc(1,500);
+    char* responce = calloc(1,3000);
     strcpy(responce, "");
 
    
@@ -93,7 +93,7 @@ char* exec_in_memory(int memory_fd, char* payload){
 
     //ejecutar
     if(write(memory_fd,payload, strlen(payload)+1)){
-      read(memory_fd, responce, 500);
+      read(memory_fd, responce, 3000);
       return responce;
     }else{
       log_error(logger, "No se logo comuniarse con memoria");
@@ -174,7 +174,6 @@ char* action_insert(package_insert* insert_info){
   log_info(logger_debug, "Se recibio una accion insert");
   t_consistency consistency = get_table_consistency(insert_info->table_name);
   int memoryfd = get_loked_memory(consistency, insert_info->table_name);
-  printf("dentro de la funcion incert\n");
 
   char* package = parse_package_insert(insert_info);
 
@@ -207,15 +206,17 @@ char* action_describe(package_describe* describe_info){
 
   char* responce = exec_in_memory(memoryfd, package);
   if(strlen(responce)>20){
-    char** buffer = string_split(responce, "\n\n");
+    char** buffer = string_split(responce, ";");
     t_dictionary* tables_dic = dictionary_create();
+
     while(*buffer){
       char** lines = string_split(*buffer, "\n");
       t_dictionary* dic = dictionary_create();
+
       void add_cofiguration(char *line) {
         if (!string_starts_with(line, "#")) {
           char** keyAndValue = string_n_split(line, 2, "=");
-          printf("de la tabla recibo los valores: %s\n", keyAndValue[0]);
+
           dictionary_put(dic,  keyAndValue[0], keyAndValue[1]);
           free(keyAndValue[0]);
           free(keyAndValue);
@@ -223,16 +224,34 @@ char* action_describe(package_describe* describe_info){
     }
       string_iterate_lines(lines, add_cofiguration);
       string_iterate_lines(lines, (void*) free);
+
       char* name = dictionary_get(dic, "NOMBRE");
-      printf("el nombre de la tabla es: %s", name);
-      //dictionary_put(tables_dic, dictionary_get(dic, "NOMBRE"), dictionary_get(dic, "CONSISTENCY") );
+      char* cons = dictionary_get(dic, "CONSISTENCY");
+         
+      if(name!=NULL && cons !=NULL){
+        string_to_upper(name);
+        int* constistency = malloc(sizeof(int));
+
+        *constistency = atoi(cons);
+
+        dictionary_put(tables_dic, name, constistency);
+      
+        if(describe_info->table_name!=NULL){
+          kmemory_add_table(name,dictionary_get(dic, "CONSISTENCY") );
+        }
+      }
+      
+      
       free(lines);
       free(dic);
 
       buffer++;
     }
-      
-    kmemory_set_active_tables(tables_dic);
+      if(describe_info->table_name == NULL){
+        printf("describe generala %s\n",describe_info->table_name);
+        kmemory_set_active_tables(tables_dic);
+
+      }
   }
 
  
