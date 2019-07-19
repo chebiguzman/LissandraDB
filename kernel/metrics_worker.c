@@ -169,7 +169,7 @@ long list_promedy(t_list* list){
 
 
 char* get_metrics(){
-    char* r = malloc(3000);
+    char* r = malloc(1000);
     strcpy(r, "Strong consistency:\nRead latency:");
 
     long rlsc = list_promedy(m->read_latency_sc );
