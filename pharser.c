@@ -135,7 +135,7 @@ char* exec_instr(char* instr_buff){
             package->timestamp = time(NULL);
         }
 
-       // printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n Value: %s\n Timestamp: %lu\n", package->instruction, package->table_name, package->key, package->value, package->timestamp);
+       printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n Value: %s\n Timestamp: %lu\n", package->instruction, package->table_name, package->key, package->value, package->timestamp);
         char* responce = action_insert(package);
         return responce;
     }
@@ -289,26 +289,25 @@ char* parse_package_run(package_run* pk){
 }
 
 char* parse_package_insert(package_insert* package){
+    
     char* buffer; 
-    char* instr = strdup(package->instruction);
-    char* tbl_n = strdup(package->table_name);
-    //char key[16]; //malisima idea llega a ser mas de 15 digitos y rompe
-    char* key = string_itoa(package->key);
-    char* val = strdup(package->value);
-    char* timestmp = string_itoa(package->timestamp);
-    int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + strlen(key)+1 + strlen(package->value)+1 + strlen(timestmp)+1;
+    
+    int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + strlen(string_itoa(package->key))+1 + strlen(package->value)+1 + 40 +5;
     buffer = malloc(tot_len);
+    
 
-    buffer = string_new();
-    buffer = strcat(buffer, instr);
-    buffer = strcat(buffer, sep); //emular NULL terminations
-    buffer = strcat(buffer, tbl_n);
-    buffer = strcat(buffer, sep);
-    buffer = strcat(buffer, key);
-    buffer = strcat(buffer, sep);
-    buffer = strcat(buffer, val);
-    buffer = strcat(buffer, sep);
-    buffer = strcat(buffer, timestmp);
+    strcpy(buffer, package->instruction);
+    strcat(buffer, sep); //emular NULL terminations
+    strcat(buffer, package->table_name);
+    strcat(buffer, sep);
+    strcat(buffer, string_itoa(package->key));
+    strcat(buffer, sep);
+    strcat(buffer, package->value);
+    strcat(buffer, sep);
+    char* buff = malloc(30);
+    strcat(buffer, ltoa(package->timestamp,buff, 10 ));
+    free(buff);
+    printf("paquete parsado %s", buffer);
     return buffer;
 }
 
@@ -389,17 +388,22 @@ char* parse_package_create(package_create* pk){
         consistency = strdup("ERR");
         break;
     }
+
+
     strcat(buffer, consistency );
     free(consistency);
+ 
     strcat(buffer, sep);
     strcat(buffer, string_itoa(pk->partition_number));
     strcat(buffer, sep);
 
     char* buff = malloc(30);
-    ltoa(pk->compactation_time, buff, 10);
+    
 
-    strcat(buffer, buff );
+    strcat(buffer, ltoa(pk->compactation_time, buff, 10) );
     free(buff);
+
+    
     return buffer;
 }
 

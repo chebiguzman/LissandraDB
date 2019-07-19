@@ -24,7 +24,7 @@ void* exec(void *system_queue){
 
             EXECUTION:
             err_trap = 0; //la label necesita una linea denajo de ella
-            log_debug(logger_debug, "exec:obtengo programa");
+            //log_debug(logger_debug, "exec:obtengo programa");
             t_instr_set* program;
             t_ksyscall* kernel_call;
 
@@ -46,29 +46,31 @@ void* exec(void *system_queue){
 
 
             for(int i = 0; i != config->quantum; i++){
-            
+                //log_debug(logger_debug, "exec:me preparo para ejecutar");
+                
                 char* instr = strdup(queue_pop( program->instr));
-
                 //en un RUN los comandos se van mostrando
                 //a medida que ejecutan
                 if(program->doesPrint){
                     printf("%s",instr);
                 }
                 ///home/dreamable/a.lql
-                log_debug(logger_debug, instr);
+                //printf(" la instruccion a ejecutar es %s\n",instr);
+                //log_debug(logger_debug, instr);
+
                 char* r = exec_instr(instr);
-                log_debug(logger_debug, "exec:obtengo respuesta");
+                //log_debug(logger_debug, "exec:obtengo respuesta");
                 printf("%s", r);
 
                 
                 if(superuser){
                     kernel_call->result = r;
                     pthread_cond_broadcast(&kernel_call->cond);
-                    log_debug(logger_debug, "se le debvuelve al kernel su pedido");
+                    //log_debug(logger_debug, "se le debvuelve al kernel su pedido");
                 }
 
                 if(err_trap != 0){
-                    log_error(logg, "EL programa no puede seguir ejecutando.");
+                    //log_error(logger_debug, "EL programa no puede seguir ejecutando.");
                     break;
                 }
            
@@ -78,7 +80,7 @@ void* exec(void *system_queue){
                 voy a buscar otro para mantener el nivel de 
                 multiprogramacion, si no, lo devuelvo a exec*/
                 if(queue_is_empty( program->instr)){
-                    log_debug(logger_debug, "exec:termino programa"); 
+                    //log_debug(logger_debug, "exec:termino programa"); 
                     exec_size--;
                    
                     //log_debug(logg, "exec:me voy a buscar otro programa");
@@ -94,7 +96,7 @@ void* exec(void *system_queue){
             }
 
             if(!queue_is_empty( program->instr) && err_trap==0){
-                log_debug(logger_debug, "exec: termino quantum");
+                //log_debug(logger_debug, "exec: termino quantum");
                 queue_push(exec_queue, program);
 
 
@@ -124,12 +126,12 @@ void* exec(void *system_queue){
         ya sea una syscal o que añadan una tarea*/ 
         
         if(!queue_is_empty(syscall_queue->scheduler_queue)){
-            log_debug(logger_debug, "exec:Una syscall libera al procesador ocioso");
+            //log_debug(logger_debug, "exec:Una syscall libera al procesador ocioso");
             unlock_queue(); //Ya que no voy a actualizar la lista la
            goto EXECUTION;
             
         }else{
-            log_debug(logger_debug, "exec:Una instruccion saco al procesador de modo ocioso");
+            //log_debug(logger_debug, "exec:Una instruccion saco al procesador de modo ocioso");
             updateTasks(exec_queue);
         }
         
@@ -151,12 +153,12 @@ void updateTasks(t_queue* q){
         //log_debug(logg, "nueva instruccion:");
         queue_push(exec_queue, new_program);
         exec_size++;
-        log_debug(logger_debug, "exec:agrego un programa");
+        //log_debug(logger_debug, "exec:agrego un programa");
         
         
     }
     unlock_queue();
-    log_debug(logger_debug, "exec:fin de acctualizacion");
+    //log_debug(logger_debug, "exec:fin de acctualizacion");
 
     
 }

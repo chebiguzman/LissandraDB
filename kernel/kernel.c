@@ -78,19 +78,22 @@ int main(int argc, char const *argv[])
 }
 
 char* exec_in_memory(int memory_fd, char* payload){
-    char* responce = malloc(3000);
+   
+    char* responce = calloc(1,500);
     strcpy(responce, "");
+
+   
+    fflush(stdout);
     
     if ( memory_fd < 0 ){
       log_error(logger, "No se pudo llevar a cabo la accion.");
-      log_debug(logger_debug, "se obtubo e");
 
       return "";
     }
 
     //ejecutar
     if(write(memory_fd,payload, strlen(payload)+1)){
-      read(memory_fd, responce, 3000);
+      read(memory_fd, responce, 500);
       return responce;
     }else{
       log_error(logger, "No se logo comuniarse con memoria");
@@ -134,8 +137,10 @@ char* action_run(package_run* run_info){
     char* buffer = NULL;
 
     while(getline(&buffer, &buffer_size, fp) != -1){
-      char* instr_from_file = malloc(buffer_size);
-      memcpy(instr_from_file, buffer, buffer_size);
+      char* instr_from_file = malloc(strlen(buffer)+1);
+      strcpy(instr_from_file, buffer);
+      printf("insturccion a run: %s", instr_from_file);
+
       queue_push(instruction_set, instr_from_file);
 
     }
@@ -169,7 +174,10 @@ char* action_insert(package_insert* insert_info){
   log_info(logger_debug, "Se recibio una accion insert");
   t_consistency consistency = get_table_consistency(insert_info->table_name);
   int memoryfd = get_loked_memory(consistency, insert_info->table_name);
+  printf("dentro de la funcion incert\n");
+
   char* package = parse_package_insert(insert_info);
+
   char* responce = exec_in_memory(memoryfd, package); 
   unlock_memory(memoryfd);
   return responce;
@@ -247,7 +255,6 @@ char* action_journal(package_journal* journal_info){
 
 char* action_metrics(package_metrics* metrics_info){
   log_info(logger_debug, "Se recibio una accion metrics");
-  
   return get_metrics();
 }
 

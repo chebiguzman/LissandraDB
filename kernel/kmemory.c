@@ -108,6 +108,8 @@ int get_loked_memory(t_consistency consistency, char* table_name){
         exit(-1);
 
     }
+
+    
 }
 
 int get_loked_main_memory(){
@@ -173,7 +175,7 @@ int get_memory(){
 }
 
 void kmemory_set_active_tables(t_dictionary* dic){
-    //tbl_list = dic;
+    tbl_list = dic;
 }
 int get_sc_memory(){
 
@@ -373,7 +375,10 @@ void unlock_memory(int memoryfd){
     t_kmemory* mem = list_find(mem_list, has_memory_fd);
     
     pthread_mutex_unlock(&mem_list_lock);
-    pthread_mutex_unlock(&mem->lock);
+    if(mem!=NULL){
+        pthread_mutex_unlock(&mem->lock);
+
+    }
 
 }
 
@@ -445,7 +450,7 @@ t_consistency get_table_consistency(char* table_name){
        exec_err_abort(); //cuano la 
         return ERR_CONSISTENCY;
     }
-    int r =*((int *) dictionary_get(tbl_list, "A"));
+    int r =*((int *) dictionary_get(tbl_list, name));
     
     switch (r)
     {
