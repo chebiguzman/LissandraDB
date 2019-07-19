@@ -217,6 +217,8 @@ int does_table_exist(char* table_name){
     char* q = strdup(table_name);
     string_to_upper(q);
 
+    printf("DOES TABLE EXIST: %s", q);
+
     bool findTableByName(void* t){
         char* cmp = strdup((char*) t);
         string_to_upper(cmp);
@@ -514,9 +516,15 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
         fclose(block_file);
 
         set_block_as_occupied(block);//marco el bloque como ocupado en el bitmap
+
+        printf("se marco el bloqie como modificado\n");
+        printf("blocks[0] es: %i",blocks[0]);
         
         if(blocks[0] == '\0'){
-            blocks = strdup(string_itoa(block));
+            //blocks = strdup(string_itoa(block));
+            printf("blocks estaba vacia\n");
+            strcat(blocks,string_itoa(block));
+            printf("concatene blocks y block: %s\n", blocks);
         }else{
             char* blocks_buffer = malloc(strlen(blocks) + strlen(string_itoa(block))+1);
             strcpy(blocks_buffer, blocks );
@@ -526,6 +534,8 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
             blocks = blocks_buffer;
         }
         
+        printf("termine de cargar los bloques\n");
+
         dump_size++; //por cada iteracion se agrega un \0
 
     }
@@ -542,37 +552,57 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
     strcat(tmp_path ,"/");
 
 
+    printf("El path temporal es: %s\n", tmp_path);
 
-    for(int i=0; i<200; i++){
+    //encuentro un archivo tmp: desde 0 en adelante itero hasta que no existe salgo y devuelvo el num
+    char* tmp_file_number = string_itoa(find_tmp_name(tmp_path));
+
+    char* tmp_filepath = malloc( strlen(tmp_path) + strlen(tmp_file_number) + strlen(".tmp") + 1);
+    strcpy(tmp_filepath, tmp_path);
+    strcat(tmp_filepath ,tmp_file_number);
+    strcat(tmp_filepath ,".tmp");
+
+    printf("tmp_filepath es: %s",tmp_filepath);
+
+    FILE* tmp_file = fopen(tmp_filepath,"w+");//creo el archivo .tmp
+
+    //cargo el archivo .tmp
+
+    char* text = "SIZE=%s\nBLOCKS=[%s]\n";
+    char* a = string_itoa(dump_size); //TODO ver que es size
+    char* r = malloc( strlen(text) + strlen(a) + strlen(blocks)+1);
+
+    sprintf(r, text, a,blocks);
+
+    printf("va por aca: %s", r);
+    
+    fputs(r, tmp_file);
+
+    fclose(tmp_file);
+    
+    return;
+}
+
+//encuentro un archivo tmp: desde 0 en adelante itero hasta que no existe salgo y devuelvo el num
+int find_tmp_name(char* tmp_path) { 
+    int found = 0;
+    int i = 0;
+    while(1) {
+        //genero el nombre
         char* tmp_name = string_itoa(i);
-        char* tmp_filepath = malloc( strlen(tmp_path) + strlen(tmp_name)+2);
+        char* tmp_filepath = malloc( strlen(tmp_path) + strlen(tmp_name)+ strlen(".tmp")+1);
         strcpy(tmp_filepath, tmp_path);
+        //strcat(tmp_filepath, tmp_path);
         strcat(tmp_filepath ,tmp_name);
         strcat(tmp_filepath ,".tmp");
-        
-        if (!does_file_exist(tmp_filepath)) {
 
-            
-            FILE* tmp_file = fopen(tmp_filepath,"w+");//creo el archivo .tmp
-
-            //cargo el archivo .tmp
-
-            char* text = "SIZE=%s\nBLOCKS=[%s]\n";
-            char* a = string_itoa(dump_size); //TODO ver que es size
-            char* r = malloc( strlen(text) + strlen(a) + strlen(blocks)+1);
-
-            sprintf(r, text, a,blocks);
-           
-            fputs(r, tmp_file);
-
-            fclose(tmp_file);
-            
-            return;
+        if(!does_file_exist(tmp_filepath)){
+            printf("encontre un nombre para tmp");
+            return i;
         }
-    }
 
-    log_error(logg, "demasiados archivos temporales");
-    exit(-1);
+        i++;
+    }
 }
 
 int find_free_block() {
