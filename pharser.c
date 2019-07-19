@@ -316,7 +316,7 @@ char* parse_package_describe(package_describe* pk){
 
     if(pk->table_name == NULL){
 
-        return "DESCRIBE";
+        return "DESCRIBE\n";
     }
     char* buffer = malloc(strlen(pk->instruction) + strlen(pk->table_name) +4);
     

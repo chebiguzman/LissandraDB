@@ -46,6 +46,8 @@ int get_hc_memory(char* table_name);
 int get_memory();
 
 int hash(char* string);
+void kmemoy_add_table();
+void kmemory_drop_table(char* tbl_name);
 
 #endif /* KMEMORY_H */
 

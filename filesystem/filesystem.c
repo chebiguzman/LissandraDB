@@ -224,7 +224,7 @@ char* action_describe(package_describe* describe_info){
       log_error(logger, "No se puede completar el describe.");
       return "La tabla no existe.\n";
     }
-
+    string_to_upper(describe_info->table_name);
     char* meta = get_table_metadata_as_string(describe_info->table_name);
     char* result = malloc( strlen(meta) + strlen(describe_info->table_name) +2);
     strcpy(result, describe_info->table_name);
