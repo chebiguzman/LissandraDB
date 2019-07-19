@@ -491,6 +491,19 @@ void *memory_finder_service(void* args){
     }
 }
 
+void kmemoy_add_table(char* tbl_name, t_consistency c){
+    t_consistency* cons = malloc(sizeof(t_consistency));
+    *cons = c;
+    dictionary_put(tbl_list, tbl_name, cons);
+}
+
+
+void kmemory_drop_table(char* tbl_name){
+    if(dictionary_has_key(tbl_list, tbl_name)){
+        dictionary_remove(tbl_list, tbl_name);
+    }
+}
+
 int hash(char* string){
     int hashr = 0;
     int i = 0;

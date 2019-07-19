@@ -87,7 +87,7 @@ char* exec_in_memory(int memory_fd, char* payload){
     
     if ( memory_fd < 0 ){
       log_error(logger, "No se pudo llevar a cabo la accion.");
-
+      exec_err_abort();
       return "";
     }
 
@@ -103,20 +103,20 @@ char* exec_in_memory(int memory_fd, char* payload){
 }
 
 char* action_select(package_select* select_info){
-  log_info(logger_debug, "Se recibio una accion select");
+  //log_info(logger_debug, "Se recibio una accion select");
   //get consistency of talble
   t_consistency consistency = get_table_consistency(select_info->table_name);
-  log_info(logger_debug, "Se obtiene consistencia accion select");
+  //log_info(logger_debug, "Se obtiene consistencia accion select");
 
   //pedir una memoria
   int memoryfd = get_loked_memory(consistency, select_info->table_name);
-  log_info(logger_debug, "Se obtiene memoria accion select");
+  //log_info(logger_debug, "Se obtiene memoria accion select");
 
   char* package = parse_package_select(select_info);
-  log_info(logger_debug, "Se parcea accion select");
+  //log_info(logger_debug, "Se parcea accion select");
 
   char* responce = exec_in_memory(memoryfd, package); 
-  log_info(logger_debug, "Se ejecuta en memoria accion select");
+  //log_info(logger_debug, "Se ejecuta en memoria accion select");
   
   unlock_memory(memoryfd);
   return responce;
@@ -190,10 +190,10 @@ char* action_create(package_create* create_info){
         
   
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
-  log_debug(logger_debug, "se obtubo el memfd %d", memoryfd);
   
   char* package = parse_package_create(create_info);
-  
+  string_to_upper(create_info->table_name);
+  kmemoy_add_table(create_info->table_name, create_info->consistency);
   char* responce = exec_in_memory(memoryfd, package);
   
   unlock_memory(memoryfd);
@@ -204,33 +204,38 @@ char* action_describe(package_describe* describe_info){
   log_info(logger_debug, "Se recibio una accion describe");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
   char* package = parse_package_describe(describe_info);
+
   char* responce = exec_in_memory(memoryfd, package);
-
-  return"";
-  char** buffer = string_split(responce, "\n\n");
-  t_dictionary* tables_dic = dictionary_create();
-
-  while(*buffer){
-    char** lines = string_split(*buffer, "\n");
-    t_dictionary* dic = dictionary_create();
-    void add_cofiguration(char *line) {
-      if (!string_starts_with(line, "#")) {
-        char** keyAndValue = string_n_split(line, 2, "=");
-        string_to_upper(keyAndValue[1]);
-        dictionary_put(dic,  keyAndValue[0], keyAndValue[1]);
-        free(keyAndValue[0]);
-        free(keyAndValue);
-      }
+  if(strlen(responce)>20){
+    char** buffer = string_split(responce, "\n\n");
+    t_dictionary* tables_dic = dictionary_create();
+    while(*buffer){
+      char** lines = string_split(*buffer, "\n");
+      t_dictionary* dic = dictionary_create();
+      void add_cofiguration(char *line) {
+        if (!string_starts_with(line, "#")) {
+          char** keyAndValue = string_n_split(line, 2, "=");
+          printf("de la tabla recibo los valores: %s\n", keyAndValue[0]);
+          dictionary_put(dic,  keyAndValue[0], keyAndValue[1]);
+          free(keyAndValue[0]);
+          free(keyAndValue);
+        }
     }
-    string_iterate_lines(lines, add_cofiguration);
-    string_iterate_lines(lines, (void*) free);
-    dictionary_put(tables_dic, dictionary_get(dic, "NOMBRE"), dictionary_get(dic, "CONSISTENCY") );
-    free(lines);
-    free(dic);
+      string_iterate_lines(lines, add_cofiguration);
+      string_iterate_lines(lines, (void*) free);
+      char* name = dictionary_get(dic, "NOMBRE");
+      printf("el nombre de la tabla es: %s", name);
+      //dictionary_put(tables_dic, dictionary_get(dic, "NOMBRE"), dictionary_get(dic, "CONSISTENCY") );
+      free(lines);
+      free(dic);
 
-    buffer++;
+      buffer++;
+    }
+      
+    kmemory_set_active_tables(tables_dic);
   }
-  kmemory_set_active_tables(tables_dic);
+
+ 
   unlock_memory(memoryfd);
   return responce;
 }
@@ -239,6 +244,8 @@ char* action_drop(package_drop* drop_info){
   log_info(logger_debug, "Se recibio una accion drop");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
   char* package = parse_package_drop(drop_info);
+  string_to_upper(drop_info->table_name);
+  kmemory_drop_table(drop_info->table_name);
   char* responce = exec_in_memory(memoryfd, package);
   unlock_memory(memoryfd);
   return responce;
