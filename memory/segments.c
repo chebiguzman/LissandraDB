@@ -111,6 +111,7 @@ page_info_t* save_page_to_memory(char* table_name, page_t* page, int dirty_bit){
 		journal(); // vacio memoria y vuelvo a buscar un index, deberia ser 0
 		index = find_free_page();
 	}
+	// recien si hay espacio, creo el segmento
 	segment_t* segment = find_or_create_segment(table_name); 
 	page_info->index = index;
 	page_info->page_ptr = MAIN_MEMORY+index;
@@ -120,6 +121,7 @@ page_info_t* save_page_to_memory(char* table_name, page_t* page, int dirty_bit){
 	return page_info;
 }
 
+// droppea la pagina sin mandarla al fs
 void remove_page(page_info_t* page_info){
 	// busco la pagina en la lru table (para saber el segmento al que pertenece)
 	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
@@ -128,27 +130,29 @@ void remove_page(page_info_t* page_info){
 	// sacar de memoria (setearla a 0), hace falta??? o simplemente sobreescribo la pages
 }
 
+// libera la pagina y si tiene dirtybit la manda al fs (igual que la de arriba pero con un if)
 void remove_and_save_page(page_info_t* page_info){
-	// busco la pagina en la lru table (para saber el segmento al que pertenece)
-	if(page_info->dirty_bit == 0){
+	if(page_info->dirty_bit != 0){
 		printf("Saving page to fs");
 		// TODO: mandar la pagina al fs para que la guarde
 	}
+	// busco la pagina en la lru table (para saber el segmento al que pertenece)
 	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
 	remove_from_segment(lru_page_info->segment, page_info);
 	remove_from_LRU(lru_page_info);	
 }
 
+// si el segundo argumento es 0, droppeo la pagina sin mandarla al fs
 void remove_all_pages_from_segment(segment_t* segment, int save_to_fs_bit){
 	printf("--- REMOVING PAGES FROM SEGMENT ---\n");
 	if(save_to_fs_bit != 0){
 		while(segment->pages != NULL){
-			remove_page(segment->pages);
+			remove_and_save_page(segment->pages);
 		}
 	}
 	else{
 		while(segment->pages != NULL){
-			remove_and_save_page(segment->pages);
+			remove_page(segment->pages);
 		}
 	}
 }
