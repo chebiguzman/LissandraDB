@@ -315,10 +315,8 @@ char* parse_package_insert(package_insert* package){
 char* parse_package_describe(package_describe* pk){
 
     if(pk->table_name == NULL){
-        char* buffer = malloc(strlen(pk->instruction) +4);
-    
-        strcat(buffer, pk->instruction);
-        return buffer;
+
+        return "DESCRIBE";
     }
     char* buffer = malloc(strlen(pk->instruction) + strlen(pk->table_name) +4);
     
