@@ -134,8 +134,17 @@ void remove_page(page_info_t* page_info){
 
 // libera la pagina y si tiene dirtybit la manda al fs 
 void remove_and_save_page(page_info_t* page_info){
+	// busco la pagina en la lru table (para saber el segmento al que pertenece)
+	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
 	if(page_info->dirty_bit != 0){
-		printf("Saving page to fs");
+		printf("---- Saving page to fs ----\n");
+		package_insert* insert_info = (package_insert*)malloc(sizeof(package_insert));
+		insert_info->table_name = lru_page_info->segment->name;
+		insert_info->instruction = "insert";
+		insert_info->key = page_info->page_ptr->key;
+		insert_info->value = page_info->page_ptr->value;
+		char* response = exec_in_fs(fs_socket, parse_package_insert(insert_info));
+		printf("Response FS: %s\n", response);
 		// TODO: mandar la pagina al fs para que la guarde
 	}
 	remove_page(page_info);
