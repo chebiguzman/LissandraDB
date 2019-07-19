@@ -146,7 +146,7 @@ void remove_and_save_page(page_info_t* page_info){
 		insert_info->instruction = "insert";
 		insert_info->key = page_info->page_ptr->key;
 		insert_info->value = page_info->page_ptr->value;
-		
+		insert_info->timestamp = (unsigned)time(NULL);
 		char* response = exec_in_fs(fs_socket, parse_package_insert(insert_info));
 		printf("Response FS: %s\n", response);
 	}
