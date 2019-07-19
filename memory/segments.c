@@ -45,6 +45,7 @@ int find_free_page(){
 			}
 			printf("No\n");
 		}
+		
 	}
 	else{
 		printf("--- MEMORY FULL, REPLACING PAGE ---\n\n");
@@ -61,6 +62,7 @@ int find_free_page(){
 int find_unmodified_page(){
 	lru_page_t* to_be_replaced_page;
 	printf("--- Looking for unmodified page ---\n");
+	
 	for(int i = 0; i < LRU_TABLE->current_pages; i++){ 
 		printf("Index %d is unmodified?: ", i);		
 		to_be_replaced_page = LRU_TABLE->lru_pages+i;
@@ -126,13 +128,11 @@ page_info_t* save_page_to_memory(char* table_name, page_t* page, int dirty_bit){
 // droppea la pagina sin mandarla al fs
 void remove_page(page_info_t* page_info){
 	// busco la pagina en la lru table (para saber el segmento al que pertenece)
-	int index = find_page_in_LRU(page_info);
-	printf("Index of LRU = %d\n", index);
 	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
 	
 	remove_from_segment(lru_page_info->segment, page_info);
 	remove_from_LRU(lru_page_info);
-	//memset(page_info->page_ptr, 0, PAGE_SIZE-1); // seteo a 0 la page en main memory
+	memset(MAIN_MEMORY+page_info->index, 0, VALUE_SIZE); // seteo a 0 la page en main memory
 }
 
 // libera la pagina y si tiene dirtybit la manda al fs 
@@ -205,6 +205,7 @@ int is_modified(page_info_t* page){
 }
 
 segment_t* find_segment(char* table_name){
+
 	segment_t* temp = SEGMENT_TABLE;
 	while(temp != NULL){
 		if(strcmp(temp->name, table_name) == 0){
@@ -212,7 +213,7 @@ segment_t* find_segment(char* table_name){
 		}
 		temp = temp->next;
 	}
-	return temp; // si no encontre nada hasta ahora, devuelvo temp que es NULL
+	return temp; // si no encontre nada en el loop, devuelvo temp que es NULL
 }
 
 page_info_t* find_page_info(char* table_name, int key){
@@ -363,8 +364,9 @@ void update_LRU(segment_t* segment, page_info_t* page_info){
 }
 
 void remove_from_LRU(lru_page_t* lru_page_info){
-	int index = find_page_in_LRU(lru_page_info->lru_page);
+
 	printf("---- Removing \"%s\" from LRU ----\n", lru_page_info->lru_page->page_ptr->value);	
+	int index = find_page_in_LRU(lru_page_info->lru_page);
 	if(index != -1){
 		memmove(LRU_TABLE->lru_pages+index, LRU_TABLE->lru_pages+index+1, sizeof(lru_page_t) * NUMBER_OF_PAGES-index-1);		
 		LRU_TABLE->current_pages--;
@@ -433,7 +435,7 @@ void journal(){
 		remove_segment(temp->name, 1);
 		temp = SEGMENT_TABLE;
 	}
-	print_segment_table();
+	print_everything();
 }
 
 void print_everything(){
