@@ -12,15 +12,11 @@
 char sep[2] = {' '};//separator for null terminations
 char* exec_instr(char* instr_buff){
 
-    int instruction_size = strlen( get_string_from_buffer(instr_buff,0))+1;
- 
-    char* instruction = malloc(instruction_size);
-    strcpy(instruction, get_string_from_buffer(instr_buff,0));
-    string_to_upper(instruction);
+  
 
     //printf("\ninstruccion:%s\n",instruction); //La dejo para debug
 
-    char buff[strlen(instr_buff)];
+    char buff[strlen(instr_buff)+2];
     memcpy(buff, instr_buff, strlen(instr_buff)+1);
 
     int i = 0;
@@ -38,6 +34,7 @@ char* exec_instr(char* instr_buff){
                 int len = strlen(buff)+1;
                 char* tmp = string_substring_from(buff,i+1);
                 memcpy(&buff[i], tmp, strlen(tmp)+1);
+                free(tmp);
                 i--;
             }
 
@@ -64,8 +61,28 @@ char* exec_instr(char* instr_buff){
     
     char** parameters = string_split(buff, "|");
     
+    
+    if(parameters[0]==NULL) return "";
+    char* instruction = parameters[0];
+    int instruction_size = strlen( instruction)+1;
+    string_to_upper(instruction);
+
     int parameters_length = 0;
     while (parameters[parameters_length] != NULL){
+         
+         if(parameters[parameters_length][0] == '"'){
+            int value_length = strlen(parameters[parameters_length]);
+            if(parameters[parameters_length][value_length-1]=='"'){
+                char* value = malloc(strlen(parameters[parameters_length])-2);
+                memcpy(value, parameters[parameters_length]+1, value_length-2);
+                memcpy(value+value_length-2, "\0", 1);
+                free(parameters[parameters_length]);
+                parameters[parameters_length] = value;
+            }else{
+   
+                return "Parametro malformado.\n";
+            }
+        }
         parameters_length++;
     }
 
@@ -163,6 +180,9 @@ char* exec_instr(char* instr_buff){
             return "Criterio no valido";
         }
 
+        free(c);
+        free(parameters[2]);
+
         //VALUE
         package->partition_number = atoi(parameters[3]);
         
@@ -177,14 +197,14 @@ char* exec_instr(char* instr_buff){
 
     if(!strcmp(instruction,"DESCRIBE")){
         package_describe* package = malloc(sizeof(package_describe));
-        package->instruction = malloc(instruction_size);
-        strcpy(package->instruction, instruction);
+        package->instruction = parameters[0];
+        
 
         //TABLE_NAME
         if(strlen(instr_buff) == strlen(instruction)+1) {
             package->table_name = NULL;
         } else {
-            package->table_name = strdup(get_string_from_buffer(instr_buff, instruction_size));
+            package->table_name = parameters[1];
         }
 
         printf("\n Datos de paquete:\n instruction: %s\n table name: %s\n \n", package->instruction, package->table_name);
@@ -216,6 +236,9 @@ char* exec_instr(char* instr_buff){
         }else{
             return "Criterio no valido\n";
         }
+
+        free(c);
+        free(parameters[4]);
         //printf("\n Datos de paquete:\n instruction: %s\n id: %d\ncriterio:%d \n", package->instruction , package->id, package->consistency);
         char* responce = action_add(package);
         return responce;
@@ -253,7 +276,7 @@ char* exec_instr(char* instr_buff){
 
         return action_metrics(pk);
     }
-
+    free(parameters);
     char* error_message = strdup("no es una instruccion valida\n");
     return error_message;
     
@@ -267,12 +290,14 @@ char* parse_package_select(package_select* package){
     sprintf(key, "%d", package->key);
     int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + strlen(key)+1;
     
-    buffer = malloc(tot_len);
+    buffer = malloc(2+tot_len);
     memcpy(buffer, instr, strlen(instr));
-    buffer = strcat(buffer, sep); //emular NULL terminations
-    buffer = strcat(buffer, tbl_n);
-    buffer = strcat(buffer, sep);
-    buffer = strcat(buffer, key);
+    strcat(buffer, sep); //emular NULL terminations
+    strcat(buffer, tbl_n);
+    strcat(buffer, sep);
+    strcat(buffer, key);
+    strcat(buffer, "\n");
+
     return buffer;
 }
 
@@ -281,11 +306,13 @@ char* parse_package_run(package_run* pk){
     char* instr = strdup(pk->instruction);
     char* path = strdup(pk->path);
     int tot_len = strlen(instr) + strlen(instr) +2;
-    buffer = malloc(tot_len);
+    buffer = malloc(2+tot_len);
     buffer[0] = '\0';
     strcat(buffer, instr);
     strcat(buffer,sep);
     strcat(buffer,path);
+    strcat(buffer, "\n");
+
     ;;
 }
 
@@ -293,7 +320,7 @@ char* parse_package_insert(package_insert* package){
     
     char* buffer; 
     
-    int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + strlen(string_itoa(package->key))+1 + strlen(package->value)+1 + 40 +5;
+    int tot_len = strlen(2+package->instruction)+1 + strlen(package->table_name)+1 + strlen(string_itoa(package->key))+1 + strlen(package->value)+1 + 40 +5;
     buffer = malloc(tot_len);
     
 
@@ -306,8 +333,11 @@ char* parse_package_insert(package_insert* package){
     strcat(buffer, package->value);
     strcat(buffer, sep);
     char* buff = malloc(30);
-    strcat(buffer, ltoa(package->timestamp,buff, 10 ));
+    sprintf(buff, "%ld",package->timestamp);
+    strcat(buffer, buff);
     free(buff);
+    strcat(buffer, "\n");
+
     return buffer;
 }
 
@@ -317,55 +347,21 @@ char* parse_package_describe(package_describe* pk){
 
         return "DESCRIBE\n";
     }
-    char* buffer = malloc(strlen(pk->instruction) + strlen(pk->table_name) +4);
+    char* buffer = malloc(2+strlen(pk->instruction) + strlen(pk->table_name) +4);
     
     strcpy(buffer, pk->instruction);
     strcat(buffer,sep);
     strcat(buffer,pk->table_name);
+    strcat(buffer, "\n");
+
     return buffer;
 }
 #define BUFSIZE (sizeof(long) * 8 + 1)
 
-char *ltoa(long N, char *str, int base)
-{
-      register int i = 2;
-      long uarg;
-      char *tail, *head = str, buf[BUFSIZE];
-
-      if (36 < base || 2 > base)
-            base = 10;                    /* can only use 0-9, A-Z        */
-      tail = &buf[BUFSIZE - 1];           /* last character position      */
-      *tail-- = '\0';
-
-      if (10 == base && N < 0L)
-      {
-            *head++ = '-';
-            uarg    = -N;
-      }
-      else  uarg = N;
-
-      if (uarg)
-      {
-            for (i = 1; uarg; ++i)
-            {
-                  register ldiv_t r;
-
-                  r       = ldiv(uarg, base);
-                  *tail-- = (char)(r.rem + ((9L < r.rem) ?
-                                  ('A' - 10L) : '0'));
-                  uarg    = r.quot;
-            }
-      }
-      else  *tail-- = '0';
-
-      memcpy(head, ++tail, i);
-      return str;
-}
-
 char* parse_package_create(package_create* pk){
     
  
-    char* buffer = malloc( strlen(pk->instruction) + strlen(pk->table_name) + 3 /*consistencia */ + strlen(string_itoa(pk->partition_number) + 22 + 9));
+    char* buffer = malloc(2+ strlen(pk->instruction) + strlen(pk->table_name) + 3 /*consistencia */ + strlen(string_itoa(pk->partition_number) + 22 + 9));
      
     strcpy(buffer, pk->instruction);
     strcat(buffer, sep);
@@ -397,9 +393,10 @@ char* parse_package_create(package_create* pk){
 
     char* buff = malloc(30);
     
-
-    strcat(buffer, ltoa(pk->compactation_time, buff, 10) );
-    free(buff);
+    sprintf(buff, "%ld", pk->compactation_time);
+    strcat(buffer, buff);
+    strcat(buffer, "\n");
+    //free(buff);
 
     
     return buffer;
@@ -441,28 +438,4 @@ char* create_buffer(int argc, char const *argv[]){
     
 }
 
-//devuelve un string de un string de un array
-//TODO en la copia del puntero se produce un  memeory leack
-char* get_string_from_buffer(char* buffer, int index){
-
-    char* bufferWord = string_substring_from(buffer,index);
-    bufferWord = strdup(bufferWord);
-
-    char buff_tmp[strlen(bufferWord)];
-    memcpy(buff_tmp, bufferWord, strlen(bufferWord)+1);
-    
-    int i = 0;
-
-    while (buff_tmp[i] != '\0'){
-
-        if(buff_tmp[i]== '\n') buff_tmp[i]='\0'; //quito las nuevas lineas 
-        if(buff_tmp[i]==' ') buff_tmp[i] = '\0'; //quito los espacios
-
-        i++;
-    }
-
-    bufferWord = strdup(buff_tmp);
-
-	return bufferWord;
-}
 

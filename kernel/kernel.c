@@ -79,11 +79,11 @@ int main(int argc, char const *argv[])
 
 char* exec_in_memory(int memory_fd, char* payload){
    
-    char* responce = calloc(1,3000);
-    strcpy(responce, "");
+    char* responce = malloc(1500);
+    //strcpy(responce, "");
 
    
-    fflush(stdout);
+
     
     if ( memory_fd < 0 ){
       log_error(logger, "No se pudo llevar a cabo la accion.");
@@ -93,7 +93,7 @@ char* exec_in_memory(int memory_fd, char* payload){
 
     //ejecutar
     if(write(memory_fd,payload, strlen(payload)+1)){
-      read(memory_fd, responce, 3000);
+      read(memory_fd, responce, 1500);
       return responce;
     }else{
       log_error(logger, "No se logo comuniarse con memoria");
