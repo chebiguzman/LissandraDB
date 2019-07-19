@@ -126,10 +126,15 @@ page_info_t* save_page_to_memory(char* table_name, page_t* page, int dirty_bit){
 // droppea la pagina sin mandarla al fs
 void remove_page(page_info_t* page_info){
 	// busco la pagina en la lru table (para saber el segmento al que pertenece)
+	int index = find_page_in_LRU(page_info);
+	printf("Index of LRU = %d\n", index);
 	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
+	
 	remove_from_segment(lru_page_info->segment, page_info);
 	remove_from_LRU(lru_page_info);
-	memset(page_info->page_ptr, 0, PAGE_SIZE); // seteo a 0 la page en main memory
+	printf("(test)---- Page %s removed from table and lru ----\n",page_info->page_ptr->value);
+
+	//memset(page_info->page_ptr, 0, PAGE_SIZE-1); // seteo a 0 la page en main memory
 }
 
 // libera la pagina y si tiene dirtybit la manda al fs 
@@ -137,15 +142,15 @@ void remove_and_save_page(page_info_t* page_info){
 	// busco la pagina en la lru table (para saber el segmento al que pertenece)
 	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
 	if(page_info->dirty_bit != 0){
-		printf("---- Saving page to fs ----\n");
+		printf("---- Saving \"%s\" to fs ----\n", page_info->page_ptr->value);
 		package_insert* insert_info = (package_insert*)malloc(sizeof(package_insert));
 		insert_info->table_name = lru_page_info->segment->name;
 		insert_info->instruction = "insert";
 		insert_info->key = page_info->page_ptr->key;
 		insert_info->value = page_info->page_ptr->value;
+		
 		char* response = exec_in_fs(fs_socket, parse_package_insert(insert_info));
 		printf("Response FS: %s\n", response);
-		// TODO: mandar la pagina al fs para que la guarde
 	}
 	remove_page(page_info);
 }
