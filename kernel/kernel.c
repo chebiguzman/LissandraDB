@@ -130,6 +130,7 @@ char* action_run(package_run* run_info){
 
   if(fp == NULL){
     log_error(logger, "El archivo no existe o no se puede leer.");
+    return "";
   }else{
     
     t_queue* instruction_set = queue_create();

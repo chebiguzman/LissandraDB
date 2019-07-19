@@ -4207,3 +4207,186 @@
 [INFO] 21:18:29:441 Kernel/(3343:3345): Se recibio una accion create
 [DEBUG] 21:18:29:441 Kernel/(3343:3345): se obtubo el memfd 17
 [INFO] 21:18:29:446 Kernel/(3343:3345): Se recibio una accion insert
+[INFO] 11:46:27:90 Kernel/(2650:2650): se inicia el modulo scheduler
+[DEBUG] 11:46:27:90 Kernel/(2650:2650): el valor del puntero es: 0 
+
+[INFO] 11:46:27:90 Kernel/(2650:2651): se inicia el monitoreo del config
+[DEBUG] 11:46:27:91 Kernel/(2650:2650): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 11:46:27:91 Kernel/(2650:2650): mismo puntero 0 
+
+[DEBUG] 11:46:27:91 Kernel/(2650:2652): se inicia el modulo exec
+[INFO] 11:46:27:93 Kernel/(2650:2650): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 11:46:35:507 Kernel/(2650:2652): Se recibio una accion select
+[INFO] 11:46:35:507 Kernel/(2650:2652): Se obtiene consistencia accion select
+[DEBUG] 11:46:35:507 Kernel/(2650:2652): kmemory: se pide memoria de SC
+[INFO] 11:46:35:508 Kernel/(2650:2652): Se obtiene memoria accion select
+[INFO] 11:46:35:508 Kernel/(2650:2652): Se parcea accion select
+[INFO] 11:46:35:508 Kernel/(2650:2652): Se ejecuta en memoria accion select
+[INFO] 11:47:58:593 Kernel/(2650:2652): Se recibio una accion run.
+[INFO] 11:47:58:594 Kernel/(2650:2652): Se recibio una accion create
+[DEBUG] 11:47:58:594 Kernel/(2650:2652): se obtubo el memfd -1
+[INFO] 11:47:58:597 Kernel/(2650:2652): Se recibio una accion create
+[INFO] 11:49:12:885 Kernel/(2717:2717): se inicia el modulo scheduler
+[DEBUG] 11:49:12:885 Kernel/(2717:2717): el valor del puntero es: 0 
+
+[DEBUG] 11:49:12:885 Kernel/(2717:2717): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 11:49:12:885 Kernel/(2717:2717): mismo puntero 0 
+
+[INFO] 11:49:12:885 Kernel/(2717:2718): se inicia el monitoreo del config
+[INFO] 11:49:12:886 Kernel/(2717:2717): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 11:49:12:886 Kernel/(2717:2719): se inicia el modulo exec
+[INFO] 11:49:31:587 Kernel/(2717:2719): Se recibio una accion create
+[DEBUG] 11:49:31:587 Kernel/(2717:2719): se obtubo el memfd -1
+[INFO] 11:50:27:251 Kernel/(2717:2719): Se recibio una accion run.
+[INFO] 11:50:27:251 Kernel/(2717:2719): Se recibio una accion metrics
+[INFO] 11:50:27:254 Kernel/(2717:2719): Se recibio una accion metrics
+[INFO] 11:50:27:256 Kernel/(2717:2719): Se recibio una accion metrics
+[INFO] 11:50:57:854 Kernel/(2717:2719): Se recibio una accion run.
+[INFO] 11:50:57:855 Kernel/(2717:2719): Se recibio una accion create
+[DEBUG] 11:50:57:855 Kernel/(2717:2719): se obtubo el memfd -1
+[INFO] 11:50:57:857 Kernel/(2717:2719): Se recibio una accion create
+[INFO] 11:51:25:38 Kernel/(2777:2777): se inicia el modulo scheduler
+[INFO] 11:51:25:42 Kernel/(2777:2778): se inicia el monitoreo del config
+[DEBUG] 11:51:25:42 Kernel/(2777:2779): se inicia el modulo exec
+[DEBUG] 11:51:25:43 Kernel/(2777:2777): el valor del puntero es: 0 
+
+[DEBUG] 11:51:25:43 Kernel/(2777:2777): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 11:51:25:43 Kernel/(2777:2777): mismo puntero 0 
+
+[INFO] 11:51:25:44 Kernel/(2777:2777): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 11:51:35:178 Kernel/(2777:2779): Se recibio una accion run.
+[INFO] 11:51:35:178 Kernel/(2777:2779): Se recibio una accion create
+[DEBUG] 11:51:35:179 Kernel/(2777:2779): se obtubo el memfd -1
+[INFO] 11:51:35:181 Kernel/(2777:2779): Se recibio una accion create
+[DEBUG] 11:51:35:181 Kernel/(2777:2779): se obtubo el memfd -1
+[INFO] 11:51:35:184 Kernel/(2777:2779): Se recibio una accion insert
+[INFO] 11:56:00:490 Kernel/(2894:2894): se inicia el modulo scheduler
+[INFO] 11:56:00:491 Kernel/(2894:2898): se inicia el monitoreo del config
+[DEBUG] 11:56:00:492 Kernel/(2894:2894): el valor del puntero es: 0 
+
+[DEBUG] 11:56:00:492 Kernel/(2894:2894): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 11:56:00:492 Kernel/(2894:2894): mismo puntero 0 
+
+[DEBUG] 11:56:00:494 Kernel/(2894:2899): se inicia el modulo exec
+[INFO] 11:56:00:498 Kernel/(2894:2894): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 11:56:14:306 Kernel/(2894:2899): Se recibio una accion run.
+[INFO] 11:56:14:306 Kernel/(2894:2899): Se recibio una accion create
+[DEBUG] 11:56:14:306 Kernel/(2894:2899): se obtubo el memfd -1
+[INFO] 11:56:14:309 Kernel/(2894:2899): Se recibio una accion create
+[DEBUG] 11:56:14:309 Kernel/(2894:2899): se obtubo el memfd -1
+[INFO] 11:56:14:312 Kernel/(2894:2899): Se recibio una accion insert
+[INFO] 11:56:47:699 Kernel/(2894:2899): Se recibio una accion run.
+[INFO] 11:59:17:876 Kernel/(2957:2957): se inicia el modulo scheduler
+[INFO] 11:59:17:877 Kernel/(2957:2958): se inicia el monitoreo del config
+[DEBUG] 11:59:17:879 Kernel/(2957:2957): el valor del puntero es: 0 
+
+[DEBUG] 11:59:17:879 Kernel/(2957:2959): se inicia el modulo exec
+[DEBUG] 11:59:17:879 Kernel/(2957:2957): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 11:59:17:879 Kernel/(2957:2957): mismo puntero 0 
+
+[INFO] 11:59:17:883 Kernel/(2957:2957): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 11:59:27:769 Kernel/(2957:2959): Se recibio una accion run.
+[INFO] 11:59:27:770 Kernel/(2957:2959): Se recibio una accion create
+[DEBUG] 11:59:27:770 Kernel/(2957:2959): se obtubo el memfd -1
+[INFO] 11:59:27:772 Kernel/(2957:2959): Se recibio una accion create
+[DEBUG] 11:59:27:773 Kernel/(2957:2959): se obtubo el memfd -1
+[INFO] 11:59:27:775 Kernel/(2957:2959): Se recibio una accion insert
+[INFO] 11:59:46:454 Kernel/(2957:2959): Se recibio una accion run.
+[INFO] 12:00:06:664 Kernel/(2987:2987): se inicia el modulo scheduler
+[INFO] 12:00:06:665 Kernel/(2987:2988): se inicia el monitoreo del config
+[DEBUG] 12:00:06:666 Kernel/(2987:2987): el valor del puntero es: 0 
+
+[DEBUG] 12:00:06:666 Kernel/(2987:2987): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 12:00:06:666 Kernel/(2987:2987): mismo puntero 0 
+
+[DEBUG] 12:00:06:667 Kernel/(2987:2989): se inicia el modulo exec
+[INFO] 12:00:06:671 Kernel/(2987:2987): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 12:00:17:155 Kernel/(2987:2989): Se recibio una accion run.
+[INFO] 12:00:27:721 Kernel/(3011:3011): se inicia el modulo scheduler
+[INFO] 12:00:27:722 Kernel/(3011:3012): se inicia el monitoreo del config
+[DEBUG] 12:00:27:724 Kernel/(3011:3011): el valor del puntero es: 0 
+
+[DEBUG] 12:00:27:724 Kernel/(3011:3011): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 12:00:27:724 Kernel/(3011:3011): mismo puntero 0 
+
+[DEBUG] 12:00:27:725 Kernel/(3011:3013): se inicia el modulo exec
+[INFO] 12:00:27:727 Kernel/(3011:3011): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 12:00:37:168 Kernel/(3011:3013): Se recibio una accion run.
+[INFO] 12:00:37:168 Kernel/(3011:3013): Se recibio una accion create
+[DEBUG] 12:00:37:169 Kernel/(3011:3013): se obtubo el memfd -1
+[INFO] 12:00:37:171 Kernel/(3011:3013): Se recibio una accion create
+[DEBUG] 12:00:37:171 Kernel/(3011:3013): se obtubo el memfd -1
+[INFO] 12:00:37:174 Kernel/(3011:3013): Se recibio una accion insert
+[INFO] 12:02:04:765 Kernel/(3095:3095): se inicia el modulo scheduler
+[INFO] 12:02:04:766 Kernel/(3095:3099): se inicia el monitoreo del config
+[DEBUG] 12:02:04:767 Kernel/(3095:3095): el valor del puntero es: 0 
+
+[DEBUG] 12:02:04:767 Kernel/(3095:3095): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 12:02:04:767 Kernel/(3095:3095): mismo puntero 0 
+
+[DEBUG] 12:02:04:771 Kernel/(3095:3100): se inicia el modulo exec
+[INFO] 12:02:04:777 Kernel/(3095:3095): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 12:02:12:938 Kernel/(3095:3100): Se recibio una accion run.
+[INFO] 12:04:21:253 Kernel/(3460:3460): se inicia el modulo scheduler
+[DEBUG] 12:04:21:253 Kernel/(3460:3460): el valor del puntero es: 0 
+
+[DEBUG] 12:04:21:253 Kernel/(3460:3460): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 12:04:21:253 Kernel/(3460:3460): mismo puntero 0 
+
+[INFO] 12:04:21:253 Kernel/(3460:3461): se inicia el monitoreo del config
+[INFO] 12:04:21:254 Kernel/(3460:3460): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 12:04:21:254 Kernel/(3460:3462): se inicia el modulo exec
+[INFO] 12:04:24:847 Kernel/(3460:3462): Se recibio una accion run.
+[INFO] 12:04:34:554 Kernel/(3460:3462): Se recibio una accion run.
+[INFO] 12:04:47:782 Kernel/(3493:3493): se inicia el modulo scheduler
+[DEBUG] 12:04:47:782 Kernel/(3493:3493): el valor del puntero es: 0 
+
+[DEBUG] 12:04:47:782 Kernel/(3493:3493): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 12:04:47:782 Kernel/(3493:3493): mismo puntero 0 
+
+[INFO] 12:04:47:783 Kernel/(3493:3493): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 12:04:47:782 Kernel/(3493:3494): se inicia el monitoreo del config
+[DEBUG] 12:04:47:784 Kernel/(3493:3495): se inicia el modulo exec
+[INFO] 12:04:58:24 Kernel/(3493:3495): Se recibio una accion run.
+[INFO] 12:05:12:686 Kernel/(3519:3519): se inicia el modulo scheduler
+[INFO] 12:05:12:687 Kernel/(3519:3523): se inicia el monitoreo del config
+[DEBUG] 12:05:12:688 Kernel/(3519:3519): el valor del puntero es: 0 
+
+[DEBUG] 12:05:12:688 Kernel/(3519:3519): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 12:05:12:688 Kernel/(3519:3519): mismo puntero 0 
+
+[DEBUG] 12:05:12:689 Kernel/(3519:3524): se inicia el modulo exec
+[INFO] 12:05:12:693 Kernel/(3519:3519): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 12:05:25:952 Kernel/(3519:3524): Se recibio una accion run.
+[INFO] 12:05:25:952 Kernel/(3519:3524): Se recibio una accion create
+[DEBUG] 12:05:25:953 Kernel/(3519:3524): se obtubo el memfd -1
+[INFO] 12:05:25:955 Kernel/(3519:3524): Se recibio una accion create
+[DEBUG] 12:05:25:955 Kernel/(3519:3524): se obtubo el memfd -1
+[INFO] 12:05:25:958 Kernel/(3519:3524): Se recibio una accion insert
+[INFO] 12:05:58:595 Kernel/(3553:3553): se inicia el modulo scheduler
+[INFO] 12:05:58:596 Kernel/(3553:3557): se inicia el monitoreo del config
+[DEBUG] 12:05:58:597 Kernel/(3553:3553): el valor del puntero es: 0 
+
+[DEBUG] 12:05:58:597 Kernel/(3553:3553): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 12:05:58:597 Kernel/(3553:3553): mismo puntero 0 
+
+[DEBUG] 12:05:58:599 Kernel/(3553:3558): se inicia el modulo exec
+[INFO] 12:05:58:603 Kernel/(3553:3553): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 12:06:07:180 Kernel/(3553:3558): Se recibio una accion run.
+[INFO] 12:06:07:180 Kernel/(3553:3558): Se recibio una accion create
+[DEBUG] 12:06:07:180 Kernel/(3553:3558): se obtubo el memfd -1
+[INFO] 12:06:07:182 Kernel/(3553:3558): Se recibio una accion create
+[DEBUG] 12:06:07:182 Kernel/(3553:3558): se obtubo el memfd -1
+[INFO] 12:06:07:185 Kernel/(3553:3558): Se recibio una accion insert
