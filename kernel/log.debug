@@ -5295,3 +5295,809 @@
 [INFO] 17:15:49:77 Kernel/(19974:19974): kmemory: El modulo kmemory fue inicializado exitosamente
 [INFO] 17:15:52:216 Kernel/(19974:19976): Se recibio una accion describe
 [INFO] 17:15:57:495 Kernel/(19974:19976): Se recibio una accion describe
+[INFO] 17:17:05:92 Kernel/(20220:20220): se inicia el modulo scheduler
+[DEBUG] 17:17:05:93 Kernel/(20220:20220): el valor del puntero es: 0 
+
+[INFO] 17:17:05:93 Kernel/(20220:20221): se inicia el monitoreo del config
+[DEBUG] 17:17:05:93 Kernel/(20220:20220): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:17:05:93 Kernel/(20220:20220): mismo puntero 0 
+
+[INFO] 17:17:05:94 Kernel/(20220:20220): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:17:09:963 Kernel/(20243:20243): se inicia el modulo scheduler
+[DEBUG] 17:17:09:964 Kernel/(20243:20243): el valor del puntero es: 0 
+
+[INFO] 17:17:09:964 Kernel/(20243:20244): se inicia el monitoreo del config
+[DEBUG] 17:17:09:964 Kernel/(20243:20243): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:17:09:965 Kernel/(20243:20243): mismo puntero 0 
+
+[INFO] 17:17:09:965 Kernel/(20243:20243): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:17:15:790 Kernel/(20261:20261): se inicia el modulo scheduler
+[DEBUG] 17:17:15:791 Kernel/(20261:20261): el valor del puntero es: 0 
+
+[DEBUG] 17:17:15:791 Kernel/(20261:20261): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:17:15:791 Kernel/(20261:20261): mismo puntero 0 
+
+[INFO] 17:17:15:791 Kernel/(20261:20262): se inicia el monitoreo del config
+[INFO] 17:17:15:791 Kernel/(20261:20261): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:17:20:147 Kernel/(20288:20288): se inicia el modulo scheduler
+[DEBUG] 17:17:20:148 Kernel/(20288:20288): el valor del puntero es: 0 
+
+[DEBUG] 17:17:20:148 Kernel/(20288:20288): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:17:20:148 Kernel/(20288:20288): mismo puntero 0 
+
+[INFO] 17:17:20:148 Kernel/(20288:20289): se inicia el monitoreo del config
+[INFO] 17:17:20:149 Kernel/(20288:20288): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:17:24:626 Kernel/(20308:20308): se inicia el modulo scheduler
+[DEBUG] 17:17:24:627 Kernel/(20308:20308): el valor del puntero es: 0 
+
+[INFO] 17:17:24:627 Kernel/(20308:20309): se inicia el monitoreo del config
+[DEBUG] 17:17:24:628 Kernel/(20308:20308): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:17:24:628 Kernel/(20308:20308): mismo puntero 0 
+
+[INFO] 17:17:24:629 Kernel/(20308:20308): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 17:17:29:924 Kernel/(20308:20310): kmemory: se pide memoria de SC
+[DEBUG] 17:17:29:925 Kernel/(20308:20310): kmemory: bloqueo memoria
+[INFO] 17:17:33:859 Kernel/(20343:20343): se inicia el modulo scheduler
+[DEBUG] 17:17:33:860 Kernel/(20343:20343): el valor del puntero es: 0 
+
+[DEBUG] 17:17:33:860 Kernel/(20343:20343): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:17:33:860 Kernel/(20343:20343): mismo puntero 0 
+
+[INFO] 17:17:33:860 Kernel/(20343:20344): se inicia el monitoreo del config
+[INFO] 17:17:33:861 Kernel/(20343:20343): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:17:36:346 Kernel/(20361:20361): se inicia el modulo scheduler
+[DEBUG] 17:17:36:347 Kernel/(20361:20361): el valor del puntero es: 0 
+
+[DEBUG] 17:17:36:347 Kernel/(20361:20361): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:17:36:347 Kernel/(20361:20361): mismo puntero 0 
+
+[INFO] 17:17:36:347 Kernel/(20361:20362): se inicia el monitoreo del config
+[INFO] 17:17:36:347 Kernel/(20361:20361): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:17:40:306 Kernel/(20380:20380): se inicia el modulo scheduler
+[DEBUG] 17:17:40:307 Kernel/(20380:20380): el valor del puntero es: 0 
+
+[INFO] 17:17:40:307 Kernel/(20380:20381): se inicia el monitoreo del config
+[DEBUG] 17:17:40:307 Kernel/(20380:20380): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:17:40:308 Kernel/(20380:20380): mismo puntero 0 
+
+[INFO] 17:17:40:308 Kernel/(20380:20380): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 17:17:43:76 Kernel/(20380:20382): kmemory: se pide memoria de SC
+[DEBUG] 17:17:43:76 Kernel/(20380:20382): kmemory: bloqueo memoria
+[INFO] 17:17:46:850 Kernel/(20399:20399): se inicia el modulo scheduler
+[DEBUG] 17:17:46:851 Kernel/(20399:20399): el valor del puntero es: 0 
+
+[DEBUG] 17:17:46:851 Kernel/(20399:20399): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:17:46:851 Kernel/(20399:20399): mismo puntero 0 
+
+[INFO] 17:17:46:851 Kernel/(20399:20400): se inicia el monitoreo del config
+[INFO] 17:17:46:853 Kernel/(20399:20399): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 17:17:49:188 Kernel/(20399:20401): kmemory: se pide memoria de SC
+[DEBUG] 17:17:49:188 Kernel/(20399:20401): kmemory: bloqueo memoria
+[INFO] 17:18:10:19 Kernel/(20399:20401): Se recibio una accion run.
+[INFO] 17:18:10:20 Kernel/(20399:20401): Se recibio una accion create
+[INFO] 17:18:10:24 Kernel/(20399:20401): Se recibio una accion describe
+[INFO] 17:18:10:29 Kernel/(20399:20401): Se recibio una accion insert
+[INFO] 17:19:19:223 Kernel/(20557:20557): se inicia el modulo scheduler
+[DEBUG] 17:19:19:224 Kernel/(20557:20557): el valor del puntero es: 0 
+
+[DEBUG] 17:19:19:224 Kernel/(20557:20557): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:19:19:224 Kernel/(20557:20557): mismo puntero 0 
+
+[INFO] 17:19:19:224 Kernel/(20557:20558): se inicia el monitoreo del config
+[INFO] 17:19:19:224 Kernel/(20557:20557): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:19:22:975 Kernel/(20583:20583): se inicia el modulo scheduler
+[DEBUG] 17:19:22:976 Kernel/(20583:20583): el valor del puntero es: 0 
+
+[DEBUG] 17:19:22:976 Kernel/(20583:20583): lo que queda luego de ingresarlo 0 
+
+[INFO] 17:19:22:976 Kernel/(20583:20584): se inicia el monitoreo del config
+[DEBUG] 17:19:22:977 Kernel/(20583:20583): mismo puntero 0 
+
+[INFO] 17:19:22:977 Kernel/(20583:20583): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:19:35:801 Kernel/(20583:20585): Se recibio una accion run.
+[INFO] 17:19:35:802 Kernel/(20583:20585): Se recibio una accion create
+[INFO] 17:19:35:806 Kernel/(20583:20585): Se recibio una accion describe
+[INFO] 17:19:35:811 Kernel/(20583:20585): Se recibio una accion insert
+[INFO] 17:21:14:541 Kernel/(20816:20816): se inicia el modulo scheduler
+[DEBUG] 17:21:14:541 Kernel/(20816:20816): el valor del puntero es: 0 
+
+[DEBUG] 17:21:14:542 Kernel/(20816:20816): lo que queda luego de ingresarlo 0 
+
+[INFO] 17:21:14:542 Kernel/(20816:20817): se inicia el monitoreo del config
+[DEBUG] 17:21:14:542 Kernel/(20816:20816): mismo puntero 0 
+
+[INFO] 17:21:14:543 Kernel/(20816:20816): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:21:26:550 Kernel/(20816:20818): Se recibio una accion run.
+[INFO] 17:21:26:551 Kernel/(20816:20818): Se recibio una accion create
+[INFO] 17:21:26:555 Kernel/(20816:20818): Se recibio una accion describe
+[INFO] 17:21:26:560 Kernel/(20816:20818): Se recibio una accion insert
+[INFO] 17:23:27:875 Kernel/(20816:20818): Se recibio una accion describe
+[INFO] 17:30:05:335 Kernel/(22977:22977): se inicia el modulo scheduler
+[DEBUG] 17:30:05:335 Kernel/(22977:22977): el valor del puntero es: 0 
+
+[DEBUG] 17:30:05:335 Kernel/(22977:22977): lo que queda luego de ingresarlo 0 
+
+[INFO] 17:30:05:335 Kernel/(22977:22978): se inicia el monitoreo del config
+[DEBUG] 17:30:05:335 Kernel/(22977:22977): mismo puntero 0 
+
+[INFO] 17:30:05:336 Kernel/(22977:22977): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:30:18:820 Kernel/(22977:22979): Se recibio una accion run.
+[INFO] 17:30:18:821 Kernel/(22977:22979): Se recibio una accion create
+[INFO] 17:30:18:826 Kernel/(22977:22979): Se recibio una accion describe
+[INFO] 17:31:04:321 Kernel/(23055:23055): se inicia el modulo scheduler
+[DEBUG] 17:31:04:322 Kernel/(23055:23055): el valor del puntero es: 0 
+
+[INFO] 17:31:04:322 Kernel/(23055:23056): se inicia el monitoreo del config
+[DEBUG] 17:31:04:322 Kernel/(23055:23055): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:31:04:323 Kernel/(23055:23055): mismo puntero 0 
+
+[INFO] 17:31:04:323 Kernel/(23055:23055): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:31:08:451 Kernel/(23055:23057): Se recibio una accion describe
+[INFO] 17:31:24:81 Kernel/(23149:23149): se inicia el modulo scheduler
+[DEBUG] 17:31:24:82 Kernel/(23149:23149): el valor del puntero es: 0 
+
+[INFO] 17:31:24:82 Kernel/(23149:23150): se inicia el monitoreo del config
+[DEBUG] 17:31:24:83 Kernel/(23149:23149): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:31:24:83 Kernel/(23149:23149): mismo puntero 0 
+
+[INFO] 17:31:24:84 Kernel/(23149:23149): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:31:26:251 Kernel/(23149:23151): Se recibio una accion describe
+[INFO] 17:31:44:60 Kernel/(23239:23239): se inicia el modulo scheduler
+[DEBUG] 17:31:44:61 Kernel/(23239:23239): el valor del puntero es: 0 
+
+[DEBUG] 17:31:44:61 Kernel/(23239:23239): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:31:44:61 Kernel/(23239:23239): mismo puntero 0 
+
+[INFO] 17:31:44:61 Kernel/(23239:23239): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:31:44:63 Kernel/(23239:23240): se inicia el monitoreo del config
+[INFO] 17:31:47:499 Kernel/(23239:23241): Se recibio una accion describe
+[INFO] 17:32:09:173 Kernel/(23287:23287): se inicia el modulo scheduler
+[INFO] 17:32:09:173 Kernel/(23287:23291): se inicia el monitoreo del config
+[DEBUG] 17:32:09:174 Kernel/(23287:23287): el valor del puntero es: 0 
+
+[DEBUG] 17:32:09:174 Kernel/(23287:23287): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:32:09:174 Kernel/(23287:23287): mismo puntero 0 
+
+[INFO] 17:32:09:174 Kernel/(23287:23287): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:32:11:970 Kernel/(23287:23292): Se recibio una accion describe
+[INFO] 17:36:08:917 Kernel/(23588:23588): se inicia el modulo scheduler
+[DEBUG] 17:36:08:918 Kernel/(23588:23588): el valor del puntero es: 0 
+
+[DEBUG] 17:36:08:918 Kernel/(23588:23588): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:36:08:918 Kernel/(23588:23588): mismo puntero 0 
+
+[INFO] 17:36:08:918 Kernel/(23588:23589): se inicia el monitoreo del config
+[INFO] 17:36:08:919 Kernel/(23588:23588): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:36:12:887 Kernel/(23588:23590): Se recibio una accion describe
+[INFO] 17:36:57:940 Kernel/(23718:23718): se inicia el modulo scheduler
+[DEBUG] 17:36:57:941 Kernel/(23718:23718): el valor del puntero es: 0 
+
+[DEBUG] 17:36:57:942 Kernel/(23718:23718): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:36:57:942 Kernel/(23718:23718): mismo puntero 0 
+
+[INFO] 17:36:57:941 Kernel/(23718:23719): se inicia el monitoreo del config
+[INFO] 17:36:57:942 Kernel/(23718:23718): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:37:01:711 Kernel/(23718:23720): Se recibio una accion describe
+[INFO] 17:44:24:858 Kernel/(24675:24675): se inicia el modulo scheduler
+[DEBUG] 17:44:24:859 Kernel/(24675:24675): el valor del puntero es: 0 
+
+[DEBUG] 17:44:24:859 Kernel/(24675:24675): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:44:24:859 Kernel/(24675:24675): mismo puntero 0 
+
+[INFO] 17:44:24:860 Kernel/(24675:24675): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:44:24:859 Kernel/(24675:24676): se inicia el monitoreo del config
+[INFO] 17:44:27:955 Kernel/(24675:24677): Se recibio una accion describe
+[INFO] 17:45:40:308 Kernel/(24794:24794): se inicia el modulo scheduler
+[DEBUG] 17:45:40:309 Kernel/(24794:24794): el valor del puntero es: 0 
+
+[INFO] 17:45:40:310 Kernel/(24794:24795): se inicia el monitoreo del config
+[DEBUG] 17:45:40:310 Kernel/(24794:24794): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:45:40:310 Kernel/(24794:24794): mismo puntero 0 
+
+[INFO] 17:45:40:312 Kernel/(24794:24794): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:45:42:766 Kernel/(24794:24796): Se recibio una accion describe
+[INFO] 17:45:54:245 Kernel/(24847:24847): se inicia el modulo scheduler
+[DEBUG] 17:45:54:246 Kernel/(24847:24847): el valor del puntero es: 0 
+
+[DEBUG] 17:45:54:246 Kernel/(24847:24847): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:45:54:246 Kernel/(24847:24847): mismo puntero 0 
+
+[INFO] 17:45:54:246 Kernel/(24847:24848): se inicia el monitoreo del config
+[INFO] 17:45:54:246 Kernel/(24847:24847): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:46:02:957 Kernel/(24847:24849): Se recibio una accion describe
+[INFO] 17:46:39:183 Kernel/(24946:24946): se inicia el modulo scheduler
+[INFO] 17:46:39:183 Kernel/(24946:24950): se inicia el monitoreo del config
+[DEBUG] 17:46:39:184 Kernel/(24946:24946): el valor del puntero es: 0 
+
+[DEBUG] 17:46:39:184 Kernel/(24946:24946): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:46:39:184 Kernel/(24946:24946): mismo puntero 0 
+
+[INFO] 17:46:39:184 Kernel/(24946:24946): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:46:42:739 Kernel/(24946:24951): Se recibio una accion describe
+[INFO] 17:47:48:405 Kernel/(25082:25082): se inicia el modulo scheduler
+[DEBUG] 17:47:48:406 Kernel/(25082:25082): el valor del puntero es: 0 
+
+[INFO] 17:47:48:406 Kernel/(25082:25083): se inicia el monitoreo del config
+[DEBUG] 17:47:48:407 Kernel/(25082:25082): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:47:48:407 Kernel/(25082:25082): mismo puntero 0 
+
+[INFO] 17:47:48:408 Kernel/(25082:25082): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:47:54:759 Kernel/(25111:25111): se inicia el modulo scheduler
+[DEBUG] 17:47:54:760 Kernel/(25111:25111): el valor del puntero es: 0 
+
+[INFO] 17:47:54:760 Kernel/(25111:25112): se inicia el monitoreo del config
+[DEBUG] 17:47:54:760 Kernel/(25111:25111): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:47:54:760 Kernel/(25111:25111): mismo puntero 0 
+
+[INFO] 17:47:54:761 Kernel/(25111:25111): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:48:01:463 Kernel/(25111:25113): Se recibio una accion describe
+[INFO] 17:49:18:680 Kernel/(25280:25280): se inicia el modulo scheduler
+[DEBUG] 17:49:18:680 Kernel/(25280:25280): el valor del puntero es: 0 
+
+[INFO] 17:49:18:680 Kernel/(25280:25281): se inicia el monitoreo del config
+[DEBUG] 17:49:18:680 Kernel/(25280:25280): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:49:18:680 Kernel/(25280:25280): mismo puntero 0 
+
+[INFO] 17:49:18:680 Kernel/(25280:25280): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:49:21:924 Kernel/(25280:25282): Se recibio una accion describe
+[INFO] 17:51:44:509 Kernel/(25528:25528): se inicia el modulo scheduler
+[DEBUG] 17:51:44:510 Kernel/(25528:25528): el valor del puntero es: 0 
+
+[INFO] 17:51:44:510 Kernel/(25528:25529): se inicia el monitoreo del config
+[DEBUG] 17:51:44:510 Kernel/(25528:25528): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:51:44:511 Kernel/(25528:25528): mismo puntero 0 
+
+[INFO] 17:51:44:512 Kernel/(25528:25528): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:51:50:514 Kernel/(25550:25550): se inicia el modulo scheduler
+[DEBUG] 17:51:50:514 Kernel/(25550:25550): el valor del puntero es: 0 
+
+[DEBUG] 17:51:50:514 Kernel/(25550:25550): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:51:50:514 Kernel/(25550:25550): mismo puntero 0 
+
+[INFO] 17:51:50:515 Kernel/(25550:25550): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:51:50:515 Kernel/(25550:25551): se inicia el monitoreo del config
+[INFO] 17:51:54:382 Kernel/(25550:25552): Se recibio una accion describe
+[INFO] 17:52:02:141 Kernel/(25550:25552): Se recibio una accion describe
+[INFO] 17:52:11:93 Kernel/(25594:25594): se inicia el modulo scheduler
+[DEBUG] 17:52:11:94 Kernel/(25594:25594): el valor del puntero es: 0 
+
+[DEBUG] 17:52:11:94 Kernel/(25594:25594): lo que queda luego de ingresarlo 0 
+
+[INFO] 17:52:11:94 Kernel/(25594:25595): se inicia el monitoreo del config
+[DEBUG] 17:52:11:101 Kernel/(25594:25594): mismo puntero 0 
+
+[INFO] 17:52:11:102 Kernel/(25594:25594): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:52:13:597 Kernel/(25594:25596): Se recibio una accion describe
+[INFO] 17:52:28:722 Kernel/(25621:25621): se inicia el modulo scheduler
+[DEBUG] 17:52:28:722 Kernel/(25621:25621): el valor del puntero es: 0 
+
+[DEBUG] 17:52:28:722 Kernel/(25621:25621): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:52:28:722 Kernel/(25621:25621): mismo puntero 0 
+
+[INFO] 17:52:28:722 Kernel/(25621:25623): se inicia el monitoreo del config
+[INFO] 17:52:28:723 Kernel/(25621:25621): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:52:35:60 Kernel/(25621:25624): Se recibio una accion describe
+[INFO] 17:53:19:595 Kernel/(25621:25624): Se recibio una accion describe
+[INFO] 17:53:29:978 Kernel/(25621:25624): Se recibio una accion describe
+[INFO] 17:53:34:570 Kernel/(25621:25624): Se recibio una accion describe
+[INFO] 17:53:37:922 Kernel/(25621:25624): Se recibio una accion describe
+[INFO] 17:53:41:642 Kernel/(25621:25624): Se recibio una accion describe
+[INFO] 17:53:45:498 Kernel/(25621:25624): Se recibio una accion describe
+[INFO] 17:53:49:194 Kernel/(25621:25624): Se recibio una accion describe
+[INFO] 17:53:52:314 Kernel/(25621:25624): Se recibio una accion describe
+[INFO] 17:55:11:69 Kernel/(25844:25844): se inicia el modulo scheduler
+[DEBUG] 17:55:11:70 Kernel/(25844:25844): el valor del puntero es: 0 
+
+[DEBUG] 17:55:11:70 Kernel/(25844:25844): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:55:11:71 Kernel/(25844:25844): mismo puntero 0 
+
+[INFO] 17:55:11:70 Kernel/(25844:25845): se inicia el monitoreo del config
+[INFO] 17:55:11:72 Kernel/(25844:25844): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:55:15:199 Kernel/(25844:25846): Se recibio una accion describe
+[INFO] 17:55:24:566 Kernel/(25874:25874): se inicia el modulo scheduler
+[DEBUG] 17:55:24:567 Kernel/(25874:25874): el valor del puntero es: 0 
+
+[DEBUG] 17:55:24:568 Kernel/(25874:25874): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:55:24:568 Kernel/(25874:25874): mismo puntero 0 
+
+[INFO] 17:55:24:568 Kernel/(25874:25874): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:55:24:569 Kernel/(25874:25875): se inicia el monitoreo del config
+[INFO] 17:55:26:720 Kernel/(25874:25876): Se recibio una accion describe
+[INFO] 17:55:42:614 Kernel/(25958:25958): se inicia el modulo scheduler
+[DEBUG] 17:55:42:614 Kernel/(25958:25958): el valor del puntero es: 0 
+
+[DEBUG] 17:55:42:614 Kernel/(25958:25958): lo que queda luego de ingresarlo 0 
+
+[INFO] 17:55:42:614 Kernel/(25958:25959): se inicia el monitoreo del config
+[DEBUG] 17:55:42:614 Kernel/(25958:25958): mismo puntero 0 
+
+[INFO] 17:55:42:614 Kernel/(25958:25958): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 17:55:46:694 Kernel/(25958:25960): kmemory: se pide memoria de SC
+[DEBUG] 17:55:46:694 Kernel/(25958:25960): kmemory: bloqueo memoria
+[INFO] 17:56:05:613 Kernel/(25958:25960): Se recibio una accion describe
+[INFO] 17:56:12:285 Kernel/(25958:25960): Se recibio una accion describe
+[INFO] 17:56:31:941 Kernel/(25958:25960): Se recibio una accion describe
+[INFO] 17:56:41:340 Kernel/(26126:26126): se inicia el modulo scheduler
+[DEBUG] 17:56:41:341 Kernel/(26126:26126): el valor del puntero es: 0 
+
+[INFO] 17:56:41:341 Kernel/(26126:26127): se inicia el monitoreo del config
+[DEBUG] 17:56:41:341 Kernel/(26126:26126): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:56:41:342 Kernel/(26126:26126): mismo puntero 0 
+
+[INFO] 17:56:41:342 Kernel/(26126:26126): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:56:43:916 Kernel/(26126:26128): Se recibio una accion describe
+[INFO] 17:58:06:186 Kernel/(26250:26250): se inicia el modulo scheduler
+[DEBUG] 17:58:06:186 Kernel/(26250:26250): el valor del puntero es: 0 
+
+[INFO] 17:58:06:186 Kernel/(26250:26251): se inicia el monitoreo del config
+[DEBUG] 17:58:06:186 Kernel/(26250:26250): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:58:06:187 Kernel/(26250:26250): mismo puntero 0 
+
+[INFO] 17:58:06:187 Kernel/(26250:26250): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:58:37:313 Kernel/(26435:26435): se inicia el modulo scheduler
+[DEBUG] 17:58:37:314 Kernel/(26435:26435): el valor del puntero es: 0 
+
+[INFO] 17:58:37:314 Kernel/(26435:26436): se inicia el monitoreo del config
+[DEBUG] 17:58:37:314 Kernel/(26435:26435): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:58:37:315 Kernel/(26435:26435): mismo puntero 0 
+
+[INFO] 17:58:37:315 Kernel/(26435:26435): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:58:40:999 Kernel/(26461:26461): se inicia el modulo scheduler
+[DEBUG] 17:58:40:0 Kernel/(26461:26461): el valor del puntero es: 0 
+
+[DEBUG] 17:58:40:0 Kernel/(26461:26461): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:58:40:0 Kernel/(26461:26461): mismo puntero 0 
+
+[INFO] 17:58:40:0 Kernel/(26461:26462): se inicia el monitoreo del config
+[INFO] 17:58:40:2 Kernel/(26461:26461): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:58:47:553 Kernel/(26461:26463): Se recibio una accion describe
+[INFO] 17:58:59:345 Kernel/(26461:26463): Se recibio una accion describe
+[INFO] 17:59:28:655 Kernel/(26562:26562): se inicia el modulo scheduler
+[DEBUG] 17:59:28:656 Kernel/(26562:26562): el valor del puntero es: 0 
+
+[INFO] 17:59:28:656 Kernel/(26562:26563): se inicia el monitoreo del config
+[DEBUG] 17:59:28:656 Kernel/(26562:26562): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 17:59:28:657 Kernel/(26562:26562): mismo puntero 0 
+
+[INFO] 17:59:28:657 Kernel/(26562:26562): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 17:59:31:184 Kernel/(26562:26564): Se recibio una accion describe
+[INFO] 17:59:40:776 Kernel/(26562:26564): Se recibio una accion insert
+[INFO] 18:00:03:742 Kernel/(26658:26658): se inicia el modulo scheduler
+[DEBUG] 18:00:03:743 Kernel/(26658:26658): el valor del puntero es: 0 
+
+[INFO] 18:00:03:743 Kernel/(26658:26659): se inicia el monitoreo del config
+[DEBUG] 18:00:03:743 Kernel/(26658:26658): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:00:03:744 Kernel/(26658:26658): mismo puntero 0 
+
+[INFO] 18:00:03:744 Kernel/(26658:26658): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:00:07:367 Kernel/(26658:26660): Se recibio una accion describe
+[INFO] 18:00:27:53 Kernel/(26756:26756): se inicia el modulo scheduler
+[DEBUG] 18:00:27:53 Kernel/(26756:26756): el valor del puntero es: 0 
+
+[INFO] 18:00:27:53 Kernel/(26756:26757): se inicia el monitoreo del config
+[DEBUG] 18:00:27:54 Kernel/(26756:26756): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:00:27:54 Kernel/(26756:26756): mismo puntero 0 
+
+[INFO] 18:00:27:55 Kernel/(26756:26756): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:00:29:598 Kernel/(26756:26758): Se recibio una accion describe
+[INFO] 18:00:37:557 Kernel/(26829:26829): se inicia el modulo scheduler
+[DEBUG] 18:00:37:558 Kernel/(26829:26829): el valor del puntero es: 0 
+
+[INFO] 18:00:37:558 Kernel/(26829:26830): se inicia el monitoreo del config
+[DEBUG] 18:00:37:558 Kernel/(26829:26829): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:00:37:558 Kernel/(26829:26829): mismo puntero 0 
+
+[INFO] 18:00:37:559 Kernel/(26829:26829): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:00:39:894 Kernel/(26829:26831): Se recibio una accion describe
+[INFO] 18:01:47:332 Kernel/(26976:26976): se inicia el modulo scheduler
+[DEBUG] 18:01:47:332 Kernel/(26976:26976): el valor del puntero es: 0 
+
+[INFO] 18:01:47:332 Kernel/(26976:26977): se inicia el monitoreo del config
+[DEBUG] 18:01:47:332 Kernel/(26976:26976): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:01:47:333 Kernel/(26976:26976): mismo puntero 0 
+
+[INFO] 18:01:47:333 Kernel/(26976:26976): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:01:49:916 Kernel/(26976:26978): Se recibio una accion describe
+[INFO] 18:03:30:161 Kernel/(27166:27166): se inicia el modulo scheduler
+[DEBUG] 18:03:30:162 Kernel/(27166:27166): el valor del puntero es: 0 
+
+[DEBUG] 18:03:30:162 Kernel/(27166:27166): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:03:30:162 Kernel/(27166:27166): mismo puntero 0 
+
+[INFO] 18:03:30:162 Kernel/(27166:27167): se inicia el monitoreo del config
+[INFO] 18:03:30:163 Kernel/(27166:27166): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:03:32:866 Kernel/(27166:27168): Se recibio una accion describe
+[INFO] 18:05:43:728 Kernel/(27349:27349): se inicia el modulo scheduler
+[DEBUG] 18:05:43:729 Kernel/(27349:27349): el valor del puntero es: 0 
+
+[DEBUG] 18:05:43:729 Kernel/(27349:27349): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:05:43:729 Kernel/(27349:27349): mismo puntero 0 
+
+[INFO] 18:05:43:730 Kernel/(27349:27349): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:05:43:729 Kernel/(27349:27350): se inicia el monitoreo del config
+[INFO] 18:05:48:207 Kernel/(27349:27351): Se recibio una accion describe
+[INFO] 18:05:56:303 Kernel/(27349:27351): Se recibio una accion insert
+[INFO] 18:06:36:310 Kernel/(27349:27351): Se recibio una accion describe
+[INFO] 18:06:47:541 Kernel/(27479:27479): se inicia el modulo scheduler
+[DEBUG] 18:06:47:542 Kernel/(27479:27479): el valor del puntero es: 0 
+
+[DEBUG] 18:06:47:542 Kernel/(27479:27479): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:06:47:542 Kernel/(27479:27479): mismo puntero 0 
+
+[INFO] 18:06:47:542 Kernel/(27479:27480): se inicia el monitoreo del config
+[INFO] 18:06:47:542 Kernel/(27479:27479): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:06:54:141 Kernel/(27479:27481): Se recibio una accion describe
+[INFO] 18:07:06:845 Kernel/(27479:27481): Se recibio una accion insert
+[INFO] 18:08:49:537 Kernel/(27723:27723): se inicia el modulo scheduler
+[DEBUG] 18:08:49:538 Kernel/(27723:27723): el valor del puntero es: 0 
+
+[DEBUG] 18:08:49:538 Kernel/(27723:27723): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:08:49:538 Kernel/(27723:27723): mismo puntero 0 
+
+[INFO] 18:08:49:538 Kernel/(27723:27724): se inicia el monitoreo del config
+[INFO] 18:08:49:538 Kernel/(27723:27723): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:08:52:299 Kernel/(27723:27725): Se recibio una accion describe
+[INFO] 18:10:19:837 Kernel/(27919:27919): se inicia el modulo scheduler
+[DEBUG] 18:10:19:837 Kernel/(27919:27919): el valor del puntero es: 0 
+
+[INFO] 18:10:19:837 Kernel/(27919:27920): se inicia el monitoreo del config
+[DEBUG] 18:10:19:837 Kernel/(27919:27919): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:10:19:838 Kernel/(27919:27919): mismo puntero 0 
+
+[INFO] 18:10:19:838 Kernel/(27919:27919): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:10:24:679 Kernel/(27984:27984): se inicia el modulo scheduler
+[DEBUG] 18:10:24:680 Kernel/(27984:27984): el valor del puntero es: 0 
+
+[INFO] 18:10:24:680 Kernel/(27984:27985): se inicia el monitoreo del config
+[DEBUG] 18:10:24:680 Kernel/(27984:27984): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:10:24:681 Kernel/(27984:27984): mismo puntero 0 
+
+[INFO] 18:10:24:682 Kernel/(27984:27984): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:10:27:569 Kernel/(27984:27986): Se recibio una accion describe
+[INFO] 18:11:32:80 Kernel/(27984:27986): Se recibio una accion insert
+[INFO] 18:12:43:668 Kernel/(28397:28397): se inicia el modulo scheduler
+[DEBUG] 18:12:43:669 Kernel/(28397:28397): el valor del puntero es: 0 
+
+[DEBUG] 18:12:43:669 Kernel/(28397:28397): lo que queda luego de ingresarlo 0 
+
+[INFO] 18:12:43:669 Kernel/(28397:28398): se inicia el monitoreo del config
+[DEBUG] 18:12:43:670 Kernel/(28397:28397): mismo puntero 0 
+
+[INFO] 18:12:43:670 Kernel/(28397:28397): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:12:46:390 Kernel/(28397:28399): Se recibio una accion describe
+[INFO] 18:13:05:126 Kernel/(28397:28399): Se recibio una accion insert
+[INFO] 18:13:11:28 Kernel/(28436:28436): se inicia el modulo scheduler
+[INFO] 18:13:11:29 Kernel/(28436:28437): se inicia el monitoreo del config
+[DEBUG] 18:13:11:29 Kernel/(28436:28436): el valor del puntero es: 0 
+
+[DEBUG] 18:13:11:30 Kernel/(28436:28436): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:13:11:30 Kernel/(28436:28436): mismo puntero 0 
+
+[INFO] 18:13:11:31 Kernel/(28436:28436): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:13:16:478 Kernel/(28436:28438): Se recibio una accion insert
+[INFO] 18:13:21:621 Kernel/(28436:28438): Se recibio una accion describe
+[INFO] 18:13:27:397 Kernel/(28436:28438): Se recibio una accion insert
+[INFO] 18:14:58:943 Kernel/(28569:28569): se inicia el modulo scheduler
+[INFO] 18:14:58:943 Kernel/(28569:28573): se inicia el monitoreo del config
+[DEBUG] 18:14:58:943 Kernel/(28569:28569): el valor del puntero es: 0 
+
+[DEBUG] 18:14:58:944 Kernel/(28569:28569): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:14:58:944 Kernel/(28569:28569): mismo puntero 0 
+
+[INFO] 18:14:58:944 Kernel/(28569:28569): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:15:02:963 Kernel/(28569:28574): Se recibio una accion describe
+[INFO] 18:15:08:299 Kernel/(28569:28574): Se recibio una accion insert
+[INFO] 18:18:45:75 Kernel/(29067:29067): se inicia el modulo scheduler
+[DEBUG] 18:18:45:76 Kernel/(29067:29067): el valor del puntero es: 0 
+
+[INFO] 18:18:45:76 Kernel/(29067:29068): se inicia el monitoreo del config
+[DEBUG] 18:18:45:77 Kernel/(29067:29067): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:18:45:77 Kernel/(29067:29067): mismo puntero 0 
+
+[INFO] 18:18:45:77 Kernel/(29067:29067): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:18:47:979 Kernel/(29067:29069): Se recibio una accion describe
+[INFO] 18:20:34:687 Kernel/(29285:29285): se inicia el modulo scheduler
+[DEBUG] 18:20:34:688 Kernel/(29285:29285): el valor del puntero es: 0 
+
+[DEBUG] 18:20:34:688 Kernel/(29285:29285): lo que queda luego de ingresarlo 0 
+
+[INFO] 18:20:34:688 Kernel/(29285:29286): se inicia el monitoreo del config
+[DEBUG] 18:20:34:689 Kernel/(29285:29285): mismo puntero 0 
+
+[INFO] 18:20:34:689 Kernel/(29285:29285): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:20:37:424 Kernel/(29285:29287): Se recibio una accion describe
+[INFO] 18:24:19:609 Kernel/(29778:29778): se inicia el modulo scheduler
+[DEBUG] 18:24:19:610 Kernel/(29778:29778): el valor del puntero es: 0 
+
+[DEBUG] 18:24:19:611 Kernel/(29778:29778): lo que queda luego de ingresarlo 0 
+
+[INFO] 18:24:19:610 Kernel/(29778:29779): se inicia el monitoreo del config
+[DEBUG] 18:24:19:611 Kernel/(29778:29778): mismo puntero 0 
+
+[INFO] 18:24:19:612 Kernel/(29778:29778): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:24:22:266 Kernel/(29778:29780): Se recibio una accion describe
+[INFO] 18:25:43:110 Kernel/(29941:29941): se inicia el modulo scheduler
+[DEBUG] 18:25:43:111 Kernel/(29941:29941): el valor del puntero es: 0 
+
+[INFO] 18:25:43:111 Kernel/(29941:29942): se inicia el monitoreo del config
+[DEBUG] 18:25:43:112 Kernel/(29941:29941): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:25:43:112 Kernel/(29941:29941): mismo puntero 0 
+
+[INFO] 18:25:43:113 Kernel/(29941:29941): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:25:50:112 Kernel/(29941:29943): Se recibio una accion describe
+[INFO] 18:26:13:749 Kernel/(30011:30011): se inicia el modulo scheduler
+[INFO] 18:26:13:749 Kernel/(30011:30022): se inicia el monitoreo del config
+[DEBUG] 18:26:13:749 Kernel/(30011:30011): el valor del puntero es: 0 
+
+[DEBUG] 18:26:13:749 Kernel/(30011:30011): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:26:13:749 Kernel/(30011:30011): mismo puntero 0 
+
+[INFO] 18:26:13:750 Kernel/(30011:30011): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:26:21:366 Kernel/(30027:30027): se inicia el modulo scheduler
+[INFO] 18:26:21:366 Kernel/(30027:30028): se inicia el monitoreo del config
+[DEBUG] 18:26:21:366 Kernel/(30027:30027): el valor del puntero es: 0 
+
+[DEBUG] 18:26:21:366 Kernel/(30027:30027): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:26:21:366 Kernel/(30027:30027): mismo puntero 0 
+
+[INFO] 18:26:21:367 Kernel/(30027:30027): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:26:24:375 Kernel/(30027:30029): Se recibio una accion describe
+[INFO] 18:28:29:819 Kernel/(30284:30284): se inicia el modulo scheduler
+[DEBUG] 18:28:29:820 Kernel/(30284:30284): el valor del puntero es: 0 
+
+[INFO] 18:28:29:820 Kernel/(30284:30285): se inicia el monitoreo del config
+[DEBUG] 18:28:29:820 Kernel/(30284:30284): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:28:29:820 Kernel/(30284:30284): mismo puntero 0 
+
+[INFO] 18:28:29:821 Kernel/(30284:30284): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:28:32:292 Kernel/(30284:30286): Se recibio una accion describe
+[INFO] 18:28:43:809 Kernel/(30353:30353): se inicia el modulo scheduler
+[DEBUG] 18:28:43:811 Kernel/(30353:30353): el valor del puntero es: 0 
+
+[INFO] 18:28:43:811 Kernel/(30353:30354): se inicia el monitoreo del config
+[DEBUG] 18:28:43:811 Kernel/(30353:30353): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:28:43:811 Kernel/(30353:30353): mismo puntero 0 
+
+[INFO] 18:28:43:812 Kernel/(30353:30353): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:28:46:316 Kernel/(30353:30355): Se recibio una accion describe
+[INFO] 18:30:21:783 Kernel/(30500:30500): se inicia el modulo scheduler
+[INFO] 18:30:21:784 Kernel/(30500:30501): se inicia el monitoreo del config
+[DEBUG] 18:30:21:785 Kernel/(30500:30500): el valor del puntero es: 0 
+
+[DEBUG] 18:30:21:785 Kernel/(30500:30500): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:30:21:785 Kernel/(30500:30500): mismo puntero 0 
+
+[INFO] 18:30:21:786 Kernel/(30500:30500): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:30:23:945 Kernel/(30500:30502): Se recibio una accion describe
+[INFO] 18:31:07:327 Kernel/(30630:30630): se inicia el modulo scheduler
+[DEBUG] 18:31:07:328 Kernel/(30630:30630): el valor del puntero es: 0 
+
+[INFO] 18:31:07:328 Kernel/(30630:30631): se inicia el monitoreo del config
+[DEBUG] 18:31:07:328 Kernel/(30630:30630): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:31:07:328 Kernel/(30630:30630): mismo puntero 0 
+
+[INFO] 18:31:07:329 Kernel/(30630:30630): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:31:09:752 Kernel/(30630:30632): Se recibio una accion describe
+[INFO] 18:33:53:420 Kernel/(30865:30865): se inicia el modulo scheduler
+[DEBUG] 18:33:53:421 Kernel/(30865:30865): el valor del puntero es: 0 
+
+[DEBUG] 18:33:53:421 Kernel/(30865:30865): lo que queda luego de ingresarlo 0 
+
+[INFO] 18:33:53:421 Kernel/(30865:30866): se inicia el monitoreo del config
+[DEBUG] 18:33:53:421 Kernel/(30865:30865): mismo puntero 0 
+
+[INFO] 18:33:53:422 Kernel/(30865:30865): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:33:55:989 Kernel/(30865:30867): Se recibio una accion describe
+[INFO] 18:34:34:834 Kernel/(30966:30966): se inicia el modulo scheduler
+[DEBUG] 18:34:34:835 Kernel/(30966:30966): el valor del puntero es: 0 
+
+[DEBUG] 18:34:34:835 Kernel/(30966:30966): lo que queda luego de ingresarlo 0 
+
+[INFO] 18:34:34:835 Kernel/(30966:30967): se inicia el monitoreo del config
+[DEBUG] 18:34:34:835 Kernel/(30966:30966): mismo puntero 0 
+
+[INFO] 18:34:34:836 Kernel/(30966:30966): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:34:37:412 Kernel/(30966:30968): Se recibio una accion describe
+[INFO] 18:34:57:37 Kernel/(31003:31003): se inicia el modulo scheduler
+[DEBUG] 18:34:57:38 Kernel/(31003:31003): el valor del puntero es: 0 
+
+[INFO] 18:34:57:38 Kernel/(31003:31004): se inicia el monitoreo del config
+[DEBUG] 18:34:57:38 Kernel/(31003:31003): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:34:57:39 Kernel/(31003:31003): mismo puntero 0 
+
+[INFO] 18:34:57:39 Kernel/(31003:31003): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:35:03:810 Kernel/(31070:31070): se inicia el modulo scheduler
+[DEBUG] 18:35:03:810 Kernel/(31070:31070): el valor del puntero es: 0 
+
+[INFO] 18:35:03:810 Kernel/(31070:31071): se inicia el monitoreo del config
+[DEBUG] 18:35:03:811 Kernel/(31070:31070): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:35:03:811 Kernel/(31070:31070): mismo puntero 0 
+
+[INFO] 18:35:03:812 Kernel/(31070:31070): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:35:11:667 Kernel/(31070:31072): Se recibio una accion describe
+[INFO] 18:38:06:406 Kernel/(31306:31306): se inicia el modulo scheduler
+[DEBUG] 18:38:06:406 Kernel/(31306:31306): el valor del puntero es: 0 
+
+[INFO] 18:38:06:406 Kernel/(31306:31307): se inicia el monitoreo del config
+[DEBUG] 18:38:06:407 Kernel/(31306:31306): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:38:06:407 Kernel/(31306:31306): mismo puntero 0 
+
+[INFO] 18:38:06:407 Kernel/(31306:31306): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:38:09:415 Kernel/(31306:31308): Se recibio una accion describe
+[INFO] 18:39:44:363 Kernel/(31491:31491): se inicia el modulo scheduler
+[DEBUG] 18:39:44:364 Kernel/(31491:31491): el valor del puntero es: 0 
+
+[INFO] 18:39:44:364 Kernel/(31491:31492): se inicia el monitoreo del config
+[DEBUG] 18:39:44:364 Kernel/(31491:31491): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:39:44:365 Kernel/(31491:31491): mismo puntero 0 
+
+[INFO] 18:39:44:365 Kernel/(31491:31491): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:39:47:141 Kernel/(31491:31493): Se recibio una accion describe
+[INFO] 18:40:15:146 Kernel/(31592:31592): se inicia el modulo scheduler
+[DEBUG] 18:40:15:147 Kernel/(31592:31592): el valor del puntero es: 0 
+
+[INFO] 18:40:15:147 Kernel/(31592:31593): se inicia el monitoreo del config
+[DEBUG] 18:40:15:147 Kernel/(31592:31592): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:40:15:147 Kernel/(31592:31592): mismo puntero 0 
+
+[INFO] 18:40:15:148 Kernel/(31592:31592): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:40:17:461 Kernel/(31592:31594): Se recibio una accion describe
+[INFO] 18:46:57:716 Kernel/(31592:31594): Se recibio una accion describe
+[INFO] 18:48:05:761 Kernel/(32162:32162): se inicia el modulo scheduler
+[DEBUG] 18:48:05:762 Kernel/(32162:32162): el valor del puntero es: 0 
+
+[INFO] 18:48:05:762 Kernel/(32162:32163): se inicia el monitoreo del config
+[DEBUG] 18:48:05:762 Kernel/(32162:32162): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:48:05:762 Kernel/(32162:32162): mismo puntero 0 
+
+[INFO] 18:48:05:763 Kernel/(32162:32162): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:48:08:818 Kernel/(32162:32164): Se recibio una accion describe
+[INFO] 18:50:17:937 Kernel/(32430:32430): se inicia el modulo scheduler
+[DEBUG] 18:50:17:937 Kernel/(32430:32430): el valor del puntero es: 0 
+
+[DEBUG] 18:50:17:938 Kernel/(32430:32430): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:50:17:938 Kernel/(32430:32430): mismo puntero 0 
+
+[INFO] 18:50:17:938 Kernel/(32430:32430): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:50:17:937 Kernel/(32430:32431): se inicia el monitoreo del config
+[INFO] 18:50:20:435 Kernel/(32430:32432): Se recibio una accion describe
+[INFO] 18:50:35:335 Kernel/(32507:32507): se inicia el modulo scheduler
+[DEBUG] 18:50:35:336 Kernel/(32507:32507): el valor del puntero es: 0 
+
+[INFO] 18:50:35:336 Kernel/(32507:32508): se inicia el monitoreo del config
+[DEBUG] 18:50:35:336 Kernel/(32507:32507): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:50:35:337 Kernel/(32507:32507): mismo puntero 0 
+
+[INFO] 18:50:35:337 Kernel/(32507:32507): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:50:37:785 Kernel/(32507:32509): Se recibio una accion describe
+[INFO] 18:53:00:640 Kernel/(32746:32746): se inicia el modulo scheduler
+[DEBUG] 18:53:00:641 Kernel/(32746:32746): el valor del puntero es: 0 
+
+[DEBUG] 18:53:00:641 Kernel/(32746:32746): lo que queda luego de ingresarlo 0 
+
+[INFO] 18:53:00:641 Kernel/(32746:32747): se inicia el monitoreo del config
+[DEBUG] 18:53:00:641 Kernel/(32746:32746): mismo puntero 0 
+
+[INFO] 18:53:00:642 Kernel/(32746:32746): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:53:04:440 Kernel/(32746:32748): Se recibio una accion describe
+[INFO] 18:53:21:277 Kernel/(371:371): se inicia el modulo scheduler
+[DEBUG] 18:53:21:278 Kernel/(371:371): el valor del puntero es: 0 
+
+[DEBUG] 18:53:21:278 Kernel/(371:371): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:53:21:278 Kernel/(371:371): mismo puntero 0 
+
+[INFO] 18:53:21:278 Kernel/(371:372): se inicia el monitoreo del config
+[INFO] 18:53:21:278 Kernel/(371:371): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:53:24:119 Kernel/(371:373): Se recibio una accion describe
+[INFO] 18:56:25:459 Kernel/(899:899): se inicia el modulo scheduler
+[INFO] 18:56:25:460 Kernel/(899:900): se inicia el monitoreo del config
+[DEBUG] 18:56:25:460 Kernel/(899:899): el valor del puntero es: 0 
+
+[DEBUG] 18:56:25:460 Kernel/(899:899): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:56:25:461 Kernel/(899:899): mismo puntero 0 
+
+[INFO] 18:56:25:461 Kernel/(899:899): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:56:27:932 Kernel/(899:901): Se recibio una accion describe
+[INFO] 18:56:46:826 Kernel/(1006:1006): se inicia el modulo scheduler
+[DEBUG] 18:56:46:826 Kernel/(1006:1006): el valor del puntero es: 0 
+
+[DEBUG] 18:56:46:827 Kernel/(1006:1006): lo que queda luego de ingresarlo 0 
+
+[INFO] 18:56:46:827 Kernel/(1006:1007): se inicia el monitoreo del config
+[DEBUG] 18:56:46:827 Kernel/(1006:1006): mismo puntero 0 
+
+[INFO] 18:56:46:827 Kernel/(1006:1006): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:56:50:748 Kernel/(1006:1008): Se recibio una accion describe
+[INFO] 18:57:27:370 Kernel/(1006:1008): Se recibio una accion insert
+[INFO] 18:57:59:23 Kernel/(1131:1131): se inicia el modulo scheduler
+[DEBUG] 18:57:59:24 Kernel/(1131:1131): el valor del puntero es: 0 
+
+[DEBUG] 18:57:59:24 Kernel/(1131:1131): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 18:57:59:24 Kernel/(1131:1131): mismo puntero 0 
+
+[INFO] 18:57:59:24 Kernel/(1131:1132): se inicia el monitoreo del config
+[INFO] 18:57:59:25 Kernel/(1131:1131): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 18:58:02:896 Kernel/(1131:1133): Se recibio una accion describe
+[INFO] 18:58:08:656 Kernel/(1131:1133): Se recibio una accion insert
+[DEBUG] 18:58:08:656 Kernel/(1131:1133): kmemory: se pide memoria de SC
+[DEBUG] 18:58:08:656 Kernel/(1131:1133): kmemory: bloqueo memoria
+[INFO] 18:58:20:551 Kernel/(1131:1133): Se recibio una accion describe
+[INFO] 19:08:25:58 Kernel/(3087:3087): se inicia el modulo scheduler
+[DEBUG] 19:08:25:58 Kernel/(3087:3087): el valor del puntero es: 0 
+
+[DEBUG] 19:08:25:58 Kernel/(3087:3087): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 19:08:25:59 Kernel/(3087:3087): mismo puntero 0 
+
+[INFO] 19:08:25:58 Kernel/(3087:3088): se inicia el monitoreo del config
+[INFO] 19:08:25:59 Kernel/(3087:3087): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 19:08:28:807 Kernel/(3087:3090): Se recibio una accion describe
+[INFO] 19:08:32:368 Kernel/(3087:3090): Se recibio una accion describe
+[INFO] 19:08:35:263 Kernel/(3087:3090): Se recibio una accion describe
+[INFO] 19:08:58:526 Kernel/(3087:3090): Se recibio una accion insert
+[DEBUG] 19:08:58:527 Kernel/(3087:3090): kmemory: se pide memoria de SC
+[DEBUG] 19:08:58:527 Kernel/(3087:3090): kmemory: bloqueo memoria

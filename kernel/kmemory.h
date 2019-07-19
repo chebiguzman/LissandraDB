@@ -48,6 +48,7 @@ int get_memory();
 int hash(char* string);
 void kmemoy_add_table();
 void kmemory_drop_table(char* tbl_name);
+void kmemory_add_table(char* name, t_consistency* cons);
 
 #endif /* KMEMORY_H */
 

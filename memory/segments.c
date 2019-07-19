@@ -406,7 +406,7 @@ int page_is_on_use(int index){
 }
 
 char* exec_in_fs(int memory_fd, char* payload){
-    char* responce = malloc(500);
+    char* responce = malloc(3000);
     strcpy(responce, "");
     
     if ( memory_fd < 0 ){
@@ -416,7 +416,7 @@ char* exec_in_fs(int memory_fd, char* payload){
 
     //ejecutar
     if(write(memory_fd,payload, strlen(payload)+1)){
-      read(memory_fd, responce, 500);
+      read(memory_fd, responce, 3000);
       return responce;
     }else{
       log_error(logger, "No se logo comuniarse con FS");
