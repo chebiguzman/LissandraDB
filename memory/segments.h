@@ -43,6 +43,7 @@ segment_t* SEGMENT_TABLE;
 page_t* MAIN_MEMORY; 
 LRU_TABLE_t* LRU_TABLE;
 int NUMBER_OF_PAGES;
+int PAGE_SIZE;
 t_log* logger;
 int VALUE_SIZE;
 

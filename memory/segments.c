@@ -6,7 +6,8 @@ page_t* create_page(int timestamp, int key, char* value){
 	page->timestamp = timestamp;
 	page->key = key;
 	page->value = (char*)malloc(VALUE_SIZE);
-	strcpy(page->value, value);
+	memcpy(page->value, value, VALUE_SIZE);
+	// strcpy(page->value, value);
 	return page;
 }
 
@@ -27,6 +28,7 @@ segment_t* create_segment(char* table_name){
 	add_segment_to_table(segment);
   	return segment;
 }
+
 
 int is_memory_full(){
 	return LRU_TABLE->current_pages < NUMBER_OF_PAGES ? 0 : 1;
@@ -91,7 +93,7 @@ page_info_t* insert_page(char* table_name, page_t* page){
 	if(page_info != NULL){
 		if(page_info->page_ptr->timestamp < page->timestamp){ // si por alguna razon de la vida el timestamp del insert es menor al timestamp que ya tengo en la page, no la modifico
 			printf("Updating value %s->%s\n", page_info->page_ptr->value, page->value);
-			memcpy(page_info->page_ptr, page, sizeof(page_t));
+			memcpy(page_info->page_ptr, page, PAGE_SIZE);
 			page_info->dirty_bit = 1;
 		}
 	}
@@ -115,7 +117,7 @@ page_info_t* save_page_to_memory(char* table_name, page_t* page, int dirty_bit){
 	segment_t* segment = find_or_create_segment(table_name); 
 	page_info->index = index;
 	page_info->page_ptr = MAIN_MEMORY+index;
-	memcpy(page_info->page_ptr, page, sizeof(page_t));
+	memcpy(page_info->page_ptr, page, PAGE_SIZE);
 	add_page_to_segment(segment, page_info);
 	update_LRU(segment, page_info);
 	return page_info;
@@ -127,19 +129,16 @@ void remove_page(page_info_t* page_info){
 	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
 	remove_from_segment(lru_page_info->segment, page_info);
 	remove_from_LRU(lru_page_info);
-	// sacar de memoria (setearla a 0), hace falta??? o simplemente sobreescribo la pages
+	memset(page_info->page_ptr, 0, PAGE_SIZE); // seteo a 0 la page en main memory
 }
 
-// libera la pagina y si tiene dirtybit la manda al fs (igual que la de arriba pero con un if)
+// libera la pagina y si tiene dirtybit la manda al fs 
 void remove_and_save_page(page_info_t* page_info){
 	if(page_info->dirty_bit != 0){
 		printf("Saving page to fs");
 		// TODO: mandar la pagina al fs para que la guarde
 	}
-	// busco la pagina en la lru table (para saber el segmento al que pertenece)
-	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
-	remove_from_segment(lru_page_info->segment, page_info);
-	remove_from_LRU(lru_page_info);	
+	remove_page(page_info);
 }
 
 // si el segundo argumento es 0, droppeo la pagina sin mandarla al fs
