@@ -10,13 +10,10 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
-#include "../pharser.h"
-#include "../actions.h"
-#include "../console.h"
+
 #include "segments.h"
 
 //logger global para que lo accedan los threads
-int fs_socket;
 int main_memory_size;
 
 //punto de entrada para el programa y el kernel
