@@ -50,6 +50,9 @@ int PAGE_SIZE;
 t_log* logger;
 int VALUE_SIZE;
 int fs_socket;
+pthread_mutex_t lru_table_mutex;
+pthread_mutex_t segment_table_mutex;
+pthread_mutex_t main_memory_mutex;
 
 // --------------------------
 
