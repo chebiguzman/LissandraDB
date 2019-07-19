@@ -81,7 +81,7 @@ char* exec_instr(char* instr_buff){
         //KEY
         package->key = atoi(parameters[2]);
 
-        //printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name,package->key);
+        printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name,package->key);
         char* responce = action_select(package);
         return responce;
     }
@@ -230,6 +230,7 @@ char* exec_instr(char* instr_buff){
         if(parameters_length != 2) return "Numero de parametros incorrecto";
 
         package_drop* package = malloc(sizeof(package_drop));
+        package->instruction = instruction;
         package->table_name = parameters[1];
 
 
@@ -321,7 +322,7 @@ char* parse_package_describe(package_describe* pk){
     }
     char* buffer = malloc(strlen(pk->instruction) + strlen(pk->table_name) +4);
     
-    strcat(buffer, pk->instruction);
+    strcpy(buffer, pk->instruction);
     strcat(buffer,sep);
     strcat(buffer,pk->table_name);
     return buffer;
