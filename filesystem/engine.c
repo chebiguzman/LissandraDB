@@ -126,7 +126,7 @@ void engine_start(t_log* logger){
     char* metadata_dir_path = malloc(strlen(MNT_POINT)+strlen("Metadata/")+10);
     strcpy(metadata_dir_path, MNT_POINT);
     strcat(metadata_dir_path, "Metadata/");
-          tables_path = malloc(strlen(MNT_POINT)+strlen("Tables/")+1);
+    tables_path = malloc(strlen(MNT_POINT)+strlen("Tables/")+1);
     strcpy( tables_path,MNT_POINT);
     strcat(tables_path, "Tables/");
     char* blocks_path = malloc(strlen(MNT_POINT)+strlen("Bloques/")+1);
@@ -148,6 +148,8 @@ void engine_start(t_log* logger){
     char* meta_path = malloc(strlen(metadata_dir_path)+strlen("Metadata.bin")+1);
     strcpy(meta_path ,metadata_dir_path);
     strcat(meta_path, "Metadata.bin");
+
+    free(metadata_dir_path);
  
     FILE* bitmap = fopen(bitmap_path,"r");
     if(bitmap==NULL){
@@ -161,6 +163,8 @@ void engine_start(t_log* logger){
     }else{
 
     }
+
+    //free(bitmap_path);
 
     FILE* meta = fopen(meta_path, "r");
     //creo el archivo Metadata/Metadata.bin
@@ -177,6 +181,8 @@ void engine_start(t_log* logger){
         fputs(r, meta);
  
         fclose(meta);
+
+        free(r);
  
     }
 
@@ -184,6 +190,8 @@ void engine_start(t_log* logger){
     t_config* meta_config = config_create(meta_path);
     block_amount = config_get_int_value(meta_config, "BLOCKS");
     block_size = config_get_int_value(meta_config, "BLOCK_SIZE");
+
+    free(meta_path);
 
     for(int i = 0; i < block_amount;i++){
         char* p = malloc(strlen(blocks_path)+strlen(string_itoa(block_amount))+5);
@@ -193,9 +201,13 @@ void engine_start(t_log* logger){
         check_or_create_file(p);
         free(p);
     }
+
+    //free(blocks_path);
  
     DIR* tables_dir = opendir(tables_path);
     tables_name = list_create();
+
+    //free(tables_path);
 
     struct dirent *entry;
      while ((entry = readdir(tables_dir)) != NULL) {
@@ -207,6 +219,7 @@ void engine_start(t_log* logger){
             list_add(tables_name, name);
             string_to_upper(entry->d_name);
             log_info(logg, entry->d_name);
+            //free(name);
          }
      }
  
@@ -273,6 +286,8 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     strcpy(partitions,"\n");
     strcpy(partitions,"PARTICIONES=");
     strcat(partitions,constante);
+    free(constante);
+
     log_info(logg,partitions);
     char* constante2= strdup(string_itoa(compactation_time));
     int util2=strlen(constante2)+strlen("\nCOMPACTATION");
@@ -280,6 +295,8 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     strcpy(compactation,"\n");
     strcpy(compactation,"\nCOMPACTATION=");
     strcat(compactation,constante2);
+    free(constante2);
+
     log_info(logg,compactation);
     char* constante3= strdup(string_itoa(consistency));
     char* consistencia;
@@ -297,6 +314,7 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
         strcpy(consistencia,"CONSISTENCY=2\n");
         break;
     }
+    free(constante3);
 
     log_info(logg,consistencia);
     fputs(consistencia,metadata);
@@ -319,9 +337,10 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
         FILE* part = fopen(resp,"w+");
         fputs(metadata_template, part);
         fclose(part);
+        free(auxx);
         c--;
     }
- 
+    
     free(resp);
 
     list_add(tables_name, table_name);
@@ -332,6 +351,7 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     free(path_dir);
     free(partitions);
     free(consistencia);
+    free(compactation);
     free(meta_path);
 
 }
@@ -357,6 +377,10 @@ void engine_drop_table(char* table_name){
     strcat(path, table_name);
     recursive_delete(path);
 
+    free(q);
+    free(path);
+    return;
+
 }
 
 char* get_table_metadata_as_string(char* table_name){
@@ -375,6 +399,7 @@ char* get_table_metadata_as_string(char* table_name){
     fread(meta, sizeof(char), bytes, f);
 
     fclose(f);
+    free(table_path);
     return meta;
 }
 
@@ -417,6 +442,8 @@ t_table_partiton* get_table_partition(char* table_name, int table_partition_numb
     strcat(partition_path, partition_name);
     strcat(partition_path, ".part");
 
+    free(partition_name);
+
     t_table_partiton* parition = malloc(sizeof(t_table_partiton));
     t_config* c = config_create(partition_path);
     printf("assasd %s\n", partition_path);
@@ -424,6 +451,8 @@ t_table_partiton* get_table_partition(char* table_name, int table_partition_numb
     parition->blocks_size = config_get_long_value(c, "SIZE");
 
     parition->blocks = config_get_array_value(c, "BLOCKS");
+
+    free(partition_path);
 
     return parition;
 }
@@ -438,6 +467,7 @@ t_table_metadata* get_table_metadata(char* table_name){
     log_info(logg, meta_path);
     
     t_config* c = config_create(meta_path);
+    free(meta_path);
     meta->consistency = config_get_int_value(c, "CONSISTENCY");
     meta->partition_number = config_get_int_value(c, "PARTICIONES");
     meta->compactation_time = config_get_long_value(c, "COMPACTATION");
@@ -449,6 +479,7 @@ t_table_metadata* get_table_metadata(char* table_name){
 
     return meta;
 }
+
 char* get_blocksize_table_rows(char* table_data){
     char* buffer = malloc(block_size);
     char** rows = string_split(table_data, "\n");
@@ -509,6 +540,7 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
 
         //escribo el dump en el bloque
         FILE* block_file = fopen(block_path,"r+");
+        free(block_path);
         printf("respuesta: %s\n", r);
 
         fwrite(r,strlen(r),1,block_file);
@@ -562,6 +594,8 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
     strcat(tmp_filepath ,tmp_file_number);
     strcat(tmp_filepath ,".tmp");
 
+    free(tmp_path);
+
     printf("tmp_filepath es: %s",tmp_filepath);
 
     FILE* tmp_file = fopen(tmp_filepath,"w+");//creo el archivo .tmp
@@ -579,6 +613,10 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
     fputs(r, tmp_file);
 
     fclose(tmp_file);
+    free(tmp_filepath);
+    free(r);
+    free(table_dump);
+    free(blocks);
     
     return;
 }
@@ -598,6 +636,7 @@ int find_tmp_name(char* tmp_path) {
 
         if(!does_file_exist(tmp_filepath)){
             printf("encontre un nombre para tmp");
+            free(tmp_filepath);
             return i;
         }
 
@@ -616,10 +655,11 @@ int find_free_block() {
     fclose(bitmap_file);
     for(int i = 0; i<block_amount ;i++) {
         if(bitmap[i]=='1'){ //recorro todo el bitmap buscando un 0
+            free(bitmap);
             return i; //devuelvo el indice del primer bloque libre que encuentro -> es el numero de bloque libre
         }
     }    
-
+    free(bitmap);
     log_error(logg,"No hay bloques libres");
     exit(-1); //ver bien que hacer cuando no hay bloques libres
 }
@@ -633,6 +673,8 @@ void set_block_as_occupied(int block_number) {
     bitmap[block_number] = '0';
     fwrite(bitmap, sizeof(char), block_amount, bitmap_file);
     fclose(bitmap_file);
+    free(bitmap);
+    return;
 }
 
 int does_file_exist(char* file_path){

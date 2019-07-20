@@ -96,6 +96,7 @@ char* action_select(package_select* select_info){
 
   t_table_partiton* partition = get_table_partition(select_info->table_name, table_partition_number);
 
+  free(meta);
   
   int block_amount = 0;
   char* first_block = partition->blocks[0];
@@ -148,6 +149,8 @@ char* action_select(package_select* select_info){
     whilethread++;
   }
 
+  free(partition);
+
   pthread_mutex_lock(&lock);
   pthread_cond_wait(&cond, &lock);
   int whileparametro=0;
@@ -171,6 +174,8 @@ char* action_select(package_select* select_info){
 
 char* action_insert(package_insert* insert_info){
 
+  printf("Se recibió una accion insert");
+
   if(!does_table_exist(insert_info->table_name)){
     log_error(logger, "No se puede completar el describe.");
     return "La tabla no existe.\n";
@@ -183,7 +188,9 @@ char* action_insert(package_insert* insert_info){
   strcat(table_path ,"Tables/");
   strcat(table_path ,table_name);
 
-   char* sliced_value = malloc(VALUE_SIZE+2);
+  printf("\nPRUEBAA %s\n",table_path);
+
+  char* sliced_value = malloc(VALUE_SIZE+2);
   memcpy(sliced_value, insert_info->value, VALUE_SIZE);
   strcpy(sliced_value+VALUE_SIZE, "\0");
   printf("%s\n", sliced_value);
@@ -194,6 +201,7 @@ char* action_insert(package_insert* insert_info){
  
   log_debug(logger, "Se inserto el valor en la memtable");
   free(table_path);
+  free(insert_info);
 
   return "";
   
