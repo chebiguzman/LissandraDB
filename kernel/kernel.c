@@ -147,7 +147,7 @@ char* action_run(package_run* run_info){
     while(getline(&buffer, &buffer_size, fp) != -1){
       char* instr_from_file = malloc(strlen(buffer)+1);
       strcpy(instr_from_file, buffer);
-      printf("insturccion a run: %s", instr_from_file);
+      //printf("insturccion a run: %s", instr_from_file);
 
       queue_push(instruction_set, instr_from_file);
 

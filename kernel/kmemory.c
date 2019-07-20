@@ -435,7 +435,7 @@ void disconect_from_memory(int memoryfd){
     }
     
     pthread_mutex_unlock(&mem_list_lock);
-    log_info(logger, "kmemory: se desconecto una memoria");
+    log_error(logger, "kmemory: se desconecto una memoria.");
 }
 
 int connect_to_memory(char* ip, int port){
