@@ -19,6 +19,7 @@ char* exec_instr(char* instr_buff){
     char buff[strlen(instr_buff)+2];
     memcpy(buff, instr_buff, strlen(instr_buff)+1);
 
+
     int i = 0;
     int offset = 0;
     bool last_character_was_null = false;
@@ -73,7 +74,7 @@ char* exec_instr(char* instr_buff){
          if(parameters[parameters_length][0] == '"'){
             int value_length = strlen(parameters[parameters_length]);
             if(parameters[parameters_length][value_length-1]=='"'){
-                char* value = malloc(strlen(parameters[parameters_length])-2);
+                char* value = malloc(strlen(parameters[parameters_length])-1);
                 memcpy(value, parameters[parameters_length]+1, value_length-2);
                 memcpy(value+value_length-2, "\0", 1);
                 free(parameters[parameters_length]);
@@ -284,18 +285,14 @@ char* exec_instr(char* instr_buff){
 
 char* parse_package_select(package_select* package){
     char* buffer; 
-    char* instr = strdup(package->instruction);
-    char* tbl_n = strdup(package->table_name);
-    char key[16];
-    sprintf(key, "%d", package->key);
-    int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + strlen(key)+1;
+    int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + 16+1;
     
     buffer = malloc(2+tot_len);
-    memcpy(buffer, instr, strlen(instr));
+    strcpy(buffer, package->instruction);
     strcat(buffer, sep); //emular NULL terminations
-    strcat(buffer, tbl_n);
+    strcat(buffer, package->table_name);
     strcat(buffer, sep);
-    strcat(buffer, key);
+    strcat(buffer, string_itoa(package->key));
     strcat(buffer, "\n");
 
     return buffer;
