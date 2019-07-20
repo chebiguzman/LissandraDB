@@ -78,7 +78,7 @@ void start_kmemory_module(t_log* logg,t_log* logg_debug, char* main_memory_ip, i
     pthread_t tid_metadata_service;
     pthread_create(&tid_metadata_service, NULL,metadata_service, NULL);
 
-    MEMORY_FINDER_SLEEP = 99999999999;
+    MEMORY_FINDER_SLEEP = 80000;
 
     pthread_t tid_memory_finder_service;
     pthread_create(&tid_memory_finder_service, NULL,memory_finder_service, NULL);
@@ -181,7 +181,7 @@ void kmemory_set_active_tables(t_dictionary* dic){
 int get_sc_memory(){
 
     if(strong_memory == NULL){
-        log_error(logger, "kmemory: No hay memoria en el citerio principal");
+        log_error(logger, "kmemory: No hay memoria en el citerio SC");
         return -1;
     }
     log_debug(logger_debug, "kmemory: bloqueo memoria");

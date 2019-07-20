@@ -183,7 +183,7 @@ void remove_segment(char* table_name, int save_to_fs_bit){
 		SEGMENT_TABLE = temp->next;
 	}
 	printf("--- SEGMENT REMOVED ---\n\n");	
-	free(temp);
+	//free(temp);
 }
 
 void remove_from_segment(segment_t* segment, page_info_t* temp){
@@ -197,7 +197,7 @@ void remove_from_segment(segment_t* segment, page_info_t* temp){
 	else{ // en caso de que sea el primero..
 		segment->pages = temp->next;
 	}
-	free(temp);
+	//free(temp);
 }
 
 int is_modified(page_info_t* page){
