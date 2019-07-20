@@ -201,7 +201,6 @@ char* action_insert(package_insert* insert_info){
  
   log_debug(logger, "Se inserto el valor en la memtable");
   free(table_path);
-  free(insert_info);
 
   return "";
   
