@@ -20,7 +20,6 @@ int main_memory_size;
 int main(int argc, char const *argv[])
 {
   //set up config  
-  printf("hola\n\n");
   t_config* config = config_create("config");
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
   int PORT = config_get_int_value(config, "PORT");
@@ -174,12 +173,12 @@ char* action_drop(package_drop* drop_info){
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
   pthread_mutex_lock(&segment_table_mutex);					
-  pthread_mutex_lock(&lru_table_mutex);
-  pthread_mutex_lock(&main_memory_mutex);
+	pthread_mutex_lock(&lru_table_mutex);
+	pthread_mutex_lock(&main_memory_mutex);
   journal();
   pthread_mutex_unlock(&segment_table_mutex);					
-  pthread_mutex_unlock(&lru_table_mutex);
-  pthread_mutex_unlock(&main_memory_mutex);
+	pthread_mutex_unlock(&lru_table_mutex);
+	pthread_mutex_unlock(&main_memory_mutex);
   return "Journaling done\n";
 }
 

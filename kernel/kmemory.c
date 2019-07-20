@@ -414,6 +414,30 @@ void check_for_new_memory(char* ip, int port, int id){
 
 }
 
+void disconect_from_memory(int memoryfd){
+     if(memoryfd < 0) return; //si no exite no ago nada
+
+    bool has_memory_fd(void* memory){
+    t_kmemory* mem = memory;
+       if(mem->fd == memoryfd){
+           return true;
+       }
+       return false;
+    }
+
+    
+
+    pthread_mutex_lock(&mem_list_lock);
+    int i = 0; 
+    for(int i= 0;i<list_size(mem_list);i++){
+        t_kmemory* mem = list_get(mem_list, i);
+        if(mem->fd == memoryfd) list_remove(mem_list, i);
+    }
+    
+    pthread_mutex_unlock(&mem_list_lock);
+    log_error(logger, "kmemory: se desconecto una memoria.");
+}
+
 int connect_to_memory(char* ip, int port){
     int memoryfd = socket(AF_INET, SOCK_STREAM, 0); 
     struct sockaddr_in sock_client;

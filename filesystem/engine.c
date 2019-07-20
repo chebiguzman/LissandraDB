@@ -230,7 +230,7 @@ int does_table_exist(char* table_name){
     char* q = strdup(table_name);
     string_to_upper(q);
 
-    printf("DOES TABLE EXIST: %s", q);
+    printf("DOES TABLE EXIST: %s\n", q);
 
     bool findTableByName(void* t){
         char* cmp = strdup((char*) t);

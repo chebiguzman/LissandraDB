@@ -48,7 +48,7 @@ int find_free_page(){
 		
 	}
 	else{
-		printf("--- MEMORY FULL, REPLACING PAGE ---\n\n");
+		printf("-- MEMORY FULL, REPLACING PAGE --\n\n");
 		int index_to_replace = find_unmodified_page();
 		if(index_to_replace != -1){
 			printf("Index to replace: %d\n", index_to_replace);
@@ -61,7 +61,7 @@ int find_free_page(){
 // busco la primer pagina sin dirtybit y devuelvo el index o -1 si esta todo hasta las bolas
 int find_unmodified_page(){
 	lru_page_t* to_be_replaced_page;
-	printf("--- Looking for unmodified page ---\n");
+	printf("-- Looking for unmodified page --\n");
 	
 	for(int i = 0; i < LRU_TABLE->current_pages; i++){ 
 		printf("Index %d is unmodified?: ", i);		
@@ -140,7 +140,7 @@ void remove_and_save_page(page_info_t* page_info){
 	// busco la pagina en la lru table (para saber el segmento al que pertenece)
 	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
 	if(page_info->dirty_bit != 0){
-		printf("---- Saving \"%s\" to fs ----\n", page_info->page_ptr->value);
+		printf("- Saving \"%s\" to fs -\n", page_info->page_ptr->value);
 		package_insert* insert_info = (package_insert*)malloc(sizeof(package_insert));
 		insert_info->table_name = lru_page_info->segment->name;
 		insert_info->instruction = "insert";
@@ -155,7 +155,7 @@ void remove_and_save_page(page_info_t* page_info){
 
 // si el segundo argumento es 0, droppeo la pagina sin mandarla al fs
 void remove_all_pages_from_segment(segment_t* segment, int save_to_fs_bit){
-	printf("--- REMOVING PAGES FROM SEGMENT ---\n");
+	printf("-- REMOVING PAGES FROM SEGMENT --\n");
 	if(save_to_fs_bit != 0){
 		while(segment->pages != NULL){
 			remove_and_save_page(segment->pages);
@@ -171,7 +171,7 @@ void remove_all_pages_from_segment(segment_t* segment, int save_to_fs_bit){
 // remueve el segmento y todas sus paginas, si el save_to_fs_bit es != 0, manda las paginas al fs 
 void remove_segment(char* table_name, int save_to_fs_bit){
 	segment_t* temp = find_segment(table_name);	
-	printf("--- REMOVING SEGMENT: %s ---\n", temp->name);
+	printf("-- REMOVING SEGMENT: %s --\n", temp->name);
 	remove_all_pages_from_segment(temp, save_to_fs_bit);
 	if(temp->next != NULL){ // si no es el ultimo..
 		temp->next->prev = temp->prev; // le asigno al siguiente de temp, su anterior, o null en caso de que sea el primero
@@ -182,12 +182,12 @@ void remove_segment(char* table_name, int save_to_fs_bit){
 	else{ // en caso de que sea el primero..
 		SEGMENT_TABLE = temp->next;
 	}
-	printf("--- SEGMENT REMOVED ---\n\n");	
+	printf("-- SEGMENT REMOVED --\n\n");	
 	//free(temp);
 }
 
 void remove_from_segment(segment_t* segment, page_info_t* temp){
-	printf("---- Removing \"%s\" from table %s ----\n", temp->page_ptr->value, segment->name);
+	printf("- Removing \"%s\" from table %s -\n", temp->page_ptr->value, segment->name);
 	if(temp->next != NULL){ // si no es el ultimo..
 		temp->next->prev = temp->prev; // le asigno al siguiente de temp, su anterior, o null en caso de que sea el primero
 	}
@@ -282,7 +282,7 @@ page_info_t* get_last_page(page_info_t* page_info){
 
 void print_page(page_info_t* page_info){
 	if(page_info != NULL){
-		printf("-%d- \"%s\", dirtybit: %d\n", page_info->index, page_info->page_ptr->value, page_info->dirty_bit);
+		printf("-%d- \"%s\", key: %d, dirtybit: %d\n", page_info->index, page_info->page_ptr->value, page_info->page_ptr->key, page_info->dirty_bit);
 	}
 	else {
 		printf("page doesnt exist");
@@ -365,7 +365,7 @@ void update_LRU(segment_t* segment, page_info_t* page_info){
 
 void remove_from_LRU(lru_page_t* lru_page_info){
 
-	printf("---- Removing \"%s\" from LRU ----\n", lru_page_info->lru_page->page_ptr->value);	
+	printf("- Removing \"%s\" from LRU -\n", lru_page_info->lru_page->page_ptr->value);	
 	int index = find_page_in_LRU(lru_page_info->lru_page);
 	if(index != -1){
 		memmove(LRU_TABLE->lru_pages+index, LRU_TABLE->lru_pages+index+1, sizeof(lru_page_t) * NUMBER_OF_PAGES-index-1);		
@@ -428,7 +428,7 @@ char* exec_in_fs(int memory_fd, char* payload){
 }
 
 void journal(){
-	printf("\n--- JOURNALING ATR ---\n\n");
+	printf("\n-- JOURNALING ATR --\n\n");
 	print_everything();
 	segment_t* temp = SEGMENT_TABLE;
 	while(temp != NULL){
@@ -436,6 +436,7 @@ void journal(){
 		temp = SEGMENT_TABLE;
 	}
 	print_everything();
+	printf("\n-- JOURNALING TERMINADO --\n\n");	
 }
 
 void print_everything(){
