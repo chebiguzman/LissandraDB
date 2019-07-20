@@ -94,3 +94,5 @@ int find_unmodified_page();
 char* exec_in_fs(int memory_fd, char* payload);
 void journal();
 void print_everything();
+int memory_full();
+int is_memory_full();

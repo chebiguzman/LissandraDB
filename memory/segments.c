@@ -58,6 +58,13 @@ int find_free_page(){
 	return -1;
 }
 
+
+// es distinta a is_memory_full(), si encuentra pagina sin modificar, la remueve y devuelve false
+int memory_full(){
+	int i = find_free_page();
+	return i == -1 ? 1 : 0;
+}
+
 // busco la primer pagina sin dirtybit y devuelvo el index o -1 si esta todo hasta las bolas
 int find_unmodified_page(){
 	lru_page_t* to_be_replaced_page;
