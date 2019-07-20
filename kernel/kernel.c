@@ -23,6 +23,8 @@
 //punto de entrada para el programa y el kernel
 t_log* logger;
 t_log* logger_debug;
+char* MEMORY_IP;
+int MEMORY_PORT;
 int main(int argc, char const *argv[])
 {   
     //set up confg
@@ -31,8 +33,8 @@ int main(int argc, char const *argv[])
     int PORT = config_get_int_value(config, "PORT");
     int q = config_get_int_value(config, "QUANTUM");
 
-    char* MEMORY_IP = config_get_string_value(config, "MEMORY_IP");
-    int MEMORY_PORT = config_get_int_value(config, "MEMORY_PORT");
+    MEMORY_IP = config_get_string_value(config, "MEMORY_IP");
+    MEMORY_PORT = config_get_int_value(config, "MEMORY_PORT");
     logger = log_create(LOGPATH, "Kernel", 1 , LOG_LEVEL_INFO);
     int console = 0;
       if(argc == 2 && !strcmp(argv[1],"-v")){
@@ -90,6 +92,9 @@ char* exec_in_memory(int memory_fd, char* payload){
       exec_err_abort();
       return "";
     }
+
+    
+    signal(SIGPIPE, handler);
 
     //ejecutar
     if(write(memory_fd,payload, strlen(payload)+1)){
@@ -286,7 +291,7 @@ char* action_metrics(package_metrics* metrics_info){
 
 char* action_intern__status(){
   log_info(logger_debug, "Se recibio una accion status");
-
+  check_for_new_memory(MEMORY_IP ,MEMORY_PORT, 0);
   int memfd = get_loked_main_memory();
   
   if(memfd<0){

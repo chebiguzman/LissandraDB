@@ -10,13 +10,13 @@ server.o:
 	gcc -c ../server.c -lcommons
 
 pharser.o:
-	gcc -c ../pharser.c
+	gcc -g  -c ../pharser.c
 
 console.o:
-	gcc -c ../console.c
+	gcc -g  -c ../console.c
 
 segments.o:
-	gcc -c segments.c
+	gcc -g  -c segments.c
 	
 clean: 
 	find . -name "*.o" -type f -delete
