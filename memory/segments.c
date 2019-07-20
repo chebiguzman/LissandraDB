@@ -428,9 +428,6 @@ char* exec_in_fs(int memory_fd, char* payload){
 }
 
 void journal(){
-	pthread_mutex_lock(&segment_table_mutex);					
-	pthread_mutex_lock(&lru_table_mutex);
-	pthread_mutex_lock(&main_memory_mutex);
 	printf("\n--- JOURNALING ATR ---\n\n");
 	print_everything();
 	segment_t* temp = SEGMENT_TABLE;
@@ -439,9 +436,7 @@ void journal(){
 		temp = SEGMENT_TABLE;
 	}
 	print_everything();
-	pthread_mutex_unlock(&segment_table_mutex);					
-	pthread_mutex_unlock(&lru_table_mutex);
-	pthread_mutex_unlock(&main_memory_mutex);
+	printf("\n--- JOURNALING TERMINADO ---\n\n");	
 }
 
 void print_everything(){
