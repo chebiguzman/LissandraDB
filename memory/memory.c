@@ -173,13 +173,7 @@ char* action_drop(package_drop* drop_info){
 
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
-  pthread_mutex_lock(&segment_table_mutex);					
-  pthread_mutex_lock(&lru_table_mutex);
-  pthread_mutex_lock(&main_memory_mutex);
   journal();
-  pthread_mutex_unlock(&segment_table_mutex);					
-  pthread_mutex_unlock(&lru_table_mutex);
-  pthread_mutex_unlock(&main_memory_mutex);
   return "Journaling done\n";
 }
 
