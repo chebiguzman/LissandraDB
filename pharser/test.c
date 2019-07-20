@@ -30,6 +30,7 @@ int main(int argc, char const *argv[])
     pthread_create(&tid_console, NULL, console_input, "test");
     
     pthread_join(tid_console,NULL);
+    
     //FREE MEMORY
     //free(logger);
     //free(serverInfo);
@@ -40,8 +41,6 @@ int main(int argc, char const *argv[])
 
 char* action_select(package_select* select_info){
   char* package = parse_package_select(select_info);
-  printf("sdksdjsdj");
-  fflush(stdout);
   return package;
 
 }

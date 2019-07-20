@@ -12,7 +12,7 @@ void *console_input(void* name){
 		getline(&buffer, &buffer_size, stdin); //llamada bloqueante
 		char* response = parse_input(buffer); 
 		printf("\r%s", response);
-		//free(response);
+		free(response);
 		free(buffer);
 
 	} //se queda en escuhca constantenmente
