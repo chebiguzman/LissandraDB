@@ -57,18 +57,27 @@ char* exec_instr(char* instr_buff){
     }
     buff[i-offset+1] = '\0';
 
-    //printf("es \n%s\n", buff);
-
-    
     char** parameters = string_split(buff, "|");
     
-    
-    if(parameters[0]==NULL) return "";
-    char* instruction = parameters[0];
-    int instruction_size = strlen( instruction)+1;
-    string_to_upper(instruction);
+
+
+    if(parameters[0]==NULL){
+        free(parameters);
+        return strdup("");
+    } 
+
+    int instruction_size = strlen( parameters[0])+1;
+    string_to_upper(parameters[0]);
 
     int parameters_length = 0;
+
+    void kill_args(){
+        for(int i =0; i < parameters_length; i++){
+            free(parameters[i]);
+        }
+        free(parameters);
+    }
+
     while (parameters[parameters_length] != NULL){
          
          if(parameters[parameters_length][0] == '"'){
@@ -87,25 +96,35 @@ char* exec_instr(char* instr_buff){
         parameters_length++;
     }
 
-    if(!strcmp(instruction,"SELECT")){
-        if(parameters_length != 3) return "Numero de parametros incorrectos\n";
+    if(!strcmp(parameters[0],"SELECT")){
+        
+        if(parameters_length != 3){
+            kill_args();
+            return strdup("Numero de parametros incorrectos\n");
+        } 
 
         package_select* package = malloc(sizeof(package_select));
         package->instruction = parameters[0];
 
         //TABLE_NAME
+        string_to_upper(parameters[1]);
         package->table_name = parameters[1];
 
         //KEY
         package->key = atoi(parameters[2]);
+        free(parameters[2]);
 
         //printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name,package->key);
         char* responce = action_select(package);
+        free(parameters);
         return responce;
     }
 
-    if(!strcmp(instruction,"RUN")){
-        if(parameters_length != 2) return "Numero de parametros incorrectos\n";
+    if(!strcmp(parameters[0],"RUN")){
+        if(parameters_length != 2){
+            kill_args();
+            return "Numero de parametros incorrectos\n";
+        }
 
         package_run* package = malloc(sizeof(package_run));
         package->instruction = parameters[0];
@@ -114,16 +133,21 @@ char* exec_instr(char* instr_buff){
         package->path = parameters[1];
         //printf("\n Datos de paquete:\n instruction: %s\n path: %s\n \n", package->instruction, package->path);
         char* responce = action_run(package);
+        free(parameters);
         return responce;
     }
 
-    if(!strcmp(instruction,"INSERT")){
-        if(parameters_length != 4 && parameters_length != 5) return "Numero de parametros incorrectos\n";
+    if(!strcmp(parameters[0],"INSERT")){
+        if(parameters_length != 4 && parameters_length != 5){
+            kill_args();
+            return "Numero de parametros incorrectos\n";
+        }
 
         package_insert* package = malloc(sizeof(package_insert));
         package->instruction = parameters[0];
         
         //TABLE_NAME
+        string_to_upper(parameters[1]);
         package->table_name = parameters[1];        
         //KEY
         package->key = atoi(parameters[2]);
@@ -155,18 +179,21 @@ char* exec_instr(char* instr_buff){
 
        //printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n Value: %s\n Timestamp: %lu\n", package->instruction, package->table_name, package->key, package->value, package->timestamp);
         char* responce = action_insert(package);
+        free(parameters);
         return responce;
     }
 
-    //CREATE [TABLA] [TIPO_CONSISTENCIA] [NUMERO_PARTICIONES] [COMPACTION_TIME]
-
-    if(!strcmp(instruction,"CREATE")){
-        if(parameters_length != 5 ) return "Numero de parametros incorrectos\n";
+    if(!strcmp(parameters[0],"CREATE")){
+        if(parameters_length != 5 ){
+            kill_args();
+            return "Numero de parametros incorrectos\n";
+        }
 
         package_create* package = malloc(sizeof(package_insert));
         package->instruction = parameters[0];
         
         //TABLE_NAME
+        string_to_upper(parameters[1]);
         package->table_name = parameters[1];        
         //CONSISTENCIA
         char* c =  strdup(parameters[2]); 
@@ -192,29 +219,39 @@ char* exec_instr(char* instr_buff){
         //printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n cons: %d\n particiones: %d\n comp: %lu\n", package->instruction, package->table_name, package->consistency, package->partition_number, package->compactation_time);
         
         char* responce =action_create(package);
- 
+        free(parameters);
         return responce;
     }
 
-    if(!strcmp(instruction,"DESCRIBE")){
+    if(!strcmp(parameters[0],"DESCRIBE")){
+        if(parameters_length != 1 && parameters_length != 2){
+            kill_args();
+            return "Numero de parametros incorrecto"; 
+        }
+
         package_describe* package = malloc(sizeof(package_describe));
         package->instruction = parameters[0];
         
 
         //TABLE_NAME
-        if(strlen(instr_buff) == strlen(instruction)+1) {
+        if(parameters_length>1) {
             package->table_name = NULL;
         } else {
+            string_to_upper(parameters[1]);
             package->table_name = parameters[1];
         }
 
         //printf("\n Datos de paquete:\n instruction: %s\n table name: %s\n \n", package->instruction, package->table_name);
         char* responce = action_describe(package);
+        free(parameters);
         return responce;
     }
 
-    if(!strcmp(instruction,"ADD")){
-        if(parameters_length != 5) return "Numero de parametros incorrecto";
+    if(!strcmp(parameters[0],"ADD")){
+        if(parameters_length != 5){
+            kill_args();
+            return "Numero de parametros incorrecto";
+        }
 
         package_add* package = malloc(sizeof(package_add));
         package->instruction = parameters[0];
@@ -242,42 +279,56 @@ char* exec_instr(char* instr_buff){
         free(parameters[4]);
         //printf("\n Datos de paquete:\n instruction: %s\n id: %d\ncriterio:%d \n", package->instruction , package->id, package->consistency);
         char* responce = action_add(package);
+        free(parameters);
         return responce;
     }
 
-    if(!strcmp(instruction,"MEMORY")){
+    if(!strcmp(parameters[0],"MEMORY")){
         char* r =  action_intern__status();
+        kill_args();
         return r;
     }
 
-    if(!strcmp(instruction, "DROP")){
-        if(parameters_length != 2) return "Numero de parametros incorrecto";
+    if(!strcmp(parameters[0], "DROP")){
+        if(parameters_length != 2) {
+            kill_args();
+            return "Numero de parametros incorrecto";
+        }
 
         package_drop* package = malloc(sizeof(package_drop));
-        package->instruction = instruction;
+        package->instruction = parameters[0];
         package->table_name = parameters[1];
 
-
+        free(parameters);
         return action_drop(package);
     }
 
-    if(!strcmp(instruction, "JOURNAL")){
-        if(parameters_length != 1) return "Numero de parametros incorrecto";
+    if(!strcmp(parameters[0], "JOURNAL")){
+        if(parameters_length != 1) {
+            kill_args();
+            return "Numero de parametros incorrecto";
+        }
 
         package_journal* pakage = malloc(sizeof(package_journal));
-        pakage->instruction = strdup("JOURNAL");
+        pakage->instruction = parameters[0];
+        free(parameters);
         return action_journal(pakage);
     }
 
-    if(!strcmp(instruction, "METRICS")){
-        if(parameters_length != 1) return "Numero de parametros incorrecto";
+    if(!strcmp(parameters[0], "METRICS")){
+        if(parameters_length != 1){
+            kill_args();
+            return "Numero de parametros incorrecto";
+        }
         package_metrics* pk = malloc(sizeof(package_metrics));
         pk->instruction = strdup("METRICS");
         
-
+        free(parameters);
         return action_metrics(pk);
     }
-    free(parameters);
+
+    kill_args();
+
     char* error_message = strdup("no es una instruccion valida\n");
     return error_message;
     
@@ -287,30 +338,37 @@ char* parse_package_select(package_select* package){
     char* buffer; 
     int tot_len = strlen(package->instruction)+1 + strlen(package->table_name)+1 + 16+1;
     
-    buffer = malloc(2+tot_len);
+    buffer = malloc(tot_len);
+    char* num_buff = string_itoa(package->key);
     strcpy(buffer, package->instruction);
     strcat(buffer, sep); //emular NULL terminations
     strcat(buffer, package->table_name);
     strcat(buffer, sep);
-    strcat(buffer, string_itoa(package->key));
+    strcat(buffer, num_buff);
     strcat(buffer, "\n");
+
+    free(package->instruction);
+    free(package->table_name);
+    free(num_buff);
+    free(package);
 
     return buffer;
 }
 
 char* parse_package_run(package_run* pk){
     char* buffer;
-    char* instr = strdup(pk->instruction);
-    char* path = strdup(pk->path);
-    int tot_len = strlen(instr) + strlen(instr) +2;
+    int tot_len = strlen(pk->instruction) + strlen(pk->path) +2;
     buffer = malloc(2+tot_len);
-    buffer[0] = '\0';
-    strcat(buffer, instr);
+    strcpy(buffer, pk->instruction);
     strcat(buffer,sep);
-    strcat(buffer,path);
-    strcat(buffer, "\n");
+    strcat(buffer,pk->path);
+    strcat(buffer, "\n");    
 
-    ;;
+    free(pk->instruction);
+    free(pk->path);
+    free(pk);
+
+    return buffer;
 }
 
 char* parse_package_insert(package_insert* package){
@@ -320,7 +378,6 @@ char* parse_package_insert(package_insert* package){
     int tot_len = strlen(2+package->instruction)+1 + strlen(package->table_name)+1 + strlen(string_itoa(package->key))+1 + strlen(package->value)+1 + 40 +5;
     buffer = malloc(tot_len);
     
-
     strcpy(buffer, package->instruction);
     strcat(buffer, sep); //emular NULL terminations
     strcat(buffer, package->table_name);
@@ -335,6 +392,10 @@ char* parse_package_insert(package_insert* package){
     free(buff);
     strcat(buffer, "\n");
 
+    free(package->instruction);
+    free(package->table_name);
+    free(package->value);
+
     return buffer;
 }
 
@@ -342,22 +403,26 @@ char* parse_package_describe(package_describe* pk){
 
     if(pk->table_name == NULL){
 
+        free(pk->instruction);
+        free(pk->table_name);
+        free(pk);
+
         return "DESCRIBE\n";
     }
     char* buffer = malloc(2+strlen(pk->instruction) + strlen(pk->table_name) +4);
-    
     strcpy(buffer, pk->instruction);
     strcat(buffer,sep);
     strcat(buffer,pk->table_name);
     strcat(buffer, "\n");
 
+    free(pk->instruction);
+    free(pk->table_name);
+    free(pk);
+
     return buffer;
 }
-#define BUFSIZE (sizeof(long) * 8 + 1)
 
 char* parse_package_create(package_create* pk){
-    
- 
     char* buffer = malloc(2+ strlen(pk->instruction) + strlen(pk->table_name) + 3 /*consistencia */ + strlen(string_itoa(pk->partition_number) + 22 + 9));
      
     strcpy(buffer, pk->instruction);
@@ -393,9 +458,12 @@ char* parse_package_create(package_create* pk){
     sprintf(buff, "%ld", pk->compactation_time);
     strcat(buffer, buff);
     strcat(buffer, "\n");
-    //free(buff);
+    free(buff);
 
-    
+    free(pk->table_name);
+    free(pk->instruction);
+    free(pk);
+
     return buffer;
 }
 
@@ -404,35 +472,20 @@ char* parse_package_drop(package_drop* pk){
     strcpy(bff, pk->instruction);
     strcat(bff, sep);
     strcat(bff, pk->table_name);
+
+    free(pk->instruction);
+    free(pk->table_name);
+    free(pk);
+
     return bff;
 }
+
 char* parse_package_journal(package_journal* pk){
-    return strdup(pk->instruction);
+    char* r = strdup(pk->instruction);
+    free(pk->instruction);
+    free(pk);
+    return r;
 }
 
-char* create_buffer(int argc, char const *argv[]){
-	char* buffer;
-    int len = 0;
-    if(argc-1 > 0){
-        for (int i = 1; i < argc; i++)
-        {
-            len += strlen(argv[i])+1;
-        }
-
-        buffer = malloc(len);
-        buffer = string_new();
-        for (int i = 1; i < argc; i++)
-        {
-            strcat(buffer,argv[i]);
-            strcat(buffer," ");
-        }
-        
-        return buffer;
-    }else{
-        buffer = string_new();
-        return buffer;
-    }
-    
-}
 
 
