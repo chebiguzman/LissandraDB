@@ -93,8 +93,11 @@ char* exec_in_memory(int memory_fd, char* payload){
       return "";
     }
 
-    
-    signal(SIGPIPE, handler);
+
+    void handler(){
+      disconect_from_memory(memory_fd);
+    }
+    signal(SIGPIPE,handler);
 
     //ejecutar
     if(write(memory_fd,payload, strlen(payload)+1)){

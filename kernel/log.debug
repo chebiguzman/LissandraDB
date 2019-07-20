@@ -8494,3 +8494,184 @@
 [INFO] 21:37:53:772 Kernel/(22017:22022): Se recibio una accion run.
 [INFO] 21:37:53:775 Kernel/(22017:22022): Se recibio una accion create
 [INFO] 21:37:53:777 Kernel/(22017:22022): Se recibio una accion describe
+[INFO] 22:36:25:717 Kernel/(26407:26407): se inicia el modulo scheduler
+[DEBUG] 22:36:25:718 Kernel/(26407:26407): el valor del puntero es: 0 
+
+[INFO] 22:36:25:718 Kernel/(26407:26408): se inicia el monitoreo del config
+[DEBUG] 22:36:25:718 Kernel/(26407:26407): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 22:36:25:718 Kernel/(26407:26407): mismo puntero 0 
+
+[INFO] 22:36:25:719 Kernel/(26407:26407): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 22:36:25:799 Kernel/(26407:26411): kmemoryService: Se actualiza las memorias
+[DEBUG] 22:36:25:799 Kernel/(26407:26411): syscall
+[INFO] 22:36:25:799 Kernel/(26407:26409): Se recibio una accion status
+[DEBUG] 22:36:32:710 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:36:32:711 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:36:46:910 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:36:46:911 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:36:53:198 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:36:53:198 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:36:53:199 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:35:997 Kernel/(26407:26409): Se recibio una accion run.
+[INFO] 22:37:35:998 Kernel/(26407:26409): Se recibio una accion create
+[INFO] 22:37:36:2 Kernel/(26407:26409): Se recibio una accion describe
+[INFO] 22:37:36:5 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:5 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:5 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:8 Kernel/(26407:26409): Se recibio una accion create
+[INFO] 22:37:36:10 Kernel/(26407:26409): Se recibio una accion create
+[INFO] 22:37:36:13 Kernel/(26407:26409): Se recibio una accion describe
+[INFO] 22:37:36:17 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:17 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:17 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:19 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:19 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:19 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:127 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:127 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:127 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:129 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:129 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:129 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:132 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:132 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:132 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:135 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:135 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:135 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:37:36:137 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:137 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:139 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:139 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:139 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:141 Kernel/(26407:26409): Se recibio una accion describe
+[INFO] 22:37:36:144 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:144 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:144 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:146 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:146 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:146 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:37:36:148 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:148 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:150 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:151 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:151 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:154 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:154 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:155 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:157 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:157 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:157 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:159 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:159 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:159 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:162 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:162 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:162 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:164 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:164 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:164 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:166 Kernel/(26407:26409): Se recibio una accion describe
+[INFO] 22:37:36:169 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:169 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:169 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:171 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:171 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:171 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:173 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:174 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:174 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:176 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:176 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:176 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:37:36:178 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:179 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:181 Kernel/(26407:26409): Se recibio una accion describe
+[INFO] 22:37:36:183 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:183 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:183 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:186 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:186 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:186 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:37:36:188 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:188 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:37:36:190 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:190 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:192 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:192 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:193 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:37:36:195 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:195 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:197 Kernel/(26407:26409): Se recibio una accion describe
+[DEBUG] 22:37:36:199 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:199 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:201 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:202 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:202 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:204 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:204 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:204 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:206 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:206 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:206 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:208 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:208 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:208 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:211 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:211 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:211 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:213 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:213 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:213 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:37:36:215 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:215 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:37:36:217 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:218 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:37:36:220 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:220 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 22:37:36:222 Kernel/(26407:26409): Se recibio una accion describe
+[INFO] 22:37:36:224 Kernel/(26407:26409): Se recibio una accion insert
+[DEBUG] 22:37:36:224 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:224 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:37:36:227 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:227 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:37:36:229 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:229 Kernel/(26407:26409): kmemory: bloqueo memoria
+[DEBUG] 22:37:36:231 Kernel/(26407:26409): kmemory: se pide memoria de SC
+[DEBUG] 22:37:36:231 Kernel/(26407:26409): kmemory: bloqueo memoria
+[INFO] 00:02:47:574 Kernel/(1312:1312): se inicia el modulo scheduler
+[DEBUG] 00:02:47:575 Kernel/(1312:1312): el valor del puntero es: 0 
+
+[DEBUG] 00:02:47:575 Kernel/(1312:1312): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 00:02:47:575 Kernel/(1312:1312): mismo puntero 0 
+
+[INFO] 00:02:47:575 Kernel/(1312:1313): se inicia el monitoreo del config
+[INFO] 00:02:47:576 Kernel/(1312:1312): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 00:02:47:656 Kernel/(1312:1316): kmemoryService: Se actualiza las memorias
+[DEBUG] 00:02:47:656 Kernel/(1312:1316): syscall
+[INFO] 00:02:47:657 Kernel/(1312:1314): Se recibio una accion status
+[DEBUG] 00:02:52:896 Kernel/(1312:1314): kmemory: se pide memoria de SC
+[DEBUG] 00:02:52:896 Kernel/(1312:1314): kmemory: bloqueo memoria
+[DEBUG] 00:03:09:96 Kernel/(1312:1314): kmemory: se pide memoria de SC
+[DEBUG] 00:03:09:96 Kernel/(1312:1314): kmemory: bloqueo memoria
+[INFO] 00:03:42:22 Kernel/(1312:1314): Se recibio una accion run.
+[INFO] 00:03:42:22 Kernel/(1312:1314): Se recibio una accion run.
+[INFO] 00:03:42:24 Kernel/(1312:1314): Se recibio una accion run.
+[INFO] 00:03:42:26 Kernel/(1312:1314): Se recibio una accion run.
+[INFO] 00:03:42:29 Kernel/(1312:1314): Se recibio una accion run.
+[INFO] 00:03:42:31 Kernel/(1312:1314): Se recibio una accion run.
+[INFO] 00:03:42:33 Kernel/(1312:1314): Se recibio una accion run.
+[INFO] 00:03:42:35 Kernel/(1312:1314): Se recibio una accion run.
+[INFO] 00:03:42:38 Kernel/(1312:1314): Se recibio una accion create
+[INFO] 00:03:42:40 Kernel/(1312:1314): Se recibio una accion describe
+[INFO] 00:03:42:40 Kernel/(1312:1314): Se recibio una accion create
+[INFO] 00:03:42:40 Kernel/(1312:1314): Se recibio una accion create
+[INFO] 00:03:42:40 Kernel/(1312:1314): Se recibio una accion create
+[INFO] 00:03:42:41 Kernel/(1312:1314): Se recibio una accion create
+[INFO] 00:03:42:41 Kernel/(1312:1314): Se recibio una accion create
+[DEBUG] 00:07:47:658 Kernel/(1312:1316): kmemoryService: Se actualiza las memorias
+[DEBUG] 00:07:47:658 Kernel/(1312:1316): syscall
+[INFO] 00:07:47:658 Kernel/(1312:1314): Se recibio una accion status
+[INFO] 00:07:47:659 Kernel/(1312:1314): Se recibio una accion create
