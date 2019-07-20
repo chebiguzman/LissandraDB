@@ -93,8 +93,11 @@ char* exec_in_memory(int memory_fd, char* payload){
       return "";
     }
 
-    
-    signal(SIGPIPE, handler);
+
+    void handler(){
+      disconect_from_memory(memory_fd);
+    }
+    signal(SIGPIPE,handler);
 
     //ejecutar
     if(write(memory_fd,payload, strlen(payload)+1)){
@@ -144,7 +147,7 @@ char* action_run(package_run* run_info){
     while(getline(&buffer, &buffer_size, fp) != -1){
       char* instr_from_file = malloc(strlen(buffer)+1);
       strcpy(instr_from_file, buffer);
-      printf("insturccion a run: %s", instr_from_file);
+      //printf("insturccion a run: %s", instr_from_file);
 
       queue_push(instruction_set, instr_from_file);
 

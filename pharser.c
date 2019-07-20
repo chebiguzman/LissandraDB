@@ -98,7 +98,7 @@ char* exec_instr(char* instr_buff){
         //KEY
         package->key = atoi(parameters[2]);
 
-        printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name,package->key);
+        //printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n", package->instruction, package->table_name,package->key);
         char* responce = action_select(package);
         return responce;
     }
@@ -111,7 +111,7 @@ char* exec_instr(char* instr_buff){
 
         //PATH
         package->path = parameters[1];
-        printf("\n Datos de paquete:\n instruction: %s\n path: %s\n \n", package->instruction, package->path);
+        //printf("\n Datos de paquete:\n instruction: %s\n path: %s\n \n", package->instruction, package->path);
         char* responce = action_run(package);
         return responce;
     }
@@ -152,7 +152,7 @@ char* exec_instr(char* instr_buff){
             package->timestamp = time(NULL);
         }
 
-       printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n Value: %s\n Timestamp: %lu\n", package->instruction, package->table_name, package->key, package->value, package->timestamp);
+       //printf("\n Datos de paquete:\n instruction: %s\n Table name: %s\n Key: %d\n Value: %s\n Timestamp: %lu\n", package->instruction, package->table_name, package->key, package->value, package->timestamp);
         char* responce = action_insert(package);
         return responce;
     }
@@ -207,7 +207,7 @@ char* exec_instr(char* instr_buff){
             package->table_name = parameters[1];
         }
 
-        printf("\n Datos de paquete:\n instruction: %s\n table name: %s\n \n", package->instruction, package->table_name);
+        //printf("\n Datos de paquete:\n instruction: %s\n table name: %s\n \n", package->instruction, package->table_name);
         char* responce = action_describe(package);
         return responce;
     }
