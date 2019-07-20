@@ -7,34 +7,18 @@ gossip_t* create_node(){
     return node;    
 }
 
-gossip_t* parse_gossip_buffer(char* buffer){
-    gossip_t* gossip_table = create_node();
-    char* char_size = (char*)malloc(500);
-    strcpy(char_size, buffer);
-    char_size[sizeof(char)] = 0;
-    int size = atoi(char_size);
-    free(char_size);
-    buffer = buffer+sizeof(char);
-    for(int i = 0; i < size; i++){
-        char* char_number = (char*)malloc(sizeof(char) * size);
-        strcpy(char_number, buffer);
-        char_number[sizeof(char)] = 0;
-        gossip_t* node = create_node();
-        node->number = atoi(char_number);
-        buffer = buffer+sizeof(char);
-    }
-    return gossip_table;
-}
-
-gossip_t* find_node(gossip_t* list, int number){
-	gossip_t* temp = list;
-	while(temp != NULL){
-		if(temp->number == number){
-			return temp;
-		}
-		temp = temp->next;
+void add_node(gossip_t* list, gossip_t* node){
+	if(list == NULL){ // si esta vacia
+		list = node;
 	}
-	return temp; // si no encontre nada en el loop, devuelvo temp que es NULL
+	else{
+		gossip_t* temp = list;
+        while(temp->next != NULL){
+            temp = temp->next; // itero hasta llegar al utlimo nodo
+        }
+		temp->next = node;
+		node->prev = temp;
+	}
 }
 
 void remove_node(gossip_t* list, gossip_t* temp){
@@ -50,18 +34,45 @@ void remove_node(gossip_t* list, gossip_t* temp){
 	}
 }
 
-void add_node(gossip_t* list, gossip_t* node){
-	if(list == NULL){ // si esta vacia
-		list = node;
+gossip_t* parse_gossip_buffer(int* buffer){
+    gossip_t* gossip_table = NULL;
+    int size = *buffer+0;
+    buffer = buffer+sizeof(int);
+    for(int i = 0; i < size; i++){
+        gossip_t* node = create_node();
+        node->number = *buffer+i+1;
+        add_node(gossip_table, node);
+    }
+    return gossip_table;
+}
+
+int* create_gossip_buffer(gossip_t* list){
+    int list_size = 0;
+    gossip_t* temp = list;
+    while(temp != NULL){
+        list_size++;
+        temp = temp->next;
+    }
+    temp = list;
+    int* buffer = (int*)malloc(sizeof(int) * (list_size + 1));
+    int n = list_size;
+    memcpy(buffer+0, &n, sizeof(int));
+    for(int i = 1; i < list_size+1; i++){
+        memcpy(buffer+i, &temp->number, sizeof(int));
+        temp = temp->next;
+    }
+    return buffer;
+}
+
+gossip_t* find_node(gossip_t* list, int number){
+	gossip_t* temp = list;
+	while(temp != NULL){
+		if(temp->number == number){
+			return temp;
+		}
+		temp = temp->next;
 	}
-	else{
-		gossip_t* temp = list;
-        while(temp->next != NULL){
-            temp = temp->next; // itero hasta llegar al utlimo nodo
-        }
-		temp->next = node;
-		node->prev = temp;
-	}
+	return temp; // si no encontre nada en el loop, devuelvo temp que es NULL
 }
 
 gossip_t* compare_lists(gossip_t* list1, gossip_t* list2){
