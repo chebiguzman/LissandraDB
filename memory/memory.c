@@ -20,7 +20,6 @@ int main_memory_size;
 int main(int argc, char const *argv[])
 {
   //set up config  
-  printf("hola\n\n");
   t_config* config = config_create("config");
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
   int PORT = config_get_int_value(config, "PORT");
