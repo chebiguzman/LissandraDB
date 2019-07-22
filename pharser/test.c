@@ -46,11 +46,17 @@ char* action_select(package_select* select_info){
 }
 
 char* action_run(package_run* run_info){
-    return "";
+    free(run_info->instruction);
+    free(run_info->path);
+    free(run_info);
+    return strdup("");
 }
 
 char* action_add(package_add* add_info){
-  return "";
+
+  free(add_info->instruction);
+  free(add_info);
+  return strdup("");
 }
 
 char* action_insert(package_insert* insert_info){
@@ -79,8 +85,10 @@ char* action_journal(package_journal* journal_info){
 }
 
 char* action_metrics(package_metrics* metrics_info){
-  log_info(logger_debug, "Se recibio una accion metrics");
-  return "";
+  //log_info(logger_debug, "Se recibio una accion metrics");
+  free(metrics_info->instruction);
+  free(metrics_info);
+  return strdup("");
 }
 
 char* action_intern__status(){
