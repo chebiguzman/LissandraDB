@@ -244,7 +244,7 @@ int does_table_exist(char* table_name){
     }
 
     char* t = list_find(tables_name,findTableByName);
-    free(q);
+    //free(q);
     if(t == NULL){
         return 0;
     }
