@@ -10,15 +10,18 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
-
 #include "segments.h"
+#include <signal.h>
 
 //logger global para que lo accedan los threads
 int main_memory_size;
-
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
 {
+  sigset_t set;
+
+  signal(SIGPIPE, SIG_IGN);
+
   //set up config  
   t_config* config = config_create("config");
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
@@ -28,6 +31,7 @@ int main(int argc, char const *argv[])
   logger = log_create(LOGPATH, "Memory", 1, LOG_LEVEL_INFO);
   log_info(logger, "El log fue creado con exito\n");
 
+  
   //set up server
   pthread_t tid;
   server_info* serverInfo = malloc(sizeof(server_info));
@@ -82,11 +86,15 @@ int main(int argc, char const *argv[])
 
   //inicio lectura por consola
   pthread_t tid_console;
+
+
+
+
+
   pthread_create(&tid_console, NULL, console_input, "Memory");
 
   //Espera a que terminen las threads antes de seguir
   pthread_join(tid,NULL);
-  
   //FREE MEMORY
   free(LOGPATH);
   free(logger);
@@ -116,8 +124,8 @@ char* action_select(package_select* select_info){
   // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
   printf("Buscando en FileSystem. Tabla: %s, Key:%d...\n", select_info->table_name, select_info->key);  
   char* response = exec_in_fs(fs_socket, parse_package_select(select_info)); 
-  printf("Respuesta del FileSystem: %s", response);  
-  if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0){
+  printf("Respuesta del FileSystem: %s\n", response);  
+  if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0 && !strcmp(response, "NO SE ENCUENTRA FS")){
     page_t* page = create_page((unsigned)time(NULL), select_info->key, response);
     save_page(select_info->table_name, page);
     printf("Page found in file system. Table: %s, Key: %d, Value: %s\n", select_info->table_name, page->key, page->value);
