@@ -78,7 +78,7 @@ void start_kmemory_module(t_log* logg,t_log* logg_debug, char* main_memory_ip, i
     pthread_t tid_metadata_service;
     pthread_create(&tid_metadata_service, NULL,metadata_service, NULL);
 
-    MEMORY_FINDER_SLEEP = 99999999999;
+    MEMORY_FINDER_SLEEP = 80000;
 
     pthread_t tid_memory_finder_service;
     pthread_create(&tid_memory_finder_service, NULL,memory_finder_service, NULL);
@@ -176,11 +176,12 @@ int get_memory(){
 
 void kmemory_set_active_tables(t_dictionary* dic){
     tbl_list = dic;
+    printf("tiene el dic la tabla tabla? %d", dictionary_has_key(tbl_list, "tabla"));
 }
 int get_sc_memory(){
 
     if(strong_memory == NULL){
-        log_error(logger, "kmemory: No hay memoria en el citerio principal");
+        log_error(logger, "kmemory: No hay memoria en el citerio SC");
         return -1;
     }
     log_debug(logger_debug, "kmemory: bloqueo memoria");
@@ -413,6 +414,30 @@ void check_for_new_memory(char* ip, int port, int id){
 
 }
 
+void disconect_from_memory(int memoryfd){
+     if(memoryfd < 0) return; //si no exite no ago nada
+
+    bool has_memory_fd(void* memory){
+    t_kmemory* mem = memory;
+       if(mem->fd == memoryfd){
+           return true;
+       }
+       return false;
+    }
+
+    
+
+    pthread_mutex_lock(&mem_list_lock);
+    int i = 0; 
+    for(int i= 0;i<list_size(mem_list);i++){
+        t_kmemory* mem = list_get(mem_list, i);
+        if(mem->fd == memoryfd) list_remove(mem_list, i);
+    }
+    
+    pthread_mutex_unlock(&mem_list_lock);
+    log_error(logger, "kmemory: se desconecto una memoria.");
+}
+
 int connect_to_memory(char* ip, int port){
     int memoryfd = socket(AF_INET, SOCK_STREAM, 0); 
     struct sockaddr_in sock_client;
@@ -432,7 +457,9 @@ int connect_to_memory(char* ip, int port){
     }
     return memoryfd;
 }
-
+void kmemory_add_table(char* name, t_consistency* cons){
+    dictionary_put(tbl_list, name, cons);
+}
 t_consistency get_table_consistency(char* table_name){
     char* name = strdup(table_name);
     string_to_upper(name);
@@ -488,6 +515,19 @@ void *memory_finder_service(void* args){
         usleep( MEMORY_FINDER_SLEEP);
         log_debug(logger_debug, "kmemoryService: Se actualiza las memorias");
         char* r = ksyscall("MEMORY");
+    }
+}
+
+void kmemoy_add_table(char* tbl_name, t_consistency c){
+    t_consistency* cons = malloc(sizeof(t_consistency));
+    *cons = c;
+    dictionary_put(tbl_list, tbl_name, cons);
+}
+
+
+void kmemory_drop_table(char* tbl_name){
+    if(dictionary_has_key(tbl_list, tbl_name)){
+        dictionary_remove(tbl_list, tbl_name);
     }
 }
 

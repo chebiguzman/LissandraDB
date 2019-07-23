@@ -9,7 +9,6 @@ void* exec(void *system_queue){
     
     
     bool superuser = false;
-    log_debug(logger_debug, "se inicia el modulo exec");
     while(true){
 
         pthread_mutex_lock(&config_lock);
@@ -70,7 +69,7 @@ void* exec(void *system_queue){
                 }
 
                 if(err_trap != 0){
-                    //log_error(logger_debug, "EL programa no puede seguir ejecutando.");
+                    log_error(logg, "EL programa no puede seguir ejecutando.");
                     break;
                 }
            

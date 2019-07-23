@@ -10,17 +10,19 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
-
 #include "segments.h"
+#include <signal.h>
 
 //logger global para que lo accedan los threads
 int main_memory_size;
-
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
 {
+  sigset_t set;
+
+  signal(SIGPIPE, SIG_IGN);
+
   //set up config  
-  printf("hola\n\n");
   t_config* config = config_create("config");
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
   int PORT = config_get_int_value(config, "PORT");
@@ -29,6 +31,7 @@ int main(int argc, char const *argv[])
   logger = log_create(LOGPATH, "Memory", 1, LOG_LEVEL_INFO);
   log_info(logger, "El log fue creado con exito\n");
 
+  
   //set up server
   pthread_t tid;
   server_info* serverInfo = malloc(sizeof(server_info));
@@ -76,13 +79,22 @@ int main(int argc, char const *argv[])
   printf("Number of pages: %d\n", NUMBER_OF_PAGES);
   printf("---------------------\n\n");
   
+  pthread_mutex_init(&main_memory_mutex, NULL);
+  pthread_mutex_init(&segment_table_mutex, NULL);
+  pthread_mutex_init(&lru_table_mutex, NULL);
+
+
   //inicio lectura por consola
   pthread_t tid_console;
+
+
+
+
+
   pthread_create(&tid_console, NULL, console_input, "Memory");
 
   //Espera a que terminen las threads antes de seguir
   pthread_join(tid,NULL);
-  
   //FREE MEMORY
   free(LOGPATH);
   free(logger);
@@ -96,34 +108,53 @@ int main(int argc, char const *argv[])
 //IMPLEMENTACION DE FUNCIONES (Devolver errror fuera del subconjunto)
 
 char* action_select(package_select* select_info){
-//  log_info(logger, "Se recibio una accion select");
-
+ //  log_info(logger, "Se recibio una accion select");
+  pthread_mutex_lock(&segment_table_mutex);					
+  pthread_mutex_lock(&lru_table_mutex);
+  pthread_mutex_lock(&main_memory_mutex);
   page_info_t* page_info = find_page_info(select_info->table_name, select_info->key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
   if(page_info != NULL){
     printf("Page found in memory -> Key: %d, Value: %s\n", select_info->key, page_info->page_ptr->value);
+    pthread_mutex_unlock(&segment_table_mutex);					
+    pthread_mutex_unlock(&lru_table_mutex);
+    pthread_mutex_unlock(&main_memory_mutex);
+
     return page_info->page_ptr->value;
   }
-
   // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
   printf("Buscando en FileSystem. Tabla: %s, Key:%d...\n", select_info->table_name, select_info->key);  
   char* response = exec_in_fs(fs_socket, parse_package_select(select_info)); 
-  printf("Respuesta del FileSystem: %s", response);  
-  if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0){
-    page_t* page = create_page(007, select_info->key, response); //CUIDADO TIMESTAMP
+  printf("Respuesta del FileSystem: %s\n", response);  
+  if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0 && !strcmp(response, "NO SE ENCUENTRA FS")){
+    page_t* page = create_page((unsigned)time(NULL), select_info->key, response);
     save_page(select_info->table_name, page);
     printf("Page found in file system. Table: %s, Key: %d, Value: %s\n", select_info->table_name, page->key, page->value);
+    pthread_mutex_unlock(&segment_table_mutex);					
+    pthread_mutex_unlock(&lru_table_mutex);
+    pthread_mutex_unlock(&main_memory_mutex);
+
     return string_new("%s\n", page->value);
   }
+  pthread_mutex_unlock(&segment_table_mutex);					
+  pthread_mutex_unlock(&lru_table_mutex);
+  pthread_mutex_unlock(&main_memory_mutex);
   return response;
 }
 
 char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
+ 
+  pthread_mutex_lock(&segment_table_mutex);					
+  pthread_mutex_lock(&lru_table_mutex);
+  pthread_mutex_lock(&main_memory_mutex);					
   //BUSCO O CREO EL SEGMENTO
   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
   page_info_t* page_info = insert_page(insert_info->table_name, page);
-  return "\n";
+  pthread_mutex_unlock(&segment_table_mutex);					
+  pthread_mutex_unlock(&lru_table_mutex);
+  pthread_mutex_unlock(&main_memory_mutex);
+  return strdup("");
 }
 
 char* action_create(package_create* create_info){
@@ -138,30 +169,39 @@ char* action_describe(package_describe* describe_info){
 
 char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
+  pthread_mutex_lock(&segment_table_mutex);					
+  pthread_mutex_lock(&lru_table_mutex);
+  pthread_mutex_lock(&main_memory_mutex);
   segment_t* segment = find_segment(drop_info->table_name);
   if(segment != NULL) remove_segment(drop_info->table_name, 0);
+  pthread_mutex_unlock(&segment_table_mutex);					
+  pthread_mutex_unlock(&lru_table_mutex);
+  pthread_mutex_unlock(&main_memory_mutex);
   return exec_in_fs(fs_socket, parse_package_drop(drop_info)); // retorno el response de fs
 }
 
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
+  pthread_mutex_lock(&segment_table_mutex);					
+	pthread_mutex_lock(&lru_table_mutex);
+	pthread_mutex_lock(&main_memory_mutex);
   journal();
-  return "Journaling done\n";
+  pthread_mutex_unlock(&segment_table_mutex);					
+	pthread_mutex_unlock(&lru_table_mutex);
+	pthread_mutex_unlock(&main_memory_mutex);
+  return strdup("Journaling done\n");
 }
 
 char* action_add(package_add* add_info){
-  log_info(logger, "Se recibio una accion select");
-  return "Pertenece a FS";
+  return strdup("No es una instruccion valida\n");
 }
 
 char* action_run(package_run* run_info){
-  log_info(logger, "Se recibio una accion run");
-  return "Pertenece a FS";
+  return strdup("No es una instruccion valida\n");
 }
 
 char* action_metrics(package_metrics* metrics_info){
-  log_info(logger, "Se recibio una accion metrics");
-  return "Pertenece a FS";
+  return strdup("No es una instruccion valida\n");
 }
 
 //en esta funcion se devuelve lo 
