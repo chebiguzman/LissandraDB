@@ -50,6 +50,9 @@ int PAGE_SIZE;
 t_log* logger;
 int VALUE_SIZE;
 int fs_socket;
+pthread_mutex_t lru_table_mutex;
+pthread_mutex_t segment_table_mutex;
+pthread_mutex_t main_memory_mutex;
 
 // --------------------------
 
@@ -91,3 +94,5 @@ int find_unmodified_page();
 char* exec_in_fs(int memory_fd, char* payload);
 void journal();
 void print_everything();
+int memory_full();
+int is_memory_full();

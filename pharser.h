@@ -25,7 +25,7 @@ typedef struct {
     char* table_name;
     int key;
     char* value;
-    unsigned long timestamp;
+    uint16_t timestamp;
 } package_insert;
 
 //DESCRIBE [NOMBRE_TABLA]?
@@ -91,4 +91,3 @@ char* parse_package_run(package_run* package);
 char* parse_package_journal(package_journal* pk);
 char* parse_input(char* input);
 
-char *ltoa(long N, char *str, int base);

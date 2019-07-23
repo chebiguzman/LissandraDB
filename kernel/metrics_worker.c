@@ -174,16 +174,19 @@ char* get_metrics(){
 
     long rlsc = list_promedy(m->read_latency_sc );
 
-    char* buff = malloc(300);
-    strcat(r, ltoa(rlsc, buff, 10));
+    char* buff = malloc(30);
+    sprintf(buff, "%ld",rlsc);
+    strcat(r, buff);
+    free(buff);
     //log_error(logger, r);
 
-    free(buff);
+
     strcat(r, "ms\nWrite latency:");
 
     long wlsc = list_promedy(m->write_latency_sc );
     buff = malloc(300);
-    strcat(r, ltoa(wlsc, buff, 10));
+    sprintf(buff, "%ld",wlsc);
+    strcat(r, buff);
     free(buff);
 
     strcat(r, "ms\nReads:");
