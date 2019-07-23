@@ -79,13 +79,16 @@ char* action_select(package_select* select_info){
 
 
   if(!does_table_exist(select_info->table_name)){
-    return "La tabla solicitada no existe.\n";
+    free(parse_package_select(select_info));
+    return strdup("La tabla solicitada no existe.\n");
   }
 
   if(is_data_on_memtable(select_info->table_name, select_info->key)){
       char* r = malloc(strlen(get_value_from_memtable(select_info->table_name, select_info->key) + 2));
       strcpy(r, get_value_from_memtable(select_info->table_name, select_info->key));
       strcat(r, "\n");
+      free(parse_package_select(select_info));
+
     return r;
   }
 
@@ -106,7 +109,7 @@ char* action_select(package_select* select_info){
   }
   *partition->blocks = first_block;
 
-   if(block_amount==0)return "Key invalida\n";
+   if(block_amount==0)return strdup("Key invalida\n");
   
   pthread_t buscadores[block_amount];
   regg regruta[block_amount];
@@ -166,8 +169,9 @@ char* action_select(package_select* select_info){
 
   pthread_mutex_destroy(&lock);
   pthread_cond_destroy(&cond);
+  free(parse_package_select(select_info));
 
-  return "Key invalida\n";
+  return strdup("Key invalida\n");
   //falta atender los memory leaks, en especial los de los thread.
 
 }
@@ -178,7 +182,8 @@ char* action_insert(package_insert* insert_info){
 
   if(!does_table_exist(insert_info->table_name)){
     log_error(logger, "No se puede completar el describe.");
-    return "La tabla no existe.\n";
+    free(parse_package_insert(insert_info));
+    return strdup("La tabla no existe.\n");
   }
   char* table_name = insert_info->table_name;
   char* table_path = malloc(sizeof(table_name)+sizeof(MNT_POINT)+sizeof("Tables/"));
@@ -201,8 +206,8 @@ char* action_insert(package_insert* insert_info){
  
   log_debug(logger, "Se inserto el valor en la memtable");
   free(table_path);
-
-  return "";
+  free(parse_package_insert(insert_info));  
+  return strdup("");
   
 }
 
@@ -212,12 +217,13 @@ char* action_create(package_create* create_info){
   if(does_table_exist(create_info->table_name)){
     char* err = "Fallo la creacion de una tabla.\n";
     log_error(logger, err);
-    return "La tabla ya existe\n";
+    free(parse_package_create(create_info));
+    return strdup("La tabla ya existe\n");
   }
 
   enginet_create_table(create_info->table_name, create_info->consistency, create_info->partition_number, create_info->compactation_time);
   
-  return "";
+  return strdup("");
 }
 
 char* action_describe(package_describe* describe_info){
@@ -229,7 +235,8 @@ char* action_describe(package_describe* describe_info){
     
     if(!does_table_exist(describe_info->table_name)){
       log_error(logger, "No se puede completar el describe.");
-      return "La tabla no existe.\n";
+      free(parse_package_describe(describe_info));
+      return strdup("La tabla no existe.\n");
     }
     //string_to_upper(describe_info->table_name);
     char* meta = get_table_metadata_as_string(describe_info->table_name);
@@ -241,6 +248,8 @@ char* action_describe(package_describe* describe_info){
     strcat(result, meta);
     strcat(result, ";\n\n");
     free(meta);
+    free(parse_package_describe(describe_info));
+
     return result;
 
   }
@@ -253,33 +262,36 @@ char* action_describe(package_describe* describe_info){
 char* action_drop(package_drop* drop_info){
 
   if(!does_table_exist(drop_info->table_name)){
-    return "La tabla solicitada no existe.\n";
+    free(parse_package_drop(drop_info));
+    return strdup("La tabla solicitada no existe.\n";)
   }
   engine_drop_table(drop_info->table_name);
 
-  return "";
+  return strdup("");
 }
 
 char* action_journal(package_journal* journal_info){
-  log_info(logger, "Se recibio una accion select");
-  
-  return "";
+  free(parse_package_journal(journal_info));
+  return strdup("No es una instruccion valida\n");
 }
 
 char* action_add(package_add* add_info){
-  log_info(logger, "Se recibio una accion select");
-  return "";
+  free(add_info->instruction);
+  free(add_info);
+  return strdup("No es una instruccion valida\n");
 }
 
 char* action_run(package_run* run_info){
-  log_info(logger, "Se recibio una accion run");
-  dump_memtable();
-  return "";
+  free(run_info->instruction);
+  free(run_info->path);
+  free(run_info);
+  return strdup("No es una instruccion valida\n");
 }
 
 char* action_metrics(package_metrics* metrics_info){
-  log_info(logger, "Se recibio una accion metrics");
-  return "";
+  free(metrics_info->instruction);
+  free(metrics_info);
+  return strdup("No es una instruccion valida\n");
 }
 
 //ACA VA A HABER QUE CREAR THREADS DE EJECUCION

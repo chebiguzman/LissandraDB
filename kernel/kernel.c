@@ -90,7 +90,7 @@ char* exec_in_memory(int memory_fd, char* payload){
     if ( memory_fd < 0 ){
       log_error(logger, "No se pudo llevar a cabo la accion.");
       exec_err_abort();
-      return "";
+      return strdup("");
     }
 
 
@@ -105,13 +105,13 @@ char* exec_in_memory(int memory_fd, char* payload){
       return responce;
     }else{
       log_error(logger, "No se logo comuniarse con memoria");
-      return "NO SE ENCTUENTEA MEMORIA";
+      return strdup("NO SE ENCTUENTEA MEMORIA");
     }  
-    return "algo sale mal";
+    return strdup("algo sale mal");
 }
 
 char* action_select(package_select* select_info){
-  //log_info(logger_debug, "Se recibio una accion select");
+  log_info(logger_debug, "Se recibio una accion select");
   //get consistency of talble
   t_consistency consistency = get_table_consistency(select_info->table_name);
   //log_info(logger_debug, "Se obtiene consistencia accion select");
@@ -162,7 +162,9 @@ char* action_run(package_run* run_info){
     fclose(fp);
   }
 
-  
+    free(run_info->instruction);
+    free(run_info->path);
+    free(run_info);
     return rt;
 }
 
@@ -175,7 +177,10 @@ char* action_add(package_add* add_info){
   }else if( add_info->consistency == H_CONSISTENCY){
     add_memory_to_hc(add_info->id);
   }
-  return "";
+
+  free(add_info->instruction);
+  free(add_info);
+  return strdup("");
 }
 
 char* action_insert(package_insert* insert_info){
@@ -289,6 +294,8 @@ char* action_journal(package_journal* journal_info){
 
 char* action_metrics(package_metrics* metrics_info){
   log_info(logger_debug, "Se recibio una accion metrics");
+  free(metrics_info->instruction);
+  free(metrics_info);
   return get_metrics();
 }
 
@@ -298,13 +305,13 @@ char* action_intern__status(){
   int memfd = get_loked_main_memory();
   
   if(memfd<0){
-    return "";
+    return strdup("");
   }
 
   char* responce = exec_in_memory(memfd, "MEMORY");
   unlock_memory(memfd);
   if(responce == ""){
-    return "";
+    return strdup("");
   }
   char** memories = string_split(responce, "|");
   update_memory_finder_service_time(atoi(memories[0]));
@@ -319,7 +326,7 @@ char* action_intern__status(){
       check_for_new_memory(ip ,port, id);
       i++;
     }
-    return "";
+    return strdup("");
 }
 
 //Crea un t_instr con un string
