@@ -25,6 +25,11 @@ t_log* logger;
 t_log* logger_debug;
 char* MEMORY_IP;
 int MEMORY_PORT;
+
+void handler(int s) {
+printf("Caught SIGPIPE\n");
+}
+
 int main(int argc, char const *argv[])
 {   
     //set up confg
@@ -64,7 +69,7 @@ int main(int argc, char const *argv[])
     pthread_t tid_console;
     pthread_create(&tid_console, NULL, console_input_wait, control);
     
-    signal(SIGPIPE, SIG_IGN); //Ignorar error de write
+    signal(SIGPIPE, handler); //Ignorar error de write
     metrics_start(logger);
     //JOIN THREADS
     //pthread_join(tid,NULL);
@@ -84,9 +89,6 @@ char* exec_in_memory(int memory_fd, char* payload){
     char* responce = malloc(1500);
     //strcpy(responce, "");
 
-   
-
-    
     if ( memory_fd < 0 ){
       log_error(logger, "No se pudo llevar a cabo la accion.");
       exec_err_abort();

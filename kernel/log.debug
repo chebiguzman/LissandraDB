@@ -9208,3 +9208,1207 @@
 [DEBUG] 20:36:53:971 Kernel/(22045:22049): kmemoryService: Se actualiza las memorias
 [DEBUG] 20:36:53:971 Kernel/(22045:22049): syscall
 [INFO] 20:36:53:971 Kernel/(22045:22047): Se recibio una accion status
+[INFO] 21:06:31:220 Kernel/(25087:25087): se inicia el modulo scheduler
+[DEBUG] 21:06:31:221 Kernel/(25087:25087): el valor del puntero es: 0 
+
+[INFO] 21:06:31:221 Kernel/(25087:25088): se inicia el monitoreo del config
+[DEBUG] 21:06:31:221 Kernel/(25087:25087): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 21:06:31:222 Kernel/(25087:25087): mismo puntero 0 
+
+[INFO] 21:06:31:223 Kernel/(25087:25087): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 21:06:31:303 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:31:303 Kernel/(25087:25091): syscall
+[INFO] 21:06:31:303 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:31:384 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:31:384 Kernel/(25087:25091): syscall
+[INFO] 21:06:31:384 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:31:465 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:31:465 Kernel/(25087:25091): syscall
+[INFO] 21:06:31:465 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:31:546 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:31:546 Kernel/(25087:25091): syscall
+[INFO] 21:06:31:546 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:31:627 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:31:627 Kernel/(25087:25091): syscall
+[INFO] 21:06:31:627 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:31:708 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:31:708 Kernel/(25087:25091): syscall
+[INFO] 21:06:31:708 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:31:788 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:31:788 Kernel/(25087:25091): syscall
+[INFO] 21:06:31:788 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:31:869 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:31:869 Kernel/(25087:25091): syscall
+[INFO] 21:06:31:869 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:31:950 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:31:950 Kernel/(25087:25091): syscall
+[INFO] 21:06:31:950 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:30 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:30 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:31 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:111 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:111 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:111 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:192 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:192 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:192 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:272 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:273 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:273 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:353 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:353 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:353 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:433 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:434 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:434 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:514 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:514 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:514 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:595 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:595 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:595 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:675 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:676 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:676 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:756 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:756 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:756 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:837 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:837 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:837 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:917 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:917 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:917 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:32:997 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:32:998 Kernel/(25087:25091): syscall
+[INFO] 21:06:32:998 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:33:78 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:33:78 Kernel/(25087:25091): syscall
+[INFO] 21:06:33:78 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:33:158 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:33:159 Kernel/(25087:25091): syscall
+[INFO] 21:06:33:159 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:33:239 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:33:239 Kernel/(25087:25091): syscall
+[INFO] 21:06:33:239 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:33:320 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:33:320 Kernel/(25087:25091): syscall
+[INFO] 21:06:33:320 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:33:400 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:33:400 Kernel/(25087:25091): syscall
+[INFO] 21:06:33:400 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:33:480 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:33:481 Kernel/(25087:25091): syscall
+[INFO] 21:06:33:481 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:33:561 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:33:561 Kernel/(25087:25091): syscall
+[INFO] 21:06:33:561 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:33:641 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:33:642 Kernel/(25087:25091): syscall
+[INFO] 21:06:33:642 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:33:722 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:33:722 Kernel/(25087:25091): syscall
+[INFO] 21:06:33:722 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:33:803 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:33:803 Kernel/(25087:25091): syscall
+[INFO] 21:06:33:803 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:33:884 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:33:884 Kernel/(25087:25091): syscall
+[INFO] 21:06:33:884 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:33:964 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:33:964 Kernel/(25087:25091): syscall
+[INFO] 21:06:33:964 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:34:44 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:34:47 Kernel/(25087:25091): syscall
+[INFO] 21:06:34:47 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:34:128 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:34:128 Kernel/(25087:25091): syscall
+[INFO] 21:06:34:128 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:34:209 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:34:209 Kernel/(25087:25091): syscall
+[INFO] 21:06:34:209 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:34:289 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:34:289 Kernel/(25087:25091): syscall
+[INFO] 21:06:34:289 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:34:369 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:34:370 Kernel/(25087:25091): syscall
+[INFO] 21:06:34:370 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:34:450 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:34:450 Kernel/(25087:25091): syscall
+[INFO] 21:06:34:450 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:34:530 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:34:530 Kernel/(25087:25091): syscall
+[INFO] 21:06:34:530 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:34:611 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:34:611 Kernel/(25087:25091): syscall
+[INFO] 21:06:34:611 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:34:691 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:34:691 Kernel/(25087:25091): syscall
+[INFO] 21:06:34:691 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:34:772 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:34:772 Kernel/(25087:25091): syscall
+[INFO] 21:06:34:772 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:34:853 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:34:853 Kernel/(25087:25091): syscall
+[INFO] 21:06:34:853 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:34:934 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:34:934 Kernel/(25087:25091): syscall
+[INFO] 21:06:34:934 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:15 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:15 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:15 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:95 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:95 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:95 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:176 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:176 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:176 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:257 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:257 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:257 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:338 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:338 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:338 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:418 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:419 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:419 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:500 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:500 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:500 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:580 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:581 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:581 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:662 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:662 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:662 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:742 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:742 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:743 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:824 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:824 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:824 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:904 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:904 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:904 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:35:985 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:35:985 Kernel/(25087:25091): syscall
+[INFO] 21:06:35:985 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:36:66 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:36:66 Kernel/(25087:25091): syscall
+[INFO] 21:06:36:66 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:36:146 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:36:146 Kernel/(25087:25091): syscall
+[INFO] 21:06:36:147 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:36:228 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:36:228 Kernel/(25087:25091): syscall
+[INFO] 21:06:36:228 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:36:309 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:36:309 Kernel/(25087:25091): syscall
+[INFO] 21:06:36:309 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:36:390 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:36:390 Kernel/(25087:25091): syscall
+[INFO] 21:06:36:390 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:36:471 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:36:471 Kernel/(25087:25091): syscall
+[INFO] 21:06:36:471 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:36:552 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:36:552 Kernel/(25087:25091): syscall
+[INFO] 21:06:36:552 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:36:632 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:36:633 Kernel/(25087:25091): syscall
+[INFO] 21:06:36:633 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:36:713 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:36:713 Kernel/(25087:25091): syscall
+[INFO] 21:06:36:714 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:36:794 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:36:794 Kernel/(25087:25091): syscall
+[INFO] 21:06:36:794 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:36:875 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:36:875 Kernel/(25087:25091): syscall
+[INFO] 21:06:36:875 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:36:968 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:36:968 Kernel/(25087:25091): syscall
+[INFO] 21:06:36:968 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:37:49 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:37:49 Kernel/(25087:25091): syscall
+[INFO] 21:06:37:49 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:37:130 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:37:130 Kernel/(25087:25091): syscall
+[INFO] 21:06:37:131 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:37:211 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:37:211 Kernel/(25087:25091): syscall
+[INFO] 21:06:37:211 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:37:292 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:37:292 Kernel/(25087:25091): syscall
+[INFO] 21:06:37:292 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:37:372 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:37:372 Kernel/(25087:25091): syscall
+[INFO] 21:06:37:372 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:37:453 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:37:453 Kernel/(25087:25091): syscall
+[INFO] 21:06:37:453 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:37:533 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:37:540 Kernel/(25087:25091): syscall
+[INFO] 21:06:37:540 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:37:621 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:37:621 Kernel/(25087:25091): syscall
+[INFO] 21:06:37:621 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:37:701 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:37:713 Kernel/(25087:25091): syscall
+[INFO] 21:06:37:713 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:37:793 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:37:793 Kernel/(25087:25091): syscall
+[INFO] 21:06:37:793 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:37:873 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:37:874 Kernel/(25087:25091): syscall
+[INFO] 21:06:37:874 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:37:955 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:37:955 Kernel/(25087:25091): syscall
+[INFO] 21:06:37:955 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:38:35 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:38:35 Kernel/(25087:25091): syscall
+[INFO] 21:06:38:36 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:38:117 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:38:117 Kernel/(25087:25091): syscall
+[INFO] 21:06:38:117 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:38:198 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:38:198 Kernel/(25087:25091): syscall
+[INFO] 21:06:38:198 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:38:278 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:38:278 Kernel/(25087:25091): syscall
+[INFO] 21:06:38:278 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:38:359 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:38:360 Kernel/(25087:25091): syscall
+[INFO] 21:06:38:360 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:38:441 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:38:441 Kernel/(25087:25091): syscall
+[INFO] 21:06:38:441 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:38:522 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:38:522 Kernel/(25087:25091): syscall
+[INFO] 21:06:38:522 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:38:603 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:38:603 Kernel/(25087:25091): syscall
+[INFO] 21:06:38:603 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:38:684 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:38:684 Kernel/(25087:25091): syscall
+[INFO] 21:06:38:684 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:38:764 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:38:765 Kernel/(25087:25091): syscall
+[INFO] 21:06:38:765 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:38:845 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:38:846 Kernel/(25087:25091): syscall
+[INFO] 21:06:38:846 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:38:927 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:38:927 Kernel/(25087:25091): syscall
+[INFO] 21:06:38:927 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:7 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:7 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:8 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:88 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:88 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:88 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:168 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:169 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:169 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:250 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:250 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:250 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:331 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:331 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:331 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:411 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:412 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:412 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:493 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:493 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:493 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:573 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:574 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:574 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:654 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:654 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:655 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:735 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:735 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:735 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:816 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:816 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:817 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:897 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:898 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:898 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:39:978 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:39:979 Kernel/(25087:25091): syscall
+[INFO] 21:06:39:979 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:40:59 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:40:59 Kernel/(25087:25091): syscall
+[INFO] 21:06:40:60 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:40:140 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:40:140 Kernel/(25087:25091): syscall
+[INFO] 21:06:40:140 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:40:220 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:40:220 Kernel/(25087:25091): syscall
+[INFO] 21:06:40:220 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:40:301 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:40:301 Kernel/(25087:25091): syscall
+[INFO] 21:06:40:301 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:40:381 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:40:381 Kernel/(25087:25091): syscall
+[INFO] 21:06:40:381 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:40:462 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:40:462 Kernel/(25087:25091): syscall
+[INFO] 21:06:40:462 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:40:542 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:40:542 Kernel/(25087:25091): syscall
+[INFO] 21:06:40:542 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:40:623 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:40:623 Kernel/(25087:25091): syscall
+[INFO] 21:06:40:623 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:40:703 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:40:703 Kernel/(25087:25091): syscall
+[INFO] 21:06:40:704 Kernel/(25087:25089): Se recibio una accion status
+[DEBUG] 21:06:40:784 Kernel/(25087:25091): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:06:40:784 Kernel/(25087:25091): syscall
+[INFO] 21:06:40:784 Kernel/(25087:25089): Se recibio una accion status
+[INFO] 21:06:58:926 Kernel/(25087:25089): Se recibio una accion select
+[DEBUG] 21:06:58:926 Kernel/(25087:25089): kmemory: se pide memoria de SC
+[INFO] 21:07:09:294 Kernel/(25087:25089): Se recibio una accion add
+[INFO] 21:07:12:966 Kernel/(25087:25089): Se recibio una accion select
+[DEBUG] 21:07:12:966 Kernel/(25087:25089): kmemory: se pide memoria de SC
+[DEBUG] 21:07:12:966 Kernel/(25087:25089): kmemory: bloqueo memoria
+[INFO] 21:10:04:681 Kernel/(25702:25702): se inicia el modulo scheduler
+[DEBUG] 21:10:04:682 Kernel/(25702:25702): el valor del puntero es: 0 
+
+[INFO] 21:10:04:682 Kernel/(25702:25703): se inicia el monitoreo del config
+[DEBUG] 21:10:04:683 Kernel/(25702:25702): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 21:10:04:683 Kernel/(25702:25702): mismo puntero 0 
+
+[INFO] 21:10:04:684 Kernel/(25702:25702): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 21:10:04:765 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:04:765 Kernel/(25702:25706): syscall
+[INFO] 21:10:04:765 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:04:845 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:04:845 Kernel/(25702:25706): syscall
+[INFO] 21:10:04:846 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:04:926 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:04:926 Kernel/(25702:25706): syscall
+[INFO] 21:10:04:927 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:7 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:8 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:8 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:88 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:89 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:89 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:170 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:170 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:170 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:250 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:250 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:250 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:331 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:331 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:331 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:411 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:412 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:412 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:492 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:492 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:492 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:573 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:573 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:573 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:653 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:653 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:653 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:733 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:734 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:734 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:814 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:814 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:814 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:894 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:895 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:895 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:05:975 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:05:975 Kernel/(25702:25706): syscall
+[INFO] 21:10:05:975 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:06:55 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:06:56 Kernel/(25702:25706): syscall
+[INFO] 21:10:06:56 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:06:136 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:06:136 Kernel/(25702:25706): syscall
+[INFO] 21:10:06:136 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:06:217 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:06:217 Kernel/(25702:25706): syscall
+[INFO] 21:10:06:217 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:06:297 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:06:297 Kernel/(25702:25706): syscall
+[INFO] 21:10:06:297 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:06:378 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:06:378 Kernel/(25702:25706): syscall
+[INFO] 21:10:06:378 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:06:459 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:06:459 Kernel/(25702:25706): syscall
+[INFO] 21:10:06:459 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:06:539 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:06:539 Kernel/(25702:25706): syscall
+[INFO] 21:10:06:539 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:06:619 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:06:620 Kernel/(25702:25706): syscall
+[INFO] 21:10:06:620 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:06:700 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:06:700 Kernel/(25702:25706): syscall
+[INFO] 21:10:06:700 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:06:780 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:06:780 Kernel/(25702:25706): syscall
+[INFO] 21:10:06:780 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:06:861 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:06:861 Kernel/(25702:25706): syscall
+[INFO] 21:10:06:861 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:06:941 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:06:941 Kernel/(25702:25706): syscall
+[INFO] 21:10:06:941 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:22 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:22 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:22 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:102 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:103 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:103 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:183 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:183 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:183 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:264 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:264 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:264 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:345 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:345 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:345 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:425 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:425 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:425 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:506 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:506 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:506 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:586 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:586 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:587 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:667 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:668 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:668 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:748 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:748 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:748 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:829 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:829 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:829 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:909 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:909 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:910 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:07:991 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:07:991 Kernel/(25702:25706): syscall
+[INFO] 21:10:07:991 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:08:71 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:08:71 Kernel/(25702:25706): syscall
+[INFO] 21:10:08:72 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:08:153 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:08:159 Kernel/(25702:25706): syscall
+[INFO] 21:10:08:160 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:08:240 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:08:240 Kernel/(25702:25706): syscall
+[INFO] 21:10:08:240 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:08:320 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:08:320 Kernel/(25702:25706): syscall
+[INFO] 21:10:08:320 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:08:401 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:08:401 Kernel/(25702:25706): syscall
+[INFO] 21:10:08:401 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:08:481 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:08:481 Kernel/(25702:25706): syscall
+[INFO] 21:10:08:481 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:08:562 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:08:562 Kernel/(25702:25706): syscall
+[INFO] 21:10:08:562 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:08:643 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:08:643 Kernel/(25702:25706): syscall
+[INFO] 21:10:08:644 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:08:724 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:08:724 Kernel/(25702:25706): syscall
+[INFO] 21:10:08:724 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:08:805 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:08:805 Kernel/(25702:25706): syscall
+[INFO] 21:10:08:805 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:08:885 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:08:885 Kernel/(25702:25706): syscall
+[INFO] 21:10:08:885 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:08:966 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:08:966 Kernel/(25702:25706): syscall
+[INFO] 21:10:08:966 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:09:47 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:09:47 Kernel/(25702:25706): syscall
+[INFO] 21:10:09:47 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:09:128 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:09:128 Kernel/(25702:25706): syscall
+[INFO] 21:10:09:128 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:09:209 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:09:209 Kernel/(25702:25706): syscall
+[INFO] 21:10:09:209 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:09:290 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:09:290 Kernel/(25702:25706): syscall
+[INFO] 21:10:09:290 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:09:370 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:09:371 Kernel/(25702:25706): syscall
+[INFO] 21:10:09:371 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:09:452 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:09:452 Kernel/(25702:25706): syscall
+[INFO] 21:10:09:452 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:09:532 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:09:532 Kernel/(25702:25706): syscall
+[INFO] 21:10:09:532 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:09:613 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:09:613 Kernel/(25702:25706): syscall
+[INFO] 21:10:09:613 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:09:693 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:09:693 Kernel/(25702:25706): syscall
+[INFO] 21:10:09:693 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:09:773 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:09:774 Kernel/(25702:25706): syscall
+[INFO] 21:10:09:774 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:09:854 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:09:854 Kernel/(25702:25706): syscall
+[INFO] 21:10:09:854 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:09:935 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:09:935 Kernel/(25702:25706): syscall
+[INFO] 21:10:09:935 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:10:15 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:10:15 Kernel/(25702:25706): syscall
+[INFO] 21:10:10:16 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:10:96 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:10:96 Kernel/(25702:25706): syscall
+[INFO] 21:10:10:96 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:10:176 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:10:176 Kernel/(25702:25706): syscall
+[INFO] 21:10:10:176 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:10:257 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:10:257 Kernel/(25702:25706): syscall
+[INFO] 21:10:10:257 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:10:337 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:10:337 Kernel/(25702:25706): syscall
+[INFO] 21:10:10:337 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:10:440 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:10:441 Kernel/(25702:25706): syscall
+[INFO] 21:10:10:441 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:10:522 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:10:522 Kernel/(25702:25706): syscall
+[INFO] 21:10:10:522 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:10:602 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:10:603 Kernel/(25702:25706): syscall
+[INFO] 21:10:10:603 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:10:684 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:10:684 Kernel/(25702:25706): syscall
+[INFO] 21:10:10:684 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:10:764 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:10:765 Kernel/(25702:25706): syscall
+[INFO] 21:10:10:765 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:10:846 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:10:846 Kernel/(25702:25706): syscall
+[INFO] 21:10:10:846 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:10:926 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:10:926 Kernel/(25702:25706): syscall
+[INFO] 21:10:10:926 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:7 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:7 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:7 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:88 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:88 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:88 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:169 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:169 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:169 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:250 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:250 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:251 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:331 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:331 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:332 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:412 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:413 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:413 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:494 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:494 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:494 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:575 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:575 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:575 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:655 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:656 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:656 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:737 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:737 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:737 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:818 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:818 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:818 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:899 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:899 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:899 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:11:980 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:11:980 Kernel/(25702:25706): syscall
+[INFO] 21:10:11:980 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:12:60 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:12:61 Kernel/(25702:25706): syscall
+[INFO] 21:10:12:61 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:12:141 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:12:141 Kernel/(25702:25706): syscall
+[INFO] 21:10:12:141 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:12:221 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:12:222 Kernel/(25702:25706): syscall
+[INFO] 21:10:12:222 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:12:302 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:12:302 Kernel/(25702:25706): syscall
+[INFO] 21:10:12:302 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:12:383 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:12:383 Kernel/(25702:25706): syscall
+[INFO] 21:10:12:383 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:12:463 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:12:464 Kernel/(25702:25706): syscall
+[INFO] 21:10:12:464 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:12:544 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:12:545 Kernel/(25702:25706): syscall
+[INFO] 21:10:12:545 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:12:625 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:12:625 Kernel/(25702:25706): syscall
+[INFO] 21:10:12:626 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:12:706 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:12:707 Kernel/(25702:25706): syscall
+[INFO] 21:10:12:707 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:12:787 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:12:787 Kernel/(25702:25706): syscall
+[INFO] 21:10:12:787 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:12:868 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:12:868 Kernel/(25702:25706): syscall
+[INFO] 21:10:12:868 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:12:948 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:12:949 Kernel/(25702:25706): syscall
+[INFO] 21:10:12:949 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:13:29 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:13:29 Kernel/(25702:25706): syscall
+[INFO] 21:10:13:30 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:13:111 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:13:111 Kernel/(25702:25706): syscall
+[INFO] 21:10:13:111 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:13:192 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:13:193 Kernel/(25702:25706): syscall
+[INFO] 21:10:13:193 Kernel/(25702:25704): Se recibio una accion status
+[DEBUG] 21:10:13:273 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:10:13:274 Kernel/(25702:25706): syscall
+[INFO] 21:10:13:274 Kernel/(25702:25704): Se recibio una accion status
+[INFO] 21:10:24:217 Kernel/(25702:25704): Se recibio una accion add
+[INFO] 21:10:28:313 Kernel/(25702:25704): Se recibio una accion select
+[DEBUG] 21:10:28:313 Kernel/(25702:25704): kmemory: se pide memoria de SC
+[DEBUG] 21:10:28:313 Kernel/(25702:25704): kmemory: bloqueo memoria
+[DEBUG] 21:15:13:277 Kernel/(25702:25706): kmemoryService: Se actualiza las memorias
+[DEBUG] 21:15:13:277 Kernel/(25702:25706): syscall
+[INFO] 21:15:13:278 Kernel/(25702:25704): Se recibio una accion status
+[INFO] 23:02:04:819 Kernel/(5765:5765): se inicia el modulo scheduler
+[DEBUG] 23:02:04:820 Kernel/(5765:5765): el valor del puntero es: 0 
+
+[DEBUG] 23:02:04:820 Kernel/(5765:5765): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 23:02:04:820 Kernel/(5765:5765): mismo puntero 0 
+
+[INFO] 23:02:04:821 Kernel/(5765:5765): kmemory: El modulo kmemory fue inicializado exitosamente
+[INFO] 23:02:04:820 Kernel/(5765:5766): se inicia el monitoreo del config
+[DEBUG] 23:02:04:901 Kernel/(5765:5769): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:02:04:901 Kernel/(5765:5769): syscall
+[INFO] 23:02:04:902 Kernel/(5765:5767): Se recibio una accion status
+[INFO] 23:02:08:91 Kernel/(5783:5783): se inicia el modulo scheduler
+[DEBUG] 23:02:08:92 Kernel/(5783:5783): el valor del puntero es: 0 
+
+[DEBUG] 23:02:08:92 Kernel/(5783:5783): lo que queda luego de ingresarlo 0 
+
+[INFO] 23:02:08:92 Kernel/(5783:5784): se inicia el monitoreo del config
+[DEBUG] 23:02:08:92 Kernel/(5783:5783): mismo puntero 0 
+
+[INFO] 23:02:08:93 Kernel/(5783:5783): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 23:02:08:173 Kernel/(5783:5787): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:02:08:174 Kernel/(5783:5787): syscall
+[INFO] 23:02:08:174 Kernel/(5783:5785): Se recibio una accion status
+[INFO] 23:02:19:509 Kernel/(5783:5785): Se recibio una accion select
+[DEBUG] 23:02:19:509 Kernel/(5783:5785): kmemory: se pide memoria de SC
+[DEBUG] 23:02:19:509 Kernel/(5783:5785): kmemory: bloqueo memoria
+[INFO] 23:02:34:725 Kernel/(5821:5821): se inicia el modulo scheduler
+[DEBUG] 23:02:34:787 Kernel/(5821:5821): el valor del puntero es: 0 
+
+[INFO] 23:02:34:790 Kernel/(5821:5822): se inicia el monitoreo del config
+[DEBUG] 23:02:34:793 Kernel/(5821:5821): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 23:02:34:794 Kernel/(5821:5821): mismo puntero 0 
+
+[INFO] 23:02:34:843 Kernel/(5821:5821): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 23:02:34:923 Kernel/(5821:5825): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:02:34:924 Kernel/(5821:5825): syscall
+[INFO] 23:02:34:937 Kernel/(5821:5823): Se recibio una accion status
+[INFO] 23:02:46:886 Kernel/(5863:5863): se inicia el modulo scheduler
+[INFO] 23:02:46:926 Kernel/(5863:5864): se inicia el monitoreo del config
+[DEBUG] 23:02:46:952 Kernel/(5863:5863): el valor del puntero es: 0 
+
+[DEBUG] 23:02:46:956 Kernel/(5863:5863): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 23:02:46:956 Kernel/(5863:5863): mismo puntero 0 
+
+[INFO] 23:02:47:40 Kernel/(5863:5863): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 23:02:47:121 Kernel/(5863:5868): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:02:47:122 Kernel/(5863:5868): syscall
+[INFO] 23:02:47:131 Kernel/(5863:5865): Se recibio una accion status
+[INFO] 23:03:02:949 Kernel/(5918:5918): se inicia el modulo scheduler
+[INFO] 23:03:02:989 Kernel/(5918:5919): se inicia el monitoreo del config
+[DEBUG] 23:03:03:14 Kernel/(5918:5918): el valor del puntero es: 0 
+
+[DEBUG] 23:03:03:19 Kernel/(5918:5918): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 23:03:03:19 Kernel/(5918:5918): mismo puntero 0 
+
+[INFO] 23:03:03:83 Kernel/(5918:5918): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 23:03:03:165 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:03:166 Kernel/(5918:5922): syscall
+[INFO] 23:03:03:198 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:03:293 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:03:294 Kernel/(5918:5922): syscall
+[INFO] 23:03:03:294 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:03:375 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:03:375 Kernel/(5918:5922): syscall
+[INFO] 23:03:03:376 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:03:457 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:03:457 Kernel/(5918:5922): syscall
+[INFO] 23:03:03:458 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:03:540 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:03:541 Kernel/(5918:5922): syscall
+[INFO] 23:03:03:541 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:03:622 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:03:622 Kernel/(5918:5922): syscall
+[INFO] 23:03:03:622 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:03:703 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:03:703 Kernel/(5918:5922): syscall
+[INFO] 23:03:03:703 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:03:784 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:03:785 Kernel/(5918:5922): syscall
+[INFO] 23:03:03:785 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:03:866 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:03:867 Kernel/(5918:5922): syscall
+[INFO] 23:03:03:867 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:03:947 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:03:948 Kernel/(5918:5922): syscall
+[INFO] 23:03:03:948 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:04:29 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:04:30 Kernel/(5918:5922): syscall
+[INFO] 23:03:04:30 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:04:113 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:04:113 Kernel/(5918:5922): syscall
+[INFO] 23:03:04:114 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:04:197 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:04:197 Kernel/(5918:5922): syscall
+[INFO] 23:03:04:197 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:04:278 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:04:278 Kernel/(5918:5922): syscall
+[INFO] 23:03:04:278 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:04:359 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:04:359 Kernel/(5918:5922): syscall
+[INFO] 23:03:04:360 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:04:440 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:04:441 Kernel/(5918:5922): syscall
+[INFO] 23:03:04:441 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:04:522 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:04:522 Kernel/(5918:5922): syscall
+[INFO] 23:03:04:522 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:04:603 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:04:604 Kernel/(5918:5922): syscall
+[INFO] 23:03:04:605 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:04:687 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:04:688 Kernel/(5918:5922): syscall
+[INFO] 23:03:04:689 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:04:771 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:04:771 Kernel/(5918:5922): syscall
+[INFO] 23:03:04:772 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:04:852 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:04:853 Kernel/(5918:5922): syscall
+[INFO] 23:03:04:853 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:04:933 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:04:934 Kernel/(5918:5922): syscall
+[INFO] 23:03:04:936 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:18 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:18 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:18 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:99 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:99 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:99 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:180 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:180 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:181 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:261 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:261 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:262 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:343 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:343 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:343 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:424 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:424 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:424 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:505 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:505 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:506 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:586 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:586 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:587 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:667 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:668 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:668 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:749 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:749 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:749 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:832 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:832 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:832 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:913 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:914 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:914 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:05:995 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:05:995 Kernel/(5918:5922): syscall
+[INFO] 23:03:05:995 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:06:76 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:06:76 Kernel/(5918:5922): syscall
+[INFO] 23:03:06:76 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:06:157 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:06:158 Kernel/(5918:5922): syscall
+[INFO] 23:03:06:158 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:06:240 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:06:240 Kernel/(5918:5922): syscall
+[INFO] 23:03:06:240 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:06:321 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:06:321 Kernel/(5918:5922): syscall
+[INFO] 23:03:06:322 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:06:403 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:06:404 Kernel/(5918:5922): syscall
+[INFO] 23:03:06:404 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:06:485 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:06:485 Kernel/(5918:5922): syscall
+[INFO] 23:03:06:485 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:06:566 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:06:567 Kernel/(5918:5922): syscall
+[INFO] 23:03:06:569 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:06:651 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:06:651 Kernel/(5918:5922): syscall
+[INFO] 23:03:06:652 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:06:732 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:06:732 Kernel/(5918:5922): syscall
+[INFO] 23:03:06:733 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:06:813 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:06:814 Kernel/(5918:5922): syscall
+[INFO] 23:03:06:814 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:06:895 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:06:895 Kernel/(5918:5922): syscall
+[INFO] 23:03:06:895 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:06:976 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:06:976 Kernel/(5918:5922): syscall
+[INFO] 23:03:06:977 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:07:57 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:07:57 Kernel/(5918:5922): syscall
+[INFO] 23:03:07:58 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:07:138 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:07:139 Kernel/(5918:5922): syscall
+[INFO] 23:03:07:139 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:07:220 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:07:220 Kernel/(5918:5922): syscall
+[INFO] 23:03:07:220 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:07:301 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:07:301 Kernel/(5918:5922): syscall
+[INFO] 23:03:07:301 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:07:382 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:07:382 Kernel/(5918:5922): syscall
+[INFO] 23:03:07:382 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:07:463 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:07:463 Kernel/(5918:5922): syscall
+[INFO] 23:03:07:463 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:07:544 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:07:544 Kernel/(5918:5922): syscall
+[INFO] 23:03:07:545 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:07:625 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:07:626 Kernel/(5918:5922): syscall
+[INFO] 23:03:07:626 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:07:707 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:07:707 Kernel/(5918:5922): syscall
+[INFO] 23:03:07:707 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:07:788 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:07:788 Kernel/(5918:5922): syscall
+[INFO] 23:03:07:789 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:07:869 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:07:869 Kernel/(5918:5922): syscall
+[INFO] 23:03:07:870 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:07:950 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:07:950 Kernel/(5918:5922): syscall
+[INFO] 23:03:07:951 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:08:31 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:08:31 Kernel/(5918:5922): syscall
+[INFO] 23:03:08:32 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:08:113 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:08:113 Kernel/(5918:5922): syscall
+[INFO] 23:03:08:113 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:08:194 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:08:194 Kernel/(5918:5922): syscall
+[INFO] 23:03:08:194 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:08:275 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:08:275 Kernel/(5918:5922): syscall
+[INFO] 23:03:08:276 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:08:358 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:08:358 Kernel/(5918:5922): syscall
+[INFO] 23:03:08:358 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:08:439 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:08:439 Kernel/(5918:5922): syscall
+[INFO] 23:03:08:440 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:08:520 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:08:521 Kernel/(5918:5922): syscall
+[INFO] 23:03:08:522 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:08:604 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:08:605 Kernel/(5918:5922): syscall
+[INFO] 23:03:08:605 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:08:686 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:08:687 Kernel/(5918:5922): syscall
+[INFO] 23:03:08:688 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:08:770 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:08:771 Kernel/(5918:5922): syscall
+[INFO] 23:03:08:772 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:08:853 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:08:853 Kernel/(5918:5922): syscall
+[INFO] 23:03:08:853 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:08:934 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:08:934 Kernel/(5918:5922): syscall
+[INFO] 23:03:08:934 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:15 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:15 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:16 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:96 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:97 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:97 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:178 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:178 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:178 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:259 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:259 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:260 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:340 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:341 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:341 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:422 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:422 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:422 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:503 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:503 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:504 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:584 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:585 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:585 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:666 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:666 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:667 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:748 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:749 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:749 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:830 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:830 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:831 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:912 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:912 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:912 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:09:993 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:09:993 Kernel/(5918:5922): syscall
+[INFO] 23:03:09:994 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:10:74 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:10:75 Kernel/(5918:5922): syscall
+[INFO] 23:03:10:75 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:10:155 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:10:156 Kernel/(5918:5922): syscall
+[INFO] 23:03:10:156 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:10:237 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:10:238 Kernel/(5918:5922): syscall
+[INFO] 23:03:10:239 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:10:321 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:10:322 Kernel/(5918:5922): syscall
+[INFO] 23:03:10:322 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:10:403 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:10:403 Kernel/(5918:5922): syscall
+[INFO] 23:03:10:403 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:10:484 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:10:484 Kernel/(5918:5922): syscall
+[INFO] 23:03:10:484 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:10:565 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:10:565 Kernel/(5918:5922): syscall
+[INFO] 23:03:10:565 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:10:646 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:10:647 Kernel/(5918:5922): syscall
+[INFO] 23:03:10:647 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:10:729 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:10:729 Kernel/(5918:5922): syscall
+[INFO] 23:03:10:730 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:10:810 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:10:811 Kernel/(5918:5922): syscall
+[INFO] 23:03:10:812 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:10:895 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:10:895 Kernel/(5918:5922): syscall
+[INFO] 23:03:10:895 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:10:976 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:10:976 Kernel/(5918:5922): syscall
+[INFO] 23:03:10:977 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:11:58 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:11:58 Kernel/(5918:5922): syscall
+[INFO] 23:03:11:58 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:11:139 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:11:139 Kernel/(5918:5922): syscall
+[INFO] 23:03:11:139 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:11:220 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:11:221 Kernel/(5918:5922): syscall
+[INFO] 23:03:11:222 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:11:305 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:11:305 Kernel/(5918:5922): syscall
+[INFO] 23:03:11:305 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:11:386 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:11:387 Kernel/(5918:5922): syscall
+[INFO] 23:03:11:388 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:11:470 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:11:470 Kernel/(5918:5922): syscall
+[INFO] 23:03:11:471 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:11:551 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:11:552 Kernel/(5918:5922): syscall
+[INFO] 23:03:11:552 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:11:633 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:11:633 Kernel/(5918:5922): syscall
+[INFO] 23:03:11:634 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:11:714 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:11:715 Kernel/(5918:5922): syscall
+[INFO] 23:03:11:715 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:11:796 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:11:797 Kernel/(5918:5922): syscall
+[INFO] 23:03:11:798 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:11:880 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:11:880 Kernel/(5918:5922): syscall
+[INFO] 23:03:11:880 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:11:961 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:11:961 Kernel/(5918:5922): syscall
+[INFO] 23:03:11:962 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:12:43 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:12:43 Kernel/(5918:5922): syscall
+[INFO] 23:03:12:43 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:12:124 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:12:124 Kernel/(5918:5922): syscall
+[INFO] 23:03:12:124 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:12:205 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:12:206 Kernel/(5918:5922): syscall
+[INFO] 23:03:12:207 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:12:289 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:12:290 Kernel/(5918:5922): syscall
+[INFO] 23:03:12:291 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:12:373 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:12:374 Kernel/(5918:5922): syscall
+[INFO] 23:03:12:374 Kernel/(5918:5920): Se recibio una accion status
+[DEBUG] 23:03:12:455 Kernel/(5918:5922): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:12:455 Kernel/(5918:5922): syscall
+[INFO] 23:03:12:455 Kernel/(5918:5920): Se recibio una accion status
+[INFO] 23:03:21:867 Kernel/(5949:5949): se inicia el modulo scheduler
+[DEBUG] 23:03:21:929 Kernel/(5949:5949): el valor del puntero es: 0 
+
+[DEBUG] 23:03:21:933 Kernel/(5949:5949): lo que queda luego de ingresarlo 0 
+
+[INFO] 23:03:21:933 Kernel/(5949:5950): se inicia el monitoreo del config
+[DEBUG] 23:03:21:936 Kernel/(5949:5949): mismo puntero 0 
+
+[INFO] 23:03:21:985 Kernel/(5949:5949): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 23:03:22:67 Kernel/(5949:5953): kmemoryService: Se actualiza las memorias
+[DEBUG] 23:03:22:69 Kernel/(5949:5953): syscall
+[INFO] 23:03:22:100 Kernel/(5949:5951): Se recibio una accion status
+[INFO] 15:26:51:595 Kernel/(13967:13967): se inicia el modulo scheduler
+[DEBUG] 15:26:51:632 Kernel/(13967:13967): el valor del puntero es: 0 
+
+[INFO] 15:26:51:632 Kernel/(13967:13968): se inicia el monitoreo del config
+[DEBUG] 15:26:51:632 Kernel/(13967:13967): lo que queda luego de ingresarlo 0 
+
+[DEBUG] 15:26:51:632 Kernel/(13967:13967): mismo puntero 0 
+
+[INFO] 15:26:51:677 Kernel/(13967:13967): kmemory: El modulo kmemory fue inicializado exitosamente
+[DEBUG] 15:26:51:757 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:51:757 Kernel/(13967:13971): syscall
+[INFO] 15:26:51:757 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:51:838 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:51:838 Kernel/(13967:13971): syscall
+[INFO] 15:26:51:838 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:51:919 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:51:919 Kernel/(13967:13971): syscall
+[INFO] 15:26:51:920 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:51:0 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:51:1 Kernel/(13967:13971): syscall
+[INFO] 15:26:51:1 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:52:81 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:52:81 Kernel/(13967:13971): syscall
+[INFO] 15:26:52:82 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:52:162 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:52:162 Kernel/(13967:13971): syscall
+[INFO] 15:26:52:162 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:52:243 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:52:244 Kernel/(13967:13971): syscall
+[INFO] 15:26:52:244 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:52:324 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:52:324 Kernel/(13967:13971): syscall
+[INFO] 15:26:52:324 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:52:405 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:52:416 Kernel/(13967:13971): syscall
+[INFO] 15:26:52:417 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:52:498 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:52:498 Kernel/(13967:13971): syscall
+[INFO] 15:26:52:498 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:52:578 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:52:578 Kernel/(13967:13971): syscall
+[INFO] 15:26:52:579 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:52:659 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:52:659 Kernel/(13967:13971): syscall
+[INFO] 15:26:52:659 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:52:740 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:52:740 Kernel/(13967:13971): syscall
+[INFO] 15:26:52:740 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:52:821 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:52:821 Kernel/(13967:13971): syscall
+[INFO] 15:26:52:821 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:52:902 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:52:902 Kernel/(13967:13971): syscall
+[INFO] 15:26:52:902 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:52:983 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:52:984 Kernel/(13967:13971): syscall
+[INFO] 15:26:52:984 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:53:64 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:53:65 Kernel/(13967:13971): syscall
+[INFO] 15:26:53:65 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:53:146 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:53:146 Kernel/(13967:13971): syscall
+[INFO] 15:26:53:146 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:53:226 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:53:226 Kernel/(13967:13971): syscall
+[INFO] 15:26:53:226 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:53:307 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:53:307 Kernel/(13967:13971): syscall
+[INFO] 15:26:53:307 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:53:387 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:53:387 Kernel/(13967:13971): syscall
+[INFO] 15:26:53:387 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:53:468 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:53:468 Kernel/(13967:13971): syscall
+[INFO] 15:26:53:469 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:53:549 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:53:550 Kernel/(13967:13971): syscall
+[INFO] 15:26:53:550 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:53:630 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:53:631 Kernel/(13967:13971): syscall
+[INFO] 15:26:53:631 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:53:712 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:53:712 Kernel/(13967:13971): syscall
+[INFO] 15:26:53:712 Kernel/(13967:13969): Se recibio una accion status
+[DEBUG] 15:26:53:793 Kernel/(13967:13971): kmemoryService: Se actualiza las memorias
+[DEBUG] 15:26:53:793 Kernel/(13967:13971): syscall
+[INFO] 15:26:53:793 Kernel/(13967:13969): Se recibio una accion status
