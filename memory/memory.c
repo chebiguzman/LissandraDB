@@ -100,7 +100,7 @@ int main(int argc, char const *argv[])
 //IMPLEMENTACION DE FUNCIONES (Devolver errror fuera del subconjunto)
 
 char* action_select(package_select* select_info){
-//  log_info(logger, "Se recibio una accion select");
+ //  log_info(logger, "Se recibio una accion select");
   pthread_mutex_lock(&segment_table_mutex);					
   pthread_mutex_lock(&lru_table_mutex);
   pthread_mutex_lock(&main_memory_mutex);
@@ -110,6 +110,7 @@ char* action_select(package_select* select_info){
     pthread_mutex_unlock(&segment_table_mutex);					
     pthread_mutex_unlock(&lru_table_mutex);
     pthread_mutex_unlock(&main_memory_mutex);
+
     return page_info->page_ptr->value;
   }
   // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
@@ -123,6 +124,7 @@ char* action_select(package_select* select_info){
     pthread_mutex_unlock(&segment_table_mutex);					
     pthread_mutex_unlock(&lru_table_mutex);
     pthread_mutex_unlock(&main_memory_mutex);
+
     return string_new("%s\n", page->value);
   }
   pthread_mutex_unlock(&segment_table_mutex);					
@@ -144,7 +146,7 @@ char* action_insert(package_insert* insert_info){
   pthread_mutex_unlock(&segment_table_mutex);					
   pthread_mutex_unlock(&lru_table_mutex);
   pthread_mutex_unlock(&main_memory_mutex);
-  return "\n";
+  return strdup("");
 }
 
 char* action_create(package_create* create_info){
@@ -179,22 +181,19 @@ char* action_journal(package_journal* journal_info){
   pthread_mutex_unlock(&segment_table_mutex);					
 	pthread_mutex_unlock(&lru_table_mutex);
 	pthread_mutex_unlock(&main_memory_mutex);
-  return "Journaling done\n";
+  return strdup("Journaling done\n");
 }
 
 char* action_add(package_add* add_info){
-  log_info(logger, "Se recibio una accion select");
-  return "Pertenece a FS";
+  return strdup("No es una instruccion valida\n");
 }
 
 char* action_run(package_run* run_info){
-  log_info(logger, "Se recibio una accion run");
-  return "Pertenece a FS";
+  return strdup("No es una instruccion valida\n");
 }
 
 char* action_metrics(package_metrics* metrics_info){
-  log_info(logger, "Se recibio una accion metrics");
-  return "Pertenece a FS";
+  return strdup("No es una instruccion valida\n");
 }
 
 //en esta funcion se devuelve lo 

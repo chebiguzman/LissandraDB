@@ -92,7 +92,7 @@ char* action_metrics(package_metrics* metrics_info){
 }
 
 char* action_intern__status(){
-    return "";
+    return strdup("");
 }
 
 //Crea un t_instr con un string

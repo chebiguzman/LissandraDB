@@ -404,7 +404,7 @@ char* get_table_metadata_as_string(char* table_name){
 }
 
 char* get_all_tables_metadata_as_string(){
-    if(list_is_empty(tables_name)) return "";
+    if(list_is_empty(tables_name)) return strdup("");
     int tables_amount = list_size(tables_name);
 
     char* result = strdup("");

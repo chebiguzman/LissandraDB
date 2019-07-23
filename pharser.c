@@ -348,7 +348,7 @@ char* exec_instr(char* instr_buff){
 
     kill_args();
 
-    char* error_message = strdup("no es una instruccion valida\n");
+    char* error_message = strdup("No es una instruccion valida\n");
     return error_message;
     
 }

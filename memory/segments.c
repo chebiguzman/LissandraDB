@@ -420,7 +420,7 @@ char* exec_in_fs(int memory_fd, char* payload){
     
     if ( memory_fd < 0 ){
       log_error(logger, "No se pudo llevar a cabo la accion.");
-      return "";
+      return strdup("");
     }
 
     //ejecutar
@@ -429,9 +429,9 @@ char* exec_in_fs(int memory_fd, char* payload){
       return responce;
     }else{
       log_error(logger, "No se logo comuniarse con FS");
-      return "NO SE ENCUENTRA FS";
+      return strdup("NO SE ENCUENTRA FS");
     }  
-    return "algo sale mal";
+    return strdup("algo sale mal");
 }
 
 void journal(){
