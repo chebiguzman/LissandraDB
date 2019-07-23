@@ -1,5 +1,6 @@
 #include "segments.h"
 
+
 page_t* create_page(int timestamp, int key, char* value){
 	//TODO: LEVANTAR EXCEPCION SI EL VALUE ES MUY GRANDE????
 	page_t* page = (page_t*)malloc(sizeof(page_t));
@@ -416,7 +417,7 @@ int page_is_on_use(int index){
 
 char* exec_in_fs(int memory_fd, char* payload){
     char* responce = malloc(3000);
-    strcpy(responce, "");
+
     
     if ( memory_fd < 0 ){
       log_error(logger, "No se pudo llevar a cabo la accion.");
@@ -424,12 +425,12 @@ char* exec_in_fs(int memory_fd, char* payload){
     }
 
     //ejecutar
-    if(write(memory_fd,payload, strlen(payload)+1)){
+    if(send(memory_fd,payload, strlen(payload)+1,MSG_NOSIGNAL)>0){
       read(memory_fd, responce, 3000);
       return responce;
     }else{
       log_error(logger, "No se logo comuniarse con FS");
-      return strdup("NO SE ENCUENTRA FS");
+      return strdup("NO SE ENCUENTRA FS\n");
     }  
     return strdup("algo sale mal");
 }
