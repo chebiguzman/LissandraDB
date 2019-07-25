@@ -97,6 +97,13 @@ char* exec_instr(char* instr_buff){
         parameters_length++;
     }
 
+    // --- gossiping ---
+    if(!strcmp(parameters[0],"GOSSIP")){
+        kill_args();
+        return strdup("Gossiping exitoso\n");
+    }
+    // -----------------
+
     if(!strcmp(parameters[0],"SELECT")){
         
         if(parameters_length != 3){
