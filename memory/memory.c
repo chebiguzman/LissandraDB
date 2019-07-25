@@ -2,36 +2,28 @@
 #include <commons/log.h>
 #include <pthread.h>
 #include <string.h>
-#include "../server.h"
-#include <commons/config.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
-#include "segments.h"
-#include <signal.h>
+#include "gossiping.h"
 
 //logger global para que lo accedan los threads
 int main_memory_size;
+
 //punto de entrada para el programa y el kernel
 int main(int argc, char const *argv[])
 {
-  sigset_t set;
-
-  signal(SIGPIPE, SIG_IGN);
-
   //set up config  
-  t_config* config = config_create("config");
+  config = config_create("config");
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
   int PORT = config_get_int_value(config, "PORT");
-
   //set up log
   logger = log_create(LOGPATH, "Memory", 1, LOG_LEVEL_INFO);
   log_info(logger, "El log fue creado con exito\n");
 
-  
   //set up server
   pthread_t tid;
   server_info* serverInfo = malloc(sizeof(server_info));
@@ -54,7 +46,8 @@ int main(int argc, char const *argv[])
   int connection_result =  connect(fs_socket, (struct sockaddr*)&sock_client, sizeof(sock_client));
   
   if(connection_result < 0){
-    log_error(logger, "No se logro establecer la conexion con el File System");   
+    log_error(logger, "No se logro establecer la conexion con el File System");
+     // return 0;   
   }
   else{
     char* handshake = malloc(16);
@@ -64,14 +57,21 @@ int main(int argc, char const *argv[])
     log_info(logger, "La memory se conecto con fs. El hanshake dio como value size %d", VALUE_SIZE);
   }
 
+  // setup memoria principal
   main_memory_size = config_get_int_value(config, "TAM_MEM");
   MAIN_MEMORY = malloc(main_memory_size);
+  if(MAIN_MEMORY == NULL) {
+    log_info(logger, "No se pudo alocar espacio para la memoria principal.");
+    return 0;
+  }
   memset(MAIN_MEMORY, 0, main_memory_size);
+
 
   SEGMENT_TABLE = NULL;
   PAGE_SIZE = sizeof(page_t) - sizeof(char*) + VALUE_SIZE;
   NUMBER_OF_PAGES = main_memory_size / PAGE_SIZE;
   LRU_TABLE = create_LRU_TABLE();
+  gossip_table = create_gossip_table();
 
   printf("\n---- Memory info ----\n");
   printf("Main memory size: %d\n", main_memory_size);
@@ -83,18 +83,15 @@ int main(int argc, char const *argv[])
   pthread_mutex_init(&segment_table_mutex, NULL);
   pthread_mutex_init(&lru_table_mutex, NULL);
 
+  //gossip(5004);
 
   //inicio lectura por consola
   pthread_t tid_console;
-
-
-
-
-
   pthread_create(&tid_console, NULL, console_input, "Memory");
 
   //Espera a que terminen las threads antes de seguir
   pthread_join(tid,NULL);
+  
   //FREE MEMORY
   free(LOGPATH);
   free(logger);
@@ -108,7 +105,7 @@ int main(int argc, char const *argv[])
 //IMPLEMENTACION DE FUNCIONES (Devolver errror fuera del subconjunto)
 
 char* action_select(package_select* select_info){
- //  log_info(logger, "Se recibio una accion select");
+//  log_info(logger, "Se recibio una accion select");
   pthread_mutex_lock(&segment_table_mutex);					
   pthread_mutex_lock(&lru_table_mutex);
   pthread_mutex_lock(&main_memory_mutex);
@@ -118,21 +115,19 @@ char* action_select(package_select* select_info){
     pthread_mutex_unlock(&segment_table_mutex);					
     pthread_mutex_unlock(&lru_table_mutex);
     pthread_mutex_unlock(&main_memory_mutex);
-
     return page_info->page_ptr->value;
   }
   // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
   printf("Buscando en FileSystem. Tabla: %s, Key:%d...\n", select_info->table_name, select_info->key);  
   char* response = exec_in_fs(fs_socket, parse_package_select(select_info)); 
-  printf("Respuesta del FileSystem: %s\n", response);  
-  if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0 && !strcmp(response, "NO SE ENCUENTRA FS")){
+  printf("Respuesta del FileSystem: %s", response);  
+  if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0){
     page_t* page = create_page((unsigned)time(NULL), select_info->key, response);
     save_page(select_info->table_name, page);
     printf("Page found in file system. Table: %s, Key: %d, Value: %s\n", select_info->table_name, page->key, page->value);
     pthread_mutex_unlock(&segment_table_mutex);					
     pthread_mutex_unlock(&lru_table_mutex);
     pthread_mutex_unlock(&main_memory_mutex);
-
     return string_new("%s\n", page->value);
   }
   pthread_mutex_unlock(&segment_table_mutex);					
@@ -154,7 +149,7 @@ char* action_insert(package_insert* insert_info){
   pthread_mutex_unlock(&segment_table_mutex);					
   pthread_mutex_unlock(&lru_table_mutex);
   pthread_mutex_unlock(&main_memory_mutex);
-  return strdup("");
+  return "\n";
 }
 
 char* action_create(package_create* create_info){
@@ -189,19 +184,22 @@ char* action_journal(package_journal* journal_info){
   pthread_mutex_unlock(&segment_table_mutex);					
 	pthread_mutex_unlock(&lru_table_mutex);
 	pthread_mutex_unlock(&main_memory_mutex);
-  return strdup("Journaling done\n");
+  return "Journaling done\n";
 }
 
 char* action_add(package_add* add_info){
-  return strdup("No es una instruccion valida\n");
+  log_info(logger, "Se recibio una accion select");
+  return "Pertenece a FS";
 }
 
 char* action_run(package_run* run_info){
-  return strdup("No es una instruccion valida\n");
+  log_info(logger, "Se recibio una accion run");
+  return "Pertenece a FS";
 }
 
 char* action_metrics(package_metrics* metrics_info){
-  return strdup("No es una instruccion valida\n");
+  log_info(logger, "Se recibio una accion metrics");
+  return "Pertenece a FS";
 }
 
 //en esta funcion se devuelve lo 

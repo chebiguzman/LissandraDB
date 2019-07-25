@@ -1,5 +1,6 @@
 #include "gossiping.h"
 
+
 gossip_t* create_node(){
     gossip_t* node = (gossip_t*)malloc(sizeof(gossip_t));
     node->next = NULL;
@@ -34,6 +35,15 @@ void remove_node(gossip_t* list, gossip_t* temp){
 	}
 }
 
+// se asigna su propio nodo a la gossip table
+gossip_t* create_gossip_table(){
+    gossip_t* gossip_table = NULL;    
+    gossip_t* this_node = create_node();
+    this_node->number = config_get_int_value(config, "PORT");
+    add_node(gossip_table, this_node);
+    return gossip_table;
+}
+
 gossip_t* parse_gossip_buffer(int* buffer){
     gossip_t* gossip_table = NULL;
     int size = *buffer+0;
@@ -43,6 +53,7 @@ gossip_t* parse_gossip_buffer(int* buffer){
         node->number = *buffer+i+1;
         add_node(gossip_table, node);
     }
+    free(buffer);
     return gossip_table;
 }
 
@@ -99,5 +110,27 @@ gossip_t* compare_lists(gossip_t* list1, gossip_t* list2){
         }
         temp2 = temp2->next;
     }
+    free(list2); // ya no la voy a usar mas hasta que haga la proxima conexion y cree uno nuevo
 }
 
+void gossip(int next_port){ // TODO: pasar un array de ips y un array de ports
+        // setup client para conecta    
+    int next_node = socket(AF_INET, SOCK_STREAM, 0);
+    char* next_ip = "127.0.0.1";
+    printf("%s %d\n", next_ip, next_port);
+    struct sockaddr_in sock_client;
+    
+    sock_client.sin_family = AF_INET; 
+    sock_client.sin_addr.s_addr = inet_addr(next_ip); 
+    sock_client.sin_port = htons(next_port);
+
+    int connection_result =  connect(next_node, (struct sockaddr*)&sock_client, sizeof(sock_client));
+    
+    if(connection_result < 0){
+        log_error(logger, "No se logro establecer la conexion con el siguiente nodo");   
+    }
+
+    // conectarse con su proxima  memoria
+    // si falla, borrar la memoria de la lista actual 
+    // si se conecta, comparar las gossip tales y cambiar de ambas
+}
