@@ -115,7 +115,7 @@ gossip_t* compare_lists(gossip_t* list1, gossip_t* list2){
 
 void gossip(int next_port){ // TODO: pasar un array de ips y un array de ports
         // setup client para conecta    
-    int next_node = socket(AF_INET, SOCK_STREAM, 0);
+    int next_node_socket = socket(AF_INET, SOCK_STREAM, 0);
     char* next_ip = "127.0.0.1";
     printf("%s %d\n", next_ip, next_port);
     struct sockaddr_in sock_client;
@@ -124,10 +124,18 @@ void gossip(int next_port){ // TODO: pasar un array de ips y un array de ports
     sock_client.sin_addr.s_addr = inet_addr(next_ip); 
     sock_client.sin_port = htons(next_port);
 
-    int connection_result =  connect(next_node, (struct sockaddr*)&sock_client, sizeof(sock_client));
+    int connection_result =  connect(next_node_socket, (struct sockaddr*)&sock_client, sizeof(sock_client));
     
     if(connection_result < 0){
         log_error(logger, "No se logro establecer la conexion con el siguiente nodo");   
+    }
+
+    else{
+        char* response = malloc(100);
+        write(next_node_socket, "GOSSIP", strlen("GOSSIP"));
+        read(next_node_socket, response, 80);
+        log_info(logger, "Se logro conectar con el siguiente nodo");
+        printf("%s", response);
     }
 
     // conectarse con su proxima  memoria
