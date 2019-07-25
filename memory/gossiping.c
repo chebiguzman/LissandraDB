@@ -113,8 +113,9 @@ gossip_t* compare_lists(gossip_t* list1, gossip_t* list2){
     free(list2); // ya no la voy a usar mas hasta que haga la proxima conexion y cree uno nuevo
 }
 
-void* gossip(){
+void* gossip(char* seed_port){
     char** seed_ports = config_get_array_value(config, "PUERTO_SEEDS");
+    memcpy(seed_ports[0], seed_port, 4); // ---- TODO: BORRAR
     char** seed_ips = config_get_array_value(config, "IP_SEEDS");
     int retardo_gossiping = config_get_int_value(config, "RETARDO_GOSSIPING") / 1000;
     while(1){
@@ -140,6 +141,7 @@ void* gossip(){
             }
 
             else{
+                // TODO: comparar tablas y actualizar
                 char* response = malloc(100);
                 write(seed_socket, "GOSSIP", strlen("GOSSIP"));
                 read(seed_socket, response, 80);
