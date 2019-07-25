@@ -28,4 +28,4 @@ gossip_t* parse_gossip_buffer(int* buffer);
 int* create_gossip_buffer(gossip_t* list);
 gossip_t* find_node(gossip_t* list, int number);
 gossip_t* compare_lists(gossip_t* list1, gossip_t* list2);
-void gossip();
+void* gossip();

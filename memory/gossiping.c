@@ -113,32 +113,44 @@ gossip_t* compare_lists(gossip_t* list1, gossip_t* list2){
     free(list2); // ya no la voy a usar mas hasta que haga la proxima conexion y cree uno nuevo
 }
 
-void gossip(int next_port){ // TODO: pasar un array de ips y un array de ports
-        // setup client para conecta    
-    int next_node_socket = socket(AF_INET, SOCK_STREAM, 0);
-    char* next_ip = "127.0.0.1";
-    printf("%s %d\n", next_ip, next_port);
-    struct sockaddr_in sock_client;
-    
-    sock_client.sin_family = AF_INET; 
-    sock_client.sin_addr.s_addr = inet_addr(next_ip); 
-    sock_client.sin_port = htons(next_port);
+void* gossip(){
+    char** seed_ports = config_get_array_value(config, "PUERTO_SEEDS");
+    char** seed_ips = config_get_array_value(config, "IP_SEEDS");
+    int retardo_gossiping = config_get_int_value(config, "RETARDO_GOSSIPING") / 1000;
+    while(1){
+        for(int i=0; seed_ports[i] != NULL; i++){
+            int seed_port = atoi(seed_ports[i]);
+            printf("Connecting with node: %s...\n", seed_ports[i]);
 
-    int connection_result =  connect(next_node_socket, (struct sockaddr*)&sock_client, sizeof(sock_client));
-    
-    if(connection_result < 0){
-        log_error(logger, "No se logro establecer la conexion con el siguiente nodo");   
+            // setup client para conectarse con otro nodo   
+            int seed_socket = socket(AF_INET, SOCK_STREAM, 0);
+            char* next_ip = "127.0.0.1";
+            printf("%s %d\n", next_ip, seed_port);
+            struct sockaddr_in sock_client;
+            
+            sock_client.sin_family = AF_INET; 
+            sock_client.sin_addr.s_addr = inet_addr(next_ip); 
+            sock_client.sin_port = htons(seed_port);
+
+            int connection_result =  connect(seed_socket, (struct sockaddr*)&sock_client, sizeof(sock_client));
+            
+            if(connection_result < 0){
+                log_error(logger, "No se logro establecer la conexion con el siguiente nodo");   
+                // TODO: borrar el nodo de la lista ya que no se encuentra.
+            }
+
+            else{
+                char* response = malloc(100);
+                write(seed_socket, "GOSSIP", strlen("GOSSIP"));
+                read(seed_socket, response, 80);
+                log_info(logger, "Se logro conectar con el siguiente nodo");
+                printf("%s", response);
+                free(response);
+            }
+        }
+        sleep(retardo_gossiping);
     }
 
-    else{
-        char* response = malloc(100);
-        write(next_node_socket, "GOSSIP", strlen("GOSSIP"));
-        read(next_node_socket, response, 80);
-        log_info(logger, "Se logro conectar con el siguiente nodo");
-        printf("%s", response);
-    }
-
-    // conectarse con su proxima  memoria
     // si falla, borrar la memoria de la lista actual 
     // si se conecta, comparar las gossip tales y cambiar de ambas
 }
