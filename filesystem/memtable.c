@@ -17,6 +17,7 @@ void insert_to_memtable(package_insert* insert_info) {
     
     if (memtable_p == NULL) { //la memtable esta vacia - agrego tabla nueva y cargo la data
         
+        printf("La memtable está vacia\n");
         
         struct table_node* new_nodo_table;
         new_nodo_table = (struct table_node*)malloc(sizeof(struct table_node));
@@ -38,6 +39,9 @@ void insert_to_memtable(package_insert* insert_info) {
         memtable_p = new_nodo_table;
 
     } else { //la memtable no esta vacia - busco si existe la tabla
+
+        printf("La memtable no esta vacia busco si existe la tabla\n");
+
         struct table_node* aux_table;
         aux_table = memtable_p;
 
@@ -84,24 +88,26 @@ void insert_to_memtable(package_insert* insert_info) {
 
         } else { //No encontro la tabla pero llego al final de la memtable - agrego la tabla y la data
 
-        struct table_node* new_nodo_table;
-        new_nodo_table = (struct table_node*)malloc(sizeof(struct table_node));
-        new_nodo_table->table_next = NULL;
-        new_nodo_table->table_name = insert_info->table_name;
+            printf("La memtable no esta vacia pero no esta la tabla\n");
 
-        //cargo la data 
-        struct data_node* new_nodo_data;
-        new_nodo_data = (struct data_node*)malloc(sizeof(struct data_node));
-        new_nodo_data->timestamp = insert_info->timestamp;
-        new_nodo_data->key = insert_info->key;
-        new_nodo_data->value = insert_info->value;
-        new_nodo_data->data_next = NULL;
+            struct table_node* new_nodo_table;
+            new_nodo_table = (struct table_node*)malloc(sizeof(struct table_node));
+            new_nodo_table->table_next = NULL;
+            new_nodo_table->table_name = insert_info->table_name;
 
-        //le asigno la data a la tabla
-        new_nodo_table->data = new_nodo_data;
+            //cargo la data 
+            struct data_node* new_nodo_data;
+            new_nodo_data = (struct data_node*)malloc(sizeof(struct data_node));
+            new_nodo_data->timestamp = insert_info->timestamp;
+            new_nodo_data->key = insert_info->key;
+            new_nodo_data->value = insert_info->value;
+            new_nodo_data->data_next = NULL;
 
-        //agrego la tabla a la memtable
-        aux_table->table_next = new_nodo_table;
+            //le asigno la data a la tabla
+            new_nodo_table->data = new_nodo_data;
+
+            //agrego la tabla a la memtable
+            aux_table->table_next = new_nodo_table;
 
         }
     }
