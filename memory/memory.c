@@ -34,29 +34,29 @@ int main(int argc, char const *argv[])
   int reslt = pthread_create(&tid, NULL, create_server, (void*) serverInfo);
 
   //set up fs client 
-  // fs_socket = socket(AF_INET, SOCK_STREAM, 0);
-  // char* FS_IP = config_get_string_value(config, "FS_IP");
-  // int FS_PORT = config_get_int_value(config, "FS_PORT");
-  // printf("%s %d\n", FS_IP, FS_PORT);
-  // struct sockaddr_in sock_client;
+  fs_socket = socket(AF_INET, SOCK_STREAM, 0);
+  char* FS_IP = config_get_string_value(config, "FS_IP");
+  int FS_PORT = config_get_int_value(config, "FS_PORT");
+  printf("%s %d\n", FS_IP, FS_PORT);
+  struct sockaddr_in sock_client;
   
-  // sock_client.sin_family = AF_INET; 
-  // sock_client.sin_addr.s_addr = inet_addr(FS_IP); 
-  // sock_client.sin_port = htons(FS_PORT);
+  sock_client.sin_family = AF_INET; 
+  sock_client.sin_addr.s_addr = inet_addr(FS_IP); 
+  sock_client.sin_port = htons(FS_PORT);
 
-  // int connection_result =  connect(fs_socket, (struct sockaddr*)&sock_client, sizeof(sock_client));
+  int connection_result =  connect(fs_socket, (struct sockaddr*)&sock_client, sizeof(sock_client));
   
-  // if(connection_result < 0){
-  //   log_error(logger, "No se logro establecer la conexion con el File System");
-  //    // return 0;
-  // }
-  // else{
-  //   char* handshake = malloc(16);
-  //   write(fs_socket, "MEMORY", strlen("MEMORY"));
-  //   read(fs_socket, handshake, 4);
-  //   VALUE_SIZE = atoi(handshake);
-  //   log_info(logger, "La memory se conecto con fs. El hanshake dio como value size %d", VALUE_SIZE);
-  // }
+  if(connection_result < 0){
+    log_error(logger, "No se logro establecer la conexion con el File System");
+     // return 0;
+  }
+  else{
+    char* handshake = malloc(16);
+    write(fs_socket, "MEMORY", strlen("MEMORY"));
+    read(fs_socket, handshake, 4);
+    VALUE_SIZE = atoi(handshake);
+    log_info(logger, "La memory se conecto con fs. El hanshake dio como value size %d", VALUE_SIZE);
+  }
 
   // setup memoria principal
   main_memory_size = config_get_int_value(config, "TAM_MEM");
@@ -83,8 +83,9 @@ int main(int argc, char const *argv[])
   pthread_mutex_init(&segment_table_mutex, NULL);
   pthread_mutex_init(&lru_table_mutex, NULL);
 
-  gossip(5004);
-
+  pthread_t tid_gossiping;
+  pthread_create(&tid_gossiping, NULL, gossip, NULL);
+  
   //inicio lectura por consola
   pthread_t tid_console;
   pthread_create(&tid_console, NULL, console_input, "Memory");
