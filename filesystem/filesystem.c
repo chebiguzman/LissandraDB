@@ -95,6 +95,7 @@ char* action_select(package_select* select_info){
   t_table_metadata* meta = get_table_metadata(select_info->table_name);
 
   //nro particion
+  
   int table_partition_number = select_info->key % meta->partition_number ;
 
   t_table_partiton* partition = get_table_partition(select_info->table_name, table_partition_number);
@@ -178,7 +179,7 @@ char* action_select(package_select* select_info){
 
 char* action_insert(package_insert* insert_info){
 
-  printf("Se recibió una accion insert");
+  printf("Se recibió una accion insert\n");
 
   if(!does_table_exist(insert_info->table_name)){
     log_error(logger, "No se puede completar el describe.");
@@ -186,14 +187,12 @@ char* action_insert(package_insert* insert_info){
     return strdup("La tabla no existe.\n");
   }
   char* table_name = insert_info->table_name;
-  char* table_path = malloc(sizeof(table_name)+sizeof(MNT_POINT)+sizeof("Tables/"));
+  char* table_path = malloc(strlen(table_name)+strlen(MNT_POINT)+strlen("Tables/")+1);
   table_path[0] = '\0';
   
   strcat(table_path ,MNT_POINT);
   strcat(table_path ,"Tables/");
   strcat(table_path ,table_name);
-
-  printf("\nPRUEBAA %s\n",table_path);
 
   char* sliced_value = malloc(VALUE_SIZE+2);
   memcpy(sliced_value, insert_info->value, VALUE_SIZE);
@@ -203,10 +202,12 @@ char* action_insert(package_insert* insert_info){
   insert_info->value = sliced_value;
 
   insert_to_memtable(insert_info);
+
+  printf("Se agrego en la memtable\n");
  
   log_debug(logger, "Se inserto el valor en la memtable");
   free(table_path);
-  free(parse_package_insert(insert_info));  
+  //free(parse_package_insert(insert_info));  
   return strdup("");
   
 }
@@ -263,7 +264,7 @@ char* action_drop(package_drop* drop_info){
 
   if(!does_table_exist(drop_info->table_name)){
     free(parse_package_drop(drop_info));
-    return strdup("La tabla solicitada no existe.\n";)
+    return strdup("La tabla solicitada no existe.\n");
   }
   engine_drop_table(drop_info->table_name);
 
