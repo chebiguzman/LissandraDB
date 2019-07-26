@@ -47,7 +47,7 @@ void* exec(void *system_queue){
             for(int i = 0; i != config->quantum; i++){
                 //log_debug(logger_debug, "exec:me preparo para ejecutar");
                 
-                char* instr = strdup(queue_pop( program->instr));
+                char* instr = queue_pop(program->instr);
                 //en un RUN los comandos se van mostrando
                 //a medida que ejecutan
                 if(program->doesPrint){
@@ -61,19 +61,28 @@ void* exec(void *system_queue){
                 //log_debug(logger_debug, "exec:obtengo respuesta");
                 printf("%s", r);
 
+                free(instr);
+
                 
                 if(superuser){
                     kernel_call->result = r;
                     pthread_cond_broadcast(&kernel_call->cond);
                     //log_debug(logger_debug, "se le debvuelve al kernel su pedido");
+                }else{
+                    free(r);
+
                 }
 
                 if(err_trap != 0){
                     log_error(logg, "EL programa no puede seguir ejecutando.");
+                    while(!queue_is_empty(program->instr)){
+                        char* intruction_to_destroy = queue_pop(program->instr );
+                        free(intruction_to_destroy);
+                
+                    }
                     break;
                 }
            
-                free(instr);
 
                 /* si el programa se termino de ejecutar
                 voy a buscar otro para mantener el nivel de 
@@ -106,10 +115,6 @@ void* exec(void *system_queue){
             
         }
 
-             
-
-        
-        
         syscall_availity_status = true;
         //devuelvo el control a consola
         pthread_mutex_unlock(&console->lock);
