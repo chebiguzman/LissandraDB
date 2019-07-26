@@ -530,7 +530,7 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
          //agrego los datos a uno o mas bloques -> ver bitmap
         int block = find_free_block(); //elijo un bloque libre
         char* block_name = string_itoa(block);
-        char* block_path = malloc(sizeof(block_name)+sizeof(MNT_POINT)+sizeof("Bloques/")+sizeof(".bin"));
+        char* block_path = malloc(strlen(block_name)+strlen(MNT_POINT)+strlen("Bloques/")+strlen(".bin")+1);
         
         block_path[0] = ('\0');
         strcat(block_path ,MNT_POINT);
@@ -575,7 +575,7 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
    
     //creo los archivos tmp -> ver como nombro los archivos
     //chequeo si existen archivos con el nombre 0.tmp , 1.tmp, 2.tmp, etc... hasta encontrar uno que no exista
-    char* tmp_path = malloc(sizeof(MNT_POINT)+sizeof("Tables/")+sizeof(table_name)+sizeof("/.tmp")+2);
+    char* tmp_path = malloc(strlen(MNT_POINT)+strlen("Tables/")+strlen(table_name)+strlen("/.tmp")+1);
    
     tmp_path[0] = '\0';
     strcat(tmp_path ,MNT_POINT);
