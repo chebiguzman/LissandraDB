@@ -529,6 +529,12 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
         printf("table dump luego:%s\n", table_dump);
          //agrego los datos a uno o mas bloques -> ver bitmap
         int block = find_free_block(); //elijo un bloque libre
+
+        if (block == -1) {
+            log_error(logg,"No hay bloques libres");
+            exit(-1);
+        }
+
         char* block_name = string_itoa(block);
         char* block_path = malloc(strlen(block_name)+strlen(MNT_POINT)+strlen("Bloques/")+strlen(".bin")+1);
         
@@ -661,7 +667,8 @@ int find_free_block() {
     }    
     free(bitmap);
     log_error(logg,"No hay bloques libres");
-    exit(-1); //ver bien que hacer cuando no hay bloques libres
+    //exit(-1); //ver bien que hacer cuando no hay bloques libres
+    return -1;
 }
 
 void set_block_as_occupied(int block_number) {
