@@ -17,15 +17,20 @@ typedef struct gossip{
 }gossip_t;
 
 // ---- GLOBAL VARIABLES ----
-gossip_t* gossip_table;
+gossip_t* GOSSIP_TABLE;
+int PORT;
 // --------------------------
 
-gossip_t* create_node();
-void add_node(gossip_t* list, gossip_t* node);
-void remove_node(gossip_t* list, gossip_t* temp);
+gossip_t* create_node(int number);
+void add_node(gossip_t** gossip_table, gossip_t* node);
+void remove_node(gossip_t** gossip_table, gossip_t* node);
+gossip_t* find_node(gossip_t** gossip_table, int number);
 gossip_t* create_gossip_table();
 gossip_t* parse_gossip_buffer(int* buffer);
-int* create_gossip_buffer(gossip_t* list);
-gossip_t* find_node(gossip_t* list, int number);
-gossip_t* compare_lists(gossip_t* list1, gossip_t* list2);
+char* create_gossip_buffer(gossip_t** gossip_table);
+gossip_t* find_node(gossip_t** gossip_table, int number);
+gossip_t* compare_lists(gossip_t* gossip_table1, gossip_t* gossip_table2);
+void print_gossip_table();
 void* gossip();
+int get_gossip_table_size(gossip_t** gossip_table);
+char* tostring(char str[], int num);
