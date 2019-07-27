@@ -47,6 +47,7 @@ void engine_drop_table(char* table_name);
 void engine_dump_table(char* table_name, char* table_dump);
 int find_free_block();
 void set_block_as_occupied(int block_number);
+void set_block_as_free(int block_number);
 int does_file_exist(char* file_path);
 int find_tmp_name(char* tmp_path);
 

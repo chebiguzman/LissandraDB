@@ -654,7 +654,7 @@ int find_free_block() {
     fread(bitmap ,sizeof(char) ,block_amount ,bitmap_file);
     fclose(bitmap_file);
     for(int i = 0; i<block_amount ;i++) {
-        if(bitmap[i]=='1'){ //recorro todo el bitmap buscando un 0
+        if(bitmap[i]=='0'){ //recorro todo el bitmap buscando un 0
             free(bitmap);
             return i; //devuelvo el indice del primer bloque libre que encuentro -> es el numero de bloque libre
         }
@@ -665,6 +665,19 @@ int find_free_block() {
 }
 
 void set_block_as_occupied(int block_number) {
+          
+    FILE* bitmap_file = fopen(bitmap_path,"r+");
+    char *bitmap = malloc(block_amount+2);
+    fread(bitmap, sizeof(char),block_amount, bitmap_file);
+    fseek(bitmap_file, 0, SEEK_SET);
+    bitmap[block_number] = '1';
+    fwrite(bitmap, sizeof(char), block_amount, bitmap_file);
+    fclose(bitmap_file);
+    free(bitmap);
+    return;
+}
+
+void set_block_as_free(int block_number) {
           
     FILE* bitmap_file = fopen(bitmap_path,"r+");
     char *bitmap = malloc(block_amount+2);
