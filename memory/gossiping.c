@@ -6,12 +6,13 @@ gossip_t* create_node(int number){
     node->next = NULL;
     node->prev = NULL;
     node->number = number;
+    printf("Creando nodo %d\n", number);
     return node;    
 }
 
 void add_node(gossip_t** gossip_table, gossip_t* node){
+    printf("Agregando nodo %d a la tabla... ", node->number);
 	if(*gossip_table == NULL){ // si esta vacia
-        printf("Agregando nodo %d a la tabla.\n", node->number);
 		*gossip_table = node;
 	}
 	else{
@@ -22,6 +23,7 @@ void add_node(gossip_t** gossip_table, gossip_t* node){
 		temp->next = node;
 		node->prev = temp;
 	}
+    printf("Nodo agregado.\n");    
 }
 
 void remove_node(gossip_t** gossip_table, gossip_t* node){
@@ -49,36 +51,25 @@ gossip_t* find_node(gossip_t** gossip_table, int number){
 	return temp; // si no encontre nada en el loop, devuelvo temp que es NULL
 }
 
-gossip_t* parse_gossip_buffer(int* buffer){
-    gossip_t* gossip_table = NULL;
-    int size = *buffer+0;
-    buffer = buffer+sizeof(int);
-    for(int i = 0; i < size; i++){
-        gossip_t* node = create_node(*buffer+i+1);
-        add_node(&gossip_table, node);
+// crea la gossip table del otro nodo con el buffer que le pasan
+gossip_t* parse_gossip_buffer(gossip_t** gossip_table, char* buffer){
+    int number_size = 5;
+    char* string_number = malloc(number_size+1);
+    memcpy(string_number, buffer, number_size);
+    string_number[number_size] = 0;
+    int size = atoi(string_number);
+    for(int i = 1; i < size+1; i++){
+        memcpy(string_number, buffer+(number_size * i), number_size);
+        gossip_t* node = create_node(atoi(string_number));
+        add_node(gossip_table, node);
     }
     free(buffer);
-    return gossip_table;
+    return *gossip_table;
 }
-
-// crea un buffer con los primeros 4 chars indicando el tamaño, y los siguientes sets de 4 chars cada puerto
-// capaz falta inclur el ip ademas del puerto
-// char* create_gossip_buffer(gossip_t** gossip_table){
-//     int gossip_table_size = get_gossip_table_size(gossip_table);
-//     int port_size = sizeof(char) * 5; // 5 es la max cantidad de digitos para un puerto; 65535
-//     gossip_t* temp = *gossip_table;
-//     char* buffer = (char*)malloc((gossip_table_size + 1) + port_size + 1); 
-//     strcat(buffer+0, &gossip_table_size);
-//     for(int i = 1; i < gossip_table_size+1; i++){
-//         memcpy(buffer+i, &temp->number, sizeof(int));
-//         temp = temp->next;
-//     }
-//     return buffer;
-// }
 
 // retorna un string de 6 caracteres, 5 para el numero y el \0
 // si tiene menos de 5 digitos, rellena el principio con 0s
-char* tostring(char* str, int num){
+char* itoa_for_buffer(char* str, int num){
     int i, max_size = 5, rem, len = 1, n;
     n = num / 10;
     while (n != 0){
@@ -98,19 +89,6 @@ char* tostring(char* str, int num){
     return 0;
 }
 
-// buffer con array de ints
-// int* create_gossip_buffer(gossip_t** gossip_table){
-//     int gossip_table_size = get_gossip_table_size(gossip_table);
-//     gossip_t* temp = *gossip_table;
-//     int* buffer = (int*)malloc(sizeof(int) * (gossip_table_size + 1));
-//     memcpy(buffer+0, &gossip_table_size, sizeof(int));
-//     for(int i = 1; i < gossip_table_size+1; i++){
-//         memcpy(buffer+i, &temp->number, sizeof(int));
-//         temp = temp->next;
-//     }
-//     return buffer;
-// }
-
 // buffer para mandar entre nodos, cada buffer esta compuesto por un numero al inicio con la cantidad de puertos 
 // que contiene el buffer, seguido de los numeros de los puertos . Cada numero (inclutendo el primero son de 5 chars)
 char* create_gossip_buffer(gossip_t** gossip_table){
@@ -120,10 +98,10 @@ char* create_gossip_buffer(gossip_t** gossip_table){
     gossip_t* temp = *gossip_table;
     char* buffer = (char*)malloc(buffer_size);
     char* string_number = malloc(6);
-    tostring(string_number, gossip_table_size);
+    itoa_for_buffer(string_number, gossip_table_size);
     strcpy(buffer, string_number);
     for(int i = 1; i < gossip_table_size+1; i++){
-        tostring(string_number, temp->number);
+        itoa_for_buffer(string_number, temp->number);
         strcat(buffer, string_number);
         temp = temp->next;
     }
@@ -132,32 +110,40 @@ char* create_gossip_buffer(gossip_t** gossip_table){
 }
 
 gossip_t* compare_gossip_tables(gossip_t** gossip_table1, gossip_t** gossip_table2){
-    gossip_t* temp1 = *gossip_table1;
-    gossip_t* temp2;
+    printf("COMPARANDO TABLAS\n");
+    gossip_t* compared_node = *gossip_table2;
+    // gossip_t* temp2;
+    // busca cada nodo de la tabla2 en la tabla1, si no lo encuentra, lo agrega
+    while(compared_node != NULL){
+        if(!find_node(gossip_table1, compared_node->number)){
+            printf("No se encontro el nodo %d... Agregandolo\n", compared_node->number);
+            add_node(gossip_table1, create_node(compared_node->number)); // creo uno nuevo, porque despues libero el puntero y lo pierdo sino
+        }
+        compared_node = compared_node->next;
+    }
 
     // busco cada nodo de gp1 en gp2, si no esta, lo saco de gp1 porque quiere decir que se desconecto el nodo
-    while(temp1 != NULL){
-        temp2 = find_node(gossip_table2, temp1->number);
-        if(temp2 == NULL){
-            remove_node(gossip_table1, temp1);
-        }
-        temp1 = temp1->next; 
-    }
+    // while(temp1 != NULL){
+    //     temp2 = find_node(gossip_table2, temp1->number);
+    //     if(temp2 == NULL){
+    //         remove_node(gossip_table1, temp1);
+    //     }
+    //     temp1 = temp1->next; 
+    // }
 
-    temp2 = *gossip_table2;
-    while(temp2 != NULL){
-        temp1 = find_node(gossip_table1, temp2->number);
-        if(temp1 == NULL){
-            gossip_t* new_node = create_node(temp2->number);
-            // add_node(new_node, temp1);
-        }
-        temp2 = temp2->next;
-    }
-    free(gossip_table2); // ya no la voy a usar mas hasta que haga la proxima conexion y cree uno nuevo
+    // temp2 = *gossip_table2;
+    // while(temp2 != NULL){
+    //     temp1 = find_node(gossip_table1, temp2->number);
+    //     if(temp1 == NULL){
+    //         gossip_t* new_node = create_node(temp2->number);
+    //         // add_node(new_node, temp1);
+    //     }
+    //     temp2 = temp2->next;
+    // }
 }
 
-void print_gossip_table(gossip_t* gossip_table){
-	gossip_t* temp = gossip_table;
+void print_gossip_table(gossip_t** gossip_table){
+	gossip_t* temp = *gossip_table;
 	printf("Gossip table: ");
 	while(temp != NULL){
 		printf("%d ", temp->number);
@@ -206,7 +192,7 @@ void* gossip(char* seed_port){
                 free(response);
             }
         }
-        print_gossip_table(GOSSIP_TABLE);
+        print_gossip_table(&GOSSIP_TABLE);
         sleep(retardo_gossiping);
     }
 

@@ -88,20 +88,27 @@ int main(int argc, char const *argv[])
   printf("Number of pages: %d\n", NUMBER_OF_PAGES);
   printf("---------------------\n\n");
   
-  print_gossip_table(GOSSIP_TABLE);
-  // int* gossip_buffer = create_gossip_buffer(&GOSSIP_TABLE);
-  char* hola = malloc(500);
-  // tostring(hola, 9001);
-  // strcat(hola, "chau");
-  printf("Bufferrrrrrrrrrrrrrrr: %s\n", hola);
+  print_gossip_table(&GOSSIP_TABLE);
+
+  gossip_t* gp2 = NULL;
+  char* asd = malloc(20);
+  strcpy(asd, "000020004200069");
+  parse_gossip_buffer(&gp2, asd);
+
+  printf("(Otro nodo) ");
+  print_gossip_table(&gp2);
+
+  compare_gossip_tables(&GOSSIP_TABLE, &gp2);
+
+  print_gossip_table(&GOSSIP_TABLE);  
 
   pthread_mutex_init(&main_memory_mutex, NULL);
   pthread_mutex_init(&segment_table_mutex, NULL);
   pthread_mutex_init(&lru_table_mutex, NULL);
 
   // inicio gossiping
-  pthread_t tid_gossiping;
-  pthread_create(&tid_gossiping, NULL, gossip, seed_port);
+  // pthread_t tid_gossiping;
+  // pthread_create(&tid_gossiping, NULL, gossip, seed_port);
   
   //inicio lectura por consola
   pthread_t tid_console;
