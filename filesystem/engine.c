@@ -106,52 +106,51 @@ int recursive_delete(const char *dir){
         return ret;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 void engine_start(t_log* logger){
 
-    logg = logger;
-    t_config* config = config_create("config");
-    MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE");
+    logg = logger; //CHECK
+    t_config* config = config_create("config"); //CHECKADO -> config_destroy
+    MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE"); //CHECK
  
-    DIR* mnt_dir = opendir(MNT_POINT);
+    DIR* mnt_dir = opendir(MNT_POINT); //CHECKADO -> closedir
  
     if(mnt_dir == NULL){
         log_error(logger, "Fatal error. El punto de montaje es invalido.");
         exit(-1);
     }else{
         closedir(mnt_dir);
-       
     }
  
     //Armo los directorios
-    char* metadata_dir_path = malloc(strlen(MNT_POINT)+strlen("Metadata/")+10);
+    char* metadata_dir_path = malloc(strlen(MNT_POINT)+strlen("Metadata/")+1); //CHECKEADO --> porque el +10? (lo cambio a +1)
     strcpy(metadata_dir_path, MNT_POINT);
     strcat(metadata_dir_path, "Metadata/");
-    tables_path = malloc(strlen(MNT_POINT)+strlen("Tables/")+1);
+    tables_path = malloc(strlen(MNT_POINT)+strlen("Tables/")+1); //CHECKEADO -> estaba comentado (porque?)
     strcpy( tables_path,MNT_POINT);
     strcat(tables_path, "Tables/");
-    char* blocks_path = malloc(strlen(MNT_POINT)+strlen("Bloques/")+1);
+    char* blocks_path = malloc(strlen(MNT_POINT)+strlen("Bloques/")+1); //CHECKEADO -> estaba comentado (porque?)
     strcpy(blocks_path , MNT_POINT);
     strcat(blocks_path, "Bloques/");
     
  
-    check_or_create_dir(metadata_dir_path);
-    check_or_create_dir(blocks_path);
-    check_or_create_dir(tables_path);
+    check_or_create_dir(metadata_dir_path); //CHECKEADO
+    check_or_create_dir(blocks_path); //CHECKEADO
+    check_or_create_dir(tables_path); //CHECKEADO
  
  
     //Creo el archivo Metadata/Bitmap.bin
-    bitmap_path = malloc(strlen(metadata_dir_path)+strlen("bitmap")+1);
+    bitmap_path = malloc(strlen(metadata_dir_path)+strlen("bitmap")+1); //CHECKEADO -> estaba comentado (poruqe?)
     strcpy(bitmap_path,metadata_dir_path);
     strcat(bitmap_path,"bitmap");
    
     //consigo el directorio metadata
-    char* meta_path = malloc(strlen(metadata_dir_path)+strlen("Metadata.bin")+1);
+    char* meta_path = malloc(strlen(metadata_dir_path)+strlen("Metadata.bin")+1); //CHECKEADO
     strcpy(meta_path ,metadata_dir_path);
     strcat(meta_path, "Metadata.bin");
-
-    free(metadata_dir_path);
  
-    FILE* bitmap = fopen(bitmap_path,"r");
+    FILE* bitmap = fopen(bitmap_path,"r"); //CHECKEADO
     if(bitmap==NULL){
 
         FILE* bitmap = fopen(bitmap_path,"w");
@@ -161,12 +160,10 @@ void engine_start(t_log* logger){
         fclose(bitmap);
 
     }else{
-
+        fclose(bitmap);
     }
 
-    //free(bitmap_path);
-
-    FILE* meta = fopen(meta_path, "r");
+    FILE* meta = fopen(meta_path, "r"); //CHECKEADO
     //creo el archivo Metadata/Metadata.bin
     if(meta == NULL){
         meta = fopen(meta_path, "w");
@@ -174,7 +171,7 @@ void engine_start(t_log* logger){
         char* text = "BLOCKS=%s\nBLOCK_SIZE=%s\nMAGIC_NUMBER=LISSANDRA\n";
         char* a = string_itoa(BLOCKS_AMOUNT_DEFAULT);
         char* b = string_itoa(BLOCK_SIZE_DEFAULT);
-        char* r = malloc( strlen(text) + strlen(a) + strlen(b)+1);
+        char* r = malloc( strlen(text) + strlen(a) + strlen(b)+1); //CHECKEADO
 
         sprintf(r, text, a,b);
  
@@ -184,47 +181,54 @@ void engine_start(t_log* logger){
 
         free(r);
  
+    } else {
+        fclose(meta);
     }
 
     
-    t_config* meta_config = config_create(meta_path);
-    block_amount = config_get_int_value(meta_config, "BLOCKS");
-    block_size = config_get_int_value(meta_config, "BLOCK_SIZE");
-
-    free(meta_path);
+    t_config* meta_config = config_create(meta_path); //CHECKEADO -> config_destroy
+    block_amount = config_get_int_value(meta_config, "BLOCKS"); //CHECK
+    block_size = config_get_int_value(meta_config, "BLOCK_SIZE"); //CHECK
 
     for(int i = 0; i < block_amount;i++){
-        char* p = malloc(strlen(blocks_path)+strlen(string_itoa(block_amount))+5);
+        char* p = malloc(strlen(blocks_path)+strlen(string_itoa(block_amount))+5); //CHECKEADO
         strcpy(p, blocks_path);
         strcat(p, string_itoa(i));
         strcat(p, ".bin");
-        check_or_create_file(p);
+        check_or_create_file(p); //CHECK
         free(p);
     }
-
-    //free(blocks_path);
  
-    DIR* tables_dir = opendir(tables_path);
-    tables_name = list_create();
-
-    //free(tables_path);
+    DIR* tables_dir = opendir(tables_path); //CHECKEADO --> closedir
+    tables_name = list_create(); //CHECK
 
     struct dirent *entry;
-     while ((entry = readdir(tables_dir)) != NULL) {
-         if(entry->d_type == DT_DIR){
-             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
-                continue;
-            char* name = malloc(strlen(entry->d_name) +1);
+    while ((entry = readdir(tables_dir)) != NULL) {
+        if(entry->d_type == DT_DIR){
+            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+            continue;
+            char* name = malloc(strlen(entry->d_name) +1); //CHECK
             strcpy(name, entry->d_name);
             list_add(tables_name, name);
             string_to_upper(entry->d_name);
             log_info(logg, entry->d_name);
             //free(name);
-         }
-     }
- 
-   
+        }
+    }
+
+    closedir(tables_dir);
+
+    config_destroy(config);
+    config_destroy(meta_config);
+    free(metadata_dir_path); //CHECKEADO -> FREE
+    free(tables_path); //antes estaba comentado -> porque?
+    free(blocks_path); //antes estaba comentado -> porque?
+    free(bitmap_path); //antes estaba comentado -> porque?
+    free(meta_path); //CHECKEADO -> FREE
+    
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 int does_table_exist(char* table_name){
     char* q = strdup(table_name);
