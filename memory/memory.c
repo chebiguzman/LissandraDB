@@ -23,8 +23,8 @@ int main(int argc, char const *argv[])
   config = config_create("config");
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
   // ---- CAMBIAR
-  // int PORT = config_get_int_value(config, "PORT");
-  int PORT = atoi(argv[1]);
+  // PORT = config_get_int_value(config, "PORT");
+  PORT = atoi(argv[1]);
   char* seed_port = (char*)argv[2];
 
   //set up log
@@ -68,7 +68,7 @@ int main(int argc, char const *argv[])
   main_memory_size = config_get_int_value(config, "TAM_MEM");
   MAIN_MEMORY = malloc(main_memory_size);
   if(MAIN_MEMORY == NULL) {
-    log_info(logger, "No se pudo alocar espacio para la memoria principal.");
+    log_error(logger, "No se pudo alocar espacio para la memoria principal.");
     return 0;
   }
   memset(MAIN_MEMORY, 0, main_memory_size);
@@ -77,7 +77,10 @@ int main(int argc, char const *argv[])
   PAGE_SIZE = sizeof(page_t) - sizeof(char*) + VALUE_SIZE;
   NUMBER_OF_PAGES = main_memory_size / PAGE_SIZE;
   LRU_TABLE = create_LRU_TABLE();
-  gossip_table = create_gossip_table();
+  GOSSIP_TABLE = NULL;
+  // add_node(&GOSSIP_TABLE, create_node(config_get_int_value(config, "PORT"))); // agrego este nodo
+  add_node(&GOSSIP_TABLE, create_node(PORT));
+  add_node(&GOSSIP_TABLE, create_node(atoi(seed_port))); 
 
   printf("\n---- Memory info ----\n");
   printf("Main memory size: %d\n", main_memory_size);
@@ -85,10 +88,18 @@ int main(int argc, char const *argv[])
   printf("Number of pages: %d\n", NUMBER_OF_PAGES);
   printf("---------------------\n\n");
   
+  print_gossip_table(GOSSIP_TABLE);
+  // int* gossip_buffer = create_gossip_buffer(&GOSSIP_TABLE);
+  char* hola = malloc(500);
+  // tostring(hola, 9001);
+  // strcat(hola, "chau");
+  printf("Bufferrrrrrrrrrrrrrrr: %s\n", hola);
+
   pthread_mutex_init(&main_memory_mutex, NULL);
   pthread_mutex_init(&segment_table_mutex, NULL);
   pthread_mutex_init(&lru_table_mutex, NULL);
 
+  // inicio gossiping
   pthread_t tid_gossiping;
   pthread_create(&tid_gossiping, NULL, gossip, seed_port);
   
