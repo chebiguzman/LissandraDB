@@ -106,15 +106,13 @@ int recursive_delete(const char *dir){
         return ret;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////
-
 void engine_start(t_log* logger){
 
     logg = logger; //CHECK
-    t_config* config = config_create("config"); //CHECKADO -> config_destroy
+    t_config* config = config_create("config"); 
     MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE"); //CHECK
  
-    DIR* mnt_dir = opendir(MNT_POINT); //CHECKADO -> closedir
+    DIR* mnt_dir = opendir(MNT_POINT); 
  
     if(mnt_dir == NULL){
         log_error(logger, "Fatal error. El punto de montaje es invalido.");
@@ -124,54 +122,41 @@ void engine_start(t_log* logger){
     }
  
     //Armo los directorios
-    char* metadata_dir_path = malloc(strlen(MNT_POINT)+strlen("Metadata/")+1); //CHECKEADO --> porque el +10? (lo cambio a +1)
+    char* metadata_dir_path = malloc(strlen(MNT_POINT)+strlen("Metadata/")+1); 
     strcpy(metadata_dir_path, MNT_POINT);
     strcat(metadata_dir_path, "Metadata/");
-    tables_path = malloc(strlen(MNT_POINT)+strlen("Tables/")+1); //CHECKEADO -> estaba comentado (porque?)
+    tables_path = malloc(strlen(MNT_POINT)+strlen("Tables/")+1); 
     strcpy( tables_path,MNT_POINT);
     strcat(tables_path, "Tables/");
-    char* blocks_path = malloc(strlen(MNT_POINT)+strlen("Bloques/")+1); //CHECKEADO -> estaba comentado (porque?)
+    char* blocks_path = malloc(strlen(MNT_POINT)+strlen("Bloques/")+1); 
     strcpy(blocks_path , MNT_POINT);
     strcat(blocks_path, "Bloques/");
     
  
-    check_or_create_dir(metadata_dir_path); //CHECKEADO
-    check_or_create_dir(blocks_path); //CHECKEADO
-    check_or_create_dir(tables_path); //CHECKEADO
+    check_or_create_dir(metadata_dir_path); 
+    check_or_create_dir(blocks_path); 
+    check_or_create_dir(tables_path); 
  
  
     //Creo el archivo Metadata/Bitmap.bin
-    bitmap_path = malloc(strlen(metadata_dir_path)+strlen("bitmap")+1); //CHECKEADO -> estaba comentado (poruqe?)
+    bitmap_path = malloc(strlen(metadata_dir_path)+strlen("bitmap")+1); 
     strcpy(bitmap_path,metadata_dir_path);
     strcat(bitmap_path,"bitmap");
    
     //consigo el directorio metadata
-    char* meta_path = malloc(strlen(metadata_dir_path)+strlen("Metadata.bin")+1); //CHECKEADO
+    char* meta_path = malloc(strlen(metadata_dir_path)+strlen("Metadata.bin")+1); 
     strcpy(meta_path ,metadata_dir_path);
     strcat(meta_path, "Metadata.bin");
- 
-    FILE* bitmap = fopen(bitmap_path,"r"); //CHECKEADO
-    if(bitmap==NULL){
 
-        FILE* bitmap = fopen(bitmap_path,"w");
-        char* bitearray;
-        bitearray = string_repeat( '1', BLOCKS_AMOUNT_DEFAULT);
-        fputs(bitearray, bitmap);
-        fclose(bitmap);
-
-    }else{
-        fclose(bitmap);
-    }
-
-    FILE* meta = fopen(meta_path, "r"); //CHECKEADO
+    FILE* meta = fopen(meta_path, "r"); 
     //creo el archivo Metadata/Metadata.bin
     if(meta == NULL){
         meta = fopen(meta_path, "w");
         log_info(logg, "Se crea: %s", meta_path);
         char* text = "BLOCKS=%s\nBLOCK_SIZE=%s\nMAGIC_NUMBER=LISSANDRA\n";
-        char* a = string_itoa(BLOCKS_AMOUNT_DEFAULT);
-        char* b = string_itoa(BLOCK_SIZE_DEFAULT);
-        char* r = malloc( strlen(text) + strlen(a) + strlen(b)+1); //CHECKEADO
+        char* a = string_itoa(block_amount);
+        char* b = string_itoa(block_size);
+        char* r = malloc( strlen(text) + strlen(a) + strlen(b)+1); 
 
         sprintf(r, text, a,b);
  
@@ -186,12 +171,34 @@ void engine_start(t_log* logger){
     }
 
     
-    t_config* meta_config = config_create(meta_path); //CHECKEADO -> config_destroy
+    t_config* meta_config = config_create(meta_path); 
     block_amount = config_get_int_value(meta_config, "BLOCKS"); //CHECK
     block_size = config_get_int_value(meta_config, "BLOCK_SIZE"); //CHECK
 
+    FILE* bitmap = fopen(bitmap_path,"r"); 
+    if(bitmap==NULL){
+
+        printf("------------cantidad de bloques---------------\n");
+        printf("%d\n", block_amount);
+        printf("---------------------------------------\n");
+
+        FILE* bitmap = fopen(bitmap_path,"w");
+        char* bitearray;
+        bitearray = string_repeat( '0', block_amount);
+
+        printf("------------El bitmap es---------------\n");
+        printf("%s\n", bitearray);
+        printf("---------------------------------------\n");
+
+        fputs(bitearray, bitmap);
+        fclose(bitmap);
+
+    }else{
+        fclose(bitmap);
+    }
+
     for(int i = 0; i < block_amount;i++){
-        char* p = malloc(strlen(blocks_path)+strlen(string_itoa(block_amount))+5); //CHECKEADO
+        char* p = malloc(strlen(blocks_path)+strlen(string_itoa(block_amount))+5); 
         strcpy(p, blocks_path);
         strcat(p, string_itoa(i));
         strcat(p, ".bin");
@@ -199,7 +206,7 @@ void engine_start(t_log* logger){
         free(p);
     }
  
-    DIR* tables_dir = opendir(tables_path); //CHECKEADO --> closedir
+    DIR* tables_dir = opendir(tables_path); 
     tables_name = list_create(); //CHECK
 
     struct dirent *entry;
@@ -218,17 +225,15 @@ void engine_start(t_log* logger){
 
     closedir(tables_dir);
 
-    config_destroy(config);
+    //config_destroy(config); -> si hago destroy pierdo el punto de montaje que uso en engine_dump_table
     config_destroy(meta_config);
-    free(metadata_dir_path); //CHECKEADO -> FREE
-    free(tables_path); //antes estaba comentado -> porque?
-    free(blocks_path); //antes estaba comentado -> porque?
-    free(bitmap_path); //antes estaba comentado -> porque?
-    free(meta_path); //CHECKEADO -> FREE
+    free(metadata_dir_path);
+    //free(tables_path); -> lo uso en enginet_create_table 
+    free(blocks_path); 
+    //free(bitmap_path); -> lo uso en otras funciones: find_free_block , set_block_as_ocupied , set_block_as_free
+    free(meta_path); 
     
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
 
 int does_table_exist(char* table_name){
     char* q = strdup(table_name);
@@ -520,7 +525,7 @@ char* get_blocksize_table_rows(char* table_data){
 }
 
 void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene que tomar el dump de cada table y llevarla al fs
-    
+
     if(!does_table_exist(table_name)){ //chequeo que la tabla existe
         log_error(logg,"La tabla no existe");
         exit(-1);
@@ -530,9 +535,13 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
     while(table_dump[0] != '\0'){
         printf("el table dump antes del dp: %s\n", table_dump);
         char* r = get_blocksize_table_rows(table_dump);
-        printf("table dump luego:%s\n", table_dump);
+        printf("table dump luego: %s\n", table_dump);
          //agrego los datos a uno o mas bloques -> ver bitmap
         int block = find_free_block(); //elijo un bloque libre
+
+        printf("-----------------Encontre el siguiente bloque------------------\n");
+        printf("%d\n",block);
+        printf("---------------------------------------------------------------\n");
 
         if (block == -1) {
             log_error(logg,"No hay bloques libres");
@@ -548,25 +557,23 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
         strcat(block_path ,block_name);
         strcat(block_path ,".bin");
 
+        printf("---------------------------------\n");
+        printf("%s\n",block_path);
+        printf("---------------------------------\n");
+
         //escribo el dump en el bloque
         FILE* block_file = fopen(block_path,"r+");
-        free(block_path);
-        printf("respuesta: %s\n", r);
 
         fwrite(r,strlen(r),1,block_file);
 
         fclose(block_file);
+        free(block_path);
 
         set_block_as_occupied(block);//marco el bloque como ocupado en el bitmap
-
-        printf("se marco el bloqie como modificado\n");
-        printf("blocks[0] es: %i",blocks[0]);
         
         if(blocks[0] == '\0'){
             //blocks = strdup(string_itoa(block));
-            printf("blocks estaba vacia\n");
             strcat(blocks,string_itoa(block));
-            printf("concatene blocks y block: %s\n", blocks);
         }else{
             char* blocks_buffer = malloc(strlen(blocks) + strlen(string_itoa(block))+1);
             strcpy(blocks_buffer, blocks );
@@ -575,12 +582,14 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
             free(blocks);
             blocks = blocks_buffer;
         }
-        
-        printf("termine de cargar los bloques\n");
 
         dump_size++; //por cada iteracion se agrega un \0
 
     }
+
+    printf("---------------------------------\n");
+    printf("%s\n",blocks);
+    printf("---------------------------------\n");
     
    
     //creo los archivos tmp -> ver como nombro los archivos
@@ -593,8 +602,9 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
     strcat(tmp_path ,table_name);
     strcat(tmp_path ,"/");
 
-
-    printf("El path temporal es: %s\n", tmp_path);
+    printf("---------------------------------\n");
+    printf("%s\n",tmp_path);
+    printf("---------------------------------\n");
 
     //encuentro un archivo tmp: desde 0 en adelante itero hasta que no existe salgo y devuelvo el num
     char* tmp_file_number = string_itoa(find_tmp_name(tmp_path));
@@ -604,11 +614,9 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
     strcat(tmp_filepath ,tmp_file_number);
     strcat(tmp_filepath ,".tmp");
 
-    free(tmp_path);
-
-    printf("tmp_filepath es: %s",tmp_filepath);
-
-    FILE* tmp_file = fopen(tmp_filepath,"w+");//creo el archivo .tmp
+    printf("---------------------------------\n");
+    printf("%s\n",tmp_filepath);
+    printf("---------------------------------\n");
 
     //cargo el archivo .tmp
 
@@ -618,15 +626,41 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
 
     sprintf(r, text, a,blocks);
 
-    printf("va por aca: %s", r);
+    printf("---------------------------------\n");
+    printf("%s",r);
+    printf("---------------------------------\n");
+    printf("el archivo temporal es: %s\n",tmp_filepath);
+    printf("---------------------------------\n");
+
+    FILE* tmp_file = fopen(tmp_filepath,"w");//creo el archivo .tmp
+
+    if (tmp_file == NULL) {
+        printf("---------------------------------\n");
+        printf("tmp_file es null\n");
+        printf("---------------------------------\n");
+    }
+    if (r == NULL) {
+        printf("---------------------------------\n");
+        printf("r es null\n");
+        printf("---------------------------------\n");
+    }
     
-    fputs(r, tmp_file);
+    fputs(r, tmp_file); //aca da seg fault
+
+    printf("---------------------------------\n");
+    printf("%s\n","huevadas");
+    printf("---------------------------------\n");
+
+    printf("hasta aca vamos bien?");
 
     fclose(tmp_file);
     free(tmp_filepath);
     free(r);
     free(table_dump);
     free(blocks);
+    free(tmp_path);
+
+    printf("engine_dump_table va a retornar");
     
     return;
 }
@@ -644,8 +678,12 @@ int find_tmp_name(char* tmp_path) {
         strcat(tmp_filepath ,tmp_name);
         strcat(tmp_filepath ,".tmp");
 
+        printf("\n============================\n");
+        printf("%s\n", tmp_filepath);
+        printf("============================\n");
+
         if(!does_file_exist(tmp_filepath)){
-            printf("encontre un nombre para tmp");
+            printf("encontre un nombre para tmp\n");
             free(tmp_filepath);
             return i;
         }
@@ -659,6 +697,8 @@ int find_free_block() {
     printf("El bloque %s\n", bitmap_path);
     FILE* bitmap_file = fopen(bitmap_path,"r+");
     char* bitmap = malloc(block_amount+2);
+
+    printf("cantidad de bloques: %d",block_amount);
     
 
     fread(bitmap ,sizeof(char) ,block_amount ,bitmap_file);
@@ -668,7 +708,13 @@ int find_free_block() {
             free(bitmap);
             return i; //devuelvo el indice del primer bloque libre que encuentro -> es el numero de bloque libre
         }
-    }    
+    }
+
+    printf("-------------------NO HAY BLOQUES LIBRES-----------------------\n");
+    printf("%s",bitmap);
+    printf("---------------------------------------------------------------\n");
+    
+
     free(bitmap);
     log_error(logg,"No hay bloques libres");
     //exit(-1); //ver bien que hacer cuando no hay bloques libres
