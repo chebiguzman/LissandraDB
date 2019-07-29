@@ -1,13 +1,15 @@
+#ifndef SEGMENTS_H
+#define SEGMENTS_H
+
 #include <stdlib.h>
 #include <commons/log.h>
 #include <pthread.h>
 #include <string.h>
 #include <commons/config.h>
 #include <unistd.h>
-#include "../server.h"
+
 #include "../pharser.h"
-#include "../actions.h"
-#include "../console.h"
+
 
 typedef struct{
   unsigned long timestamp;
@@ -99,3 +101,6 @@ void journal();
 void print_everything();
 int memory_full();
 int is_memory_full();
+
+
+#endif

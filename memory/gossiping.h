@@ -1,13 +1,17 @@
-#include "../server.h"
+#ifndef GOSSIPING_H
+#define GOSSIPING_H
+
+// #include "../server.h"
 #include <commons/config.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
+// #include "../actions.h"
 #include "segments.h"
-
 
 
 typedef struct gossip{
@@ -18,7 +22,7 @@ typedef struct gossip{
 
 // ---- GLOBAL VARIABLES ----
 gossip_t* GOSSIP_TABLE;
-int PORT;
+int MEMORY_PORT;
 // --------------------------
 
 gossip_t* create_node(int number);
@@ -34,3 +38,5 @@ void print_gossip_table();
 void* gossip();
 int get_gossip_table_size(gossip_t** gossip_table);
 char* itoa_for_buffer(char* str, int num);
+
+#endif

@@ -8,6 +8,12 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
+#include <commons/config.h>
+#include "../server.h"
+// #include "../pharser.h"
+// #include "../actions.h"
+#include "../console.h"
+#include "segments.h"
 #include "gossiping.h"
 
 //logger global para que lo accedan los threads
@@ -23,8 +29,8 @@ int main(int argc, char const *argv[])
   config = config_create("config");
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
   // ---- CAMBIAR
-  // PORT = config_get_int_value(config, "PORT");
-  PORT = atoi(argv[1]);
+  // MEMORY_PORT = config_get_int_value(config, "MEMORY_PORT");
+  MEMORY_PORT = atoi(argv[1]);
   char* seed_port = (char*)argv[2];
 
   //set up log
@@ -36,7 +42,7 @@ int main(int argc, char const *argv[])
   server_info* serverInfo = malloc(sizeof(server_info));
   memset(serverInfo, 0, sizeof(server_info));    
   serverInfo->logger = logger;
-  serverInfo->portNumber = PORT; 
+  serverInfo->portNumber = MEMORY_PORT; 
   int reslt = pthread_create(&tid, NULL, create_server, (void*) serverInfo);
 
   //set up fs client 
@@ -78,9 +84,9 @@ int main(int argc, char const *argv[])
   NUMBER_OF_PAGES = main_memory_size / PAGE_SIZE;
   LRU_TABLE = create_LRU_TABLE();
   GOSSIP_TABLE = NULL;
-  // add_node(&GOSSIP_TABLE, create_node(config_get_int_value(config, "PORT"))); // agrego este nodo
-  add_node(&GOSSIP_TABLE, create_node(PORT));
-  add_node(&GOSSIP_TABLE, create_node(atoi(seed_port))); 
+  // add_node(&GOSSIP_TABLE, create_node(config_get_int_value(config, "MEMORY_PORT"))); // agrego este nodo
+  add_node(&GOSSIP_TABLE, create_node(MEMORY_PORT));
+  // add_node(&GOSSIP_TABLE, create_node(atoi(seed_port))); 
 
   printf("\n---- Memory info ----\n");
   printf("Main memory size: %d\n", main_memory_size);
@@ -90,17 +96,7 @@ int main(int argc, char const *argv[])
   
   print_gossip_table(&GOSSIP_TABLE);
 
-  gossip_t* gp2 = NULL;
-  char* asd = malloc(20);
-  strcpy(asd, "000020004200069");
-  parse_gossip_buffer(&gp2, asd);
-
-  printf("(Otro nodo) ");
-  print_gossip_table(&gp2);
-
-  compare_gossip_tables(&GOSSIP_TABLE, &gp2);
-
-  print_gossip_table(&GOSSIP_TABLE);  
+  gossip(seed_port);  
 
   pthread_mutex_init(&main_memory_mutex, NULL);
   pthread_mutex_init(&segment_table_mutex, NULL);
