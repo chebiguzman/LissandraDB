@@ -4,7 +4,8 @@
 #include "pharser.h"
 #include "server.h"
 #include "actions.h"
-#include<string.h>
+#include <string.h>
+#include "memory/gossiping.h"
 
 
 
@@ -99,8 +100,14 @@ char* exec_instr(char* instr_buff){
 
     // --- gossiping ---
     if(!strcmp(parameters[0],"GOSSIP")){
+        char* gossip_buffer = create_gossip_buffer(&GOSSIP_TABLE);
+        printf("Gossip buffer to send when contacted: %s\n", gossip_buffer);
+        gossip_t* gossip_table = NULL;
+        parse_gossip_buffer(&gossip_table, parameters[1]);
+        compare_gossip_tables(&GOSSIP_TABLE, &gossip_table);
         kill_args();
-        return strdup("Gossiping exitoso\n");
+        // return strdup("Gossiping exitoso\n");
+        return gossip_buffer;
     }
     // -----------------
 
