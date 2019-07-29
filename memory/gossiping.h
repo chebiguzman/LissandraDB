@@ -23,6 +23,10 @@ typedef struct gossip{
 // ---- GLOBAL VARIABLES ----
 gossip_t* GOSSIP_TABLE;
 int MEMORY_PORT;
+char** seeds_ports;
+char** seeds_ips;
+int retardo_gossiping;
+
 // --------------------------
 
 gossip_t* create_node(int number);
@@ -35,8 +39,9 @@ char* create_gossip_buffer(gossip_t** gossip_table);
 gossip_t* find_node(gossip_t** gossip_table, int number);
 gossip_t* compare_gossip_tables(gossip_t** gossip_table1, gossip_t** gossip_table2);
 void print_gossip_table();
-void* gossip();
+void* gossip(gossip_t** gossip_table);
 int get_gossip_table_size(gossip_t** gossip_table);
 char* itoa_for_buffer(char* str, int num);
+gossip_t* create_nodes_to_connect(gossip_t** gossip_table, char** seeds_ports);
 
 #endif
