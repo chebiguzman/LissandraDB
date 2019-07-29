@@ -158,18 +158,28 @@ void print_gossip_table(gossip_t** gossip_table){
 	printf("\n\n");
 }
 
-void* gossip(gossip_t** gossip_table, char* seed_port){
+// armo una gossip_table con los nodos que se tienen que contactar (los de la gossip table y los de config en caso de que se hayan sacado de la table)
+gossip_t* create_nodes_to_connect(gossip_t** gossip_table, char** seeds_ports){
+    gossip_t* temp_gossip = NULL;
+    compare_gossip_tables(&temp_gossip, gossip_table); // duplico la tabla asi no cambio la posta
+    remove_node(&temp_gossip, *gossip_table); // remuevo el primer elemento
+    for(int i=0; seeds_ports[i] != NULL; i++){
+        printf("asd: %s\n", seeds_ports[i]);
+        if(!find_node(&temp_gossip, atoi(seeds_ports[i]))){ // si no encuentra alguno de los nodos que estan en el config, los agrego
+            gossip_t* temp_node = create_node(atoi(seeds_ports[i]));
+            add_node(&temp_gossip, temp_node);
+        }
+    }
+    return temp_gossip;
+}
+
+void* gossip(gossip_t** gossip_table){
     printf("Gossiping...\n");
-    // es mejor tener un array de char porque el ultimo elemento va a ser NULL y no me como un segfault cuando itero
-    char** seed_ports = config_get_array_value(config, "PUERTO_SEEDS");
-    memcpy(seed_ports[0], seed_port, 4); // ---- TODO: BORRAR
-    char** seed_ips = config_get_array_value(config, "IP_SEEDS");
-    int retardo_gossiping = config_get_int_value(config, "RETARDO_GOSSIPING") / 1000;
-    // TODO: armar un array con los nodos del config + los de la gossip table menos el este nodo
+    gossip_t* nodes_to_connect = create_nodes_to_connect(gossip_table, seeds_ports);
     // while(1){
-        for(int i=0; seed_ports[i] != NULL; i++){
-            int seed_port = atoi(seed_ports[i]);
-            printf("Connecting with node: %s...\n", seed_ports[i]);
+        while(nodes_to_connect != NULL){
+            int seed_port = nodes_to_connect->number;
+            printf("Connecting with node: %d...\n", seed_port);
 
             // setup client para conectarse con otro nodo   
             int seed_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -185,7 +195,6 @@ void* gossip(gossip_t** gossip_table, char* seed_port){
             
             if(connection_result < 0){
                 log_error(logger, "No se logro establecer la conexion con el siguiente nodo");   
-                // TODO: hay que borrar el nodo con el que no conecto? o todo y volver a empezar el gossiping
                 remove_node(gossip_table, find_node(gossip_table, seed_port));
             }
 
@@ -211,12 +220,10 @@ void* gossip(gossip_t** gossip_table, char* seed_port){
                   remove_node(gossip_table, find_node(gossip_table, seed_port));   
                 }
             }
-        // }
+            nodes_to_connect = nodes_to_connect->next;
+        }
         sleep(retardo_gossiping);
-    }
-
-    // si falla, borrar la memoria de la gossip_tablea actual 
-    // si se conecta, comparar las gossip tales y cambiar de ambas
+    // }
 }
 
 int get_gossip_table_size(gossip_t** gossip_table){

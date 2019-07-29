@@ -26,12 +26,12 @@ int main_memory_size;
 int main(int argc, char const *argv[])
 {
   //set up config  
-  config = config_create("config");
+  char* config_name = malloc(10);
+  strcpy(config_name, "config");
+  strcat(config_name, argv[1]);
+  config = config_create(config_name);
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
-  // ---- CAMBIAR
-  // MEMORY_PORT = config_get_int_value(config, "MEMORY_PORT");
-  MEMORY_PORT = atoi(argv[1]);
-  char* seed_port = (char*)argv[2];
+  MEMORY_PORT = config_get_int_value(config, "PORT");
 
   //set up log
   logger = log_create(LOGPATH, "Memory", 1, LOG_LEVEL_INFO);
@@ -79,6 +79,13 @@ int main(int argc, char const *argv[])
   }
   memset(MAIN_MEMORY, 0, main_memory_size);
 
+  // setup gossiping
+  seeds_ports = config_get_array_value(config, "PUERTO_SEEDS");
+  printf("asdasd:%s\n", seeds_ports[0]);
+  seeds_ips = config_get_array_value(config, "IP_SEEDS");
+  retardo_gossiping = config_get_int_value(config, "RETARDO_GOSSIPING") / 1000;
+
+
   SEGMENT_TABLE = NULL;
   PAGE_SIZE = sizeof(page_t) - sizeof(char*) + VALUE_SIZE;
   NUMBER_OF_PAGES = main_memory_size / PAGE_SIZE;
@@ -86,7 +93,6 @@ int main(int argc, char const *argv[])
   GOSSIP_TABLE = NULL;
   // add_node(&GOSSIP_TABLE, create_node(config_get_int_value(config, "MEMORY_PORT"))); // agrego este nodo
   add_node(&GOSSIP_TABLE, create_node(MEMORY_PORT));
-  // add_node(&GOSSIP_TABLE, create_node(atoi(seed_port))); 
 
   printf("\n---- Memory info ----\n");
   printf("Main memory size: %d\n", main_memory_size);
@@ -96,7 +102,11 @@ int main(int argc, char const *argv[])
   
   print_gossip_table(&GOSSIP_TABLE);
 
-  gossip(&GOSSIP_TABLE, seed_port);  
+  // char** seed_ports = config_get_array_value(config, "PUERTO_SEEDS");
+  // gossip_t* gossip_temp = create_nodes_to_connect(&GOSSIP_TABLE, seed_ports);
+  // print_gossip_table(&gossip_temp);
+
+  gossip(&GOSSIP_TABLE);  
 
   pthread_mutex_init(&main_memory_mutex, NULL);
   pthread_mutex_init(&segment_table_mutex, NULL);
