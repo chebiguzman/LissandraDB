@@ -18,8 +18,8 @@
 extern scheduler_config* config_not;
 extern pthread_mutex_t config_lock;
 long MEMORY_FINDER_SLEEP;
-t_log* logger;
-t_log* logger_debug;
+ t_log* logger;
+ t_log* logger_debug;
 t_dictionary* tbl_list;   //Lista de tablas (metadata)
 
 pthread_mutex_t mem_list_lock = PTHREAD_MUTEX_INITIALIZER;  //mutex para la lista de memorias

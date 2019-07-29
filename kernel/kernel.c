@@ -21,8 +21,8 @@
 #include "metrics_worker.h"
 
 //punto de entrada para el programa y el kernel
-t_log* logger;
-t_log* logger_debug;
+ t_log* logger;
+ t_log* logger_debug;
 
 char* MEMORY_IP;
 int MEMORY_PORT;
@@ -54,22 +54,35 @@ int main(int argc, char const *argv[])
  
     pthread_cond_t console_cond;
     pthread_mutex_t console_lock;
+
+    pthread_cond_t exec_cond;
+    pthread_mutex_t exec_lock;
+    pthread_mutex_t print_lock;
     pthread_mutex_init(&console_lock, NULL);
     pthread_cond_init(&console_cond,NULL);
+    pthread_mutex_init(&exec_lock, NULL);
+    pthread_cond_init(&exec_cond,NULL);
+    pthread_mutex_init(&print_lock, NULL);
+
     t_console_control* control = malloc(sizeof(t_console_control));
     control->lock = console_lock;
     control->cond = console_cond;
+    control->print_lock = print_lock;
     control->name = strdup("kernel");
+  
+
+   
+        
+
 
     start_sheduler(logger,logger_debug, control);
 
     start_kmemory_module(logger,logger_debug, MEMORY_IP, MEMORY_PORT);
-        
 
    //inicio lectura por consola
     pthread_t tid_console;
     pthread_create(&tid_console, NULL, console_input_wait, control);
-    
+
     //signal(SIGPIPE, SIG_IGN); //Ignorar error de write
     metrics_start(logger);
     //JOIN THREADS
@@ -88,7 +101,8 @@ int main(int argc, char const *argv[])
 char* exec_in_memory(int memory_fd, char* payload){
    
     char* responce = malloc(3000);
-    strcpy(responce, "");
+    responce[0] = '\033';
+    //strcpy(responce, "");
 
     if ( memory_fd < 0 ){
       log_error(logger, "No se pudo llevar a cabo la accion.");
@@ -109,7 +123,9 @@ char* exec_in_memory(int memory_fd, char* payload){
     if(write(memory_fd,payload, strlen(payload)+1)){
       read(memory_fd, responce, 3000);
       free(payload);
-      if(strlen(responce)==0){
+
+      
+      if(responce[0]=='\033'){
         log_error(logger, "Una memoria en uso fue desconectada.");
         disconect_from_memory(memory_fd);
         exec_err_abort();
