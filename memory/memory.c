@@ -154,7 +154,7 @@ char* action_insert(package_insert* insert_info){
   pthread_mutex_unlock(&segment_table_mutex);					
   pthread_mutex_unlock(&lru_table_mutex);
   pthread_mutex_unlock(&main_memory_mutex);
-  return strdup(" ");
+  return strdup("");
 }
 
 char* action_create(package_create* create_info){
