@@ -6,12 +6,12 @@ gossip_t* create_node(int number){
     node->next = NULL;
     node->prev = NULL;
     node->number = number;
-    printf("Creando nodo %d\n", number);
+    // printf("Creando nodo %d\n", number);
     return node;    
 }
 
 void add_node(gossip_t** gossip_table, gossip_t* node){
-    printf("Agregando nodo %d a la tabla... ", node->number);
+    // printf("Agregando nodo %d a la tabla... ", node->number);
 	if(*gossip_table == NULL){ // si esta vacia
 		*gossip_table = node;
 	}
@@ -23,7 +23,7 @@ void add_node(gossip_t** gossip_table, gossip_t* node){
 		temp->next = node;
 		node->prev = temp;
 	}
-    printf("Nodo agregado.\n");    
+    // printf("Nodo agregado.\n");    
 }
 
 void remove_node(gossip_t** gossip_table, gossip_t* node){
@@ -53,6 +53,7 @@ gossip_t* find_node(gossip_t** gossip_table, int number){
 
 // crea la gossip table del otro nodo con el buffer que le pasan
 gossip_t* parse_gossip_buffer(gossip_t** gossip_table, char* buffer){
+    printf("Parseando buffer: %s\n", buffer);
     char* temp_buffer = malloc(strlen(buffer) + 1);
     strcpy(temp_buffer, buffer);
     // temp_buffer = temp_buffer+(strlen("GOSSIP "));
@@ -109,7 +110,6 @@ char* create_gossip_buffer(gossip_t** gossip_table){
         temp = temp->next;
     }
     free(string_number);
-    printf("Gossip buffer created: %s\n", buffer);
     return buffer;
 }
 
@@ -126,7 +126,7 @@ gossip_t* compare_gossip_tables(gossip_t** gossip_table1, gossip_t** gossip_tabl
         compared_node = compared_node->next;
     }
     printf("Asi quedo la ");
-    print_gossip_table(&GOSSIP_TABLE);
+    print_gossip_table(gossip_table1);
 
     // busco cada nodo de gp1 en gp2, si no esta, lo saco de gp1 porque quiere decir que se desconecto el nodo
     // while(temp1 != NULL){
@@ -158,14 +158,14 @@ void print_gossip_table(gossip_t** gossip_table){
 	printf("\n\n");
 }
 
-void* gossip(char* seed_port){
+void* gossip(gossip_t** gossip_table, char* seed_port){
     printf("Gossiping...\n");
     // es mejor tener un array de char porque el ultimo elemento va a ser NULL y no me como un segfault cuando itero
     char** seed_ports = config_get_array_value(config, "PUERTO_SEEDS");
     memcpy(seed_ports[0], seed_port, 4); // ---- TODO: BORRAR
     char** seed_ips = config_get_array_value(config, "IP_SEEDS");
     int retardo_gossiping = config_get_int_value(config, "RETARDO_GOSSIPING") / 1000;
-    // TODO: armar un array con los nodos que del config + los de la gossip table
+    // TODO: armar un array con los nodos del config + los de la gossip table menos el este nodo
     // while(1){
         for(int i=0; seed_ports[i] != NULL; i++){
             int seed_port = atoi(seed_ports[i]);
@@ -186,35 +186,32 @@ void* gossip(char* seed_port){
             if(connection_result < 0){
                 log_error(logger, "No se logro establecer la conexion con el siguiente nodo");   
                 // TODO: hay que borrar el nodo con el que no conecto? o todo y volver a empezar el gossiping
-                remove_node(&GOSSIP_TABLE, find_node(&GOSSIP_TABLE, seed_port));
+                remove_node(gossip_table, find_node(gossip_table, seed_port));
             }
 
             else{
                 char* instruction = "GOSSIP ";
-                char* string_gossip_table = create_gossip_buffer(&GOSSIP_TABLE);
+                char* string_gossip_table = create_gossip_buffer(gossip_table);
                 char* gossip_buffer = malloc(strlen(instruction) + strlen(string_gossip_table) + 1);
                 strcpy(gossip_buffer, instruction);
                 strcat(gossip_buffer, string_gossip_table);
-                printf("Sending buffer: %s\n", gossip_buffer);
 
                 char* response = malloc(500);
                 if(write(seed_socket, gossip_buffer, strlen(gossip_buffer) + 1)){
                     read(seed_socket, response, 499);
                     log_info(logger, "Se logro conectar con el siguiente nodo");
-                    printf("Gossip buffer recibido: %s\n", response);
-                    gossip_t* gossip_table = NULL;
-                    parse_gossip_buffer(&gossip_table, response);
+                    gossip_t* temp_gossip = NULL;
+                    parse_gossip_buffer(&temp_gossip, response);
 
-                    compare_gossip_tables(&GOSSIP_TABLE, &gossip_table);
+                    compare_gossip_tables(gossip_table, &temp_gossip);
+                    // liberar tabla????
                     free(response);
-                    print_gossip_table(&gossip_table);
                 }
                 else{
-                  remove_node(&GOSSIP_TABLE, find_node(&GOSSIP_TABLE, seed_port));   
+                  remove_node(gossip_table, find_node(gossip_table, seed_port));   
                 }
             }
         // }
-        print_gossip_table(&GOSSIP_TABLE);
         sleep(retardo_gossiping);
     }
 

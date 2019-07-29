@@ -96,7 +96,7 @@ int main(int argc, char const *argv[])
   
   print_gossip_table(&GOSSIP_TABLE);
 
-  gossip(seed_port);  
+  gossip(&GOSSIP_TABLE, seed_port);  
 
   pthread_mutex_init(&main_memory_mutex, NULL);
   pthread_mutex_init(&segment_table_mutex, NULL);
