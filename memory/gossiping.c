@@ -53,17 +53,20 @@ gossip_t* find_node(gossip_t** gossip_table, int number){
 
 // crea la gossip table del otro nodo con el buffer que le pasan
 gossip_t* parse_gossip_buffer(gossip_t** gossip_table, char* buffer){
+    char* temp_buffer = malloc(strlen(buffer) + 1);
+    strcpy(temp_buffer, buffer);
+    // temp_buffer = temp_buffer+(strlen("GOSSIP "));
     int number_size = 5;
     char* string_number = malloc(number_size+1);
-    memcpy(string_number, buffer, number_size);
+    memcpy(string_number, temp_buffer, number_size);
     string_number[number_size] = 0;
     int size = atoi(string_number);
     for(int i = 1; i < size+1; i++){
-        memcpy(string_number, buffer+(number_size * i), number_size);
+        memcpy(string_number, temp_buffer+(number_size * i), number_size);
         gossip_t* node = create_node(atoi(string_number));
         add_node(gossip_table, node);
     }
-    free(buffer);
+    free(temp_buffer);
     return *gossip_table;
 }
 
@@ -106,6 +109,7 @@ char* create_gossip_buffer(gossip_t** gossip_table){
         temp = temp->next;
     }
     free(string_number);
+    printf("Gossip buffer created: %s\n", buffer);
     return buffer;
 }
 
@@ -121,6 +125,8 @@ gossip_t* compare_gossip_tables(gossip_t** gossip_table1, gossip_t** gossip_tabl
         }
         compared_node = compared_node->next;
     }
+    printf("Asi quedo la ");
+    print_gossip_table(&GOSSIP_TABLE);
 
     // busco cada nodo de gp1 en gp2, si no esta, lo saco de gp1 porque quiere decir que se desconecto el nodo
     // while(temp1 != NULL){
@@ -153,12 +159,14 @@ void print_gossip_table(gossip_t** gossip_table){
 }
 
 void* gossip(char* seed_port){
+    printf("Gossiping...\n");
     // es mejor tener un array de char porque el ultimo elemento va a ser NULL y no me como un segfault cuando itero
     char** seed_ports = config_get_array_value(config, "PUERTO_SEEDS");
     memcpy(seed_ports[0], seed_port, 4); // ---- TODO: BORRAR
     char** seed_ips = config_get_array_value(config, "IP_SEEDS");
     int retardo_gossiping = config_get_int_value(config, "RETARDO_GOSSIPING") / 1000;
-    while(1){
+    // TODO: armar un array con los nodos que del config + los de la gossip table
+    // while(1){
         for(int i=0; seed_ports[i] != NULL; i++){
             int seed_port = atoi(seed_ports[i]);
             printf("Connecting with node: %s...\n", seed_ports[i]);
@@ -182,16 +190,30 @@ void* gossip(char* seed_port){
             }
 
             else{
-                // TODO: comparar tablas y actualizar
-                char* response = malloc(100);
-                // mandarle 
-                write(seed_socket, "GOSSIP", strlen("GOSSIP"));
-                read(seed_socket, response, 80);
-                log_info(logger, "Se logro conectar con el siguiente nodo");
-                printf("%s", response);
-                free(response);
+                char* instruction = "GOSSIP ";
+                char* string_gossip_table = create_gossip_buffer(&GOSSIP_TABLE);
+                char* gossip_buffer = malloc(strlen(instruction) + strlen(string_gossip_table) + 1);
+                strcpy(gossip_buffer, instruction);
+                strcat(gossip_buffer, string_gossip_table);
+                printf("Sending buffer: %s\n", gossip_buffer);
+
+                char* response = malloc(500);
+                if(write(seed_socket, gossip_buffer, strlen(gossip_buffer) + 1)){
+                    read(seed_socket, response, 499);
+                    log_info(logger, "Se logro conectar con el siguiente nodo");
+                    printf("Gossip buffer recibido: %s\n", response);
+                    gossip_t* gossip_table = NULL;
+                    parse_gossip_buffer(&gossip_table, response);
+
+                    compare_gossip_tables(&GOSSIP_TABLE, &gossip_table);
+                    free(response);
+                    print_gossip_table(&gossip_table);
+                }
+                else{
+                  remove_node(&GOSSIP_TABLE, find_node(&GOSSIP_TABLE, seed_port));   
+                }
             }
-        }
+        // }
         print_gossip_table(&GOSSIP_TABLE);
         sleep(retardo_gossiping);
     }
