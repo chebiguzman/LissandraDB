@@ -11,6 +11,7 @@
 #include <commons/config.h>
 #include "../server.h"
 // #include "../pharser.h"
+#include <signal.h>
 // #include "../actions.h"
 #include "../console.h"
 #include "segments.h"
@@ -25,6 +26,9 @@ int main_memory_size;
 //ejemplo: ./memoria 5001 5004
 int main(int argc, char const *argv[])
 {
+  sigset_t set;	
+  signal(SIGPIPE, SIG_IGN);
+	
   //set up config  
   char* config_name = malloc(10);
   strcpy(config_name, "config");
