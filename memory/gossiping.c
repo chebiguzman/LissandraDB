@@ -175,8 +175,10 @@ gossip_t* create_nodes_to_connect(gossip_t** gossip_table, char** seeds_ports){
 
 void* gossip(gossip_t** gossip_table){
     printf("Gossiping...\n");
-    gossip_t* nodes_to_connect = create_nodes_to_connect(gossip_table, seeds_ports);
-    // while(1){
+    gossip_t* nodes_to_connect_temp = create_nodes_to_connect(gossip_table, seeds_ports);
+    gossip_t* nodes_to_connect = NULL; // lo guardo en otra variable para volver a definirlo antes de empezar el loop
+    while(1){
+        nodes_to_connect = nodes_to_connect_temp;
         while(nodes_to_connect != NULL){
             int seed_port = nodes_to_connect->number;
             printf("Connecting with node: %d...\n", seed_port);
@@ -222,8 +224,9 @@ void* gossip(gossip_t** gossip_table){
             }
             nodes_to_connect = nodes_to_connect->next;
         }
-        sleep(retardo_gossiping);
-    // }
+        config_save(config);
+        sleep(config_get_int_value(config, "RETARDO_GOSSIPING") / 1000);
+    }
 }
 
 int get_gossip_table_size(gossip_t** gossip_table){
