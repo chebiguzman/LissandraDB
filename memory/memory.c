@@ -83,7 +83,6 @@ int main(int argc, char const *argv[])
   seeds_ports = config_get_array_value(config, "PUERTO_SEEDS");
   printf("asdasd:%s\n", seeds_ports[0]);
   seeds_ips = config_get_array_value(config, "IP_SEEDS");
-  retardo_gossiping = config_get_int_value(config, "RETARDO_GOSSIPING") / 1000;
 
 
   SEGMENT_TABLE = NULL;
@@ -91,7 +90,6 @@ int main(int argc, char const *argv[])
   NUMBER_OF_PAGES = main_memory_size / PAGE_SIZE;
   LRU_TABLE = create_LRU_TABLE();
   GOSSIP_TABLE = NULL;
-  // add_node(&GOSSIP_TABLE, create_node(config_get_int_value(config, "MEMORY_PORT"))); // agrego este nodo
   add_node(&GOSSIP_TABLE, create_node(MEMORY_PORT));
 
   printf("\n---- Memory info ----\n");

@@ -25,8 +25,6 @@ gossip_t* GOSSIP_TABLE;
 int MEMORY_PORT;
 char** seeds_ports;
 char** seeds_ips;
-int retardo_gossiping;
-
 // --------------------------
 
 gossip_t* create_node(int number);
