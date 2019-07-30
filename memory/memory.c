@@ -134,7 +134,7 @@ int main(int argc, char const *argv[])
 //IMPLEMENTACION DE FUNCIONES (Devolver errror fuera del subconjunto)
 
 char* action_select(package_select* select_info){
-//  log_info(logger, "Se recibio una accion select");
+ //  log_info(logger, "Se recibio una accion select");
   pthread_mutex_lock(&segment_table_mutex);					
   pthread_mutex_lock(&lru_table_mutex);
   pthread_mutex_lock(&main_memory_mutex);
@@ -144,19 +144,21 @@ char* action_select(package_select* select_info){
     pthread_mutex_unlock(&segment_table_mutex);					
     pthread_mutex_unlock(&lru_table_mutex);
     pthread_mutex_unlock(&main_memory_mutex);
+
     return page_info->page_ptr->value;
   }
   // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
   printf("Buscando en FileSystem. Tabla: %s, Key:%d...\n", select_info->table_name, select_info->key);  
   char* response = exec_in_fs(fs_socket, parse_package_select(select_info)); 
-  printf("Respuesta del FileSystem: %s", response);  
-  if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0){
+  printf("Respuesta del FileSystem: %s\n", response);  
+  if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0 && !strcmp(response, "NO SE ENCUENTRA FS")){
     page_t* page = create_page((unsigned)time(NULL), select_info->key, response);
     save_page(select_info->table_name, page);
     printf("Page found in file system. Table: %s, Key: %d, Value: %s\n", select_info->table_name, page->key, page->value);
     pthread_mutex_unlock(&segment_table_mutex);					
     pthread_mutex_unlock(&lru_table_mutex);
     pthread_mutex_unlock(&main_memory_mutex);
+
     return string_new("%s\n", page->value);
   }
   pthread_mutex_unlock(&segment_table_mutex);					
@@ -178,7 +180,7 @@ char* action_insert(package_insert* insert_info){
   pthread_mutex_unlock(&segment_table_mutex);					
   pthread_mutex_unlock(&lru_table_mutex);
   pthread_mutex_unlock(&main_memory_mutex);
-  return "\n";
+  return strdup("");
 }
 
 char* action_create(package_create* create_info){
@@ -213,22 +215,19 @@ char* action_journal(package_journal* journal_info){
   pthread_mutex_unlock(&segment_table_mutex);					
 	pthread_mutex_unlock(&lru_table_mutex);
 	pthread_mutex_unlock(&main_memory_mutex);
-  return "Journaling done\n";
+  return strdup("Journaling done\n");
 }
 
 char* action_add(package_add* add_info){
-  log_info(logger, "Se recibio una accion select");
-  return "Pertenece a FS";
+  return strdup("No es una instruccion valida\n");
 }
 
 char* action_run(package_run* run_info){
-  log_info(logger, "Se recibio una accion run");
-  return "Pertenece a FS";
+  return strdup("No es una instruccion valida\n");
 }
 
 char* action_metrics(package_metrics* metrics_info){
-  log_info(logger, "Se recibio una accion metrics");
-  return "Pertenece a FS";
+  return strdup("No es una instruccion valida\n");
 }
 
 //en esta funcion se devuelve lo 
