@@ -13,10 +13,6 @@ gossip_t* create_node(int number){
 void add_node(gossip_t** gossip_table, gossip_t* node){
     // printf("Agregando nodo %d a la tabla... ", node->number);
     if(find_node(gossip_table, node->number)) return;
-    
-    if(*gossip_table == GOSSIP_TABLE){
-        printf("\n\nMODIFICANDO TABLA POSTA, AGREGANDO NODO %d\n\n", node->number);
-    }
 	if(*gossip_table == NULL){ // si esta vacia
 		*gossip_table = node;
 	}
@@ -199,20 +195,9 @@ void* gossip(void* void_gossip_table){
                     printf("Buffer recibido: %s\n", response);
                     gossip_t* gossip_temp = parse_gossip_buffer(response);
                     compare_gossip_tables(gossip_table, &gossip_temp);
-                    // while(gossip_temp != NULL){
-                    //     gossip_t* temp_node = create_node(gossip_temp->number);
-                    //     add_node(gossip_table, temp_node);
-                    //     gossip_temp = gossip_temp->next;
-                    // }
-                    printf("Me conecto con una memoria y asi quedo la ");
+                    printf("Me conecto con una memoria y actualizo la ");
                     print_gossip_table(gossip_table);
-
-
-                //     log_info(logger, "Se logro conectar con el siguiente nodo");
-                //     gossip_t* temp_gossip = parse_gossip_buffer(response);
-                //     print_gossip_table(&temp_gossip);
-                //     compare_gossip_tables(gossip_table, &temp_gossip);
-                //     // liberar tabla????
+                    // liberar tabla????
                     free(response);
                 }
 
