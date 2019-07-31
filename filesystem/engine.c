@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include <fts.h>
 #include <commons/bitarray.h>
+#include "filesystem.h"
 
 #define BLOCK_SIZE_DEFAULT 128
 #define BLOCKS_AMOUNT_DEFAULT 12
@@ -757,4 +758,165 @@ int does_file_exist(char* file_path){
 
     fclose(file);
     return 1;
+}
+
+t_table_partiton* get_table_partition2(char* table_name, int table_partition_number){
+    char* partition_name = strdup(string_itoa(table_partition_number));
+    char* partition_path =malloc(strlen(tables_path) + strlen(table_name) + 1 + strlen(partition_name)+ strlen(".temp") + 5);
+    strcpy(partition_path ,tables_path);
+
+    strcat(partition_path,table_name);
+    strcat(partition_path,"/");
+    strcat(partition_path, partition_name);
+    strcat(partition_path, ".tmp");
+
+    t_table_partiton* parition = malloc(sizeof(t_table_partiton));
+    t_config* c = config_create(partition_path);
+    printf("assasd %s\n", partition_path);
+    log_info(logg,"antes de la linea");
+    parition->blocks_size = config_get_long_value(c, "SIZE");
+   log_info(logg,"despues de la linea");
+    parition->blocks = config_get_array_value(c, "BLOCKS");
+    
+    return parition;
+}
+
+void engine_compactate(char* name_table){
+
+   char* ruta=malloc(100);
+   strcpy(ruta,tables_path);
+   strcat(ruta,name_table);
+   DIR* tablaDir=opendir(ruta);
+   int cantidad=contadordetemp(tablaDir);
+   char* cantidad_aux=string_itoa(cantidad);
+   log_info(logg,cantidad_aux);
+   if(cantidad==0){
+     return;
+   }
+   char* temporales[cantidad];
+
+int contador=0;
+struct dirent * file;
+while((file= readdir(tablaDir))!=NULL ){
+   int len= strlen(file->d_name);
+   if(file->d_name[len-1]=='p'){
+  temporales[contador]=strdup(file->d_name);
+  log_info(logg,temporales[contador]);
+  contador++;
+   }
+ }
+char* file_path=malloc(100);
+ for(int i=0;i<cantidad;i++){
+log_info(logg,"entro al for");
+particiontemporal(temporales[i],name_table);
+strcpy(file_path,ruta);
+strcat(file_path,"/");
+strcat(file_path,temporales[i]);
+log_info(logg,"se va a borrar:");
+log_info(logg,file_path);
+remove(file_path);
+ }
+log_info(logg,"se salio del ciclo madre");
+free(ruta);
+free(file_path);
+return;
+}
+
+ int contadordetemp(DIR* directorio){
+struct dirent* file;
+int contador=0;
+while((file= readdir(directorio))!=NULL ){
+   int len= strlen(file->d_name);
+   if(file->d_name[len-1]=='p'){
+  contador++;
+   }
+ }
+ rewinddir(directorio);
+ return contador;
+ 
+}
+
+
+void new_block(char* new_row,char* tabla,int particion){
+char* ruta=malloc(100);
+strcpy(ruta,tables_path);
+strcat(ruta,tabla);
+strcat(ruta,"/");
+char* partauux=string_itoa(particion);
+regg registro[2];
+strcat(ruta,partauux);
+strcat(ruta,".part");
+log_info(logg,ruta);
+FILE* part=NULL;
+part=fopen(ruta,"r");
+if(part==NULL){
+    log_info(logg,"no se abrio archivo");
+}
+int i=0;
+rewind(part);
+log_info(logg,"antes de leer");
+while(!feof(part)){
+    registro[i].line=malloc(100);
+    fgets(registro[i].line,100,part);
+    log_info(logg,registro[i].line);
+    i++;//cambiar el 100 por max+1
+}
+int new_block=find_free_block();
+set_block_as_occupied(new_block);
+add_block_to_list(registro[1].line,new_block);
+adjust_size(registro[0].line,new_row);
+log_info(logg,"vamos a checkear");
+log_info(logg,registro[0].line);
+log_info(logg,registro[1].line);
+rewind(part);
+fclose(part);
+part=fopen(ruta,"w");
+for(int j=0;j<2;j++){
+fputs(registro[j].line,part);
+}
+fclose(part);
+log_info(logg,"aca no rompe");
+log_info(logg,MNT_POINT);
+char* ruta_bloque=malloc(200);
+log_info(logg,"aca no rompe 2");
+strcpy(ruta_bloque,MNT_POINT);
+log_info(logg,"aca no rompe 3");
+strcat(ruta_bloque,"Bloques/");
+log_info(logg,ruta_bloque);
+char* aux=string_itoa(new_block);
+strcat(ruta_bloque,aux);
+strcat(ruta_bloque,".bin");
+log_info(logg,ruta_bloque);
+FILE* bloque=fopen(ruta_bloque,"w");
+int length_row=strlen(new_row);
+new_row[length_row]='\n';
+new_row[length_row+1]='\0';
+fputs(new_row,bloque);
+fclose(bloque);
+free(ruta);
+free(registro[0].line);
+free(registro[1].line);
+  return;
+}
+
+void add_block_to_list(char* block_list,int new){
+    int i=0;
+    char* new_block=string_itoa(new);
+    log_info(logg,"el bloque a agregar es");
+    log_info(logg,new_block);
+    while(block_list[i]!=']'){
+        i++;
+    }
+    if(block_list[i-1]=='['){
+     strcpy(block_list,"BLOCKS=[");
+     strcat(block_list,new_block);
+     strcat(block_list,"]");
+     log_info(logg,block_list);
+      return;
+    }
+    block_list[i]=',';
+    strcat(block_list,new_block);
+    strcat(new_block,"]");
+    log_info(logg,block_list);
+  return;
 }
