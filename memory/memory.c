@@ -53,29 +53,29 @@ int main(int argc, char const *argv[])
   int reslt = pthread_create(&tid, NULL, create_server, (void*) serverInfo);
 
   //set up fs client 
-  // fs_socket = socket(AF_INET, SOCK_STREAM, 0);
-  // char* FS_IP = config_get_string_value(config, "FS_IP");
-  // int FS_PORT = config_get_int_value(config, "FS_PORT");
-  // printf("%s %d\n", FS_IP, FS_PORT);
-  // struct sockaddr_in sock_client;
+  fs_socket = socket(AF_INET, SOCK_STREAM, 0);
+  char* FS_IP = config_get_string_value(config, "FS_IP");
+  int FS_PORT = config_get_int_value(config, "FS_PORT");
+  printf("%s %d\n", FS_IP, FS_PORT);
+  struct sockaddr_in sock_client;
   
-  // sock_client.sin_family = AF_INET; 
-  // sock_client.sin_addr.s_addr = inet_addr(FS_IP); 
-  // sock_client.sin_port = htons(FS_PORT);
+  sock_client.sin_family = AF_INET; 
+  sock_client.sin_addr.s_addr = inet_addr(FS_IP); 
+  sock_client.sin_port = htons(FS_PORT);
 
-  // int connection_result =  connect(fs_socket, (struct sockaddr*)&sock_client, sizeof(sock_client));
+  int connection_result =  connect(fs_socket, (struct sockaddr*)&sock_client, sizeof(sock_client));
   
-  // if(connection_result < 0){
-  //   log_error(logger, "No se logro establecer la conexion con el File System");
-  //    // return 0;
-  // }
-  // else{
-  //   char* handshake = malloc(16);
-  //   write(fs_socket, "MEMORY", strlen("MEMORY"));
-  //   read(fs_socket, handshake, 4);
-  //   VALUE_SIZE = atoi(handshake);
-  //   log_info(logger, "La memory se conecto con fs. El hanshake dio como value size %d", VALUE_SIZE);
-  // }
+  if(connection_result < 0){
+    log_error(logger, "No se logro establecer la conexion con el File System");
+     // return 0;
+  }
+  else{
+    char* handshake = malloc(16);
+    write(fs_socket, "MEMORY", strlen("MEMORY"));
+    read(fs_socket, handshake, 4);
+    VALUE_SIZE = atoi(handshake);
+    log_info(logger, "La memory se conecto con fs. El hanshake dio como value size %d", VALUE_SIZE);
+  }
 
   // setup memoria principal
   main_memory_size = config_get_int_value(config, "TAM_MEM");
@@ -109,8 +109,8 @@ int main(int argc, char const *argv[])
   pthread_mutex_unlock(&gossip_table_mutex);					
 
   // char** seed_ports = config_get_array_value(config, "PUERTO_SEEDS");
-  // gossip_t* gossip_temp = create_nodes_to_connect(&GOSSIP_TABLE, seed_ports);
-  // print_gossip_table(&gossip_temp);
+  // gossip_t* parsed_gossip_table = create_nodes_to_connect(&GOSSIP_TABLE, seed_ports);
+  // print_gossip_table(&parsed_gossip_table);
 
   // gossip(&GOSSIP_TABLE);  
 
@@ -268,4 +268,32 @@ char* action_intern__status(){
 
 char* parse_input(char* input){
   return exec_instr(input);
+}
+
+char* action_gossip(gossip_t** parsed_gossip_table){
+  pthread_mutex_lock(&gossip_table_mutex);	
+
+  printf("Me llego una conexion de una memoria \n");
+  char* gossip_buffer = create_gossip_buffer(&GOSSIP_TABLE); // lo creo antes de que compare las tablas asi no le mando las que me acaba de pasar
+  printf("- Gossip buffer to send: %s\n", gossip_buffer);
+
+  // tengo que filtrar los nodos. Si me pasan un nodo al cual yo me conecto, no lo tengo que agregar
+  // porque si esta desconectado, lo agrega a la tabla igual y no sale nunca porque el que se lo pasa
+  // manda su tabla antes de corroborar que este conectado, y despues le pasa lo mismo a ese
+  gossip_t* temp_node = *parsed_gossip_table;
+  while(temp_node != NULL){
+      for(int i=0; seeds_ports[i] != NULL; i++){
+          if(temp_node->number == atoi(seeds_ports[i])){
+              remove_node(parsed_gossip_table, temp_node);
+          }
+      }
+      temp_node = temp_node->next;
+  }
+  compare_gossip_tables(&GOSSIP_TABLE, parsed_gossip_table);
+
+  printf("- Actualizo ");
+  print_gossip_table(&GOSSIP_TABLE);
+
+  pthread_mutex_unlock(&gossip_table_mutex);
+  return strdup(gossip_buffer);
 }
