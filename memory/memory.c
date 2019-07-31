@@ -26,6 +26,9 @@ int main_memory_size;
 //ejemplo: ./memoria 5001 5004
 int main(int argc, char const *argv[])
 {
+  pthread_mutex_init(&gossip_table_mutex, NULL);
+  pthread_mutex_lock(&gossip_table_mutex);					
+    
   sigset_t set;	
   signal(SIGPIPE, SIG_IGN);
 	
@@ -85,16 +88,16 @@ int main(int argc, char const *argv[])
 
   // setup gossiping
   seeds_ports = config_get_array_value(config, "PUERTO_SEEDS");
-  printf("asdasd:%s\n", seeds_ports[0]);
   seeds_ips = config_get_array_value(config, "IP_SEEDS");
-
-
+  GOSSIP_TABLE = NULL;
+  add_node(&GOSSIP_TABLE, create_node(MEMORY_PORT));
+  // add_node(&GOSSIP_TABLE, create_node(5002));
+  
+  // setup segments
   SEGMENT_TABLE = NULL;
   PAGE_SIZE = sizeof(page_t) - sizeof(char*) + VALUE_SIZE;
   NUMBER_OF_PAGES = main_memory_size / PAGE_SIZE;
   LRU_TABLE = create_LRU_TABLE();
-  GOSSIP_TABLE = NULL;
-  add_node(&GOSSIP_TABLE, create_node(MEMORY_PORT));
 
   printf("\n---- Memory info ----\n");
   printf("Main memory size: %d\n", main_memory_size);
@@ -103,20 +106,21 @@ int main(int argc, char const *argv[])
   printf("---------------------\n\n");
   
   print_gossip_table(&GOSSIP_TABLE);
+  pthread_mutex_unlock(&gossip_table_mutex);					
 
   // char** seed_ports = config_get_array_value(config, "PUERTO_SEEDS");
   // gossip_t* gossip_temp = create_nodes_to_connect(&GOSSIP_TABLE, seed_ports);
   // print_gossip_table(&gossip_temp);
 
-  gossip(&GOSSIP_TABLE);  
+  // gossip(&GOSSIP_TABLE);  
 
   pthread_mutex_init(&main_memory_mutex, NULL);
   pthread_mutex_init(&segment_table_mutex, NULL);
   pthread_mutex_init(&lru_table_mutex, NULL);
 
   // inicio gossiping
-  // pthread_t tid_gossiping;
-  // pthread_create(&tid_gossiping, NULL, gossip, seed_port);
+  pthread_t tid_gossiping;
+  pthread_create(&tid_gossiping, NULL, gossip, (void*)&GOSSIP_TABLE);
   
   //inicio lectura por consola
   pthread_t tid_console;
