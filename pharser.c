@@ -104,7 +104,22 @@ char* exec_instr(char* instr_buff){
         char* gossip_buffer = create_gossip_buffer(&GOSSIP_TABLE); // lo creo antes de que compare las tablas asi no le mando las que me acaba de pasar
         printf("Gossip buffer to send: %s\n", gossip_buffer);
         gossip_t* gossip_temp = parse_gossip_buffer(parameters[1]);
+
+        // tengo que filtrar los nodos. Si me pasan un nodo al cual yo me conecto, no lo tengo que agregar
+        // porque si esta desconectado, lo agrega a la tabla igual y no sale nunca porque el que se lo pasa
+        // manda su tabla antes de corroborar que este conectado, y despues le pasa lo mismo a ese
+        gossip_t* temp_node = gossip_temp;
+        while(temp_node != NULL){
+            for(int i=0; seeds_ports[i] != NULL; i++){
+                if(temp_node->number == atoi(seeds_ports[i])){
+                    remove_node(&gossip_temp, temp_node);
+                }
+            }
+            temp_node = temp_node->next;
+        }
+
         compare_gossip_tables(&GOSSIP_TABLE, &gossip_temp);
+
         printf("Me llega una conexion de una memoria y asi quedo la ");
         print_gossip_table(&GOSSIP_TABLE);
 
