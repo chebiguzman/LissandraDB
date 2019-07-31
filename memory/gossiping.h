@@ -16,6 +16,8 @@
 
 typedef struct gossip{
   int number;
+  int port;
+  char* ip;
   struct gossip* next;
   struct gossip* prev;
 }gossip_t;
@@ -28,14 +30,14 @@ char** seeds_ips;
 pthread_mutex_t gossip_table_mutex;
 // --------------------------
 
-gossip_t* create_node(int number);
+gossip_t* create_node(int number, int port, char* ip);
 void add_node(gossip_t** gossip_table, gossip_t* node);
 void remove_node(gossip_t** gossip_table, gossip_t* node);
-gossip_t* find_node(gossip_t** gossip_table, int number);
+gossip_t* find_node(gossip_t** gossip_table, int port);
 gossip_t* create_gossip_table();
 gossip_t* parse_gossip_buffer(char* buffer);
 char* create_gossip_buffer(gossip_t** gossip_table);
-gossip_t* find_node(gossip_t** gossip_table, int number);
+gossip_t* find_node(gossip_t** gossip_table, int port);
 void compare_gossip_tables(gossip_t** gossip_table1, gossip_t** gossip_table2);
 void print_gossip_table();
 void* gossip(void* gossip_table);

@@ -283,7 +283,7 @@ char* action_gossip(gossip_t** parsed_gossip_table){
   gossip_t* temp_node = *parsed_gossip_table;
   while(temp_node != NULL){
       for(int i=0; seeds_ports[i] != NULL; i++){
-          if(temp_node->number == atoi(seeds_ports[i])){
+          if(temp_node->port == atoi(seeds_ports[i])){
               remove_node(parsed_gossip_table, temp_node);
           }
       }

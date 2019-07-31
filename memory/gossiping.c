@@ -1,17 +1,19 @@
 #include "gossiping.h"
 
 
-gossip_t* create_node(int number){
+gossip_t* create_node(int number, int port, char* ip){
     gossip_t* node = (gossip_t*)malloc(sizeof(gossip_t));
     node->next = NULL;
     node->prev = NULL;
     node->number = number;
-    // printf("Creando nodo %d\n", number);
+    node->port = port;
+    strdup(node->ip, ip);
+    // printf("Creando nodo %d\n", port);
     return node;    
 }
 
 void add_node(gossip_t** gossip_table, gossip_t* node){
-    // printf("Agregando nodo %d a la tabla... ", node->number);
+    // printf("Agregando nodo %d a la tabla... ", node->port);
     if(find_node(gossip_table, node->number)) return;
 	if(*gossip_table == NULL){ // si esta vacia
 		*gossip_table = node;
@@ -29,7 +31,7 @@ void add_node(gossip_t** gossip_table, gossip_t* node){
 
 void remove_node(gossip_t** gossip_table, gossip_t* node){
     if(node == NULL) return;
-    // printf("- Removing node %d\n", node->number);
+    // printf("- Removing node %d\n", node->port);
 	if(node->next != NULL){ // si no es el ultimo..
 		node->next->prev = node->prev; // le asigno al siguiente de temp, su anterior, o null en caso de que sea el primero
 	}
@@ -91,19 +93,21 @@ char* itoa_for_buffer(char* str, int num){
     return 0;
 }
 
-// buffer para mandar entre nodos, cada buffer esta compuesto por un numero al inicio con la cantidad de puertos 
-// que contiene el buffer, seguido de los numeros de los puertos . Cada numero (inclutendo el primero son de 5 chars)
+// buffer para mandar entre nodos, cada buffer esta compuesto por un numero al inicio con la cantidad infos de nodos 
+// que contiene el buffer, seguido de la info de nodos
+// Cada info de nodo tiene 5 chars para el puerto, 2 chars para la length del ip, y el ip
 char* create_gossip_buffer(gossip_t** gossip_table){
     int gossip_table_size = get_gossip_table_size(gossip_table);
-    int number_size = 5;
-    int buffer_size = number_size * (gossip_table_size + 1) + 1; // +1 para el \0
+
+    int number_size = 5, ip_length = 2;
+    int buffer_size = number_size + number_size * gossip_table_size + 1; // +1 para el \0
     gossip_t* temp = *gossip_table;
-    char* buffer = (char*)malloc(buffer_size);
+    char* buffer = (char*)malloc(1000);
     char* string_number = malloc(6);
     itoa_for_buffer(string_number, gossip_table_size);
     strcpy(buffer, string_number);
     for(int i = 1; i < gossip_table_size+1; i++){
-        itoa_for_buffer(string_number, temp->number);
+        itoa_for_buffer(string_number, temp->port);
         strcat(buffer, string_number);
         temp = temp->next;
     }
@@ -115,7 +119,7 @@ char* create_gossip_buffer(gossip_t** gossip_table){
 void compare_gossip_tables(gossip_t** gossip_table1, gossip_t** gossip_table2){
     gossip_t* gossip_temp = *gossip_table2;
     while(gossip_temp != NULL){
-        gossip_t* temp_node = create_node(gossip_temp->number);
+        gossip_t* temp_node = create_node(gossip_temp->port);
         add_node(gossip_table1, temp_node);
         gossip_temp = gossip_temp->next;
     }
@@ -125,7 +129,7 @@ void print_gossip_table(gossip_t** gossip_table){
 	gossip_t* temp = *gossip_table;
 	printf("Gossip table: ");
 	while(temp != NULL){
-		printf("%d ", temp->number);
+		printf("%d ", temp->port);
 		temp = temp->next;		
 	}
 	printf("\n");
@@ -136,7 +140,7 @@ gossip_t* create_nodes_to_connect(gossip_t** gossip_table, char** seeds_ports){
     gossip_t* temp_gossip = NULL;
     gossip_t* temp_gossip2 = *gossip_table;
     while(temp_gossip2 != NULL){
-        gossip_t* temp_node = create_node(temp_gossip2->number);
+        gossip_t* temp_node = create_node(temp_gossip2->port);
         add_node(&temp_gossip, temp_node);
         temp_gossip2 = temp_gossip2->next;
     }
@@ -161,7 +165,7 @@ void* gossip(void* void_gossip_table){
         printf("Nodes to connnect with: ");
         print_gossip_table(&nodes_to_connect);
         while(nodes_to_connect != NULL){
-            int seed_port = nodes_to_connect->number;
+            int seed_port = nodes_to_connect->port;
             printf("Connecting with node: %d...\n", seed_port);
 
             // setup client para conectarse con otro nodo   
