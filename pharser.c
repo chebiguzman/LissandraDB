@@ -104,6 +104,8 @@ char* exec_instr(char* instr_buff){
             return strdup("Numero de parametros incorrectos\n");
         } 
 
+        if(strspn(parameters[2], "0123456789")!=strlen(parameters[2])) return strdup("Parametro mal formado\n");
+
         package_select* package = malloc(sizeof(package_select));
         package->instruction = parameters[0];
 
@@ -143,6 +145,7 @@ char* exec_instr(char* instr_buff){
             kill_args();
             return strdup("Numero de parametros incorrectos\n");
         }
+        if(strspn(parameters[2], "0123456789")!=strlen(parameters[2])) return strdup("Parametro mal formado\n");
 
         package_insert* package = malloc(sizeof(package_insert));
         package->instruction = parameters[0];
@@ -197,6 +200,8 @@ char* exec_instr(char* instr_buff){
             kill_args();
             return strdup("Numero de parametros incorrectos\n");
         }
+        if(strspn(parameters[3], "0123456789")!=strlen(parameters[3])) return strdup("Parametro mal formado\n");
+        if(strspn(parameters[4], "0123456789")!=strlen(parameters[4])) return strdup("Parametro mal formado\n");
 
         package_create* package = malloc(sizeof(package_insert));
         package->instruction = parameters[0];

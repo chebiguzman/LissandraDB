@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
 {
   sigset_t set;
 
-  signal(SIGPIPE, SIG_IGN);
+  //signal(SIGPIPE, SIG_IGN);
 
   //set up config  
   t_config* config = config_create("config");
@@ -207,10 +207,11 @@ char* action_metrics(package_metrics* metrics_info){
 //en esta funcion se devuelve lo 
 //proveniente del gossiping
 //devuelve solo las seeds
-//con esta forma: RETARDO_GOSSIPING_DE_ESTA_MEMORIA|id,ip,port|id,ip,port|id,ip,port
+//con esta forma: ID_PROPIO|RETARDO_GOSSIPING_DE_ESTA_MEMORIA|id,ip,port|id,ip,port|id,ip,port
 //                                                    seed        seed      seed
 char* action_intern__status(){
-  char* res = strdup("300000000|"); //ya que se puede modificar en tiempo real y yo necesito saber cada cuanto ir a buscar una memoira se le añade como primer elemento el retargo gossiping de la memoria principal.
+  char* res = malloc(300); //ya que se puede modificar en tiempo real y yo necesito saber cada cuanto ir a buscar una memoira se le añade como primer elemento el retargo gossiping de la memoria principal.
+  strcpy(res,"3|300000000|");
   char sep[2] = { ',', '\0' };
   char div[2] = { '|', '\0' };
   t_config* config = config_create("config");

@@ -46,12 +46,13 @@ void* exec(void *system_queue){
 
             for(int i = 0; i != config->quantum; i++){
                 //log_debug(logger_debug, "exec:me preparo para ejecutar");
-                
-                char* instr = strdup(queue_pop( program->instr));
+                //printf("entro a quiantum\n");
+                char* instr = queue_pop(program->instr);
                 //en un RUN los comandos se van mostrando
                 //a medida que ejecutan
                 if(program->doesPrint){
                     printf("%s",instr);
+
                 }
                 ///home/dreamable/a.lql
                 //printf(" la instruccion a ejecutar es %s\n",instr);
@@ -59,21 +60,41 @@ void* exec(void *system_queue){
 
                 char* r = exec_instr(instr);
                 //log_debug(logger_debug, "exec:obtengo respuesta");
+                //printf("imprimo resultado\n");
+                pthread_mutex_lock(&console->lock);
                 printf("%s", r);
+                fflush(stdout);
+                pthread_mutex_unlock(&console->lock);
+
+  
+                /* pthread_mutex_lock(&console->lock);
+                console->cont_int = 1;
+                pthread_cond_broadcast(&console->cond);
+                pthread_mutex_unlock(&console->lock);*/
+                free(instr);
 
                 
                 if(superuser){
                     kernel_call->result = r;
                     pthread_cond_broadcast(&kernel_call->cond);
                     //log_debug(logger_debug, "se le debvuelve al kernel su pedido");
+                }else{
+                    free(r);
+
                 }
+
+        		//pthread_mutex_unlock(&console->print_lock);
 
                 if(err_trap != 0){
                     log_error(logg, "EL programa no puede seguir ejecutando.");
+                    while(!queue_is_empty(program->instr)){
+                        char* intruction_to_destroy = queue_pop(program->instr );
+                        free(intruction_to_destroy);
+                
+                    }
                     break;
                 }
            
-                free(instr);
 
                 /* si el programa se termino de ejecutar
                 voy a buscar otro para mantener el nivel de 
@@ -106,20 +127,39 @@ void* exec(void *system_queue){
             
         }
 
-             
-
-        
-        
         syscall_availity_status = true;
         //devuelvo el control a consola
-        pthread_mutex_unlock(&console->lock);
-        lock_queue();
+        
+        fflush(stdout);
+
+
+        
+        //pthread_mutex_lock(&console->print_lock);
+        
+    
+        pthread_mutex_lock(&console->lock);
+        console->cont_int = 1;
         pthread_cond_broadcast(&console->cond);
-        //log_debug(logg, "exec");
+        pthread_mutex_unlock(&console->lock);
+        
 
-        pthread_cond_wait(&queue->cond, &queue->lock);
+        lock_queue();
+        pthread_mutex_lock(&lock_for_tasks);
+        if(added_queue==0){
+            pthread_cond_wait(&queue->cond, &queue->lock);
+            pthread_mutex_unlock(&lock_for_tasks);
+        }else{
+            added_queue=0;
+            pthread_mutex_unlock(&lock_for_tasks);
+
+        }
 
 
+
+
+       
+        
+       
          /*si mi cola de exec se quedo  vacia quiere decir
         que tambien la del scheduler asi que espero una señal
         ya sea una syscal o que añadan una tarea*/ 
