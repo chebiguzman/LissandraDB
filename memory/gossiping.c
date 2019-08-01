@@ -129,27 +129,16 @@ char* itoa_for_buffer(char* str, int max_size, int num){
 // que contiene el buffer, seguido de la info de nodos
 // Cada info de nodo tiene 5 chars para el puerto, 2 chars para la length del ip, y el ip
 char* create_gossip_buffer(gossip_t** gossip_table){
+    // char sep[2] = { ',', '\0' };
+    // char div[2] = { '|', '\0' };
     printf("Creando Buffer \n");
     int gossip_table_size = get_gossip_table_size(gossip_table);
-
-    // int number_size = 5, ip_length = 2;
-    // int buffer_size = number_size + number_size * gossip_table_size + 1; // +1 para el \0
     gossip_t* temp = *gossip_table;
     char* buffer = (char*)malloc(1000);
-    // memset(buffer, 0, 1000);
     char* string_number_of_nodes = malloc(length_indicator + 1);
     itoa_for_buffer(string_number_of_nodes, length_indicator, gossip_table_size);
     strcpy(buffer, string_number_of_nodes);
-    // char* string_number = malloc(6);
-    // itoa_for_buffer(string_number, gossip_table_size);
-    // strcpy(buffer, string_number);
-    // for(int i = 1; i < gossip_table_size+1; i++){
-    //     itoa_for_buffer(string_number, temp->port);
-    //     strcat(buffer, string_number);
-    //     temp = temp->next;
-    // }
-    // free(string_number);
-    
+  
     while(temp != NULL){
         char* string_port = malloc(length_number + 1);
         itoa_for_buffer(string_port, length_number, temp->port);
