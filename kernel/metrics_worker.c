@@ -45,21 +45,23 @@ void metrics_start(t_log* log){
     m->write_latency_hc = list_create();
 }
 
-void register_select(int* memoryid, t_consistency c, long* latency){
+void register_select(int memoryid, t_consistency c, double* latency){
     switch (c)
     {
     case S_CONSISTENCY:
         m->read_count_sc++;
         m->total_count_sc++;
         list_add(m->read_latency_sc, latency);
-        if(dictionary_has_key(m->memory_count_sc, string_itoa(*memoryid))){
-            int* i = dictionary_get(m->memory_count_sc, string_itoa(*memoryid));
-            *i++;
-    
+        if(dictionary_has_key(m->memory_count_sc, string_itoa(memoryid))){
+            int* i = dictionary_get(m->memory_count_sc, string_itoa(memoryid));
+            int r = *i;
+            r++;
+            *i = r;
+
         }else{
             int* i = malloc(sizeof(int));
             *i = 1;
-            dictionary_put(m->memory_count_sc, string_itoa(*memoryid), i);
+            dictionary_put(m->memory_count_sc, string_itoa(memoryid), i);
         }
         break;
 
@@ -150,13 +152,13 @@ void* print_metrics(void* args){
 
 }
 
-long list_promedy(t_list* list){
-    long sum = 0;
+double list_promedy(t_list* list){
+    double sum = 0;
 
     if(list_size(list)>0){
         for(int i = 0; i < list_size(list);i++){
 
-            sum += *((long *)list_get(list, i));
+            sum += *((double *)list_get(list, i));
         }
 
         return sum/list_size(list);
@@ -164,7 +166,7 @@ long list_promedy(t_list* list){
     return sum;
    
 }
-#define BUFSIZE (sizeof(long) * 8 + 1)
+#define BUFSIZE (sizeof(double) * 8 + 1)
 
 
 
@@ -172,10 +174,10 @@ char* get_metrics(){
     char* r = malloc(1000);
     strcpy(r, "Strong consistency:\nRead latency:");
 
-    long rlsc = list_promedy(m->read_latency_sc );
+    double rlsc = list_promedy(m->read_latency_sc );
 
     char* buff = malloc(30);
-    sprintf(buff, "%ld",rlsc);
+    sprintf(buff, "%f",rlsc);
     strcat(r, buff);
     free(buff);
     //log_error(logger, r);
@@ -183,9 +185,9 @@ char* get_metrics(){
 
     strcat(r, "ms\nWrite latency:");
 
-    long wlsc = list_promedy(m->write_latency_sc );
+    double wlsc = list_promedy(m->write_latency_sc );
     buff = malloc(300);
-    sprintf(buff, "%ld",wlsc);
+    sprintf(buff, "%f",wlsc);
     strcat(r, buff);
     free(buff);
 
