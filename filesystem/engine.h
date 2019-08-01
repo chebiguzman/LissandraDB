@@ -58,4 +58,5 @@ void engine_compactate(char* table_name);
 int contadordetemp(DIR* directorio);
 void particiontemporal(char* temporal,char* tabla);
 int max_row_amount();
+void engine_adjust(char* tabla,int particion,char* new_row);
 #endif /* ENGINE_H */
