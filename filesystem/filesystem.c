@@ -177,6 +177,13 @@ char* action_select(package_select* select_info){
 
 }
 
+int min(int a, int b){
+  if(a>b){
+    return b;
+  }
+  return a;
+}
+
 char* action_insert(package_insert* insert_info){
 
   printf("Se recibió una accion insert\n");
@@ -195,7 +202,8 @@ char* action_insert(package_insert* insert_info){
   strcat(table_path ,table_name);
 
   char* sliced_value = malloc(VALUE_SIZE+2);
-  memcpy(sliced_value, insert_info->value, VALUE_SIZE);
+  int len = min(VALUE_SIZE, strlen(insert_info->value));
+  memcpy(sliced_value, insert_info->value, len);
   strcpy(sliced_value+VALUE_SIZE, "\0");
   printf("%s\n", sliced_value);
   free(insert_info->value);
@@ -328,7 +336,7 @@ void* buscador(void* args){
 
   void kill_thread(){
     pthread_mutex_lock(&parametros->lock);
-    parametros->number_of_running_threads--;
+    *parametros->number_of_running_threads--;
     int amount = *parametros->number_of_running_threads;
     pthread_mutex_unlock(&parametros->lock);
     if(amount==0) pthread_cond_broadcast(parametros->cond);
@@ -453,9 +461,11 @@ void particiontemporal(char* temporal,char* tabla){
     block_number=atoi(particion->blocks[i]);
     strcat(regruta[i].line,".bin");
     log_info(logger,regruta[i].line);
+
     reg_amount= get_all_rows(regruta[i].line,temp_rows,block_number);
     paloggear=string_itoa(reg_amount);
     log_info(logger,paloggear);
+
     reubicar_rows(temp_rows,tabla,reg_amount);
     i++;
   }
@@ -464,20 +474,40 @@ void particiontemporal(char* temporal,char* tabla){
 }
 
 int partition_num(char* numero){
-char* charcito;
-int u=0;
-while(numero[u]!='.'){
-charcito[u]=numero[u];
-u++;
-}
-int retorno=atoi(charcito);
-return retorno;
+  char** name_parts = string_split(numero, ".");
+  printf("la primera parte del nombre es:%s\n",name_parts[0]);
+  int retorno = atoi(name_parts[0]);
+  free(name_parts[0]);
+  free(name_parts[1]);
+  free(name_parts);
+  return retorno;
 }
 
 int get_all_rows(char* ruta,regg* rows,int block_number){
   log_info(logger,ruta);
   FILE* bloque=fopen(ruta,"r");
   int registro=0;
+  while(!feof(bloque)){
+    rows[registro].line=malloc(100);// cambiar max tam;
+    fgets(rows[registro].line,100,bloque);
+    registro++;
+  }
+  fclose(bloque);
+  set_block_as_free(block_number);
+  return registro;
+}
+
+//algun dia (?)
+/*char** get_all_rows_in_string_array(char* ruta,int size,int block_number){
+  log_info(logger,ruta);
+  FILE* bloque=fopen(ruta,"r");
+  fseek(bloque,0, SEEK_END);
+  int size = ftell(bloque);
+  char* buff = malloc(size);
+  fread(buff, size, 1, bloque);
+  printf("el srchivo contiene:%s", buff);
+
+  /*int registro=0;
   while(!feof(bloque)){
     rows[registro].line=malloc(100);// cambiar max tam;
     fgets(rows[registro].line,100,bloque);
@@ -495,19 +525,34 @@ int get_all_rows(char* ruta,regg* rows,int block_number){
   
   return registro;
 }
-
+*/
+int get_row_key(char* row ){
+  printf("obterner la key de la row:%s\n", row);
+  if(row == NULL) return -1;
+  char** parts = string_split(row, ";");
+  if(parts == NULL) return -1;
+  if(parts[1] == NULL) return -1;
+  int r = atoi(parts[1]);
+  string_iterate_lines(parts, free);
+  free(parts);
+  return r;
+}
 void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
-  int cantidad_maxima;
+  int cantidad_maxima = 1;//max_row_amount();
   t_table_metadata* metadata= get_table_metadata(tabla);
-  char* auxkey;
+  char* auxkey = malloc(30);
   int q=0;
  
   while(q<reg_amount-1){
     char* aux_reg_amount=string_itoa(reg_amount);
     log_info(logger,"recibo esta cantidad de registros:");
     log_info(logger,aux_reg_amount);
-    cortador(row_list[q].line,auxkey);
-    int key=atoi(auxkey);
+    printf("la row es:%s\n", row_list[q].line);
+    printf("q es %d\n", q);
+
+    int key= get_row_key(row_list[q].line);
+    printf("key es %d\n", key);
+
     int part=key % metadata->partition_number;
     log_info(logger,tabla);
     t_table_partiton* currentpartition=get_table_partition(tabla,part);
@@ -575,19 +620,28 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
 
     log_info(logger,"antes del lock");
     pthread_mutex_lock(&lock);
-    pthread_cond_wait(&cond, &lock);
+    if(*number_of_threads!=0){
+      pthread_cond_wait(&cond, &lock);
+    }
     log_info(logger,"despues del lock");
+
     int whileparametro=0;
     int nada=0;
+
     while(whileparametro<block_amount){
+
       if(parametros[whileparametro]->hecho!=1){
         nada++;
       }
       whileparametro++;
     }
+    
+
     if(nada==whileparametro){
       int amount=contar_rows(regruta[block_amount-1].line);
       if(amount<cantidad_maxima){
+      log_info(logger,"despues del w");
+
         FILE* last=fopen(regruta[block_amount-1].line,"r+");
         fseek(last,0,SEEK_END);
         fputs(row_list[q].line,last);
@@ -597,6 +651,8 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
         new_block(row_list[q].line,tabla,part);
       }
     }
+
+
     pthread_mutex_destroy(&lock);
     pthread_cond_destroy(&cond);
     q++;
@@ -607,6 +663,7 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
 }
 
 void* buscador_compactacion(void* args){
+
   argumentosthread_compactacion* parametros;
   parametros= (argumentosthread_compactacion*) args;
   FILE* bloque=NULL;
@@ -615,10 +672,13 @@ void* buscador_compactacion(void* args){
   log_info(logger,parametros->ruta);
   void kill_thread(){
     pthread_mutex_lock(&parametros->lock);
-    parametros->number_of_running_threads--;
+    //*parametros->number_of_running_threads= *parametros->number_of_running_threads ;
     int amount = *parametros->number_of_running_threads;
-    pthread_mutex_unlock(&parametros->lock);
+    amount--;
+    *parametros->number_of_running_threads= amount;
     if(amount==0) pthread_cond_broadcast(parametros->cond);
+    pthread_mutex_unlock(&parametros->lock);
+
   }
 
   bloque=fopen(parametros->ruta,"r+");
@@ -637,14 +697,13 @@ void* buscador_compactacion(void* args){
   parametros->retorno = strdup("");
   while(!feof(bloque)){
     buffer[l].line=malloc(100);
+    buffer[l].line[0] = '\0';
     fgets(buffer[l].line,100,bloque);
-    log_info(logger,buffer[l].line);
+    if(buffer[l].line[0] == '\0') break;
     parametros->row= strdup(buffer[l].line);
     
     //devuelve key
-
-    cortador(buffer[l].line,parametros->retorno);
-    if(parametros->key==atoi(parametros->retorno)){
+    if(parametros->key== get_row_key(buffer[l].line) ){
       if(atoi(parametros->new_row)<atoi(buffer[l].line)){
       buffer[l].line=strdup(parametros->new_row);
       parametros->bolean=1;
@@ -680,9 +739,9 @@ void* buscador_compactacion(void* args){
 int contar_rows(char* ruta){
   FILE* last_block=fopen(ruta,"r");
   int row_amount=0;
-  char trash[1];
+  char *trash = malloc(30);
   while(!feof(last_block)){
-    fgets(trash,1,last_block);
+    fgets(trash,30,last_block);
     row_amount++;
   }
   fclose(last_block);
