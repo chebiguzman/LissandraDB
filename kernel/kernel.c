@@ -88,7 +88,7 @@ int main(int argc, char const *argv[])
     //JOIN THREADS
     //pthread_join(tid,NULL);
     pthread_join(tid_console,NULL);
-    free(LOGPATH);
+    //free(LOGPATH);
     config_destroy(config);
     
     //FREE MEMORY
@@ -165,7 +165,6 @@ char* action_select(package_select* select_info){
   *latency = time_taken;
   log_info(logger_debug, "Se ejecuta en memoria accion select respuesta:", responce);
   int id = unlock_memory(memoryfd);
-  printf("latencia %f", *latency);
   if(id>0) register_select(id, consistency, latency);
 
   return responce;
