@@ -789,3 +789,5 @@ void adjust_size(char* size,char* new_row){
   log_info(logger,final);
   return;
 }
+
+void exec_err_abort(){};

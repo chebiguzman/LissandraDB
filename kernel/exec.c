@@ -58,16 +58,11 @@ void* exec(void *system_queue){
                 ///home/dreamable/a.lql
                 //printf(" la instruccion a ejecutar es %s\n",instr);
                 //log_debug(logger_debug, instr);
-
                 char* r = exec_instr(instr);
                 //log_debug(logger_debug, "exec:obtengo respuesta");
                 //printf("imprimo resultado\n");
-                pthread_mutex_lock(&console->lock);
-                printf("%s", r);
-                fflush(stdout);
-                pthread_mutex_unlock(&console->lock);
+                fprintf(stderr, "%s", r);
 
-  
                 /* pthread_mutex_lock(&console->lock);
                 console->cont_int = 1;
                 pthread_cond_broadcast(&console->cond);
@@ -127,19 +122,13 @@ void* exec(void *system_queue){
             }
             
         }
-
+        //printf("SALGO A ESPERAR MAS PROGRAMAS\n");
         syscall_availity_status = true;
         //devuelvo el control a consola
-        
-        fflush(stdout);
 
-
-        
-        //pthread_mutex_lock(&console->print_lock);
-        
         pthread_mutex_lock(&console->lock);
         pthread_cond_broadcast(&console->cond);
-        //console->cont_int = 1;
+        console->cont_int = 1;
         pthread_mutex_unlock(&console->lock);
         
 
