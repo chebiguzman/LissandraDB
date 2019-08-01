@@ -786,7 +786,7 @@ t_table_partiton* get_table_partition2(char* table_name, int table_partition_num
 
 void engine_compactate(char* name_table){
 
-    char* ruta=malloc(strlen(tables_path) + strlen(name_path) + 30);
+    char* ruta=malloc(strlen(tables_path) + strlen(name_table) + 30);
     strcpy(ruta,tables_path);
     strcat(ruta,name_table);
 
@@ -841,7 +841,7 @@ int contadordetemp(DIR* directorio){
 
 void new_block(char* new_row,char* tabla,int particion){
 
-    char* ruta=malloc(strlen(ruta) + strlen(tables_path) + 50);
+    char* ruta=malloc(strlen(tabla) + strlen(tables_path) + 50);
     strcpy(ruta,tables_path);
     strcat(ruta,tabla);
     strcat(ruta,"/");
@@ -913,16 +913,16 @@ void new_block(char* new_row,char* tabla,int particion){
 }
 
 char* add_block_to_list(char* block_list,int new){
+
     char* new_block=string_itoa(new);
     char* buff = malloc(strlen(block_list) + 5);
     memcpy(buff, block_list, strlen(block_list)-1);
     buff[strlen(block_list)-1] = '\0';
-    if(buff[strlen(block_list)-2]!='[') strcat(buff, ",");
+    if(block_list[8]!=']') strcat(buff, ",");
     strcat(buff, new_block);
     strcat(buff, "]");
 
-    
-    
+
 
     return buff;
 
@@ -941,20 +941,20 @@ void engine_adjust(char* tabla,int particion,char* new_row){
     int i=0;
     FILE* part=fopen(ruta,"r");
     while(!feof(part)){
-    registro[i].line=malloc(100);
-    fgets(registro[i].line,100,part);
-    log_info(logg,registro[i].line);
-    i++;//cambiar el 100 por max+1
-}
-adjust_size(registro[0].line,new_row);
-rewind(part);
-fclose(part);
-part=fopen(ruta,"w");
-for(int j=0;j<2;j++){
-fputs(registro[j].line,part);
-}
-fclose(part);
-free(registro[0].line);
-free(registro[1].line);
-return;
+        registro[i].line=malloc(100);
+        fgets(registro[i].line,100,part);
+        log_info(logg,registro[i].line);
+        i++;//cambiar el 100 por max+1
+    }
+    adjust_size(registro[0].line,new_row);
+    rewind(part);
+    fclose(part);
+    part=fopen(ruta,"w");
+    for(int j=0;j<2;j++){
+        fputs(registro[j].line,part);
+    }
+    fclose(part);
+    free(registro[0].line);
+    free(registro[1].line);
+    return;
 }
