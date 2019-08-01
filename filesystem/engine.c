@@ -888,9 +888,17 @@ strcat(ruta_bloque,".bin");
 log_info(logg,ruta_bloque);
 FILE* bloque=fopen(ruta_bloque,"w");
 int length_row=strlen(new_row);
-new_row[length_row]='\n';
-new_row[length_row+1]='\0';
-fputs(new_row,bloque);
+new_row[length_row]='\0';
+fseek(bloque,0,SEEK_END);
+if(ftell(bloque)==0){
+  fputs(new_row,bloque);  
+}
+else{
+    char salto[1];
+    salto[0]='\n';
+    fputs(salto,bloque);
+    fputs(new_row,bloque);
+}
 fclose(bloque);
 free(ruta);
 free(registro[0].line);
