@@ -204,7 +204,7 @@ char* action_insert(package_insert* insert_info){
   char* sliced_value = malloc(VALUE_SIZE+2);
   int len = min(VALUE_SIZE, strlen(insert_info->value));
   memcpy(sliced_value, insert_info->value, len);
-  strcpy(sliced_value+VALUE_SIZE, "\0");
+  strcpy(sliced_value+len, "\0");
   printf("%s\n", sliced_value);
   free(insert_info->value);
   insert_info->value = sliced_value;
@@ -282,7 +282,7 @@ char* action_drop(package_drop* drop_info){
 char* action_journal(package_journal* journal_info){
   free(parse_package_journal(journal_info));
   log_info(logger,"wat?");
-   engine_compactate(strdup("POSTRES"));
+   engine_compactate(strdup("A"));
   return strdup("No es una instruccion valida\n");
 }
 
@@ -544,6 +544,7 @@ int get_row_key(char* row ){
   }
 
   string_iterate_lines(parts, free_s);
+
   
   free(parts);
   return r;
@@ -636,6 +637,8 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
     log_info(logger,"antes del lock");
     pthread_mutex_lock(&lock);
     if(*number_of_threads!=0){
+      log_info(logger,"espero condicion");
+
       pthread_cond_wait(&cond, &lock);
     }
     log_info(logger,"despues del lock");
@@ -683,7 +686,7 @@ void* buscador_compactacion(void* args){
   argumentosthread_compactacion* parametros;
   parametros= (argumentosthread_compactacion*) args;
   FILE* bloque=NULL;
-  log_info(logger,"comprovacion re parametros");
+  log_info(logger,"comprobacion re parametros");
   log_info(logger,parametros->new_row);
   log_info(logger,parametros->ruta);
   void kill_thread(){
@@ -703,15 +706,15 @@ void* buscador_compactacion(void* args){
     log_error(logger,parametros->ruta);
     log_error(logger, "el archivo no existe.");
     kill_thread();
-  
+
     return NULL;
   }
 
   regg buffer[100];
   int l=0;
-  log_info(logger,"antes de leer");
   parametros->retorno = strdup("");
   while(!feof(bloque)){
+
     buffer[l].line=malloc(100);
     buffer[l].line[0] = '\0';
     fgets(buffer[l].line,100,bloque);
@@ -719,6 +722,8 @@ void* buscador_compactacion(void* args){
     parametros->row= strdup(buffer[l].line);
     
     //devuelve key
+    log_info(logger,"antes de leer");
+
     if(parametros->key== get_row_key(buffer[l].line) ){
       if(atoi(parametros->new_row)<atoi(buffer[l].line)){
       buffer[l].line=strdup(parametros->new_row);
@@ -726,6 +731,7 @@ void* buscador_compactacion(void* args){
       }
       else{
         parametros->hecho=1;
+        kill_thread();
         return NULL;
       }
     }
@@ -743,10 +749,12 @@ void* buscador_compactacion(void* args){
     contadorcito++;
     }
     parametros->hecho=1;
+    kill_thread();
     pthread_cond_broadcast(parametros->cond);
     fclose(bloque);
     return NULL;
   }
+
   kill_thread();
   log_info(logger, "salida de la funcion");
   return NULL;
