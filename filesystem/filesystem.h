@@ -54,3 +54,4 @@ void reubicar_rows(regg* temp_rows,char* tabla,int reg_amount);
 int contar_rows(char* ruta);
 void adjust_size(char* size,char* new_row);
 void* buscador_compactacion(void* args);
+void exec_err_abort();

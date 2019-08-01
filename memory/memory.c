@@ -12,7 +12,7 @@
 #include <netdb.h>
 #include "segments.h"
 #include <signal.h>
-
+void exec_err_abort(){};
 //logger global para que lo accedan los threads
 int main_memory_size;
 //punto de entrada para el programa y el kernel
@@ -236,3 +236,4 @@ char* action_intern__status(){
 char* parse_input(char* input){
   return exec_instr(input);
 }
+
