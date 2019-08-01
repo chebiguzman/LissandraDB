@@ -70,7 +70,7 @@ void* create_server(void* args){
                 char* responce = parse_input(buffer);
 
                 write(newsockfd,responce,strlen(responce)+1);
-                
+                free(responce);
 
             }else{
 

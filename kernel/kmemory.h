@@ -50,6 +50,7 @@ void kmemoy_add_table();
 void kmemory_drop_table(char* tbl_name);
 void kmemory_add_table(char* name, t_consistency* cons);
 void disconect_from_memory(int memoryfd);
+void set_main_memory_id(int id);
 
 #endif /* KMEMORY_H */
 

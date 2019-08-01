@@ -1,2 +1,2 @@
-SIZE=0
-BLOCKS=[]
+SIZE=40
+BLOCKS=[3]
