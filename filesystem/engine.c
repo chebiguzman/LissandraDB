@@ -921,3 +921,34 @@ char* add_block_to_list(char* block_list,int new){
     return buff;
 
 }
+
+void engine_adjust(char* tabla,int particion,char* new_row){
+    char* ruta= malloc(100);
+    strcpy(ruta,tables_path);
+    strcat(ruta,tabla);
+    strcat(ruta,"/");
+    char* aux= malloc(10);
+    aux=string_itoa(particion);
+    strcat(ruta,aux);
+    strcat(ruta,".part");
+    regg registro[2];
+    int i=0;
+    FILE* part=fopen(ruta,"r");
+    while(!feof(part)){
+    registro[i].line=malloc(100);
+    fgets(registro[i].line,100,part);
+    log_info(logg,registro[i].line);
+    i++;//cambiar el 100 por max+1
+}
+adjust_size(registro[0].line,new_row);
+rewind(part);
+fclose(part);
+part=fopen(ruta,"w");
+for(int j=0;j<2;j++){
+fputs(registro[j].line,part);
+}
+fclose(part);
+free(registro[0].line);
+free(registro[1].line);
+return;
+}
