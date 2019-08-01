@@ -492,6 +492,11 @@ int get_all_rows(char* ruta,regg* rows,int block_number){
     fgets(rows[registro].line,100,bloque);
     registro++;
   }
+  char* hola=string_itoa(block_number);
+  log_info(logger,"el bloque a liberar es");
+  log_info(logger,hola);
+  fclose(bloque);
+  bloque=fopen(ruta,"w");
   fclose(bloque);
   set_block_as_free(block_number);
   return registro;
@@ -589,8 +594,6 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
     log_info(logger,amount_aux);
     int i = 0;
     log_info(logger,"bloques:");
-    log_info(logger,currentpartition->blocks[0]);
-    printf("%s \n",currentpartition->blocks[1]);
     while(i<block_amount){
       regruta[i].line=malloc(100);
       strcpy(regruta[i].line,"MountTest/");
@@ -651,13 +654,14 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
 
     if(nada==whileparametro){
       int amount=contar_rows(regruta[block_amount-1].line);
-      if(amount<cantidad_maxima){
+      if(amount<3){
       log_info(logger,"despues del w");
 
         FILE* last=fopen(regruta[block_amount-1].line,"r+");
         fseek(last,0,SEEK_END);
         fputs(row_list[q].line,last);
         fclose(last);
+        engine_adjust(tabla,part,row_list[q].line);
       }
       else{
         new_block(row_list[q].line,tabla,part);
