@@ -1,20 +1,20 @@
 #include "gossiping.h"
 
+int length_indicator = 2, length_number = 5;
 
-gossip_t* create_node(int number, int port, char* ip){
+gossip_t* create_node(int port, char* ip){
     gossip_t* node = (gossip_t*)malloc(sizeof(gossip_t));
     node->next = NULL;
     node->prev = NULL;
-    node->number = number;
     node->port = port;
-    strdup(node->ip, ip);
+    node->ip = strdup(ip);
     // printf("Creando nodo %d\n", port);
     return node;    
 }
 
 void add_node(gossip_t** gossip_table, gossip_t* node){
     // printf("Agregando nodo %d a la tabla... ", node->port);
-    if(find_node(gossip_table, node->number)) return;
+    if(find_node(gossip_table, node->port)) return;
 	if(*gossip_table == NULL){ // si esta vacia
 		*gossip_table = node;
 	}
@@ -43,10 +43,10 @@ void remove_node(gossip_t** gossip_table, gossip_t* node){
 	}
 }
 
-gossip_t* find_node(gossip_t** gossip_table, int number){
+gossip_t* find_node(gossip_t** gossip_table, int port){
 	gossip_t* temp = *gossip_table;
 	while(temp != NULL){
-		if(temp->number == number){
+		if(temp->port == port){
 			return temp;
 		}
 		temp = temp->next;
@@ -57,24 +57,56 @@ gossip_t* find_node(gossip_t** gossip_table, int number){
 // crea la gossip table del otro nodo con el buffer que le pasan
 gossip_t* parse_gossip_buffer(char* buffer){
     // printf("Parseando: %s\n", buffer);
-    gossip_t* gossip_table = NULL;
+    gossip_t* new_gossip_table = NULL;
     char* temp_buffer = strdup(buffer);
-    int number_size = 5;
-    char* string_number = strndup(buffer, number_size);
-    int size = atoi(string_number);
-    for(int i = 1; i < size+1; i++){
-        memcpy(string_number, temp_buffer+(number_size * i), number_size);
-        gossip_t* node = create_node(atoi(string_number));
-        add_node(&gossip_table, node);
+    // printf("Buffer asd(length: %d): %s\n", strlen(buffer), buffer);
+    printf("Buffer(length: %d): %s\n", strlen(temp_buffer), temp_buffer);
+    char* string_number_of_nodes = strndup(temp_buffer, length_indicator);
+    int number_of_nodes = atoi(string_number_of_nodes);
+    temp_buffer = temp_buffer+length_indicator;
+    printf("Parsed number of nodes: %d\n", number_of_nodes);
+    
+    char* string_port;
+    // char* string_number = strndup(buffer, length_number);
+    char* string_ip_length;
+    char* new_ip;
+    // temp_buffer = temp_buffer+length_number;
+    // while(temp_buffer != 0){
+    for(int i = 0; i < number_of_nodes; i++){
+        // sleep(1);
+        //leo el port (5 chars)
+        string_port = strndup(temp_buffer, length_number);
+        int new_port = atoi(string_port);
+        temp_buffer = temp_buffer+length_number;
+        // printf("Parsed port: %d\n", new_port);
+
+        // sleep(1);
+        //leo el length indicator (2 chars)
+        string_ip_length = strndup(temp_buffer, length_indicator);
+        int ip_length = atoi(string_ip_length);
+        temp_buffer = temp_buffer+length_indicator;
+        // printf("Parsed ip length: %d\n", ip_length);
+        
+        // sleep(1);
+        //leo el ip (<ip_length> chars)
+        new_ip = strndup(temp_buffer, ip_length);
+        temp_buffer = temp_buffer+ip_length;
+        // printf("Parsed ip: %s\n", new_ip);
+        
+        // temp_buffer = temp_buffer+strlen(new_ip);        
+        // memcpy(string_number, temp_buffer+(length_number * i), length_number);
+        gossip_t* node = create_node(new_port, new_ip);
+        add_node(&new_gossip_table, node);
+        print_gossip_table(&node);
     }
-    free(temp_buffer);
-    return gossip_table;
+    // free(temp_buffer);
+    return new_gossip_table;
 }
 
 // retorna un string de 6 caracteres, 5 para el numero y el \0
 // si tiene menos de 5 digitos, rellena el principio con 0s
-char* itoa_for_buffer(char* str, int num){
-    int i, max_size = 5, rem, len = 1, n;
+char* itoa_for_buffer(char* str, int max_size, int num){
+    int i, rem, len = 1, n;
     n = num / 10;
     while (n != 0){
         len++;
@@ -90,36 +122,60 @@ char* itoa_for_buffer(char* str, int num){
         }
     }
     str[max_size] = '\0'; // le agrego el \0 al final para terminar el string
-    return 0;
+    return strdup(str);
 }
 
 // buffer para mandar entre nodos, cada buffer esta compuesto por un numero al inicio con la cantidad infos de nodos 
 // que contiene el buffer, seguido de la info de nodos
 // Cada info de nodo tiene 5 chars para el puerto, 2 chars para la length del ip, y el ip
 char* create_gossip_buffer(gossip_t** gossip_table){
+    printf("Creando Buffer \n");
     int gossip_table_size = get_gossip_table_size(gossip_table);
 
-    int number_size = 5, ip_length = 2;
-    int buffer_size = number_size + number_size * gossip_table_size + 1; // +1 para el \0
+    // int number_size = 5, ip_length = 2;
+    // int buffer_size = number_size + number_size * gossip_table_size + 1; // +1 para el \0
     gossip_t* temp = *gossip_table;
     char* buffer = (char*)malloc(1000);
-    char* string_number = malloc(6);
-    itoa_for_buffer(string_number, gossip_table_size);
-    strcpy(buffer, string_number);
-    for(int i = 1; i < gossip_table_size+1; i++){
-        itoa_for_buffer(string_number, temp->port);
-        strcat(buffer, string_number);
+    // memset(buffer, 0, 1000);
+    char* string_number_of_nodes = malloc(length_indicator + 1);
+    itoa_for_buffer(string_number_of_nodes, length_indicator, gossip_table_size);
+    strcpy(buffer, string_number_of_nodes);
+    // char* string_number = malloc(6);
+    // itoa_for_buffer(string_number, gossip_table_size);
+    // strcpy(buffer, string_number);
+    // for(int i = 1; i < gossip_table_size+1; i++){
+    //     itoa_for_buffer(string_number, temp->port);
+    //     strcat(buffer, string_number);
+    //     temp = temp->next;
+    // }
+    // free(string_number);
+    
+    while(temp != NULL){
+        char* string_port = malloc(length_number + 1);
+        itoa_for_buffer(string_port, length_number, temp->port);
+        strcat(buffer, string_port);
+        // printf("String port: %s\n", string_port);
+
+        char* string_ip_length = malloc(length_indicator + 1);
+        itoa_for_buffer(string_ip_length, length_indicator, strlen(temp->ip));
+        strcat(buffer, string_ip_length);
+        // printf("IP length: %s\n", string_ip_length);
+
+        strcat(buffer, temp->ip);
+        // printf("IP: %s\n", temp->ip);
         temp = temp->next;
     }
-    free(string_number);
-    return buffer;
+    char* short_buffer = strdup(buffer);
+    free(buffer);
+    printf("Buffer generado: %s \n", short_buffer);
+    return short_buffer;
 }
 
 // busca cada nodo de la tabla2 en la tabla1, si no lo encuentra, lo agrega
 void compare_gossip_tables(gossip_t** gossip_table1, gossip_t** gossip_table2){
     gossip_t* gossip_temp = *gossip_table2;
     while(gossip_temp != NULL){
-        gossip_t* temp_node = create_node(gossip_temp->port);
+        gossip_t* temp_node = create_node(gossip_temp->port, gossip_temp->ip);
         add_node(gossip_table1, temp_node);
         gossip_temp = gossip_temp->next;
     }
@@ -140,13 +196,13 @@ gossip_t* create_nodes_to_connect(gossip_t** gossip_table, char** seeds_ports){
     gossip_t* temp_gossip = NULL;
     gossip_t* temp_gossip2 = *gossip_table;
     while(temp_gossip2 != NULL){
-        gossip_t* temp_node = create_node(temp_gossip2->port);
+        gossip_t* temp_node = create_node(temp_gossip2->port, temp_gossip2->ip);
         add_node(&temp_gossip, temp_node);
         temp_gossip2 = temp_gossip2->next;
     }
     remove_node(&temp_gossip, temp_gossip);
     for(int i = 0; seeds_ports[i] != NULL; i++){
-        gossip_t* temp_node = create_node(atoi(seeds_ports[i]));
+        gossip_t* temp_node = create_node(atoi(seeds_ports[i]), seeds_ips[i]);
         add_node(&temp_gossip, temp_node);   
     }
     return temp_gossip;
