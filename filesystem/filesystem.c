@@ -533,7 +533,13 @@ int get_row_key(char* row ){
   if(parts == NULL) return -1;
   if(parts[1] == NULL) return -1;
   int r = atoi(parts[1]);
-  string_iterate_lines(parts, free);
+  
+  void free_s(char * s){
+    free(s);
+  }
+
+  string_iterate_lines(parts, free_s);
+  
   free(parts);
   return r;
 }
@@ -560,14 +566,15 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
     
     int block_amount = 0;
     log_info(logger,"antes del while");
-    char* first_block = currentpartition->blocks[0];
+    void* first_block = currentpartition->blocks;
     while(*currentpartition->blocks){
       log_info(logger,"entre al while");
-      printf("los bloques son: %s",currentpartition->blocks[block_amount]);
+      printf("los bloques son: %s",*currentpartition->blocks);
       block_amount++;
-      *currentpartition->blocks++;
+      currentpartition->blocks++;
     }
-    *currentpartition->blocks = first_block;
+    currentpartition->blocks = first_block;
+    
     log_info(logger,"antes del if");
      if(block_amount==0){
        log_info(logger,"adentro del if");
@@ -588,11 +595,12 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
       regruta[i].line=malloc(100);
       strcpy(regruta[i].line,"MountTest/");
       strcat(regruta[i].line,"Bloques/");
-      strcat(regruta[i].line,currentpartition->blocks[i]);
+      strcat(regruta[i].line,*currentpartition->blocks);
       strcat(regruta[i].line,".bin");
       log_info(logger,regruta[i].line);
       log_info(logger,"una vuelta de armado de rutas");
       i++;
+      *currentpartition->blocks++;
     }
     pthread_mutex_t lock;
     pthread_cond_t cond;
