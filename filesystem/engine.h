@@ -42,13 +42,20 @@ char* get_table_metadata_as_string(char* table_name);
 char* get_all_tables_metadata_as_string();
 t_table_metadata* get_table_metadata(char* table_name);
 t_table_partiton* get_table_partition(char* table_name, int table_partition_number);
+t_table_partiton* get_table_partition2(char* table_name, int table_partition_number);
 void engine_drop_table(char* table_name);
 
 void engine_dump_table(char* table_name, char* table_dump);
 int find_free_block();
 void set_block_as_occupied(int block_number);
+void set_block_as_free(int block_number);
 int does_file_exist(char* file_path);
 int find_tmp_name(char* tmp_path);
-
+void add_block_to_list(char* block_list,int );
+void adjust_size(char* size,char* new_row);
+void new_block(char* new_row,char* tabla,int particion);
+void engine_compactate(char* table_name);
+int contadordetemp(DIR* directorio);
+void particiontemporal(char* temporal,char* tabla);
 
 #endif /* ENGINE_H */

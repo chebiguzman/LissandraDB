@@ -52,7 +52,7 @@ int main(int argc, char const *argv[]){
     serverInfo->portNumber = PORT;
     pthread_t tid;
     pthread_create(&tid, NULL, create_server, (void*) serverInfo);
- 
+    
  
     //inicio lectura por consola
     pthread_t tid_console;
@@ -273,6 +273,8 @@ char* action_drop(package_drop* drop_info){
 
 char* action_journal(package_journal* journal_info){
   free(parse_package_journal(journal_info));
+  log_info(logger,"wat?");
+   engine_compactate(strdup("POSTRES"));
   return strdup("No es una instruccion valida\n");
 }
 
@@ -411,4 +413,308 @@ void* dump_cron(void* TIEMPO_DUMP) {
     sleep(*((int*) TIEMPO_DUMP) / 1000);
     dump_memtable();
   }
+}
+
+
+void particiontemporal(char* temporal,char* tabla){
+
+  char* ruta=malloc(100);
+  strcpy(ruta,"MountTest/Tables/") ;
+  strcat(ruta,tabla);
+  strcat(ruta,"/");
+  strcat(ruta,temporal);
+  
+  log_info(logger,ruta);
+  int numparticion=partition_num(temporal);
+  char* numparticion_aux=string_itoa(numparticion);
+  log_info(logger,numparticion_aux);
+  
+  t_table_partiton* particion= get_table_partition2(tabla, numparticion); 
+  
+  int block_amount = 0;
+  char* first_block = particion->blocks[0];
+  log_info(logger,"antes de la iteracion");
+  while(*particion->blocks){
+    block_amount++;
+    *particion->blocks++;
+  }
+  *particion->blocks = first_block;  
+  regg regruta[block_amount];
+  regg temp_rows[40];
+  int reg_amount;
+  int i = 0;
+  int block_number;
+  char* paloggear;
+  while(i<block_amount){
+    regruta[i].line=malloc(100);
+    strcpy(regruta[i].line,"MountTest/");
+    strcat(regruta[i].line,"Bloques/");
+    strcat(regruta[i].line,particion->blocks[i]);
+    block_number=atoi(particion->blocks[i]);
+    strcat(regruta[i].line,".bin");
+    log_info(logger,regruta[i].line);
+    reg_amount= get_all_rows(regruta[i].line,temp_rows,block_number);
+    paloggear=string_itoa(reg_amount);
+    log_info(logger,paloggear);
+    reubicar_rows(temp_rows,tabla,reg_amount);
+    i++;
+  }
+  free(ruta);
+  return ;
+}
+
+int partition_num(char* numero){
+char* charcito;
+int u=0;
+while(numero[u]!='.'){
+charcito[u]=numero[u];
+u++;
+}
+int retorno=atoi(charcito);
+return retorno;
+}
+
+int get_all_rows(char* ruta,regg* rows,int block_number){
+  log_info(logger,ruta);
+  FILE* bloque=fopen(ruta,"r");
+  int registro=0;
+  while(!feof(bloque)){
+    rows[registro].line=malloc(100);// cambiar max tam;
+    fgets(rows[registro].line,100,bloque);
+    registro++;
+  }
+  fclose(bloque);
+  log_info(logger,"hasta acaaaaaaaaaaaaaaa");
+  bloque=fopen(ruta,"w");
+  fclose(bloque);
+  set_block_as_free(block_number);
+  for(int i=0;i<registro;i++){
+    log_info(logger,rows[i].line);
+  }
+  log_info(logger,"fuera del ciclo");
+  
+  return registro;
+}
+
+void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
+  int cantidad_maxima;
+  t_table_metadata* metadata= get_table_metadata(tabla);
+  char* auxkey;
+  int q=0;
+ 
+  while(q<reg_amount-1){
+    char* aux_reg_amount=string_itoa(reg_amount);
+    log_info(logger,"recibo esta cantidad de registros:");
+    log_info(logger,aux_reg_amount);
+    cortador(row_list[q].line,auxkey);
+    int key=atoi(auxkey);
+    int part=key % metadata->partition_number;
+    log_info(logger,tabla);
+    t_table_partiton* currentpartition=get_table_partition(tabla,part);
+    
+    int block_amount = 0;
+    log_info(logger,"antes del while");
+    char* first_block = currentpartition->blocks[0];
+    while(*currentpartition->blocks){
+      log_info(logger,"entre al while");
+      block_amount++;
+      *currentpartition->blocks++;
+    }
+    *currentpartition->blocks = first_block;
+    log_info(logger,"antes del if");
+     if(block_amount==0){
+       log_info(logger,"adentro del if");
+      new_block(row_list[q].line,tabla,part);
+      q++;
+    }
+    else{
+    pthread_t buscadores[block_amount];
+    regg regruta[block_amount];
+    log_info(logger,"hasta aca prro");
+    char* amount_aux=string_itoa(block_amount);
+    log_info(logger,amount_aux);
+    int i = 0;
+    while(i<block_amount){
+      regruta[i].line=malloc(100);
+      strcpy(regruta[i].line,"MountTest/");
+      strcat(regruta[i].line,"Bloques/");
+      strcat(regruta[i].line,currentpartition->blocks[i]);
+
+      strcat(regruta[i].line,".bin");
+      
+      log_info(logger,regruta[i].line);
+      i++;
+    }
+    pthread_mutex_t lock;
+    pthread_cond_t cond;
+    pthread_mutex_init(&lock, NULL);
+    pthread_cond_init(&cond, NULL);
+    log_info(logger,"semaforos levantados");
+    int whilethread=0;
+    argumentosthread_compactacion* parametros [block_amount];
+    int* number_of_threads = malloc(sizeof(int));
+    *number_of_threads = block_amount;
+    log_info(logger,"mallock hecho");
+
+    while(whilethread<block_amount){
+      argumentosthread_compactacion* args = malloc(sizeof(argumentosthread));
+      args->bolean=0;
+      args->hecho=0;
+      args->ruta = strdup(regruta[whilethread].line);
+      args->key=key;
+      args->cond = &cond;
+      args->lock = lock;
+      args->new_row=strdup(row_list[q].line);
+      args->number_of_running_threads = number_of_threads;
+      parametros[whilethread] = args;
+      pthread_create(&buscadores[whilethread],NULL,buscador_compactacion,args);
+      pthread_detach(buscadores[whilethread]);
+      log_info(logger,"vuelta de armada de parametros");
+      whilethread++;
+    }
+
+    log_info(logger,"antes del lock");
+    pthread_mutex_lock(&lock);
+    pthread_cond_wait(&cond, &lock);
+    log_info(logger,"despues del lock");
+    int whileparametro=0;
+    int nada=0;
+    while(whileparametro<block_amount){
+      if(parametros[whileparametro]->hecho!=1){
+        nada++;
+      }
+      whileparametro++;
+    }
+    if(nada==whileparametro){
+      int amount=contar_rows(regruta[block_amount-1].line);
+      if(amount<cantidad_maxima){
+        FILE* last=fopen(regruta[block_amount-1].line,"r+");
+        fseek(last,0,SEEK_END);
+        fputs(row_list[q].line,last);
+        fclose(last);
+      }
+      else{
+        new_block(row_list[q].line,tabla,part);
+      }
+    }
+    pthread_mutex_destroy(&lock);
+    pthread_cond_destroy(&cond);
+    q++;
+  }
+}
+  
+  return;
+}
+
+void* buscador_compactacion(void* args){
+  argumentosthread_compactacion* parametros;
+  parametros= (argumentosthread_compactacion*) args;
+  FILE* bloque=NULL;
+  log_info(logger,"comprovacion re parametros");
+  log_info(logger,parametros->new_row);
+  log_info(logger,parametros->ruta);
+  void kill_thread(){
+    pthread_mutex_lock(&parametros->lock);
+    parametros->number_of_running_threads--;
+    int amount = *parametros->number_of_running_threads;
+    pthread_mutex_unlock(&parametros->lock);
+    if(amount==0) pthread_cond_broadcast(parametros->cond);
+  }
+
+  bloque=fopen(parametros->ruta,"r+");
+  if(bloque==NULL){
+    log_error(logger,"El sistema de bloques de archivos presenta una inconcistencia en el bloque:");
+    log_error(logger,parametros->ruta);
+    log_error(logger, "el archivo no existe.");
+    kill_thread();
+  
+    return NULL;
+  }
+
+  regg buffer[100];
+  int l=0;
+  log_info(logger,"antes de leer");
+  parametros->retorno = strdup("");
+  while(!feof(bloque)){
+    buffer[l].line=malloc(100);
+    fgets(buffer[l].line,100,bloque);
+    log_info(logger,buffer[l].line);
+    parametros->row= strdup(buffer[l].line);
+    
+    //devuelve key
+
+    cortador(buffer[l].line,parametros->retorno);
+    if(parametros->key==atoi(parametros->retorno)){
+      if(atoi(parametros->new_row)<atoi(buffer[l].line)){
+      buffer[l].line=strdup(parametros->new_row);
+      parametros->bolean=1;
+      }
+      else{
+        parametros->hecho=1;
+        return NULL;
+      }
+    }
+    parametros->retorno = strdup("");
+    l++;
+    log_info(logger,"una vuela de lectura");
+    }
+    log_info(logger,"se termino de leer el bloque");
+    fclose(bloque);
+  if(parametros->bolean){
+    bloque=fopen(parametros->ruta,"w");
+    int contadorcito=0;
+    while(contadorcito<l){
+    fputs(buffer[contadorcito].line,bloque);
+    contadorcito++;
+    }
+    parametros->hecho=1;
+    pthread_cond_broadcast(parametros->cond);
+    fclose(bloque);
+    return NULL;
+  }
+  kill_thread();
+  log_info(logger, "salida de la funcion");
+  return NULL;
+}
+
+int contar_rows(char* ruta){
+  FILE* last_block=fopen(ruta,"r");
+  int row_amount=0;
+  char trash[1];
+  while(!feof(last_block)){
+    fgets(trash,1,last_block);
+    row_amount++;
+  }
+  fclose(last_block);
+  return row_amount;
+}
+
+void adjust_size(char* size,char* new_row){
+  int tam=strlen(new_row);
+  char aux_size [10];
+  int i =5;
+  int p=0;
+  log_info(logger,"antes de recorrer string");
+  log_info(logger,size);
+  while(size[i]!='\n' && size[i]!='\0'){
+    aux_size[p]=size[i];
+    i++;
+    p++;
+  }
+  aux_size[p]='\0';
+  char* check=string_itoa(i);
+  log_info(logger,check);
+  log_info(logger,aux_size);
+  int tam2=atoi(aux_size);
+  tam2= tam2+tam;
+  char* aux=string_itoa(tam2);
+  log_info(logger,aux);
+  char* final="SIZE=";
+  strcpy(size,final);
+  strcat(size,aux);
+  int last_tam=strlen(size);
+  size[last_tam]='\n';
+  size[last_tam+1]='\0';
+  log_info(logger,final);
+  return;
 }
