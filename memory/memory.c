@@ -39,6 +39,7 @@ int main(int argc, char const *argv[])
   config = config_create(config_name);
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
   MEMORY_PORT = config_get_int_value(config, "PORT");
+  MEMORY_IP = "127.0.0.1";
 
   //set up log
   logger = log_create(LOGPATH, "Memory", 1, LOG_LEVEL_INFO);
@@ -90,7 +91,7 @@ int main(int argc, char const *argv[])
   seeds_ports = config_get_array_value(config, "PUERTO_SEEDS");
   seeds_ips = config_get_array_value(config, "IP_SEEDS");
   GOSSIP_TABLE = NULL;
-  add_node(&GOSSIP_TABLE, create_node(MEMORY_PORT));
+  add_node(&GOSSIP_TABLE, create_node(MEMORY_PORT, MEMORY_IP));
   // add_node(&GOSSIP_TABLE, create_node(5002));
   
   // setup segments
@@ -108,11 +109,8 @@ int main(int argc, char const *argv[])
   print_gossip_table(&GOSSIP_TABLE);
   pthread_mutex_unlock(&gossip_table_mutex);					
 
-  // char** seed_ports = config_get_array_value(config, "PUERTO_SEEDS");
-  // gossip_t* parsed_gossip_table = create_nodes_to_connect(&GOSSIP_TABLE, seed_ports);
-  // print_gossip_table(&parsed_gossip_table);
-
-  // gossip(&GOSSIP_TABLE);  
+  // char* gossip_buffer = create_gossip_buffer(&GOSSIP_TABLE);
+  // printf("%s\n", gossip_buffer);
 
   pthread_mutex_init(&main_memory_mutex, NULL);
   pthread_mutex_init(&segment_table_mutex, NULL);
@@ -271,8 +269,6 @@ char* parse_input(char* input){
 }
 
 char* action_gossip(gossip_t** parsed_gossip_table){
-  pthread_mutex_lock(&gossip_table_mutex);	
-
   printf("Me llego una conexion de una memoria \n");
   char* gossip_buffer = create_gossip_buffer(&GOSSIP_TABLE); // lo creo antes de que compare las tablas asi no le mando las que me acaba de pasar
   printf("- Gossip buffer to send: %s\n", gossip_buffer);
@@ -294,6 +290,5 @@ char* action_gossip(gossip_t** parsed_gossip_table){
   printf("- Actualizo ");
   print_gossip_table(&GOSSIP_TABLE);
 
-  pthread_mutex_unlock(&gossip_table_mutex);
   return strdup(gossip_buffer);
 }
