@@ -396,6 +396,7 @@ char* get_table_metadata_as_string(char* table_name){
     strcpy(table_path, tables_path);
     strcat(table_path, table_name);
     strcat(table_path, "/metadata");
+
     FILE* f = fopen(table_path, "r");
     fseek(f, 0L, SEEK_END);
     int bytes = ftell(f);
@@ -406,10 +407,12 @@ char* get_table_metadata_as_string(char* table_name){
 
     fclose(f);
     free(table_path);
+
     return meta;
 }
 
 char* get_all_tables_metadata_as_string(){
+
     if(list_is_empty(tables_name)) return strdup("");
     int tables_amount = list_size(tables_name);
 
@@ -426,14 +429,14 @@ char* get_all_tables_metadata_as_string(){
         strcat(result, "\n");
     
         char* m = get_table_metadata_as_string(list_get(tables_name,i));
+
         result = realloc(result, strlen(result) + strlen(m) + 1);
         strcat(result, m);
         result = realloc(result, strlen(result) + 4);
         strcat(result, ";\n\n");
+
         free(m); 
     }
-
-
 
     return result;
 }
@@ -529,6 +532,7 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
     }
     char* blocks = NULL;
     int dump_size = strlen(table_dump);
+
     while(table_dump[0] != '\0'){
         printf("el table dump antes del dp: %s\n", table_dump);
         char* r = get_blocksize_table_rows(table_dump);

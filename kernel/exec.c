@@ -48,6 +48,7 @@ void* exec(void *system_queue){
                 //log_debug(logger_debug, "exec:me preparo para ejecutar");
                 //printf("entro a quiantum\n");
                 char* instr = queue_pop(program->instr);
+
                 //en un RUN los comandos se van mostrando
                 //a medida que ejecutan
                 if(program->doesPrint){
@@ -136,10 +137,9 @@ void* exec(void *system_queue){
         
         //pthread_mutex_lock(&console->print_lock);
         
-    
         pthread_mutex_lock(&console->lock);
-        console->cont_int = 1;
         pthread_cond_broadcast(&console->cond);
+        //console->cont_int = 1;
         pthread_mutex_unlock(&console->lock);
         
 
