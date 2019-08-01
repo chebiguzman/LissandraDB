@@ -156,10 +156,18 @@ char* action_select(package_select* select_info){
   char* package = parse_package_select(select_info);
   log_info(logger_debug, "Se parcea accion select:", package);
 
+  clock_t t; 
+  t = clock(); 
   char* responce = exec_in_memory(memoryfd, package); 
+  t = clock() - t; 
+  double time_taken = ((double)t)/CLOCKS_PER_SEC; 
+  double* latency = malloc(sizeof(double));
+  *latency = time_taken;
   log_info(logger_debug, "Se ejecuta en memoria accion select respuesta:", responce);
-  
-  unlock_memory(memoryfd);
+  int id = unlock_memory(memoryfd);
+  printf("latencia %f", *latency);
+  if(id>0) register_select(id, consistency, latency);
+
   return responce;
 
 }
