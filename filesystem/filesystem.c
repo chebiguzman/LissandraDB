@@ -542,8 +542,9 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
   t_table_metadata* metadata= get_table_metadata(tabla);
   char* auxkey = malloc(30);
   int q=0;
+  reg_amount--;
  
-  while(q<reg_amount-1){
+  while(q<reg_amount){
     char* aux_reg_amount=string_itoa(reg_amount);
     log_info(logger,"recibo esta cantidad de registros:");
     log_info(logger,aux_reg_amount);
@@ -562,6 +563,7 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
     char* first_block = currentpartition->blocks[0];
     while(*currentpartition->blocks){
       log_info(logger,"entre al while");
+      printf("los bloques son: %s",currentpartition->blocks[block_amount]);
       block_amount++;
       *currentpartition->blocks++;
     }
@@ -575,19 +577,21 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
     else{
     pthread_t buscadores[block_amount];
     regg regruta[block_amount];
-    log_info(logger,"hasta aca prro");
+    log_info(logger,"cantidad de bloques:");
     char* amount_aux=string_itoa(block_amount);
     log_info(logger,amount_aux);
     int i = 0;
+    log_info(logger,"bloques:");
+    log_info(logger,currentpartition->blocks[0]);
+    printf("%s \n",currentpartition->blocks[1]);
     while(i<block_amount){
       regruta[i].line=malloc(100);
       strcpy(regruta[i].line,"MountTest/");
       strcat(regruta[i].line,"Bloques/");
       strcat(regruta[i].line,currentpartition->blocks[i]);
-
       strcat(regruta[i].line,".bin");
-      
       log_info(logger,regruta[i].line);
+      log_info(logger,"una vuelta de armado de rutas");
       i++;
     }
     pthread_mutex_t lock;
