@@ -250,7 +250,7 @@ char* action_describe(package_describe* describe_info){
     //string_to_upper(describe_info->table_name);
     char* meta = get_table_metadata_as_string(describe_info->table_name);
 
-    char* result = malloc( strlen(meta) + strlen(describe_info->table_name) +8);
+    char* result = malloc( strlen(meta) + strlen(describe_info->table_name) + strlen("NAME=") +8);
     strcpy(result,"NAME=");
     strcat(result, describe_info->table_name);
     strcat(result, "\n");
