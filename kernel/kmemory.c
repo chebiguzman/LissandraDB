@@ -303,6 +303,8 @@ void add_memory_to_sc(int id){
 
 } 
 
+
+
 void add_memory_to_hc(int id){
 
     bool find_memory_by_id(void* m){
@@ -375,8 +377,8 @@ void add_memory_to_any(int id){
 
 }
 
-void unlock_memory(int memoryfd){
-    if(memoryfd < 0) return; //si no exite no ago nada
+int unlock_memory(int memoryfd){
+    if(memoryfd < 0) return -1; //si no exite no ago nada
     bool has_memory_fd(void* memory){
     t_kmemory* mem = memory;
        if(mem->fd == memoryfd){
@@ -390,8 +392,9 @@ void unlock_memory(int memoryfd){
     
     pthread_mutex_unlock(&mem_list_lock);
     if(mem!=NULL){
+        int i = mem->id;
         pthread_mutex_unlock(&mem->lock);
-
+        return i;
     }
 
 }
