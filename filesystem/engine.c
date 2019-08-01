@@ -15,6 +15,7 @@ DIR* root;
 char* bitmap_path;
 int block_amount;
 int block_size;
+int row_amount;
 
 void check_or_create_dir(char* path){
     DIR* dir = opendir(path);
@@ -112,7 +113,7 @@ void engine_start(t_log* logger){
     logg = logger; //CHECK
     t_config* config = config_create("config"); 
     MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE"); //CHECK
- 
+    int TAM_VALUE = config_get_int_value(config, "TAMAÑO_VALUE");
     DIR* mnt_dir = opendir(MNT_POINT); 
  
     if(mnt_dir == NULL){
@@ -155,8 +156,8 @@ void engine_start(t_log* logger){
         meta = fopen(meta_path, "w");
         log_info(logg, "Se crea: %s", meta_path);
         char* text = "BLOCKS=%s\nBLOCK_SIZE=%s\nMAGIC_NUMBER=LISSANDRA\n";
-        char* a = string_itoa(block_amount);
-        char* b = string_itoa(block_size);
+        char* a = string_itoa(BLOCKS_AMOUNT_DEFAULT);
+        char* b = string_itoa(BLOCK_SIZE_DEFAULT);
         char* r = malloc( strlen(text) + strlen(a) + strlen(b)+1); 
 
         sprintf(r, text, a,b);
@@ -175,7 +176,7 @@ void engine_start(t_log* logger){
     t_config* meta_config = config_create(meta_path); 
     block_amount = config_get_int_value(meta_config, "BLOCKS"); //CHECK
     block_size = config_get_int_value(meta_config, "BLOCK_SIZE"); //CHECK
-
+    row_amount = block_size/(5 + 1 + 2 + TAM_VALUE  );
     FILE* bitmap = fopen(bitmap_path,"r"); 
     if(bitmap==NULL){
 
@@ -228,12 +229,7 @@ void engine_start(t_log* logger){
 
     //config_destroy(config); -> si hago destroy pierdo el punto de montaje que uso en engine_dump_table
     config_destroy(meta_config);
-    free(metadata_dir_path);
-    //free(tables_path); -> lo uso en enginet_create_table 
-    free(blocks_path); 
-    //free(bitmap_path); -> lo uso en otras funciones: find_free_block , set_block_as_ocupied , set_block_as_free
-    free(meta_path); 
-    
+
 }
 
 int does_table_exist(char* table_name){
@@ -531,7 +527,7 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
         log_error(logg,"La tabla no existe");
         exit(-1);
     }
-    char* blocks = strdup("");
+    char* blocks = NULL;
     int dump_size = strlen(table_dump);
     while(table_dump[0] != '\0'){
         printf("el table dump antes del dp: %s\n", table_dump);
@@ -572,9 +568,9 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
 
         set_block_as_occupied(block);//marco el bloque como ocupado en el bitmap
         
-        if(blocks[0] == '\0'){
-            //blocks = strdup(string_itoa(block));
-            strcat(blocks,string_itoa(block));
+        if(blocks == NULL){
+            blocks = strdup(string_itoa(block));
+
         }else{
             char* blocks_buffer = malloc(strlen(blocks) + strlen(string_itoa(block))+1);
             strcpy(blocks_buffer, blocks );
@@ -666,6 +662,9 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
     return;
 }
 
+int max_row_amount(){
+    return row_amount;
+}
 //encuentro un archivo tmp: desde 0 en adelante itero hasta que no existe salgo y devuelvo el num
 int find_tmp_name(char* tmp_path) { 
     int found = 0;
@@ -806,15 +805,15 @@ while((file= readdir(tablaDir))!=NULL ){
    }
  }
 char* file_path=malloc(100);
- for(int i=0;i<cantidad;i++){
-log_info(logg,"entro al for");
-particiontemporal(temporales[i],name_table);
-strcpy(file_path,ruta);
-strcat(file_path,"/");
-strcat(file_path,temporales[i]);
-log_info(logg,"se va a borrar:");
-log_info(logg,file_path);
-remove(file_path);
+for(int i=0;i<cantidad;i++){
+
+    particiontemporal(temporales[i],name_table);
+    strcpy(file_path,ruta);
+    strcat(file_path,"/");
+    strcat(file_path,temporales[i]);
+    log_info(logg,"se va a borrar:");
+    log_info(logg,file_path);
+    remove(file_path);
  }
 log_info(logg,"se salio del ciclo madre");
 free(ruta);
@@ -863,11 +862,11 @@ while(!feof(part)){
 }
 int new_block=find_free_block();
 set_block_as_occupied(new_block);
-add_block_to_list(registro[1].line,new_block);
+char* list = add_block_to_list(registro[1].line,new_block);
+free(registro[1].line);
+registro[1].line = list;
 adjust_size(registro[0].line,new_row);
-log_info(logg,"vamos a checkear");
-log_info(logg,registro[0].line);
-log_info(logg,registro[1].line);
+
 rewind(part);
 fclose(part);
 part=fopen(ruta,"w");
@@ -899,24 +898,18 @@ free(registro[1].line);
   return;
 }
 
-void add_block_to_list(char* block_list,int new){
-    int i=0;
+char* add_block_to_list(char* block_list,int new){
     char* new_block=string_itoa(new);
-    log_info(logg,"el bloque a agregar es");
-    log_info(logg,new_block);
-    while(block_list[i]!=']'){
-        i++;
-    }
-    if(block_list[i-1]=='['){
-     strcpy(block_list,"BLOCKS=[");
-     strcat(block_list,new_block);
-     strcat(block_list,"]");
-     log_info(logg,block_list);
-      return;
-    }
-    block_list[i]=',';
-    strcat(block_list,new_block);
-    strcat(new_block,"]");
-    log_info(logg,block_list);
-  return;
+    char* buff = malloc(strlen(block_list) + 5);
+    memcpy(buff, block_list, strlen(block_list)-1);
+    buff[strlen(block_list)-1] = '\0';
+    if(buff[strlen(block_list)-2]!='[') strcat(buff, ",");
+    strcat(buff, new_block);
+    strcat(buff, "]");
+
+    
+    
+
+    return buff;
+
 }

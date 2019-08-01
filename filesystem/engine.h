@@ -51,11 +51,11 @@ void set_block_as_occupied(int block_number);
 void set_block_as_free(int block_number);
 int does_file_exist(char* file_path);
 int find_tmp_name(char* tmp_path);
-void add_block_to_list(char* block_list,int );
+char* add_block_to_list(char* block_list,int );
 void adjust_size(char* size,char* new_row);
 void new_block(char* new_row,char* tabla,int particion);
 void engine_compactate(char* table_name);
 int contadordetemp(DIR* directorio);
 void particiontemporal(char* temporal,char* tabla);
-
+int max_row_amount();
 #endif /* ENGINE_H */
