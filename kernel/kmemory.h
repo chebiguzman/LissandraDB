@@ -25,7 +25,7 @@ typedef struct{
 
 t_consistency get_table_consistency(char* table_name);
 int get_loked_memory(t_consistency consistency, char* table_name);
-void unlock_memory(int memoryfd);
+int unlock_memory(int memoryfd);
 void start_kmemory_module(t_log* logg,t_log* logg_debug, char* main_memory_ip, int main_memoy_port);
 int connect_to_memory(char* ip, int port);
 void *metadata_service(void* args);
@@ -50,6 +50,8 @@ void kmemoy_add_table();
 void kmemory_drop_table(char* tbl_name);
 void kmemory_add_table(char* name, t_consistency* cons);
 void disconect_from_memory(int memoryfd);
+void set_main_memory_id(int id);
+int get_memory_id_by_fd(int fd);
 
 #endif /* KMEMORY_H */
 

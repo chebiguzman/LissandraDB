@@ -23,10 +23,13 @@ bool syscall_availity_status = false; //No puedo hacer una sys call hasta que al
 scheduler_queue* queue;
 scheduler_queue* syscall_queue;
 
-t_log* logg;
-t_log* logger_debug;
+ t_log* logg;
+ t_log* logger_debug;
 t_console_control* console;
 t_config* fconfig;
+int added_queue = 0;
+pthread_mutex_t lock_for_tasks;
+
 
 void start_sheduler(t_log* log,t_log* log_debug, t_console_control* console_control ){
 
@@ -40,6 +43,7 @@ void start_sheduler(t_log* log,t_log* log_debug, t_console_control* console_cont
 
     int m = config_get_int_value(fconfig, "MULTIPROCESAMIENTO");
     long ref = config_get_long_value(fconfig, "METADATA_REFRESH");
+    int q = config_get_int_value(fconfig, "QUANTUM");
     config_not->multi_script_level = m;
     config_not->quantum = 1;
     config_not->metadata_refresh = ref;
@@ -57,7 +61,8 @@ void start_sheduler(t_log* log,t_log* log_debug, t_console_control* console_cont
     queue->scheduler_queue = queue_create();
     int r = pthread_mutex_init(&queue->lock, NULL);
     pthread_cond_init(&queue->cond,NULL);
-    
+    pthread_mutex_init(&lock_for_tasks, NULL);
+
     console = console_control;
     pthread_t tid;
     pthread_create(&tid, NULL, exec, NULL);
@@ -121,9 +126,12 @@ void schedule(t_instr_set* instr_set){
     lock_queue();
     queue_push(queue->scheduler_queue, instr_set);
     //log_info(logg, "sh:acrego una instruccion");
-    unlock_queue();
-    
+    //pthread_mutex_lock(&lock_for_tasks);
+    //added_queue = 1;
+    //pthread_mutex_unlock(&lock_for_tasks);
     pthread_cond_broadcast(&queue->cond);
+    unlock_queue();
+
     //log_info(logg, "llame a exec");
 }
 
@@ -134,7 +142,7 @@ char* ksyscall(char* call){
         
         t_ksyscall* syscall = malloc( sizeof(t_ksyscall));
         syscall->instr = malloc ( sizeof ( t_instr_set));
-
+        
         t_queue* kqueue = queue_create();
         queue_push(kqueue, call);
 
@@ -155,7 +163,8 @@ char* ksyscall(char* call){
         pthread_mutex_lock(&syscall->lock);
         pthread_cond_wait(&syscall->cond, &syscall->lock);
         
-        char* res = strdup(syscall->result);
+        char* res = syscall->result;
+        pthread_mutex_unlock(&syscall->lock);
         pthread_mutex_destroy(&syscall->lock);
         pthread_cond_destroy(&syscall->cond);
         
