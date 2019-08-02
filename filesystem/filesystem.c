@@ -86,9 +86,10 @@ char* action_select(package_select* select_info){
     free(parse_package_select(select_info));
     return strdup("La tabla solicitada no existe.\n");
   }
- char* m = malloc(strlen(get_value_from_memtable(select_info->table_name, select_info->key) + 2));
+ char* m = NULL;
   if(is_data_on_memtable(select_info->table_name, select_info->key)){
-      strcpy(m, get_value_from_memtable(select_info->table_name, select_info->key));
+      m = malloc(strlen(get_row_from_memtable(select_info->table_name, select_info->key) )+ 2);
+      strcpy(m, get_row_from_memtable(select_info->table_name, select_info->key));
       strcat(m, "\n");
   }
   
@@ -100,13 +101,14 @@ char* action_select(package_select* select_info){
   temp_row=select_particiones_temporales(select_info);
   if(is_data_on_memtable(select_info->table_name, select_info->key)){
     if(atoi(m)>temp_row->timestap){
-      char* valuee=malloc(100);
+      char* valuee = malloc(VALUE_SIZE);
       obtengovalue(m,valuee);
-      strcpy(temp_row->value,valuee);
+      temp_row->value = strdup(valuee);
       temp_row->timestap=atoi(m);
       free(m);
     }
   }
+  printf("||| %s ||| %d \n",temp_row->value, temp_row->timestap );
   
   int table_partition_number = select_info->key % meta->partition_number ;
  
@@ -365,6 +367,7 @@ void cortador(char* cortado, char* auxkey){
 }
  
 void obtengovalue(char* row, char* value){
+  printf("row:%s\n", row);
   int largo=strlen(row);
   int i= 0;
   int j= 0;

@@ -807,6 +807,26 @@ t_table_partiton* get_table_partition2(char* table_name, int table_partition_num
     return parition;
 }
  
+ t_table_partiton* get_table_partition3(char* table_name, int table_partition_number){
+    char* partition_name = strdup(string_itoa(table_partition_number));
+    char* partition_path =malloc(strlen(tables_path) + strlen(table_name) + 1 + strlen(partition_name)+ strlen(".temp") + 5);
+    strcpy(partition_path ,tables_path);
+ 
+    strcat(partition_path,table_name);
+    strcat(partition_path,"/");
+    strcat(partition_path, partition_name);
+    strcat(partition_path, ".tmpc");
+ 
+    t_table_partiton* parition = malloc(sizeof(t_table_partiton));
+    t_config* c = config_create(partition_path);
+    printf("assasd %s\n", partition_path);
+    log_info(logg,"antes de la linea");
+    parition->blocks_size = config_get_long_value(c, "SIZE");
+   log_info(logg,"despues de la linea");
+    parition->blocks = config_get_array_value(c, "BLOCKS");
+   
+    return parition;
+}
 void engine_compactate(char* name_table){
  
     char* ruta=malloc(strlen(tables_path) + strlen(name_table) + 30);

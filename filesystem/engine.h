@@ -80,4 +80,5 @@ void update_engine_config();
 long get_retardo_time();
 void* config_worker(void* args);
 row* select_particiones_temporales(package_select* select_info);
+t_table_partiton* get_table_partition3(char* table_name, int table_partition_number);
 #endif /* ENGINE_H */

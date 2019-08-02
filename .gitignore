@@ -41,12 +41,8 @@
 **/kernel/kernel
 **/memory/memory
 **/filesystem/filesystem
-<<<<<<< HEAD
 log.debug
 **/kernel/log.debug
-=======
-
->>>>>>> 8b208718164a1c0aacd23c90187b2a621e4b4c2e
 
 # Debug files
 *.dSYM/
@@ -57,11 +53,8 @@ log.debug
 *.json
 .*
 !/.gitignore
-<<<<<<< HEAD
 /MountTest
 MountTest
-=======
->>>>>>> 8b208718164a1c0aacd23c90187b2a621e4b4c2e
 
 # Kernel Module Compile Results
 *.mod*
