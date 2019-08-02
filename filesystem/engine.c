@@ -1005,6 +1005,97 @@ long get_retardo_time(){
     return r;
 }
 
-row* select_particiones_temporales(package_select* select_info){
+row* select_particiones_temporales(package_select* select_info){har* ruta=malloc(strlen(tables_path) + strlen(select_info->table_name) + 30);
+    strcpy(ruta,tables_path);
+    strcat(ruta,select_info->table_name);
+    row* row_return=malloc(sizeof(row));//hace malloc
+    DIR* tablaDir=opendir(ruta);
+    int cantidad=contadordetemp(tablaDir);
+    if(cantidad==0){
+        return NULL;
+    }
+    char* temporales[cantidad];
+    int contador=0;
+    struct dirent * file;
+    while((file= readdir(tablaDir))!=NULL ){
+        int len= strlen(file->d_name);
+        if(file->d_name[len-1]=='p' || file->d_name[len-1]=='c'){
+            temporales[contador]=strdup(file->d_name);
+            log_info(logg,temporales[contador]);
+            contador++;
+        }
+    }
+    int contador2=0;
+    int temp_part;
+    long mayor=0;
+    char* r = malloc(100);
+    while(contador2<contador){
+        int longitud=strlen(temporales[contador2]);
+        char* current_part=malloc(150);
+        strcpy(current_part,temporales[contador2]);
+        temp_part=partition_num(current_part);
+         t_table_partiton* partition;
+        if(current_part[longitud]== 'p'){
+            partition=get_table_partition2(select_info->table_name,temp_part);
+        }
+        else{
+            partition=get_table_partition3(select_info->table_name,temp_part);
+        }
+        //
+        
+//
+
+        pthread_mutex_t lock;
+        pthread_cond_t cond;
+        pthread_mutex_init(&lock, NULL);
+        pthread_cond_init(&cond, NULL);
+
+        int whilethread=0;
+        argumentosthread2* parametros [block_amount];
+        int* number_of_threads = malloc(sizeof(int));
+        *number_of_threads = block_amount;
+
+        while(whilethread<block_amount){
+            argumentosthread2* args = malloc(sizeof(argumentosthread));
+            args->bolean=0;
+            args->ruta = strdup(regruta[whilethread].line);
+            args->key=select_info->key;
+            args->cond = &cond;
+            args->lock = lock;
+            args->number_of_running_threads = number_of_threads;
+            parametros[whilethread] = args;
+            pthread_create(&buscadores[whilethread],NULL,buscador2,args);
+            pthread_detach(buscadores[whilethread]);
+            whilethread++;
+        }
+
+        free(partition);
+
+        pthread_mutex_lock(&lock);
+        pthread_cond_wait(&cond, &lock);
+        int whileparametro=0;
+        printf("____________________________\n");
+        printf("respuesta de los temporales:\n");
+        while(whileparametro<block_amount){
+            if(parametros[whileparametro]->bolean && mayor<parametros[whileparametro]->timestap_max){
+            mayor=parametros[whileparametro]->timestap_max;
+            strcpy(r, parametros[whileparametro]->value);
+            strcat(r, "\n");
+            }
+            whileparametro++;
+        }
+        printf("____________________________\n");
+
+        pthread_mutex_destroy(&lock);
+        pthread_cond_destroy(&cond);
+
+  //retornar timestap y value
+  //falta atender los memory leaks, en especial los de los thread.
+
+    }
+    row_return->timestap=mayor;
+    row_return->value=strdup(r);
+    free(r);
+    return row_return;
   
  }
