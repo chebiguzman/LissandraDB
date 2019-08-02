@@ -161,6 +161,37 @@ char* get_value_from_memtable(char* table_name, int key){
     return false;
 }
 
+char* get_row_from_memtable(char* table_name, int key){
+    struct table_node* aux_table;
+    aux_table = memtable_p;
+    while (aux_table!=NULL)
+    {
+        if(!strcmp(aux_table->table_name, table_name)){
+        
+            struct data_node* table_data;
+            table_data = aux_table->data;
+
+            while(table_data!=NULL){
+                if(key == table_data->key){
+                    char* r = malloc( 3+strlen(table_data->value) + 16 + 32 );
+                    strcpy(r, string_itoa(table_data->timestamp));
+                    strcat(r,";");
+                    strcat(r, string_itoa(table_data->key));
+                    strcat(r, ";");
+                    strcat(r, table_data->value);
+                    return r;
+                } 
+                table_data = table_data->data_next;
+            }
+
+        }
+
+        aux_table = aux_table->table_next;
+    }
+    
+    return false;
+}
+
 void dump_memtable(){
     while(memtable_p!=NULL){
         char* table_dump = dump_table(memtable_p);

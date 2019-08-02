@@ -29,8 +29,8 @@ int main(int argc, char const *argv[]){
     //las estructuras se van al .h para que quede mas limpio
     //set up confg
     t_config* config = config_create("config");
-    char* LOGPATH = config_get_string_value(config, "LOG_PATH");
-    MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE");
+    char* LOGPATH = strdup(config_get_string_value(config, "LOG_PATH"));
+    MNT_POINT = strdup(config_get_string_value(config, "PUNTO_MONTAJE"));
     VALUE_SIZE = config_get_int_value(config, "TAMAÑO_VALUE");
     int PORT = config_get_int_value(config, "PORT");
 
@@ -39,6 +39,7 @@ int main(int argc, char const *argv[]){
 
     engine_start(logger);
 
+    printf("punto montaje:%s\n", MNT_POINT);
 
     //set up dump
     int dump_time_buffer = config_get_int_value(config, "TIEMPO_DUMP"); 
@@ -165,12 +166,6 @@ char* action_select(package_select* select_info){
     if(parametros[whileparametro]->bolean){
       char* r = malloc( strlen(parametros[whileparametro]->value) + 2);
       strcpy(r, parametros[whileparametro]->value);
-<<<<<<< HEAD
-      
-=======
->>>>>>> f8a9449b115c46273015ee63b9c6ed0326d7eaf7
-
-      //strcat(r, "\n");
       return r;
     }
     whileparametro++;

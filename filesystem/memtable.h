@@ -26,3 +26,4 @@ bool is_data_on_memtable(char* table_name, int key);
 char* get_value_from_memtable(char* table_name, int key);
 void dump_memtable();
 char* dump_table(struct table_node* table);
+char* get_row_from_memtable(char* table_name, int key);
