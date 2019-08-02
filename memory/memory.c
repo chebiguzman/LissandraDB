@@ -247,35 +247,23 @@ char* action_intern__status(){
   pthread_mutex_lock(&gossip_table_mutex);  
 
   char* retardo_gossip = config_get_string_value(config, "RETARDO_GOSSIPING");
+  char* id = config_get_string_value(config, "MEMORY_NUMBER");
 
   char sep[2] = { ',', '\0' };
   char div[2] = { '|', '\0' };
 
   char* gossip_table_buffer = create_gossip_buffer(&GOSSIP_TABLE);
-  printf("Gossip table: %s\n", gossip_table_buffer);
   char* buffer = malloc(strlen(retardo_gossip) + strlen(gossip_table_buffer) + 2);
   *buffer = 0;
-  strcpy(buffer, retardo_gossip);
+  strcpy(buffer, id);
+  strcat(buffer, div);
+  strcat(buffer, retardo_gossip);
   strcat(buffer, div);
   strcat(buffer, gossip_table_buffer);
-  // t_config* config = config_create("config");
-  // char** ips = config_get_array_value(config, "IP_SEEDS");
-  // char** ports = config_get_array_value(config, "PUERTO_SEEDS");
 
-  // int i = 2; //ESto reprecenta el id de las memorias, se consigue como parte del proceso de gossiping.
-  // while(*ips != NULL){
-  //   strcat(res, string_itoa(i));
-  //   strcat(res,sep);    
-  //   strcat(res, *ips);
-  //   strcat(res,sep);
-  //   strcat(res, *ports);
-  //   strcat(res,div);
-  //   ips++;
-  //   ports++;
-  //   i++;
-  // }
-  // return res;
   pthread_mutex_unlock(&gossip_table_mutex);  
+
+  log_error(logger, "%s",buffer);
   return buffer;
 }
 
