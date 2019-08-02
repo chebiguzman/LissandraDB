@@ -32,3 +32,4 @@ typedef struct
 void metrics_start();
 char* get_metrics();
 void register_select(int memoryid, t_consistency c, double* latency);
+void register_insert(int memoryid, t_consistency c, double* latency);

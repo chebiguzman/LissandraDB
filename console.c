@@ -21,6 +21,7 @@ void *console_input(void* name){
 
 void *console_input_wait(void* args){
 	t_console_control* self = args;
+	setbuf(stdout, NULL);
 
 	while(1){
 		//printf("a punto de bloquear\n");
@@ -45,14 +46,15 @@ void *console_input_wait(void* args){
 		pthread_mutex_lock(&self->lock);
 		
 		if(self->cont_int==0){
-			//printf("consola entra en espera\n");
 			pthread_cond_wait(&self->cond, &self->lock);
 			self->cont_int = 0;
 			printf("\r%s>", self->name);
 			pthread_mutex_unlock(&self->lock);
 		}else{
 			self->cont_int = 0;
+			usleep(10000);
 			printf("\r%s>", self->name);
+			//fprintf(stderr,"\r%s>", self->name);
 			pthread_mutex_unlock(&self->lock);
 		}
 

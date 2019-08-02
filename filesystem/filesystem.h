@@ -1,6 +1,7 @@
 #include "../pharser.h"
 typedef struct{
      char* line;
+     int dirty;
     } regg;
 
 
@@ -19,6 +20,7 @@ typedef struct {
   pthread_cond_t* cond;
   pthread_mutex_t lock;
   int* number_of_running_threads;
+  
 
 }argumentosthread;
 
@@ -33,6 +35,8 @@ typedef struct {
   pthread_cond_t* cond;
   pthread_mutex_t lock;
   int* number_of_running_threads;
+  char* tabla;
+  int part;
 
 }argumentosthread_compactacion;
 
@@ -52,5 +56,6 @@ int partition_num(char* numero);
 int get_all_rows(char* ruta,regg* temp_rows,int block_number);
 void reubicar_rows(regg* temp_rows,char* tabla,int reg_amount);
 int contar_rows(char* ruta);
-void adjust_size(char* size,char* new_row);
+void adjust_size(char* size,int new_row);
 void* buscador_compactacion(void* args);
+void exec_err_abort();

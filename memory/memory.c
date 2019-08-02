@@ -12,11 +12,13 @@
 #include "../server.h"
 // #include "../pharser.h"
 #include <signal.h>
+
 // #include "../actions.h"
 #include "../console.h"
 #include "segments.h"
 #include "gossiping.h"
 
+void exec_err_abort(){};
 //logger global para que lo accedan los threads
 int main_memory_size;
 
@@ -300,3 +302,4 @@ char* action_gossip(gossip_t** parsed_gossip_table){
   pthread_mutex_unlock(&gossip_table_mutex);
   return strdup(gossip_buffer);
 }
+
