@@ -296,9 +296,12 @@ char* exec_instr(char* instr_buff){
             package->table_name = parameters[1];
         } else {
 <<<<<<< HEAD
+<<<<<<< HEAD
             printf("no hay parametros\n");
 =======
 >>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
+=======
+>>>>>>> 8b208718164a1c0aacd23c90187b2a621e4b4c2e
             package->table_name = NULL;
             
         }
