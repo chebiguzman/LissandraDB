@@ -19,6 +19,7 @@
 #include <fcntl.h>
 #include "filesystem.h"
 #include <pthread.h>
+#define BLOCK_SIZE_DEFAULT 128
 //punto de entrada para el programa y el kernel
 t_log* logger;
 int VALUE_SIZE;
@@ -625,6 +626,8 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
       args->key=key;
       args->cond = &cond;
       args->lock = lock;
+      args->tabla=strdup(tabla);
+      args->part=part;
       args->new_row=strdup(row_list[q].line);
       args->number_of_running_threads = number_of_threads;
       parametros[whilethread] = args;
@@ -656,17 +659,20 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
     
 
     if(nada==whileparametro){
-      int amount=contar_rows(regruta[block_amount-1].line);
-      if(amount<3){
+      FILE* last=fopen(regruta[block_amount-1].line,"r+");
+      fseek(last,0,SEEK_END);
+      int size_file=ftell(last);
+      int size_free=BLOCK_SIZE_DEFAULT-size_file;
+      int size_row=strlen(row_list[q].line);
+      if(size_row<size_free){
       log_info(logger,"despues del w");
-
-        FILE* last=fopen(regruta[block_amount-1].line,"r+");
-        fseek(last,0,SEEK_END);
         fputs(row_list[q].line,last);
         fclose(last);
-        engine_adjust(tabla,part,row_list[q].line);
+        int tam_adjust=strlen(row_list[q].line);
+        engine_adjust(tabla,part,tam_adjust);
       }
       else{
+        fclose(last);
         new_block(row_list[q].line,tabla,part);
       }
     }
@@ -689,6 +695,8 @@ void* buscador_compactacion(void* args){
   log_info(logger,"comprobacion re parametros");
   log_info(logger,parametros->new_row);
   log_info(logger,parametros->ruta);
+  int len_new_row=strlen(parametros->new_row);
+  int length_row;
   void kill_thread(){
     pthread_mutex_lock(&parametros->lock);
     //*parametros->number_of_running_threads= *parametros->number_of_running_threads ;
@@ -701,6 +709,7 @@ void* buscador_compactacion(void* args){
   }
 
   bloque=fopen(parametros->ruta,"r+");
+  
   if(bloque==NULL){
     log_error(logger,"El sistema de bloques de archivos presenta una inconcistencia en el bloque:");
     log_error(logger,parametros->ruta);
@@ -709,7 +718,10 @@ void* buscador_compactacion(void* args){
 
     return NULL;
   }
-
+  fseek(bloque,0,SEEK_END);
+  int block_size=ftell(bloque);
+  rewind(bloque);
+  int free_space=BLOCK_SIZE_DEFAULT-block_size;//max block;
   regg buffer[100];
   int l=0;
   parametros->retorno = strdup("");
@@ -720,17 +732,24 @@ void* buscador_compactacion(void* args){
     fgets(buffer[l].line,100,bloque);
     if(buffer[l].line[0] == '\0') break;
     parametros->row= strdup(buffer[l].line);
-    
-    //devuelve key
-    log_info(logger,"antes de leer");
-
+    buffer[l].dirty=0;
     if(parametros->key== get_row_key(buffer[l].line) ){
+      log_info(logger,"se detecto key repetida");
       if(atoi(parametros->new_row)<atoi(buffer[l].line)){
-      buffer[l].line=strdup(parametros->new_row);
+      log_info(logger,"y con timestamp menor");
+      length_row=strlen(buffer[l].line);
       parametros->bolean=1;
+      
+      if(len_new_row<=(free_space+length_row)){
+      buffer[l].line=strdup(parametros->new_row);
+      }
+      else{
+      buffer[l].dirty=1;
+      }
       }
       else{
         parametros->hecho=1;
+        fclose(bloque);
         kill_thread();
         return NULL;
       }
@@ -740,18 +759,35 @@ void* buscador_compactacion(void* args){
     log_info(logger,"una vuela de lectura");
     }
     log_info(logger,"se termino de leer el bloque");
+    rewind(bloque);
     fclose(bloque);
   if(parametros->bolean){
     bloque=fopen(parametros->ruta,"w");
     int contadorcito=0;
+    int escrito=0;
     while(contadorcito<l){
+    if(buffer[contadorcito].dirty!=1){
+    log_info(logger,"se va a escribir:");
+    log_info(logger,buffer[contadorcito].line);
     fputs(buffer[contadorcito].line,bloque);
+    escrito++;
+    }
+    else{
+    int lost=0 - strlen(buffer[contadorcito].line);
+    engine_adjust(parametros->tabla,parametros->part,lost);
+    }
     contadorcito++;
     }
+    fflush(bloque);
+    fclose(bloque);
+    if(escrito==contadorcito){
     parametros->hecho=1;
+    int lost2= len_new_row - length_row;
+    engine_adjust(parametros->tabla,parametros->part,lost2);
+    }
     kill_thread();
     pthread_cond_broadcast(parametros->cond);
-    fclose(bloque);
+    
     return NULL;
   }
 
@@ -772,8 +808,7 @@ int contar_rows(char* ruta){
   return row_amount;
 }
 
-void adjust_size(char* size,char* new_row){
-  int tam=strlen(new_row);
+void adjust_size(char* size,int tam){
   char aux_size [10];
   int i =5;
   int p=0;
