@@ -13,9 +13,13 @@ gossip_t* create_node(int port, char* ip){
     return node;    
 }
 
+// ((((LIBERA EL NODO SI NO LO PUEDE AGREGAR)))))
 void add_node(gossip_t** gossip_table, gossip_t* node){
     // printf("Agregando nodo %d a la tabla... ", node->port);
-    if(find_node(gossip_table, node->port, node->ip)) return;
+    if(find_node(gossip_table, node->port, node->ip)){
+        free_node(node);
+        return;
+    }
 	if(*gossip_table == NULL){ // si esta vacia
 		*gossip_table = node;
 	}
@@ -27,7 +31,11 @@ void add_node(gossip_t** gossip_table, gossip_t* node){
 		temp->next = node;
 		node->prev = temp;
 	}
-    // printf("Nodo agregado.\n");    
+}
+
+void free_node(gossip_t* node){
+    free(node->ip);
+    free(node);
 }
 
 void remove_node(gossip_t** gossip_table, gossip_t* node){
@@ -42,8 +50,7 @@ void remove_node(gossip_t** gossip_table, gossip_t* node){
 	else{ // en caso de que sea el primero..
 		*gossip_table = node->next;
 	}
-    free(node->ip);
-    free(node);
+    free_node(node);
 }
 
 void delete_table(gossip_t** gossip_table){
@@ -54,7 +61,7 @@ void delete_table(gossip_t** gossip_table){
         remove_node(gossip_table, temp);
         temp = temp2;
     }
-    free(*gossip_table);
+    // free(*gossip_table);
 }
 
 gossip_t* find_node(gossip_t** gossip_table, int port, char* ip){
@@ -95,23 +102,23 @@ gossip_t* parse_gossip_buffer(char* buffer){
         char* string_number = strndup(temp_buffer, next_value_length);
         int new_number = atoi(string_number);
         temp_buffer += next_value_length + 1;
-        printf("Parsed number: %d\n", new_number);        
+        // printf("Parsed number: %d\n", new_number);        
 
         next_value_length = get_next_value_length(temp_buffer);
         char* string_port = strndup(temp_buffer, next_value_length);
         int new_port = atoi(string_port);
         temp_buffer += next_value_length + 1;
-        printf("Parsed port: %d\n", new_port);        
+        // printf("Parsed port: %d\n", new_port);        
 
         next_value_length = get_next_value_length(temp_buffer);
         char* new_ip = strndup(temp_buffer, next_value_length);
         temp_buffer += next_value_length + 1;        
-        printf("Parsed ip: %s\n", new_ip);
+        // printf("Parsed ip: %s\n", new_ip);
 
         gossip_t* node = create_node(new_port, new_ip);
         node->number = new_number;
         add_node(&new_gossip_table, node);
-        print_gossip_table(&node);
+        // print_gossip_table(&node);
 
         free(string_number);
         free(string_port);
@@ -232,6 +239,7 @@ void* gossip(void* void_gossip_table){
                 char* gossip_buffer = malloc(strlen(instruction) + strlen(string_gossip_table) + 1);
                 strcpy(gossip_buffer, instruction);
                 strcat(gossip_buffer, string_gossip_table);
+                free(string_gossip_table);
                 printf("Me conecte con el nodo y le mando esta tabla: ");
                 print_gossip_table(gossip_table);
 
@@ -245,6 +253,7 @@ void* gossip(void* void_gossip_table){
                     print_gossip_table(gossip_table);
                     // liberar tabla????
                     delete_table(&gossip_temp);
+                    free(gossip_buffer);
                     free(response);
                 }
 
