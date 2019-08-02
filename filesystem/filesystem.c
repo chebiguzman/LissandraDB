@@ -113,9 +113,12 @@ char* action_select(package_select* select_info){
   int table_partition_number = select_info->key % meta->partition_number ;
  
   t_table_partiton* partition = get_table_partition(select_info->table_name, table_partition_number);
- 
+  int bit=0;
   free(meta);
- 
+  if(temp_row->timestap > 0){
+    bit=1;
+    printf("se seteo el bit en 1 \n");
+  }
   int block_amount = 0;
   void* first_block = partition->blocks;
   while(*partition->blocks){
@@ -124,8 +127,16 @@ char* action_select(package_select* select_info){
   }
   partition->blocks = first_block;
  
-  if(block_amount==0)return strdup("Key invalida\n");
- 
+  if(block_amount==0 && bit==0){
+    return strdup("Key invalida\n");
+  }
+
+  if(block_amount==0 && bit==1){
+    free(parse_package_select(select_info));
+    printf("retorno: \n");
+    return temp_row->value;
+  }
+
   pthread_t buscadores[block_amount];
   regg regruta[block_amount];
  
@@ -188,9 +199,15 @@ char* action_select(package_select* select_info){
     }
     whileparametro++;
   }
+
+  
  
   free(parse_package_select(select_info));
- 
+  printf("%d",bit);
+ if(bit==1){
+    printf("entre al if de retorno \n");
+    return temp_row->value;
+  }
   return strdup("Key invalida\n");
   //falta atender los memory leaks, en especial los de los thread.
  
