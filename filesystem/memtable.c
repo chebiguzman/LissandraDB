@@ -161,6 +161,7 @@ char* get_value_from_memtable(char* table_name, int key){
     return false;
 }
 
+<<<<<<< HEAD
 char* get_row_from_memtable(char* table_name, int key){
     struct table_node* aux_table;
     aux_table = memtable_p;
@@ -192,6 +193,8 @@ char* get_row_from_memtable(char* table_name, int key){
     return false;
 }
 
+=======
+>>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
 void dump_memtable(){
     while(memtable_p!=NULL){
         char* table_dump = dump_table(memtable_p);
