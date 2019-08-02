@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <sys/inotify.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
@@ -416,10 +417,9 @@ void obtengovalue(char* row, char* value){
 }
 
 void* dump_cron(void* TIEMPO_DUMP) {
-  printf("el tiempo de dump es: %d", *((int*) TIEMPO_DUMP));
   fflush(stdout);
   while(1) {
-    sleep(*((int*) TIEMPO_DUMP) / 1000);
+    sleep( get_dump_time() / 1000);
     dump_memtable();
   }
 }

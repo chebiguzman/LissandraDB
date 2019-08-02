@@ -59,4 +59,7 @@ int contadordetemp(DIR* directorio);
 void particiontemporal(char* temporal,char* tabla);
 int max_row_amount();
 void engine_adjust(char* tabla,int particion,int adjust);
+long get_dump_time();
+void update_engine_config();
+
 #endif /* ENGINE_H */
