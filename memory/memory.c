@@ -89,18 +89,6 @@ int main(int argc, char const *argv[])
   }
   memset(MAIN_MEMORY, 0, main_memory_size);
 
-  // setup gossiping
-  seeds_ports = config_get_array_value(config, "PUERTO_SEEDS");
-  seeds_ips = config_get_array_value(config, "IP_SEEDS");
-  GOSSIP_TABLE = NULL;
-  gossip_t* this_node = create_node(MEMORY_PORT, MEMORY_IP);
-  this_node->number = config_get_int_value(config, "MEMORY_NUMBER");
-  add_node(&GOSSIP_TABLE, this_node);
-
-  gossip_t* this_node2 = create_node(69, "10.2.4");
-  this_node2->number = 42;
-  add_node(&GOSSIP_TABLE, this_node2);
-  
   // setup segments
   SEGMENT_TABLE = NULL;
   PAGE_SIZE = sizeof(page_t) - sizeof(char*) + VALUE_SIZE;
@@ -112,6 +100,14 @@ int main(int argc, char const *argv[])
   printf("Page size: %d\n", PAGE_SIZE);
   printf("Number of pages: %d\n", NUMBER_OF_PAGES);
   printf("---------------------\n\n");
+  
+  // setup gossiping
+  seeds_ports = config_get_array_value(config, "PUERTO_SEEDS");
+  seeds_ips = config_get_array_value(config, "IP_SEEDS");
+  GOSSIP_TABLE = NULL;
+  gossip_t* this_node = create_node(MEMORY_PORT, MEMORY_IP);
+  this_node->number = config_get_int_value(config, "MEMORY_NUMBER");
+  add_node(&GOSSIP_TABLE, this_node);
   
   print_gossip_table(&GOSSIP_TABLE);
 
@@ -299,7 +295,7 @@ char* action_gossip(gossip_t** parsed_gossip_table){
   gossip_t* temp_node = *parsed_gossip_table;
   while(temp_node != NULL){
       for(int i=0; seeds_ports[i] != NULL; i++){
-          if(temp_node->port == atoi(seeds_ports[i])){
+          if(temp_node->port == atoi(seeds_ports[i]) && !strcmp(temp_node->ip, seeds_ips[i])){
               remove_node(parsed_gossip_table, temp_node);
           }
       }
@@ -310,7 +306,7 @@ char* action_gossip(gossip_t** parsed_gossip_table){
   printf("- Actualizo ");
   print_gossip_table(&GOSSIP_TABLE);
 
-  pthread_mutex_lock(&gossip_table_mutex);
+  pthread_mutex_unlock(&gossip_table_mutex);
   
   return strdup(gossip_buffer);
 }
