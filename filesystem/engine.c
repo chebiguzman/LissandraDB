@@ -1004,3 +1004,29 @@ long get_retardo_time(){
     pthread_mutex_unlock(&config_lock);
     return r;
 }
+
+row* select_particiones_temporales(package_select* select_info){
+  char* ruta=malloc(strlen(tables_path) + strlen(select_info->table_name) + 30);
+    strcpy(ruta,tables_path);
+    strcat(ruta,select_info->table_name);
+    row* row_return=malloc(sizeof(row));//hace malloc
+    DIR* tablaDir=opendir(ruta);
+    int cantidad=contadordetemp(tablaDir);
+    if(cantidad==0){
+        return NULL;
+    }
+    char* temporales[cantidad];
+    int contador=0;
+    struct dirent * file;
+    while((file= readdir(tablaDir))!=NULL ){
+        int len= strlen(file->d_name);
+        if(file->d_name[len-1]=='p' || file->d_name[len-1]=='c'){
+            temporales[contador]=strdup(file->d_name);
+            log_info(logg,temporales[contador]);
+            contador++;
+        }
+    }
+    int contador2=0;
+    int temp_part;
+    long mayor=0;
+    char* r = malloc(100);
