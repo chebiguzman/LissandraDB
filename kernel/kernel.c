@@ -259,6 +259,15 @@ char* action_create(package_create* create_info){
 char* action_describe(package_describe* describe_info){
   log_info(logger_debug, "Se recibio una accion describe");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+  char* table_name = NULL;
+  if(describe_info->table_name!=NULL) table_name = strdup(describe_info->table_name);
+=======
+>>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
+=======
+>>>>>>> 8b208718164a1c0aacd23c90187b2a621e4b4c2e
   char* package = parse_package_describe(describe_info);
 
   char* responce = exec_in_memory(memoryfd, package);
@@ -293,8 +302,19 @@ char* action_describe(package_describe* describe_info){
 
         dictionary_put(tables_dic, name, constistency);
       
+<<<<<<< HEAD
+<<<<<<< HEAD
+        if(table_name!=0){
+          kmemory_add_table(name,dictionary_get(dic, "CONSISTENCY") );
+          free(table_name);
+=======
         if(describe_info->table_name!=NULL){
           kmemory_add_table(name,dictionary_get(dic, "CONSISTENCY") );
+>>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
+=======
+        if(describe_info->table_name!=NULL){
+          kmemory_add_table(name,dictionary_get(dic, "CONSISTENCY") );
+>>>>>>> 8b208718164a1c0aacd23c90187b2a621e4b4c2e
         }
       }
       
@@ -304,8 +324,17 @@ char* action_describe(package_describe* describe_info){
 
       buffer++;
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+      if(table_name==NULL ){
+=======
       if(describe_info->table_name == NULL){
         printf("describe generala %s\n",describe_info->table_name);
+>>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
+=======
+      if(describe_info->table_name == NULL){
+        printf("describe generala %s\n",describe_info->table_name);
+>>>>>>> 8b208718164a1c0aacd23c90187b2a621e4b4c2e
         kmemory_set_active_tables(tables_dic);
 
       }

@@ -36,11 +36,12 @@ typedef struct{
 }t_table_partiton;
 
 typedef struct{
-    char* table_name;
+
+    char* name;
     int compactating;
     pthread_mutex_t lock;
     pthread_cond_t cond;
-}t_table_condition;
+}t_table;
 
 typedef struct{
   char* value;
