@@ -68,11 +68,16 @@ int get_next_value_length(char* buffer){
 // crea la gossip table del otro nodo con el buffer que le pasan
 gossip_t* parse_gossip_buffer(char* buffer){
     gossip_t* new_gossip_table = NULL;
-    char* temp_buffer = strdup(buffer);
-    int next_value_length;
+    // char* temp_buffer = strdup(buffer);
+    char* temp_buffer = malloc(1000);
+    memset(temp_buffer, 0, 1000);
+    strcpy(temp_buffer, buffer);
     char* temp_buffer_address = temp_buffer; // me tengo que guardar la address para liberarlo despues
 
-    while(*temp_buffer != 0){
+    // printf("Char value: %d\n", temp_buffer[strlen(temp_buffer)+1]);
+    int next_value_length;
+
+    while(temp_buffer[0] != 0){
         next_value_length = get_next_value_length(temp_buffer);
         char* string_number = strndup(temp_buffer, next_value_length);
         int new_number = atoi(string_number);
@@ -82,7 +87,6 @@ gossip_t* parse_gossip_buffer(char* buffer){
         next_value_length = get_next_value_length(temp_buffer);
         char* string_port = strndup(temp_buffer, next_value_length);
         int new_port = atoi(string_port);
-        // free(string_port);
         temp_buffer += next_value_length + 1;
         printf("Parsed port: %d\n", new_port);        
 
@@ -92,14 +96,13 @@ gossip_t* parse_gossip_buffer(char* buffer){
         printf("Parsed ip: %s\n", new_ip);
 
         gossip_t* node = create_node(new_port, new_ip);
+        node->number = new_number;
         add_node(&new_gossip_table, node);
         print_gossip_table(&node);
     }
     free(temp_buffer_address);
     return new_gossip_table;
 }
-
-
 
 char* create_gossip_buffer(gossip_t** gossip_table){
     printf("Creando Buffer \n");
@@ -130,6 +133,7 @@ void compare_gossip_tables(gossip_t** gossip_table1, gossip_t** gossip_table2){
     gossip_t* gossip_temp = *gossip_table2;
     while(gossip_temp != NULL){
         gossip_t* temp_node = create_node(gossip_temp->port, gossip_temp->ip);
+        temp_node->number = gossip_temp->number;
         add_node(gossip_table1, temp_node);
         gossip_temp = gossip_temp->next;
     }
@@ -149,12 +153,18 @@ void print_gossip_table(gossip_t** gossip_table){
 gossip_t* create_nodes_to_connect(gossip_t** gossip_table, char** seeds_ports){
     gossip_t* temp_gossip = NULL;
     gossip_t* temp_gossip2 = *gossip_table;
+
+    // copio la GOSSIP_TABLE en otra tabla
     while(temp_gossip2 != NULL){
         gossip_t* temp_node = create_node(temp_gossip2->port, temp_gossip2->ip);
         add_node(&temp_gossip, temp_node);
         temp_gossip2 = temp_gossip2->next;
     }
+    
+    // saco este nodo para que no se conecte con si mismo
     remove_node(&temp_gossip, temp_gossip);
+
+    // creo y agrego los nodos del config (solo se agregan si no estan ya)
     for(int i = 0; seeds_ports[i] != NULL; i++){
         gossip_t* temp_node = create_node(atoi(seeds_ports[i]), seeds_ips[i]);
         add_node(&temp_gossip, temp_node);   
@@ -169,10 +179,8 @@ void* gossip(void* void_gossip_table){
         
         printf("Gossiping...\n");
         gossip_t* nodes_to_connect = create_nodes_to_connect(gossip_table, seeds_ports);
-        printf("Gossip table posta: ");
-        print_gossip_table(gossip_table);
         
-        printf("Nodes to connnect with: ");
+        printf("Nodes to connect with: ");
         print_gossip_table(&nodes_to_connect);
         while(nodes_to_connect != NULL){
             int seed_port = nodes_to_connect->port;
@@ -189,11 +197,13 @@ void* gossip(void* void_gossip_table){
 
             int connection_result =  connect(seed_socket, (struct sockaddr*)&sock_client, sizeof(sock_client));
             
+            // si no se conecta, lo saco de la gossip table
             if(connection_result < 0){
                 log_error(logger, "No se logro establecer la conexion con el siguiente nodo");   
                 remove_node(gossip_table, find_node(gossip_table, seed_port));
             }
 
+            // si se conecta, le paso mi gossip table y el otro nodo me va a pasar su gossip table. La comparo con la mia y agrego los que faltan
             else{
                 char* instruction = "GOSSIP ";
                 char* string_gossip_table = create_gossip_buffer(gossip_table);
@@ -203,9 +213,9 @@ void* gossip(void* void_gossip_table){
                 printf("Me conecte con el nodo y le mando esta tabla: ");
                 print_gossip_table(gossip_table);
 
-                char* response = malloc(500);
+                char* response = malloc(1000);
                 if(write(seed_socket, gossip_buffer, strlen(gossip_buffer) + 1)){
-                    read(seed_socket, response, 499);
+                    read(seed_socket, response, 1000);
                     printf("Buffer recibido: %s\n", response);
                     gossip_t* gossip_temp = parse_gossip_buffer(response);
                     compare_gossip_tables(gossip_table, &gossip_temp);
