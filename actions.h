@@ -26,6 +26,6 @@ char* action_metrics(package_metrics* metrics_info);
 
 char* action_intern__status();
 
-char* action_gossip(gossip_t** buffer);
+char* action_gossip(char* buffer);
 
 #endif
