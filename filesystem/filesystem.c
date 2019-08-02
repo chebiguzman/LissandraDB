@@ -79,6 +79,7 @@ int main(int argc, char const *argv[]){
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
 
+  usleep(get_retardo_time());
 
   if(!does_table_exist(select_info->table_name)){
     free(parse_package_select(select_info));
@@ -187,7 +188,7 @@ int min(int a, int b){
 
 char* action_insert(package_insert* insert_info){
 
-  printf("Se recibió una accion insert\n");
+  usleep(get_retardo_time());
 
   if(!does_table_exist(insert_info->table_name)){
     log_error(logger, "No se puede completar el describe.");
@@ -223,6 +224,7 @@ char* action_insert(package_insert* insert_info){
 
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
+  usleep(get_retardo_time());
   
   if(does_table_exist(create_info->table_name)){
     char* err = "Fallo la creacion de una tabla.\n";
@@ -238,6 +240,7 @@ char* action_create(package_create* create_info){
 
 char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
+  usleep(get_retardo_time());
 
   //distingo si cargaron o no una tabla a describir
 

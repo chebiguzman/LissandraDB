@@ -22,6 +22,7 @@ int row_amount;
 long config_tiempo_dump;
 long config_retardo;
 t_config* config;
+
 pthread_mutex_t config_lock;
 void check_or_create_dir(char* path){
     DIR* dir = opendir(path);
@@ -122,7 +123,13 @@ void engine_start(t_log* logger){
     int TAM_VALUE = config_get_int_value(config, "TAMAÑO_VALUE");
     DIR* mnt_dir = opendir(MNT_POINT); 
     tables_name = list_create();
+
+    update_engine_config();
     pthread_mutex_init(&config_lock, NULL);
+
+    pthread_t tid;
+    pthread_create(&tid, NULL, config_worker, NULL);
+
     if(mnt_dir == NULL){
         log_error(logger, "Fatal error. El punto de montaje es invalido.");
         exit(-1);
@@ -508,7 +515,8 @@ void* config_worker(void* args){
 
         struct inotify_event *event = (struct inotify_event *) buf;
         if(event->mask == IN_CLOSE_WRITE){
-        //config_destroy(fconfig);
+        log_info(logg, "Se actualiza la info del config");
+        config_destroy(config);
         config = config_create("config");
         update_engine_config();
 
@@ -604,10 +612,6 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
          //agrego los datos a uno o mas bloques -> ver bitmap
         int block = find_free_block(); //elijo un bloque libre
 
-        printf("-----------------Encontre el siguiente bloque------------------\n");
-        printf("%d\n",block);
-        printf("---------------------------------------------------------------\n");
-
         if (block == -1) {
             log_error(logg,"No hay bloques libres");
             exit(-1);
@@ -621,10 +625,6 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
         strcat(block_path ,"Bloques/");
         strcat(block_path ,block_name);
         strcat(block_path ,".bin");
-
-        printf("---------------------------------\n");
-        printf("%s\n",block_path);
-        printf("---------------------------------\n");
 
         //escribo el dump en el bloque
         FILE* block_file = fopen(block_path,"r+");
@@ -652,11 +652,6 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
 
     }
 
-    printf("---------------------------------\n");
-    printf("%s\n",blocks);
-    printf("---------------------------------\n");
-    
-   
     //creo los archivos tmp -> ver como nombro los archivos
     //chequeo si existen archivos con el nombre 0.tmp , 1.tmp, 2.tmp, etc... hasta encontrar uno que no exista
     char* tmp_path = malloc(strlen(MNT_POINT)+strlen("Tables/")+strlen(table_name)+strlen("/.tmp")+1);
@@ -667,10 +662,7 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
     strcat(tmp_path ,table_name);
     strcat(tmp_path ,"/");
 
-    printf("---------------------------------\n");
-    printf("%s\n",tmp_path);
-    printf("---------------------------------\n");
-
+    
     //encuentro un archivo tmp: desde 0 en adelante itero hasta que no existe salgo y devuelvo el num
     char* tmp_file_number = string_itoa(find_tmp_name(tmp_path));
 
@@ -678,10 +670,6 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
     strcpy(tmp_filepath, tmp_path);
     strcat(tmp_filepath ,tmp_file_number);
     strcat(tmp_filepath ,".tmp");
-
-    printf("---------------------------------\n");
-    printf("%s\n",tmp_filepath);
-    printf("---------------------------------\n");
 
     //cargo el archivo .tmp
 
@@ -691,32 +679,13 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
 
     sprintf(r, text, a,blocks);
 
-    printf("---------------------------------\n");
-    printf("%s",r);
-    printf("---------------------------------\n");
-    printf("el archivo temporal es: %s\n",tmp_filepath);
-    printf("---------------------------------\n");
 
     FILE* tmp_file = fopen(tmp_filepath,"w");//creo el archivo .tmp
 
-    if (tmp_file == NULL) {
-        printf("---------------------------------\n");
-        printf("tmp_file es null\n");
-        printf("---------------------------------\n");
-    }
-    if (r == NULL) {
-        printf("---------------------------------\n");
-        printf("r es null\n");
-        printf("---------------------------------\n");
-    }
+
     
     fputs(r, tmp_file); //aca da seg fault
 
-    printf("---------------------------------\n");
-    printf("%s\n","huevadas");
-    printf("---------------------------------\n");
-
-    printf("hasta aca vamos bien?");
 
     fclose(tmp_file);
     free(tmp_filepath);
@@ -725,7 +694,7 @@ void engine_dump_table(char* table_name, char* table_dump){ //esta funcion tiene
     free(blocks);
     free(tmp_path);
 
-    printf("engine_dump_table va a retornar");
+
     
     return;
 }
@@ -1027,6 +996,14 @@ long get_dump_time(){
     long r;
     pthread_mutex_lock(&config_lock);
     r = config_tiempo_dump;
+    pthread_mutex_unlock(&config_lock);
+    return r;
+}
+
+long get_retardo_time(){
+    long r;
+    pthread_mutex_lock(&config_lock);
+    r = config_retardo;
     pthread_mutex_unlock(&config_lock);
     return r;
 }

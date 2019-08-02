@@ -65,7 +65,6 @@ void* create_server(void* args){
          while (1){
 
             if(read(newsockfd, buffer, 3000)){
-
                 log_info(serverInfo->logger, buffer);
                 char* responce = parse_input(buffer);
 
