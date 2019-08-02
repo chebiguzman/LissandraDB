@@ -326,9 +326,9 @@ char *strdups(const char *src) {
 
 void vaciarvector(char* puntero){
   for(int i=0;i<100;i++){
-  puntero[i]='\0';
-}
-return;
+    puntero[i]='\0';
+  }
+  return;
 }
 
 void* buscador(void* args){
@@ -503,35 +503,6 @@ int get_all_rows(char* ruta,regg* rows,int block_number){
   return registro;
 }
 
-//algun dia (?)
-/*char** get_all_rows_in_string_array(char* ruta,int size,int block_number){
-  log_info(logger,ruta);
-  FILE* bloque=fopen(ruta,"r");
-  fseek(bloque,0, SEEK_END);
-  int size = ftell(bloque);
-  char* buff = malloc(size);
-  fread(buff, size, 1, bloque);
-  printf("el srchivo contiene:%s", buff);
-
-  /*int registro=0;
-  while(!feof(bloque)){
-    rows[registro].line=malloc(100);// cambiar max tam;
-    fgets(rows[registro].line,100,bloque);
-    registro++;
-  }
-  fclose(bloque);
-  log_info(logger,"hasta acaaaaaaaaaaaaaaa");
-  bloque=fopen(ruta,"w");
-  fclose(bloque);
-  set_block_as_free(block_number);
-  for(int i=0;i<registro;i++){
-    log_info(logger,rows[i].line);
-  }
-  log_info(logger,"fuera del ciclo");
-  
-  return registro;
-}
-*/
 int get_row_key(char* row ){
   printf("obterner la key de la row:%s\n", row);
   if(row == NULL) return -1;
@@ -550,6 +521,7 @@ int get_row_key(char* row ){
   free(parts);
   return r;
 }
+
 void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
   int cantidad_maxima = 1;//max_row_amount();
   t_table_metadata* metadata= get_table_metadata(tabla);
@@ -682,7 +654,7 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
     pthread_cond_destroy(&cond);
     q++;
   }
-}
+  }
   
   return;
 }
@@ -837,7 +809,8 @@ void adjust_size(char* size,int tam){
   return;
 }
 
-char* action_gossip(gossip_t** buffer){
+char* action_gossip(char* buffer){
   return strdup("");
 }
+
 void exec_err_abort(){};
