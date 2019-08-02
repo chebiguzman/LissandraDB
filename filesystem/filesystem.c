@@ -105,14 +105,15 @@ char* action_select(package_select* select_info){
   free(meta);
   
   int block_amount = 0;
-  char* first_block = partition->blocks[0];
+  void* first_block = partition->blocks;
   while(*partition->blocks){
     block_amount++;
-    *partition->blocks++;
+    printf("%s\n",*partition->blocks );
+    partition->blocks++;
   }
-  *partition->blocks = first_block;
+  partition->blocks = first_block;
 
-   if(block_amount==0)return strdup("Key invalida\n");
+  if(block_amount==0)return strdup("Key invalida\n");
   
   pthread_t buscadores[block_amount];
   regg regruta[block_amount];
