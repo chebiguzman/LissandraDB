@@ -287,6 +287,7 @@ char* action_describe(package_describe* describe_info){
          
       if(name!=NULL && cons !=NULL){
         string_to_upper(name);
+        printf("se agrega la tabla::%s", name);
         int* constistency = malloc(sizeof(int));
 
         *constistency = atoi(cons);
@@ -304,6 +305,8 @@ char* action_describe(package_describe* describe_info){
 
       buffer++;
     }
+        printf("se agreg");
+
       if(describe_info->table_name == NULL){
         printf("describe generala %s\n",describe_info->table_name);
         kmemory_set_active_tables(tables_dic);

@@ -41,7 +41,7 @@
 **/kernel/kernel
 **/memory/memory
 **/filesystem/filesystem
-
+log.debug
 
 # Debug files
 *.dSYM/
