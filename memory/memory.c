@@ -18,14 +18,12 @@
 #include "segments.h"
 #include "gossiping.h"
 
+
 void exec_err_abort(){};
 //logger global para que lo accedan los threads
 int main_memory_size;
 
 //punto de entrada para el programa y el kernel
-//para inicializar la memoria por ahora hay que mandar dos parametros, el puerto de la memoria
-//y el puerto del seed
-//ejemplo: ./memoria 5001 5004
 int main(int argc, char const *argv[])
 {
 
@@ -43,6 +41,7 @@ int main(int argc, char const *argv[])
   config = config_create(config_name);
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
   MEMORY_PORT = config_get_int_value(config, "PORT");
+  MEMORY_IP = "127.0.0.1";
 
   //set up log
   logger = log_create(LOGPATH, "Memory", 1, LOG_LEVEL_INFO);
@@ -94,8 +93,13 @@ int main(int argc, char const *argv[])
   seeds_ports = config_get_array_value(config, "PUERTO_SEEDS");
   seeds_ips = config_get_array_value(config, "IP_SEEDS");
   GOSSIP_TABLE = NULL;
-  add_node(&GOSSIP_TABLE, create_node(MEMORY_PORT));
-  // add_node(&GOSSIP_TABLE, create_node(5002));
+  gossip_t* this_node = create_node(MEMORY_PORT, MEMORY_IP);
+  this_node->number = config_get_int_value(config, "MEMORY_NUMBER");
+  add_node(&GOSSIP_TABLE, this_node);
+
+  gossip_t* this_node2 = create_node(69, "10.2.4");
+  this_node2->number = 42;
+  add_node(&GOSSIP_TABLE, this_node2);
   
   // setup segments
   SEGMENT_TABLE = NULL;
@@ -110,13 +114,8 @@ int main(int argc, char const *argv[])
   printf("---------------------\n\n");
   
   print_gossip_table(&GOSSIP_TABLE);
+
   pthread_mutex_unlock(&gossip_table_mutex);					
-
-  // char** seed_ports = config_get_array_value(config, "PUERTO_SEEDS");
-  // gossip_t* parsed_gossip_table = create_nodes_to_connect(&GOSSIP_TABLE, seed_ports);
-  // print_gossip_table(&parsed_gossip_table);
-
-  // gossip(&GOSSIP_TABLE);  
 
   pthread_mutex_init(&main_memory_mutex, NULL);
   pthread_mutex_init(&segment_table_mutex, NULL);
@@ -248,27 +247,40 @@ char* action_metrics(package_metrics* metrics_info){
 //con esta forma: ID_PROPIO|RETARDO_GOSSIPING_DE_ESTA_MEMORIA|id,ip,port|id,ip,port|id,ip,port
 //                                                    seed        seed      seed
 char* action_intern__status(){
-  char* res = malloc(300); //ya que se puede modificar en tiempo real y yo necesito saber cada cuanto ir a buscar una memoira se le añade como primer elemento el retargo gossiping de la memoria principal.
-  strcpy(res,"3|300000000|");
+  // char* res = strdup("300000000|"); //ya que se puede modificar en tiempo real y yo necesito saber cada cuanto ir a buscar una memoira se le añade como primer elemento el retargo gossiping de la memoria principal.
+  pthread_mutex_lock(&gossip_table_mutex);  
+
+  char* retardo_gossip = config_get_string_value(config, "RETARDO_GOSSIPING");
+
   char sep[2] = { ',', '\0' };
   char div[2] = { '|', '\0' };
-  t_config* config = config_create("config");
-  char** ips = config_get_array_value(config, "IP_SEEDS");
-  char** ports = config_get_array_value(config, "PUERTO_SEEDS");
 
-  int i = 2; //ESto reprecenta el id de las memorias, se consigue como parte del proceso de gossiping.
-  while(*ips != NULL){
-    strcat(res, string_itoa(i));
-    strcat(res,sep);    
-    strcat(res, *ips);
-    strcat(res,sep);
-    strcat(res, *ports);
-    strcat(res,div);
-    ips++;
-    ports++;
-    i++;
-  }
-  return res;
+  char* gossip_table_buffer = create_gossip_buffer(&GOSSIP_TABLE);
+  printf("Gossip table: %s\n", gossip_table_buffer);
+  char* buffer = malloc(strlen(retardo_gossip) + strlen(gossip_table_buffer) + 2);
+  *buffer = 0;
+  strcpy(buffer, retardo_gossip);
+  strcat(buffer, div);
+  strcat(buffer, gossip_table_buffer);
+  // t_config* config = config_create("config");
+  // char** ips = config_get_array_value(config, "IP_SEEDS");
+  // char** ports = config_get_array_value(config, "PUERTO_SEEDS");
+
+  // int i = 2; //ESto reprecenta el id de las memorias, se consigue como parte del proceso de gossiping.
+  // while(*ips != NULL){
+  //   strcat(res, string_itoa(i));
+  //   strcat(res,sep);    
+  //   strcat(res, *ips);
+  //   strcat(res,sep);
+  //   strcat(res, *ports);
+  //   strcat(res,div);
+  //   ips++;
+  //   ports++;
+  //   i++;
+  // }
+  // return res;
+  pthread_mutex_unlock(&gossip_table_mutex);  
+  return buffer;
 }
 
 char* parse_input(char* input){
@@ -276,8 +288,7 @@ char* parse_input(char* input){
 }
 
 char* action_gossip(gossip_t** parsed_gossip_table){
-  pthread_mutex_lock(&gossip_table_mutex);	
-
+  pthread_mutex_lock(&gossip_table_mutex);  
   printf("Me llego una conexion de una memoria \n");
   char* gossip_buffer = create_gossip_buffer(&GOSSIP_TABLE); // lo creo antes de que compare las tablas asi no le mando las que me acaba de pasar
   printf("- Gossip buffer to send: %s\n", gossip_buffer);
@@ -288,7 +299,7 @@ char* action_gossip(gossip_t** parsed_gossip_table){
   gossip_t* temp_node = *parsed_gossip_table;
   while(temp_node != NULL){
       for(int i=0; seeds_ports[i] != NULL; i++){
-          if(temp_node->number == atoi(seeds_ports[i])){
+          if(temp_node->port == atoi(seeds_ports[i])){
               remove_node(parsed_gossip_table, temp_node);
           }
       }
@@ -299,7 +310,8 @@ char* action_gossip(gossip_t** parsed_gossip_table){
   printf("- Actualizo ");
   print_gossip_table(&GOSSIP_TABLE);
 
-  pthread_mutex_unlock(&gossip_table_mutex);
+  pthread_mutex_lock(&gossip_table_mutex);
+  
   return strdup(gossip_buffer);
 }
 

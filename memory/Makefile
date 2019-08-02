@@ -1,13 +1,13 @@
 all: memory clean
 
 memory: memory.o server.o pharser.o console.o segments.o gossiping.o
-	gcc -o memory memory.o server.o pharser.o console.o segments.o gossiping.o -lcommons -pthread
+	gcc -Wall -Werror -g -o memory memory.o server.o pharser.o console.o segments.o gossiping.o -lcommons -pthread
 
 memory.o: 
-	gcc -c memory.c -lcommons
+	gcc -g -c memory.c -lcommons
 
 server.o:
-	gcc -c ../server.c -lcommons
+	gcc -g -c ../server.c -lcommons
 
 pharser.o:
 	gcc -g  -c ../pharser.c
