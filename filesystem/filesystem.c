@@ -85,20 +85,28 @@ char* action_select(package_select* select_info){
     free(parse_package_select(select_info));
     return strdup("La tabla solicitada no existe.\n");
   }
- 
+ char* m = malloc(strlen(get_value_from_memtable(select_info->table_name, select_info->key) + 2));
   if(is_data_on_memtable(select_info->table_name, select_info->key)){
-      char* r = malloc(strlen(get_value_from_memtable(select_info->table_name, select_info->key) + 2));
-      strcpy(r, get_value_from_memtable(select_info->table_name, select_info->key));
-      strcat(r, "\n");
-      free(parse_package_select(select_info));
- 
-    return r;
+      strcpy(m, get_value_from_memtable(select_info->table_name, select_info->key));
+      strcat(m, "\n");
   }
- 
+  
+  
   t_table_metadata* meta = get_table_metadata(select_info->table_name);
  
   //nro particion
- 
+  row* temp_row=malloc(sizeof(temp_row)); 
+  temp_row=select_particiones_temporales(select_info);
+  if(is_data_on_memtable(select_info->table_name, select_info->key)){
+    if(atoi(m)>temp_row->timestap){
+      char* valuee=malloc(100);
+      obtengovalue(m,valuee);
+      strcpy(temp_row->value,valuee);
+      temp_row->timestap=atoi(m);
+      free(m);
+    }
+  }
+  
   int table_partition_number = select_info->key % meta->partition_number ;
  
   t_table_partiton* partition = get_table_partition(select_info->table_name, table_partition_number);
@@ -149,6 +157,7 @@ char* action_select(package_select* select_info){
     args->key=select_info->key;
     args->cond = &cond;
     args->lock = lock;
+    args->timestap=0;
     args->number_of_running_threads = number_of_threads;
     parametros[whilethread] = args;
     pthread_create(&buscadores[whilethread],NULL,buscador,args);
@@ -163,12 +172,16 @@ char* action_select(package_select* select_info){
   int whileparametro=0;
   while(whileparametro<block_amount){
     if(parametros[whileparametro]->bolean){
+      if(temp_row->timestap<=parametros[whileparametro]->timestap){
       char* r = malloc( strlen(parametros[whileparametro]->value) + 2);
       strcpy(r, parametros[whileparametro]->value);
-     
- 
-      //strcat(r, "\n");
+      free(parse_package_select(select_info));
       return r;
+      }
+      else{
+      free(parse_package_select(select_info));
+      return temp_row->value;
+      }
     }
     whileparametro++;
   }
@@ -764,6 +777,7 @@ void* buscador(void* args){
     //devuelve key
  
     if(parametros->key==get_row_key(parametros->row)){
+      parametros->timestap=atoi(parametros->row);
       obtengovalue(parametros->row,parametros->value);
       parametros->bolean=1;
       kill_thread();
@@ -825,3 +839,55 @@ char* action_gossip(char* buffer){
 }
  
 void exec_err_abort(){};
+
+
+void* buscador2(void* args){
+  argumentosthread2* parametros;
+  parametros= (argumentosthread2*) args;
+  FILE* bloque=NULL;
+ 
+  void kill_thread(){
+   
+    pthread_mutex_lock(&parametros->lock);
+    int amount = *parametros->number_of_running_threads;
+    amount--;
+    *parametros->number_of_running_threads= amount;
+    pthread_mutex_unlock(&parametros->lock);
+    if(amount==0){
+      if(parametros->cond == NULL) return;
+      pthread_cond_broadcast(parametros->cond);
+      pthread_mutex_destroy(&parametros->lock);
+      pthread_cond_destroy(parametros->cond);
+    }
+  }
+  parametros->timestap_max=0;
+  bloque=fopen(parametros->ruta,"r+");
+  if(bloque==NULL){
+    log_error(logger,"El sistema de bloques de archivos presenta una inconcistencia en el bloque:");
+    log_error(logger,parametros->ruta);
+    log_error(logger, "el archivo no existe.");
+    kill_thread();
+    return NULL;
+  }
+ 
+  char *buffer = malloc(50);
+  parametros->retorno = strdup("");
+  while(!feof(bloque)){
+    fgets(buffer,50,bloque);
+    parametros->row= strdup(buffer);
+ 
+    //devuelve key
+ 
+    if(parametros->key==get_row_key(parametros->row)){
+      if(parametros->timestap_max<atoi(parametros->row)){
+        parametros->timestap_max=atoi(parametros->row);
+      obtengovalue(parametros->row,parametros->value);
+      parametros->bolean=1;
+    }
+    }
+    parametros->retorno = strdup("");
+  }
+  kill_thread();
+  fclose(bloque);
+  return NULL;
+}

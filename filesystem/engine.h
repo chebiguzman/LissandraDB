@@ -10,9 +10,11 @@
 #include <sys/stat.h> //creacion de directorios
 #include <sys/types.h> //creacion de directorios
 #include <stdio.h>
+#include <stdint.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
+#include "../pharser.h"
 #include <unistd.h>
 #include <commons/collections/list.h>
 #include <commons/string.h>
@@ -40,6 +42,12 @@ typedef struct{
     pthread_cond_t cond;
 }t_table_condition;
 
+typedef struct{
+  char* value;
+  uint16_t timestap;
+}row;
+
+
 void* setup_fs(void* args);
 void engine_start(t_log* logger);
 int enginet_create_table(char* table_name, int consistency, int particiones, long compactation_time);
@@ -48,6 +56,7 @@ char* get_table_metadata_as_string(char* table_name);
 char* get_all_tables_metadata_as_string();
 t_table_metadata* get_table_metadata(char* table_name);
 t_table_partiton* get_table_partition(char* table_name, int table_partition_number);
+t_table_partiton* get_table_partition2(char* table_name, int table_partition_number);
 t_table_partiton* get_table_partition2(char* table_name, int table_partition_number);
 void engine_drop_table(char* table_name);
 
@@ -69,4 +78,5 @@ long get_dump_time();
 void update_engine_config();
 long get_retardo_time();
 void* config_worker(void* args);
+row* select_particiones_temporales(package_select* select_info);
 #endif /* ENGINE_H */

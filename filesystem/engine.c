@@ -498,6 +498,31 @@ t_table_partiton* get_table_partition(char* table_name, int table_partition_numb
  
     return parition;
 }
+
+t_table_partiton* get_table_partition3(char* table_name, int table_partition_number){
+    char* partition_name = strdup(string_itoa(table_partition_number));
+    char* partition_path =malloc(strlen(tables_path) + strlen(table_name) + 1 + strlen(partition_name)+ strlen(".part") + 5);
+    strcpy(partition_path ,tables_path);
+ 
+    strcat(partition_path,table_name);
+    strcat(partition_path,"/");
+    strcat(partition_path, partition_name);
+    strcat(partition_path, ".tmpc");
+ 
+    free(partition_name);
+ 
+    t_table_partiton* parition = malloc(sizeof(t_table_partiton));
+    t_config* c = config_create(partition_path);
+    printf("assasd %s\n", partition_path);
+ 
+    parition->blocks_size = config_get_long_value(c, "SIZE");
+ 
+    parition->blocks = config_get_array_value(c, "BLOCKS");
+ 
+    free(partition_path);
+ 
+    return parition;
+}
  
 void* config_worker(void* args){
     int inotifyFd = inotify_init();
@@ -1005,14 +1030,16 @@ long get_retardo_time(){
     return r;
 }
 
-row* select_particiones_temporales(package_select* select_info){har* ruta=malloc(strlen(tables_path) + strlen(select_info->table_name) + 30);
+row* select_particiones_temporales(package_select* select_info){
+    char* ruta=malloc(strlen(tables_path) + strlen(select_info->table_name) + 30);
     strcpy(ruta,tables_path);
     strcat(ruta,select_info->table_name);
     row* row_return=malloc(sizeof(row));//hace malloc
     DIR* tablaDir=opendir(ruta);
     int cantidad=contadordetemp(tablaDir);
     if(cantidad==0){
-        return NULL;
+        row_return->timestap=0;
+        return row_return;
     }
     char* temporales[cantidad];
     int contador=0;
@@ -1049,7 +1076,7 @@ row* select_particiones_temporales(package_select* select_info){har* ruta=malloc
   }
   partition->blocks = first_block;
  
-  if(block_amount==0)return strdup("Key invalida\n");
+  if(block_amount==0)return NULL;
  
   pthread_t buscadores[block_amount];
   regg regruta[block_amount];
@@ -1096,8 +1123,6 @@ row* select_particiones_temporales(package_select* select_info){har* ruta=malloc
         pthread_mutex_lock(&lock);
         pthread_cond_wait(&cond, &lock);
         int whileparametro=0;
-        printf("____________________________\n");
-        printf("respuesta de los temporales:\n");
         while(whileparametro<block_amount){
             if(parametros[whileparametro]->bolean && mayor<parametros[whileparametro]->timestap_max){
             mayor=parametros[whileparametro]->timestap_max;
@@ -1106,7 +1131,7 @@ row* select_particiones_temporales(package_select* select_info){har* ruta=malloc
             }
             whileparametro++;
         }
-        printf("____________________________\n");
+
 
         pthread_mutex_destroy(&lock);
         pthread_cond_destroy(&cond);
@@ -1117,7 +1142,6 @@ row* select_particiones_temporales(package_select* select_info){har* ruta=malloc
     }
     row_return->timestap=mayor;
     row_return->value=strdup(r);
-    free(r);
     return row_return;
   
  }
