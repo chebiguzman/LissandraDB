@@ -34,6 +34,12 @@ typedef struct{
     int blocks_size;
 }t_table_partiton;
 
+typedef struct{
+    char* table_name;
+    int compactating;
+    pthread_mutex_t table_condition_mutex;
+}t_table_condition;
+
 void* setup_fs(void* args);
 void engine_start(t_log* logger);
 int enginet_create_table(char* table_name, int consistency, int particiones, long compactation_time);
