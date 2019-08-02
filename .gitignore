@@ -53,11 +53,8 @@ log.debug
 *.json
 .*
 !/.gitignore
-<<<<<<< HEAD
 /MountTest
 MountTest
-=======
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
 
 # Kernel Module Compile Results
 *.mod*

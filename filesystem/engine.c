@@ -12,11 +12,7 @@
 #define BLOCKS_AMOUNT_DEFAULT 12
 char* MNT_POINT;
 t_log* logg;
-<<<<<<< HEAD
 t_list* tables;
-=======
-t_list* tables_name;
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
 char* tables_path;
 DIR* root;
 char* bitmap_path;
@@ -126,11 +122,7 @@ void engine_start(t_log* logger){
     MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE"); //CHECK
     int TAM_VALUE = config_get_int_value(config, "TAMAÑO_VALUE");
     DIR* mnt_dir = opendir(MNT_POINT); 
-<<<<<<< HEAD
     tables = list_create();
-=======
-    tables_name = list_create();
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
 
     update_engine_config();
     pthread_mutex_init(&config_lock, NULL);
@@ -231,20 +223,13 @@ void engine_start(t_log* logger){
     }
  
     DIR* tables_dir = opendir(tables_path); 
-<<<<<<< HEAD
 
     struct dirent *entry;
-=======
-    //tables_conditions = list_create(); //CHECK
-
-   /*  struct dirent *entry;
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
     while ((entry = readdir(tables_dir)) != NULL) {
         if(entry->d_type == DT_DIR){
             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
             continue;
 
-<<<<<<< HEAD
             t_table* table;
             table = malloc(sizeof(t_table));
 
@@ -259,34 +244,6 @@ void engine_start(t_log* logger){
             string_to_upper(name);
             log_info(logg,name);
             
-=======
-            struct t_table_condition* new_table_condition;
-            new_table_condition = (struct t_table_condition*)malloc(sizeof(struct t_table_condition));
-            char* name = malloc(strlen(entry->d_name) +1); //CHECK
-            strcpy(name, entry->d_name);
-            new_table_condition->table_name = name;
-            new_table_condition->compacting = 0;
-            pthread_mutex_init(new_table_condition->lock,new_table_condition->cond);
-
-            list_add(tables_conditions, new_table_condition);
-            string_to_upper(entry->d_name);
-            log_info(logg, entry->d_name);
-            //free(name);
-        }
-    }*/
-
-    struct dirent *entry;
-    while ((entry = readdir(tables_dir)) != NULL) {
-        if(entry->d_type == DT_DIR){
-            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
-            continue;
-            char* name = malloc(strlen(entry->d_name) +1); //CHECK
-            strcpy(name, entry->d_name);
-            list_add(tables_name, name);
-            string_to_upper(entry->d_name);
-            log_info(logg, entry->d_name);
-            //free(name);
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
         }
     }
 
@@ -302,12 +259,8 @@ int does_table_exist(char* table_name){
     string_to_upper(q);
 
     bool findTableByName(void* t){
-<<<<<<< HEAD
          t_table* tt = (t_table*) t;
         char* cmp = strdup(tt->name);
-=======
-        char* cmp = strdup((char*) t);
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
         string_to_upper(cmp);
         if(!strcmp(q, cmp)){
             free(cmp);
@@ -317,11 +270,7 @@ int does_table_exist(char* table_name){
         return false;
     }
 
-<<<<<<< HEAD
     char* t = list_find(tables,findTableByName);
-=======
-    char* t = list_find(tables_name,findTableByName);
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
     //free(q);
     if(t == NULL){
         return 0;
@@ -421,16 +370,12 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     
     free(resp);
 
-<<<<<<< HEAD
     t_table* new_table = malloc( sizeof(t_table));
     new_table->name = table_name;
     pthread_mutex_init(&new_table->lock, NULL);
     pthread_cond_init(&new_table->cond, NULL);
     new_table->compactating = 0;
     list_add(tables, new_table);
-=======
-    list_add(tables_name, table_name);
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
     char* copy = strdup(table_name);
     string_to_upper(copy);
 
@@ -448,12 +393,8 @@ void engine_drop_table(char* table_name){
     string_to_upper(q);
 
     bool findTableByName(void* t){
-<<<<<<< HEAD
         t_table* tt = (t_table*) t;
         char* cmp = strdup(tt->name);
-=======
-        char* cmp = strdup((char*) t);
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
         string_to_upper(cmp);
         if(!strcmp(q, cmp)){
             free(cmp);
@@ -463,11 +404,7 @@ void engine_drop_table(char* table_name){
         return false;
     }
 
-<<<<<<< HEAD
     list_remove_by_condition(tables,findTableByName);
-=======
-    list_remove_by_condition(tables_name,findTableByName);
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
     char* path = malloc(strlen(tables_path) + strlen(table_name) + 5);
     strcpy(path, tables_path);
     strcat(path, table_name);
@@ -488,21 +425,14 @@ char* get_table_metadata_as_string(char* table_name){
     strcat(table_path, "/metadata");
 
     FILE* f = fopen(table_path, "r");
-<<<<<<< HEAD
     if(f == NULL) return "";
-=======
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
     fseek(f, 0L, SEEK_END);
     int bytes = ftell(f);
 
     fseek(f, 0l, SEEK_SET);
     char* meta = (char*)calloc(bytes, sizeof(char));	
     fread(meta, sizeof(char), bytes, f);
-<<<<<<< HEAD
     printf("metadata de:%s", table_name);
-=======
-
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
     fclose(f);
     free(table_path);
 
@@ -511,39 +441,23 @@ char* get_table_metadata_as_string(char* table_name){
 
 char* get_all_tables_metadata_as_string(){
 
-<<<<<<< HEAD
     if(list_is_empty(tables)) return strdup("");
     int tables_amount = list_size(tables);
-=======
-    if(list_is_empty(tables_name)) return strdup("");
-    int tables_amount = list_size(tables_name);
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
 
     char* result = strdup("");
 
     for (size_t i = 0; i < tables_amount; i++)
     {   
 
-<<<<<<< HEAD
         result = realloc(result, strlen(result) + strlen(((t_table*)list_get(tables,i))->name)+ 8);
         strcat(result, "NOMBRE=");
         strcat(result, ((t_table*) list_get(tables,i))->name);
-=======
-        result = realloc(result, strlen(result) + strlen(list_get(tables_name,i))+ 8);
-        strcat(result, "NOMBRE=");
-        strcat(result, list_get(tables_name,i));
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
 
         result = realloc(result, strlen(result) + 2);
         strcat(result, "\n");
     
-<<<<<<< HEAD
         char* m = get_table_metadata_as_string(((t_table*) list_get(tables,i))->name);
         printf("recivo m:%s\n", m);
-=======
-        char* m = get_table_metadata_as_string(list_get(tables_name,i));
-
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
         result = realloc(result, strlen(result) + strlen(m) + 1);
         strcat(result, m);
         result = realloc(result, strlen(result) + 4);
@@ -580,12 +494,6 @@ t_table_partiton* get_table_partition(char* table_name, int table_partition_numb
     return parition;
 }
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
 void* config_worker(void* args){
     int inotifyFd = inotify_init();
     inotify_add_watch(inotifyFd, "config", IN_CLOSE_WRITE);
@@ -600,11 +508,7 @@ void* config_worker(void* args){
         struct inotify_event *event = (struct inotify_event *) buf;
         if(event->mask == IN_CLOSE_WRITE){
         log_info(logg, "Se actualiza la info del config");
-<<<<<<< HEAD
         //config_destroy(config);
-=======
-        config_destroy(config);
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
         config = config_create("config");
         update_engine_config();
 
@@ -618,11 +522,6 @@ void update_engine_config(){
          
         int dump = config_get_int_value(config, "TIEMPO_DUMP");
         long retardo = config_get_long_value(config, "RETARDO");
-<<<<<<< HEAD
-=======
-        //log_debug(logg, "el nuevo es: ");
-        //log_debug(logg, string_itoa((int) refresh));
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
         pthread_mutex_lock(&config_lock);
         config_tiempo_dump = dump;
         config_retardo = retardo;
