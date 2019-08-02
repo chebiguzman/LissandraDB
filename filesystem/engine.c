@@ -1041,9 +1041,31 @@ row* select_particiones_temporales(package_select* select_info){har* ruta=malloc
         else{
             partition=get_table_partition3(select_info->table_name,temp_part);
         }
-        //
-        
-//
+        int block_amount = 0;
+  void* first_block = partition->blocks;
+  while(*partition->blocks){
+    block_amount++;
+    partition->blocks++;
+  }
+  partition->blocks = first_block;
+ 
+  if(block_amount==0)return strdup("Key invalida\n");
+ 
+  pthread_t buscadores[block_amount];
+  regg regruta[block_amount];
+ 
+  int i = 0;
+  while(i<block_amount){
+    regruta[i].line=malloc(100);
+    strcpy(regruta[i].line,"MountTest/");
+    strcat(regruta[i].line,"Bloques/");
+    strcat(regruta[i].line,partition->blocks[i]);
+ 
+    strcat(regruta[i].line,".bin");
+   
+    log_info(logg,regruta[i].line);
+    i++;
+  }
 
         pthread_mutex_t lock;
         pthread_cond_t cond;
