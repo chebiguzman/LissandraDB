@@ -216,9 +216,30 @@ void engine_start(t_log* logger){
     }
  
     DIR* tables_dir = opendir(tables_path); 
-    tables_name = list_create(); //CHECK
+    tables_conditions = list_create(); //CHECK
 
     struct dirent *entry;
+    while ((entry = readdir(tables_dir)) != NULL) {
+        if(entry->d_type == DT_DIR){
+            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+            continue;
+
+            struct t_table_condition* new_table_condition;
+            new_table_condition = (struct t_table_condition*)malloc(sizeof(struct t_table_condition));
+            char* name = malloc(strlen(entry->d_name) +1); //CHECK
+            strcpy(name, entry->d_name);
+            new_table_condition->table_name = name;
+            new_table_condition->compacting = 0;
+            pthread_mutex_init(new_table_condition->lock,new_table_condition->cond);
+
+            list_add(tables_conditions, new_table_condition);
+            string_to_upper(entry->d_name);
+            log_info(logg, entry->d_name);
+            //free(name);
+        }
+    }
+
+    /*struct dirent *entry;
     while ((entry = readdir(tables_dir)) != NULL) {
         if(entry->d_type == DT_DIR){
             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
@@ -230,7 +251,7 @@ void engine_start(t_log* logger){
             log_info(logg, entry->d_name);
             //free(name);
         }
-    }
+    }*/
 
     closedir(tables_dir);
 

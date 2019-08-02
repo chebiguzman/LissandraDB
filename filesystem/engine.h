@@ -37,7 +37,8 @@ typedef struct{
 typedef struct{
     char* table_name;
     int compactating;
-    pthread_mutex_t table_condition_mutex;
+    pthread_mutex_t lock;
+    pthread_cond_t cond;
 }t_table_condition;
 
 void* setup_fs(void* args);
