@@ -34,25 +34,12 @@ typedef struct{
 }t_table_partiton;
 
 typedef struct{
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     char* name;
     int compactating;
     pthread_mutex_t lock;
     pthread_cond_t cond;
 }t_table;
-=======
-=======
->>>>>>> 8b208718164a1c0aacd23c90187b2a621e4b4c2e
-    char* table_name;
-    int compactating;
-    pthread_mutex_t lock;
-    pthread_cond_t cond;
-}t_table_condition;
-<<<<<<< HEAD
->>>>>>> 709054a6e23cdd3936903a4425098f41ef5a3763
-=======
->>>>>>> 8b208718164a1c0aacd23c90187b2a621e4b4c2e
 
 void* setup_fs(void* args);
 void engine_start(t_log* logger);
