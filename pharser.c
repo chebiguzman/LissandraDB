@@ -98,6 +98,19 @@ char* exec_instr(char* instr_buff){
         parameters_length++;
     }
 
+    // --- gossiping ---
+    if(!strcmp(parameters[0],"GOSSIP")){
+        pthread_mutex_lock(&gossip_table_mutex);
+        					
+        gossip_t* parsed_gossip_table = parse_gossip_buffer(parameters[1]);
+        kill_args();
+
+        pthread_mutex_unlock(&gossip_table_mutex);
+        
+        return strdup(action_gossip(&parsed_gossip_table));
+    }
+    // -----------------
+
     if(!strcmp(parameters[0],"SELECT")){
         
         if(parameters_length != 3){
