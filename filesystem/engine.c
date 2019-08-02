@@ -1030,3 +1030,76 @@ row* select_particiones_temporales(package_select* select_info){
     int temp_part;
     long mayor=0;
     char* r = malloc(100);
+    int block_amount = 0;
+  void* first_block = partition->blocks;
+  while(*partition->blocks){
+    block_amount++;
+    partition->blocks++;
+  }
+  partition->blocks = first_block;
+ 
+  if(block_amount==0)return strdup("Key invalida\n");
+ 
+  pthread_t buscadores[block_amount];
+  regg regruta[block_amount];
+ 
+  int i = 0;
+  while(i<block_amount){
+    regruta[i].line=malloc(100);
+    strcpy(regruta[i].line,"MountTest/");
+    strcat(regruta[i].line,"Bloques/");
+    strcat(regruta[i].line,partition->blocks[i]);
+ 
+    strcat(regruta[i].line,".bin");
+   
+    log_info(logg,regruta[i].line);
+    i++;
+  }
+ 
+ 
+  pthread_mutex_t lock;
+  pthread_cond_t cond;
+  pthread_mutex_init(&lock, NULL);
+  pthread_cond_init(&cond, NULL);
+ 
+  int whilethread=0;
+  argumentosthread* parametros [block_amount];
+  int* number_of_threads = malloc(sizeof(int));
+  *number_of_threads = block_amount;
+ 
+  while(whilethread<block_amount){
+    argumentosthread* args = malloc(sizeof(argumentosthread));
+    args->bolean=0;
+    args->ruta = strdup(regruta[whilethread].line);
+    args->key=select_info->key;
+    args->cond = &cond;
+    args->lock = lock;
+    args->number_of_running_threads = number_of_threads;
+    parametros[whilethread] = args;
+    pthread_create(&buscadores[whilethread],NULL,buscador,args);
+    pthread_detach(buscadores[whilethread]);
+    whilethread++;
+  }
+ 
+  free(partition);
+ 
+  pthread_mutex_lock(&lock);
+  pthread_cond_wait(&cond, &lock);
+  int whileparametro=0;
+  while(whileparametro<block_amount){
+    if(parametros[whileparametro]->bolean){
+      char* r = malloc( strlen(parametros[whileparametro]->value) + 2);
+      strcpy(r, parametros[whileparametro]->value);
+     
+ 
+      //strcat(r, "\n");
+      return r;
+    }
+    whileparametro++;
+  }
+ 
+  free(parse_package_select(select_info));
+ 
+  return strdup("Key invalida\n");
+  //falta atender los memory leaks, en especial los de los thread.
+ }
