@@ -4,9 +4,8 @@
 #include "pharser.h"
 #include "server.h"
 #include "actions.h"
-#include <string.h>
-// #include "memory/gossiping.h"
-
+#include<string.h>
+#include "kernel/scheduler.h"
 
 
 
@@ -92,6 +91,7 @@ char* exec_instr(char* instr_buff){
             }else{
                 parameters_length++;
                 kill_args();
+                exec_err_abort();
                 return strdup("Parametro malformado.\n");
             }
         }
@@ -110,10 +110,15 @@ char* exec_instr(char* instr_buff){
         
         if(parameters_length != 3){
             kill_args();
+            exec_err_abort();
             return strdup("Numero de parametros incorrectos\n");
         } 
 
-        if(strspn(parameters[2], "0123456789")!=strlen(parameters[2])) return strdup("Parametro mal formado\n");
+        if(strspn(parameters[2], "0123456789")!=strlen(parameters[2])){
+            kill_args();
+            exec_err_abort();
+            return strdup("Parametro mal formado\n");
+        } 
 
         package_select* package = malloc(sizeof(package_select));
         package->instruction = parameters[0];
@@ -135,6 +140,7 @@ char* exec_instr(char* instr_buff){
     if(!strcmp(parameters[0],"RUN")){
         if(parameters_length != 2){
             kill_args();
+            exec_err_abort();
             return strdup("Numero de parametros incorrectos\n");
         }
 
@@ -152,9 +158,22 @@ char* exec_instr(char* instr_buff){
     if(!strcmp(parameters[0],"INSERT")){
         if(parameters_length != 4 && parameters_length != 5){
             kill_args();
+            exec_err_abort();
             return strdup("Numero de parametros incorrectos\n");
         }
-        if(strspn(parameters[2], "0123456789")!=strlen(parameters[2])) return strdup("Parametro mal formado\n");
+        if(strspn(parameters[2], "0123456789")!=strlen(parameters[2])){
+            kill_args();
+            exec_err_abort();
+            return strdup("Parametro mal formado\n");
+        } 
+
+        if(parameters_length == 5){
+            if(strspn(parameters[4], "0123456789")!=strlen(parameters[4])){
+            kill_args();
+            exec_err_abort();
+            return strdup("Parametro timestamp mal formado\n");
+        } 
+        }
 
         package_insert* package = malloc(sizeof(package_insert));
         package->instruction = parameters[0];
@@ -179,6 +198,7 @@ char* exec_instr(char* instr_buff){
                 free(value);
                 kill_args();
                 free(package);
+                exec_err_abort();
                 return strdup("Parametro value malformado.\n");
             }
         }
@@ -191,6 +211,7 @@ char* exec_instr(char* instr_buff){
         //TIMESTAMP
         //si hay 4 parmateros me fijo si es un timestamp
         if(parameters_length == 5){
+
             uint16_t timestamp = atoi(parameters[4]);
             free(parameters[4]);
             if(timestamp>0) package->timestamp = timestamp;
@@ -207,10 +228,19 @@ char* exec_instr(char* instr_buff){
     if(!strcmp(parameters[0],"CREATE")){
         if(parameters_length != 5 ){
             kill_args();
+            exec_err_abort();
             return strdup("Numero de parametros incorrectos\n");
         }
-        if(strspn(parameters[3], "0123456789")!=strlen(parameters[3])) return strdup("Parametro mal formado\n");
-        if(strspn(parameters[4], "0123456789")!=strlen(parameters[4])) return strdup("Parametro mal formado\n");
+        if(strspn(parameters[3], "0123456789")!=strlen(parameters[3])){
+            kill_args();
+            exec_err_abort();
+            return strdup("Parametro mal formado\n");
+        } 
+        if(strspn(parameters[4], "0123456789")!=strlen(parameters[4])){
+            kill_args();
+            exec_err_abort();
+            return strdup("Parametro mal formado\n");
+        } 
 
         package_create* package = malloc(sizeof(package_insert));
         package->instruction = parameters[0];
@@ -231,6 +261,7 @@ char* exec_instr(char* instr_buff){
         }else{
             kill_args();
             free(package);
+            exec_err_abort();
             return strdup("Criterio no valido\n");
         }
         free(parameters[2]);
@@ -250,6 +281,7 @@ char* exec_instr(char* instr_buff){
     if(!strcmp(parameters[0],"DESCRIBE")){
         if(parameters_length != 1 && parameters_length != 2){
             kill_args();
+            exec_err_abort();
             return strdup("Numero de parametros incorrecto"); 
         }
 
@@ -275,7 +307,8 @@ char* exec_instr(char* instr_buff){
     if(!strcmp(parameters[0],"ADD")){
         if(parameters_length != 5){
             kill_args();
-            return strdup("Numero de parametros incorrecto\n");
+            exec_err_abort();
+            return strdup("Numero de parametros incorrectos\n");
         }
 
         package_add* package = malloc(sizeof(package_add));
@@ -286,6 +319,7 @@ char* exec_instr(char* instr_buff){
         if(strcmp(parameters[1], "MEMORY") && strcmp(parameters[3], "TO")){
             kill_args();
             free(package);
+            exec_err_abort();
             return strdup("Instrucion ADD mal formulada.\n");
         } 
 
@@ -302,6 +336,7 @@ char* exec_instr(char* instr_buff){
         }else{
             kill_args();
             free(package);
+            exec_err_abort();
             return strdup("Criterio no valido\n");
         }
 
@@ -325,6 +360,7 @@ char* exec_instr(char* instr_buff){
     if(!strcmp(parameters[0], "DROP")){
         if(parameters_length != 2) {
             kill_args();
+            exec_err_abort();
             return strdup("Numero de parametros incorrectos\n");
         }
 
@@ -339,6 +375,7 @@ char* exec_instr(char* instr_buff){
     if(!strcmp(parameters[0], "JOURNAL")){
         if(parameters_length != 1) {
             kill_args();
+            exec_err_abort();
             return strdup("Numero de parametros incorrecto\n");
         }
 
@@ -351,6 +388,7 @@ char* exec_instr(char* instr_buff){
     if(!strcmp(parameters[0], "METRICS")){
         if(parameters_length != 1){
             kill_args();
+            exec_err_abort();
             return strdup("Numero de parametros incorrecto\n");
         }
         package_metrics* pk = malloc(sizeof(package_metrics));
@@ -361,7 +399,7 @@ char* exec_instr(char* instr_buff){
     }
 
     kill_args();
-
+    exec_err_abort();
     char* error_message = strdup("No es una instruccion valida\n");
     return error_message;
     
