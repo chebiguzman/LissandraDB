@@ -1,6 +1,7 @@
 #include "gossiping.h"
 
-int length_indicator = 2, length_number = 5;
+char g_sep[2] = { ',', '\0' };
+char g_div[2] = { '|', '\0' };
 
 gossip_t* create_node(int port, char* ip){
     gossip_t* node = (gossip_t*)malloc(sizeof(gossip_t));
@@ -54,109 +55,73 @@ gossip_t* find_node(gossip_t** gossip_table, int port){
 	return temp; // si no encontre nada en el loop, devuelvo temp que es NULL
 }
 
+int get_next_value_length(char* buffer){
+    char* temp_buffer = strdup(buffer);
+    int i = 0;
+    while(temp_buffer[i] != g_sep[0] && temp_buffer[i] != g_div[0] && temp_buffer[i] != 0){
+        i++;
+    }
+    free(temp_buffer);
+    return i;
+}
+
 // crea la gossip table del otro nodo con el buffer que le pasan
 gossip_t* parse_gossip_buffer(char* buffer){
-    // printf("Parseando: %s\n", buffer);
     gossip_t* new_gossip_table = NULL;
     char* temp_buffer = strdup(buffer);
-    // printf("Buffer asd(length: %d): %s\n", strlen(buffer), buffer);
-    printf("Buffer(length: %d): %s\n", strlen(temp_buffer), temp_buffer);
-    char* string_number_of_nodes = strndup(temp_buffer, length_indicator);
-    int number_of_nodes = atoi(string_number_of_nodes);
-    temp_buffer = temp_buffer+length_indicator;
-    printf("Parsed number of nodes: %d\n", number_of_nodes);
-    
-    char* string_port;
-    // char* string_number = strndup(buffer, length_number);
-    char* string_ip_length;
-    char* new_ip;
-    // temp_buffer = temp_buffer+length_number;
-    // while(temp_buffer != 0){
-    for(int i = 0; i < number_of_nodes; i++){
-        // sleep(1);
-        //leo el port (5 chars)
-        string_port = strndup(temp_buffer, length_number);
-        int new_port = atoi(string_port);
-        temp_buffer = temp_buffer+length_number;
-        // printf("Parsed port: %d\n", new_port);
+    int next_value_length;
+    char* temp_buffer_address = temp_buffer; // me tengo que guardar la address para liberarlo despues
 
-        // sleep(1);
-        //leo el length indicator (2 chars)
-        string_ip_length = strndup(temp_buffer, length_indicator);
-        int ip_length = atoi(string_ip_length);
-        temp_buffer = temp_buffer+length_indicator;
-        // printf("Parsed ip length: %d\n", ip_length);
-        
-        // sleep(1);
-        //leo el ip (<ip_length> chars)
-        new_ip = strndup(temp_buffer, ip_length);
-        temp_buffer = temp_buffer+ip_length;
-        // printf("Parsed ip: %s\n", new_ip);
-        
-        // temp_buffer = temp_buffer+strlen(new_ip);        
-        // memcpy(string_number, temp_buffer+(length_number * i), length_number);
+    while(*temp_buffer != 0){
+        next_value_length = get_next_value_length(temp_buffer);
+        char* string_number = strndup(temp_buffer, next_value_length);
+        int new_number = atoi(string_number);
+        temp_buffer += next_value_length + 1;
+        printf("Parsed number: %d\n", new_number);        
+
+        next_value_length = get_next_value_length(temp_buffer);
+        char* string_port = strndup(temp_buffer, next_value_length);
+        int new_port = atoi(string_port);
+        // free(string_port);
+        temp_buffer += next_value_length + 1;
+        printf("Parsed port: %d\n", new_port);        
+
+        next_value_length = get_next_value_length(temp_buffer);
+        char* new_ip = strndup(temp_buffer, next_value_length);
+        temp_buffer += next_value_length + 1;        
+        printf("Parsed ip: %s\n", new_ip);
+
         gossip_t* node = create_node(new_port, new_ip);
         add_node(&new_gossip_table, node);
         print_gossip_table(&node);
     }
-    // free(temp_buffer);
+    free(temp_buffer_address);
     return new_gossip_table;
 }
 
-// retorna un string de 6 caracteres, 5 para el numero y el \0
-// si tiene menos de 5 digitos, rellena el principio con 0s
-char* itoa_for_buffer(char* str, int max_size, int num){
-    int i, rem, len = 1, n;
-    n = num / 10;
-    while (n != 0){
-        len++;
-        n /= 10;
-    }
-    for (i = 0; i < max_size; i++){
-        if(i > len){
-            str[max_size - (i + 1)] = '0';
-        }else{
-            rem = num % 10;
-            num = num / 10;
-            str[max_size - (i + 1)] = rem + '0';
-        }
-    }
-    str[max_size] = '\0'; // le agrego el \0 al final para terminar el string
-    return strdup(str);
-}
 
-// buffer para mandar entre nodos, cada buffer esta compuesto por un numero al inicio con la cantidad infos de nodos 
-// que contiene el buffer, seguido de la info de nodos
-// Cada info de nodo tiene 5 chars para el puerto, 2 chars para la length del ip, y el ip
+
 char* create_gossip_buffer(gossip_t** gossip_table){
-    // char sep[2] = { ',', '\0' };
-    // char div[2] = { '|', '\0' };
     printf("Creando Buffer \n");
-    int gossip_table_size = get_gossip_table_size(gossip_table);
     gossip_t* temp = *gossip_table;
     char* buffer = (char*)malloc(1000);
-    char* string_number_of_nodes = malloc(length_indicator + 1);
-    itoa_for_buffer(string_number_of_nodes, length_indicator, gossip_table_size);
-    strcpy(buffer, string_number_of_nodes);
+    memset(buffer, 0, 1000);
   
     while(temp != NULL){
-        char* string_port = malloc(length_number + 1);
-        itoa_for_buffer(string_port, length_number, temp->port);
-        strcat(buffer, string_port);
-        // printf("String port: %s\n", string_port);
-
-        char* string_ip_length = malloc(length_indicator + 1);
-        itoa_for_buffer(string_ip_length, length_indicator, strlen(temp->ip));
-        strcat(buffer, string_ip_length);
-        // printf("IP length: %s\n", string_ip_length);
+        strcat(buffer, string_itoa(temp->number));
+        strcat(buffer, g_sep);
+        
+        strcat(buffer, string_itoa(temp->port));
+        strcat(buffer, g_sep);
 
         strcat(buffer, temp->ip);
-        // printf("IP: %s\n", temp->ip);
+        strcat(buffer, g_div);
+
         temp = temp->next;
     }
     char* short_buffer = strdup(buffer);
     free(buffer);
-    printf("Buffer generado: %s \n", short_buffer);
+    // printf("Buffer generado: %s \n", short_buffer);
     return short_buffer;
 }
 
