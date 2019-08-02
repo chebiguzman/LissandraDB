@@ -871,8 +871,8 @@ void new_block(char* new_row,char* tabla,int particion){
     char* list = add_block_to_list(registro[1].line,new_block);
     free(registro[1].line);
     registro[1].line = list;
-    adjust_size(registro[0].line,new_row);
-
+    int adjust=strlen(new_row);
+    adjust_size(registro[0].line,adjust);
     rewind(part);
     fclose(part);
     part=fopen(ruta,"w");
@@ -928,7 +928,7 @@ char* add_block_to_list(char* block_list,int new){
 
 }
 
-void engine_adjust(char* tabla,int particion,char* new_row){
+void engine_adjust(char* tabla,int particion,int adjust){
     char* ruta= malloc(100);
     strcpy(ruta,tables_path);
     strcat(ruta,tabla);
@@ -945,8 +945,8 @@ void engine_adjust(char* tabla,int particion,char* new_row){
         fgets(registro[i].line,100,part);
         log_info(logg,registro[i].line);
         i++;//cambiar el 100 por max+1
-    }
-    adjust_size(registro[0].line,new_row);
+    }  
+    adjust_size(registro[0].line,adjust);
     rewind(part);
     fclose(part);
     part=fopen(ruta,"w");
