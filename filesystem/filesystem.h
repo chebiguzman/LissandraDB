@@ -41,9 +41,9 @@ typedef struct {
 }argumentosthread_compactacion;
 
 typedef struct{
-  char* row;
+  char* value;
   uint16_t timestap;
-}
+}row;
 
 void obtengovalue(char* row, char* value);
 void* buscador(void* args);
