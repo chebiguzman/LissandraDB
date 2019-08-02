@@ -189,7 +189,6 @@ int get_memory(){
 
 void kmemory_set_active_tables(t_dictionary* dic){
     tbl_list = dic;
-    printf("tiene el dic la tabla tabla? %d", dictionary_has_key(tbl_list, "tabla"));
 }
 
 int get_sc_memory(){

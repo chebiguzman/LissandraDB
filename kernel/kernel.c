@@ -259,6 +259,9 @@ char* action_create(package_create* create_info){
 char* action_describe(package_describe* describe_info){
   log_info(logger_debug, "Se recibio una accion describe");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
+
+  char* table_name = NULL;
+  if(describe_info->table_name!=NULL) table_name = strdup(describe_info->table_name);
   char* package = parse_package_describe(describe_info);
 
   char* responce = exec_in_memory(memoryfd, package);
@@ -287,18 +290,15 @@ char* action_describe(package_describe* describe_info){
          
       if(name!=NULL && cons !=NULL){
         string_to_upper(name);
-<<<<<<< HEAD
-        printf("se agrega la tabla::%s", name);
-=======
->>>>>>> f8a9449b115c46273015ee63b9c6ed0326d7eaf7
         int* constistency = malloc(sizeof(int));
 
         *constistency = atoi(cons);
 
         dictionary_put(tables_dic, name, constistency);
       
-        if(describe_info->table_name!=NULL){
+        if(table_name!=0){
           kmemory_add_table(name,dictionary_get(dic, "CONSISTENCY") );
+          free(table_name);
         }
       }
       
@@ -308,13 +308,7 @@ char* action_describe(package_describe* describe_info){
 
       buffer++;
     }
-<<<<<<< HEAD
-        printf("se agreg");
-
-=======
->>>>>>> f8a9449b115c46273015ee63b9c6ed0326d7eaf7
-      if(describe_info->table_name == NULL){
-        printf("describe generala %s\n",describe_info->table_name);
+      if(table_name==NULL ){
         kmemory_set_active_tables(tables_dic);
 
       }
