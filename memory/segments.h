@@ -1,11 +1,15 @@
+#ifndef SEGMENTS_H
+#define SEGMENTS_H
+
 #include <stdlib.h>
 #include <commons/log.h>
 #include <pthread.h>
 #include <string.h>
+#include <commons/config.h>
 #include <unistd.h>
+
 #include "../pharser.h"
-#include "../actions.h"
-#include "../console.h"
+
 
 typedef struct{
   unsigned long timestamp;
@@ -50,6 +54,7 @@ int PAGE_SIZE;
 t_log* logger;
 int VALUE_SIZE;
 int fs_socket;
+t_config* config;
 pthread_mutex_t lru_table_mutex;
 pthread_mutex_t segment_table_mutex;
 pthread_mutex_t main_memory_mutex;
@@ -96,3 +101,6 @@ void journal();
 void print_everything();
 int memory_full();
 int is_memory_full();
+
+
+#endif
