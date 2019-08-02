@@ -108,7 +108,6 @@ char* action_select(package_select* select_info){
   void* first_block = partition->blocks;
   while(*partition->blocks){
     block_amount++;
-    printf("%s\n",*partition->blocks );
     partition->blocks++;
   }
   partition->blocks = first_block;
@@ -165,14 +164,13 @@ char* action_select(package_select* select_info){
     if(parametros[whileparametro]->bolean){
       char* r = malloc( strlen(parametros[whileparametro]->value) + 2);
       strcpy(r, parametros[whileparametro]->value);
-      strcat(r, "\n");
+
+      //strcat(r, "\n");
       return r;
     }
     whileparametro++;
   }
 
-  pthread_mutex_destroy(&lock);
-  pthread_cond_destroy(&cond);
   free(parse_package_select(select_info));
 
   return strdup("Key invalida\n");
@@ -332,52 +330,6 @@ void vaciarvector(char* puntero){
   return;
 }
 
-void* buscador(void* args){
-  argumentosthread* parametros;
-  parametros= (argumentosthread*) args;
-  FILE* bloque=NULL;
-
-  void kill_thread(){
-    pthread_mutex_lock(&parametros->lock);
-    *parametros->number_of_running_threads--;
-    int amount = *parametros->number_of_running_threads;
-    pthread_mutex_unlock(&parametros->lock);
-    if(amount==0) pthread_cond_broadcast(parametros->cond);
-  }
-
-  bloque=fopen(parametros->ruta,"r+");
-  if(bloque==NULL){
-    log_error(logger,"El sistema de bloques de archivos presenta una inconcistencia en el bloque:");
-    log_error(logger,parametros->ruta);
-    log_error(logger, "el archivo no existe.");
-    kill_thread();
-  
-    return NULL;
-  }
-
-  char buffer[100];
-  parametros->retorno = strdup("");
-  while(!feof(bloque)){
-    fgets(buffer,100,bloque);
-    parametros->row= strdup(buffer);
-    //devuelve key
-
-    cortador(buffer,parametros->retorno);
-    if(parametros->key==atoi(parametros->retorno)){
-      obtengovalue(parametros->row,parametros->value);
-      parametros->bolean=1;
-      pthread_cond_broadcast(parametros->cond);
-      fclose(bloque);
-      return NULL;
-    }
-    parametros->retorno = strdup("");
-  }
-  kill_thread();
-
-  fclose(bloque);
-  return NULL;
-}
-
 void cortador(char* cortado, char* auxkey){
   int i=0;
   int j=0;
@@ -505,10 +457,11 @@ int get_all_rows(char* ruta,regg* rows,int block_number){
 }
 
 int get_row_key(char* row ){
-  printf("obterner la key de la row:%s\n", row);
+  //printf("obterner la key de la row:%s\n", row);
   if(row == NULL) return -1;
   char** parts = string_split(row, ";");
   if(parts == NULL) return -1;
+  if(parts[0] == NULL) return -1;
   if(parts[1] == NULL) return -1;
   int r = atoi(parts[1]);
   
@@ -768,6 +721,59 @@ void* buscador_compactacion(void* args){
   log_info(logger, "salida de la funcion");
   return NULL;
 }
+
+void* buscador(void* args){
+  argumentosthread* parametros;
+  parametros= (argumentosthread*) args;
+  FILE* bloque=NULL;
+
+  void kill_thread(){
+    
+    pthread_mutex_lock(&parametros->lock);
+    int amount = *parametros->number_of_running_threads;
+    amount--;
+    *parametros->number_of_running_threads= amount;
+    pthread_mutex_unlock(&parametros->lock);
+    if(amount==0){
+      if(parametros->cond == NULL) return;
+      pthread_cond_broadcast(parametros->cond);
+      pthread_mutex_destroy(&parametros->lock);
+      pthread_cond_destroy(parametros->cond);
+    } 
+  }
+
+  bloque=fopen(parametros->ruta,"r+");
+  if(bloque==NULL){
+    log_error(logger,"El sistema de bloques de archivos presenta una inconcistencia en el bloque:");
+    log_error(logger,parametros->ruta);
+    log_error(logger, "el archivo no existe.");
+    kill_thread();
+    return NULL;
+  }
+
+  char *buffer = malloc(50);
+  parametros->retorno = strdup("");
+  while(!feof(bloque)){
+    fgets(buffer,50,bloque);
+    parametros->row= strdup(buffer);
+
+    //devuelve key
+
+    if(parametros->key==get_row_key(parametros->row)){
+      obtengovalue(parametros->row,parametros->value);
+      parametros->bolean=1;
+      kill_thread();
+      pthread_cond_broadcast(parametros->cond);
+      fclose(bloque);
+      return NULL;
+    }
+    parametros->retorno = strdup("");
+  }
+  kill_thread();
+  fclose(bloque);
+  return NULL;
+}
+
 
 int contar_rows(char* ruta){
   FILE* last_block=fopen(ruta,"r");

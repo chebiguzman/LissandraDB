@@ -62,7 +62,7 @@ void* create_server(void* args){
         }
 
         log_info(serverInfo->logger, "El servidor se conecto exitosamente");
-        // while (1){
+         while (1){
 
             if(read(newsockfd, buffer, 3000)){
 
@@ -72,15 +72,15 @@ void* create_server(void* args){
                 write(newsockfd,responce,strlen(responce)+1);
 
                 free(responce);
-            }
-        //     }else{
+            
+            }else{
 
 
-        //         break;
+                 break;
 
-        //     }//SI el cliente se desconecta deja de leer para ir a por otro cliente
+             }//SI el cliente se desconecta deja de leer para ir a por otro cliente
 
-        // }    
+         }    
     
     }
     
