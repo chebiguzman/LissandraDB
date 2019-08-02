@@ -92,7 +92,7 @@ char* action_select(package_select* select_info){
 
     return r;
   }
-
+  //row* temp_row=select_particiones_temporales(select_info);
   t_table_metadata* meta = get_table_metadata(select_info->table_name);
 
   //nro particion
@@ -107,10 +107,10 @@ char* action_select(package_select* select_info){
   char* first_block = partition->blocks[0];
   while(*partition->blocks){
     block_amount++;
-    *partition->blocks++;
+    partition->blocks++;
   }
   *partition->blocks = first_block;
-
+    
    if(block_amount==0)return strdup("Key invalida\n");
   
   pthread_t buscadores[block_amount];
@@ -129,7 +129,7 @@ char* action_select(package_select* select_info){
     i++;
   }
 
-
+  log_info(logger,"antes de los semaforos");
   pthread_mutex_t lock;
   pthread_cond_t cond;
   pthread_mutex_init(&lock, NULL);
@@ -139,7 +139,7 @@ char* action_select(package_select* select_info){
   argumentosthread* parametros [block_amount];
   int* number_of_threads = malloc(sizeof(int));
   *number_of_threads = block_amount;
-
+  log_info(logger,"antes del while");
   while(whilethread<block_amount){
     argumentosthread* args = malloc(sizeof(argumentosthread));
     args->bolean=0;
@@ -172,7 +172,7 @@ char* action_select(package_select* select_info){
   pthread_mutex_destroy(&lock);
   pthread_cond_destroy(&cond);
   free(parse_package_select(select_info));
-
+//MAL HECHO EL MEMORY FREE
   return strdup("Key invalida\n");
   //falta atender los memory leaks, en especial los de los thread.
 
@@ -331,6 +331,7 @@ return;
 }
 
 void* buscador(void* args){
+  log_info(logger,"dentro de buscador");
   argumentosthread* parametros;
   parametros= (argumentosthread*) args;
   FILE* bloque=NULL;
@@ -362,6 +363,7 @@ void* buscador(void* args){
 
     cortador(buffer,parametros->retorno);
     if(parametros->key==atoi(parametros->retorno)){
+      parametros->timestap=atol(buffer);
       obtengovalue(parametros->row,parametros->value);
       parametros->bolean=1;
       pthread_cond_broadcast(parametros->cond);
@@ -836,5 +838,51 @@ void adjust_size(char* size,int tam){
   log_info(logger,final);
   return;
 }
+void* buscador2(void* args){
+  argumentosthread2* parametros;
+  parametros= (argumentosthread2*) args;
+  FILE* bloque=NULL;
+
+  void kill_thread(){
+    pthread_mutex_lock(&parametros->lock);
+    *parametros->number_of_running_threads--;
+    int amount = *parametros->number_of_running_threads;
+    pthread_mutex_unlock(&parametros->lock);
+    if(amount==0) pthread_cond_broadcast(parametros->cond);
+  }
+  parametros->timestap_max=0;
+  bloque=fopen(parametros->ruta,"r+");
+  if(bloque==NULL){
+    log_error(logger,"El sistema de bloques de archivos presenta una inconcistencia en el bloque:");
+    log_error(logger,parametros->ruta);
+    log_error(logger, "el archivo no existe.");
+    kill_thread();
+  
+    return NULL;
+  }
+
+  char buffer[100];
+  int rows_encontradas=0;
+  parametros->retorno = strdup("");
+  while(!feof(bloque)){
+    fgets(buffer,100,bloque);
+    parametros->row= strdup(buffer);
+    //devuelve key
+
+    cortador(buffer,parametros->retorno);
+    if(parametros->key==atoi(parametros->retorno)&&parametros->timestap_max<atol(buffer)){
+      parametros->timestap_max=atol(buffer);
+      obtengovalue(parametros->row,parametros->value);
+      parametros->bolean=1;
+    }
+    parametros->retorno = strdup("");
+  }
+  kill_thread();
+
+  fclose(bloque);
+  return NULL;
+}
 
 void exec_err_abort(){};
+
+

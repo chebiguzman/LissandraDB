@@ -34,6 +34,11 @@ typedef struct{
     int blocks_size;
 }t_table_partiton;
 
+typedef struct{
+    char* value;
+    long timestap;
+}row;
+
 void* setup_fs(void* args);
 void engine_start(t_log* logger);
 int enginet_create_table(char* table_name, int consistency, int particiones, long compactation_time);
@@ -43,6 +48,7 @@ char* get_all_tables_metadata_as_string();
 t_table_metadata* get_table_metadata(char* table_name);
 t_table_partiton* get_table_partition(char* table_name, int table_partition_number);
 t_table_partiton* get_table_partition2(char* table_name, int table_partition_number);
+t_table_partiton* get_table_partition3(char* table_name, int table_partition_number);
 void engine_drop_table(char* table_name);
 
 void engine_dump_table(char* table_name, char* table_dump);

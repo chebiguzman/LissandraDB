@@ -15,6 +15,7 @@ typedef struct {
   int key;
   char* retorno;
   char* row;
+  long timestap;
   char value [100];
   int bolean;
   pthread_cond_t* cond;
@@ -23,6 +24,21 @@ typedef struct {
   
 
 }argumentosthread;
+
+typedef struct {
+  char* ruta;
+  int key;
+  long timestap_max;
+  char* retorno;
+  char* row;
+  char value [100];
+  int bolean;
+  pthread_cond_t* cond;
+  pthread_mutex_t lock;
+  int* number_of_running_threads;
+  
+
+}argumentosthread2;
 
 typedef struct {
   char* ruta;
@@ -40,8 +56,10 @@ typedef struct {
 
 }argumentosthread_compactacion;
 
+row* select_particiones_temporales(package_select* select_info);
 void obtengovalue(char* row, char* value);
 void* buscador(void* args);
+void* buscador2(void* args);
 char *strdups(const char *src);
 int contarbloques(char*);
 void vaciarvector(char* puntero);
