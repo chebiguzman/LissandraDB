@@ -499,6 +499,12 @@ t_table_partiton* get_table_partition(char* table_name, int table_partition_numb
     return parition;
 }
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> f8a9449b115c46273015ee63b9c6ed0326d7eaf7
 void* config_worker(void* args){
     int inotifyFd = inotify_init();
     inotify_add_watch(inotifyFd, "config", IN_CLOSE_WRITE);

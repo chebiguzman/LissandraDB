@@ -165,7 +165,10 @@ char* action_select(package_select* select_info){
     if(parametros[whileparametro]->bolean){
       char* r = malloc( strlen(parametros[whileparametro]->value) + 2);
       strcpy(r, parametros[whileparametro]->value);
+<<<<<<< HEAD
       
+=======
+>>>>>>> f8a9449b115c46273015ee63b9c6ed0326d7eaf7
 
       //strcat(r, "\n");
       return r;

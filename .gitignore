@@ -41,7 +41,11 @@
 **/kernel/kernel
 **/memory/memory
 **/filesystem/filesystem
+<<<<<<< HEAD
 log.debug
+=======
+
+>>>>>>> f8a9449b115c46273015ee63b9c6ed0326d7eaf7
 
 # Debug files
 *.dSYM/
