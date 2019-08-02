@@ -98,6 +98,14 @@ char* exec_instr(char* instr_buff){
         parameters_length++;
     }
 
+    // --- gossiping ---
+    if(!strcmp(parameters[0],"GOSSIP")){					
+        gossip_t* parsed_gossip_table = parse_gossip_buffer(parameters[1]);
+        kill_args();
+        return strdup(action_gossip(&parsed_gossip_table));
+    }
+    // -----------------
+
     if(!strcmp(parameters[0],"SELECT")){
         
         if(parameters_length != 3){

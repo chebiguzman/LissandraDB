@@ -1,5 +1,10 @@
+#ifndef PHARSER_H
+#define PHARSER_H
+
 #include "server.h"
 #include "kernel/kmemory.h"
+#include "memory/gossiping.h"
+
 
 
 
@@ -91,3 +96,5 @@ char* parse_package_run(package_run* package);
 char* parse_package_journal(package_journal* pk);
 char* parse_input(char* input);
 
+
+#endif

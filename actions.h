@@ -1,6 +1,8 @@
-#ifndef PHARSER_H_   
-#define PHARSER_H_
+#ifndef ACTIONS_H_   
+#define ACTIONS_H_
+#include "pharser.h"
 #include "server.h"
+#include "memory/gossiping.h"
 
 char* parse_input(char* input);
 
@@ -23,5 +25,7 @@ char* action_run(package_run* run_info);
 char* action_metrics(package_metrics* metrics_info);
 
 char* action_intern__status();
+
+char* action_gossip(gossip_t** buffer);
 
 #endif
