@@ -106,6 +106,7 @@ char* exec_instr(char* instr_buff){
         kill_args();
 
         pthread_mutex_unlock(&gossip_table_mutex);
+        
         return strdup(action_gossip(&parsed_gossip_table));
     }
     // -----------------
