@@ -272,10 +272,8 @@ char* parse_input(char* input){
 }
 
 char* action_gossip(char* arg){
-  gossip_t** parsed_gossip_table;
+  gossip_t* parsed_gossip_table = parse_gossip_buffer(arg);
   pthread_mutex_lock(&gossip_table_mutex);    					
-  gossip_t* parsed_gossip_table_buff = parse_gossip_buffer(arg);
-  parsed_gossip_table = &parsed_gossip_table_buff;
 
   printf("Me llego una conexion de una memoria \n");
   char* gossip_buffer = create_gossip_buffer(&GOSSIP_TABLE); // lo creo antes de que compare las tablas asi no le mando las que me acaba de pasar
@@ -284,22 +282,25 @@ char* action_gossip(char* arg){
   // tengo que filtrar los nodos. Si me pasan un nodo al cual yo me conecto, no lo tengo que agregar
   // porque si esta desconectado, lo agrega a la tabla igual y no sale nunca porque el que se lo pasa
   // manda su tabla antes de corroborar que este conectado, y despues le pasa lo mismo a ese
-  gossip_t* temp_node = *parsed_gossip_table;
+  gossip_t* temp_node = parsed_gossip_table;
   while(temp_node != NULL){
       for(int i=0; seeds_ports[i] != NULL; i++){
-          if(temp_node->port == atoi(seeds_ports[i]) && !strcmp(temp_node->ip, seeds_ips[i])){
-              remove_node(parsed_gossip_table, temp_node);
+          int seed_port = atoi(seeds_ports[i]);
+          if(temp_node->port ==  seed_port && !strcmp(temp_node->ip, seeds_ips[i])){
+              remove_node(&parsed_gossip_table, temp_node);
           }
       }
       temp_node = temp_node->next;
   }
-  compare_gossip_tables(&GOSSIP_TABLE, parsed_gossip_table);
+  compare_gossip_tables(&GOSSIP_TABLE, &parsed_gossip_table);
 
   printf("- Actualizo ");
   print_gossip_table(&GOSSIP_TABLE);
 
   pthread_mutex_unlock(&gossip_table_mutex);
-  
-  return strdup(gossip_buffer);
+ 
+  delete_table(&parsed_gossip_table);
+  free(arg);
+  return gossip_buffer;
 }
 
