@@ -21,25 +21,31 @@
 #include "metrics_worker.h"
 
 //punto de entrada para el programa y el kernel
-t_log* logger;
-t_log* logger_debug;
+ t_log* logger;
+ t_log* logger_debug;
+
 char* MEMORY_IP;
 int MEMORY_PORT;
+
 int main(int argc, char const *argv[])
 {   
     //set up confg
+
     t_config* config = config_create("config");
     char* LOGPATH = config_get_string_value(config, "LOG_PATH");
     int PORT = config_get_int_value(config, "PORT");
     int q = config_get_int_value(config, "QUANTUM");
 
-    MEMORY_IP = config_get_string_value(config, "MEMORY_IP");
+
+    MEMORY_IP = strdup(config_get_string_value(config, "MEMORY_IP"));
     MEMORY_PORT = config_get_int_value(config, "MEMORY_PORT");
     logger = log_create(LOGPATH, "Kernel", 1 , LOG_LEVEL_INFO);
+
     int console = 0;
       if(argc == 2 && !strcmp(argv[1],"-v")){
       console++;
     }
+
     logger_debug = log_create("log.debug", "Kernel", console, LOG_LEVEL_DEBUG);
   
     //set up log
@@ -48,62 +54,89 @@ int main(int argc, char const *argv[])
  
     pthread_cond_t console_cond;
     pthread_mutex_t console_lock;
+
+    pthread_cond_t exec_cond;
+    pthread_mutex_t exec_lock;
+    pthread_mutex_t print_lock;
     pthread_mutex_init(&console_lock, NULL);
     pthread_cond_init(&console_cond,NULL);
+    pthread_mutex_init(&exec_lock, NULL);
+    pthread_cond_init(&exec_cond,NULL);
+    pthread_mutex_init(&print_lock, NULL);
+
     t_console_control* control = malloc(sizeof(t_console_control));
     control->lock = console_lock;
     control->cond = console_cond;
+    control->print_lock = print_lock;
     control->name = strdup("kernel");
+  
+
+   
+        
+
 
     start_sheduler(logger,logger_debug, control);
 
     start_kmemory_module(logger,logger_debug, MEMORY_IP, MEMORY_PORT);
-        
 
    //inicio lectura por consola
     pthread_t tid_console;
     pthread_create(&tid_console, NULL, console_input_wait, control);
-    
-    signal(SIGPIPE, SIG_IGN); //Ignorar error de write
+
+    //signal(SIGPIPE, SIG_IGN); //Ignorar error de write
     metrics_start(logger);
     //JOIN THREADS
     //pthread_join(tid,NULL);
     pthread_join(tid_console,NULL);
+    //free(LOGPATH);
+    config_destroy(config);
     
     //FREE MEMORY
-    free(LOGPATH);
     //free(logger);
     //free(serverInfo);
-    config_destroy(config);
 
       return 0;
 }
 
 char* exec_in_memory(int memory_fd, char* payload){
    
-    char* responce = malloc(1500);
+    char* responce = malloc(3000);
+    responce[0] = '\033';
     //strcpy(responce, "");
 
-   
-
-    
     if ( memory_fd < 0 ){
       log_error(logger, "No se pudo llevar a cabo la accion.");
+      free(responce);
+      free(payload);
       exec_err_abort();
       return strdup("");
     }
 
-
     void handler(){
       disconect_from_memory(memory_fd);
+      log_debug(logger, "proken pipe");
+      
     }
     signal(SIGPIPE,handler);
 
     //ejecutar
     if(write(memory_fd,payload, strlen(payload)+1)){
-      read(memory_fd, responce, 1500);
+      read(memory_fd, responce, 3000);
+      free(payload);
+
+      
+      if(responce[0]=='\033'){
+        log_error(logger, "Una memoria en uso fue desconectada.");
+        disconect_from_memory(memory_fd);
+        exec_err_abort();
+        free(responce);
+        return strdup("");
+      }
+
       return responce;
     }else{
+      free(payload);
+      free(responce);
       log_error(logger, "No se logo comuniarse con memoria");
       return strdup("NO SE ENCTUENTEA MEMORIA");
     }  
@@ -114,19 +147,26 @@ char* action_select(package_select* select_info){
   log_info(logger_debug, "Se recibio una accion select");
   //get consistency of talble
   t_consistency consistency = get_table_consistency(select_info->table_name);
-  //log_info(logger_debug, "Se obtiene consistencia accion select");
+  log_info(logger_debug, "Se obtiene consistencia accion select es de: %d", consistency);
 
   //pedir una memoria
   int memoryfd = get_loked_memory(consistency, select_info->table_name);
-  //log_info(logger_debug, "Se obtiene memoria accion select");
+  log_info(logger_debug, "Se obtiene memoria accion select es:%d", memoryfd);
 
   char* package = parse_package_select(select_info);
-  //log_info(logger_debug, "Se parcea accion select");
+  log_info(logger_debug, "Se parcea accion select:", package);
 
+  clock_t t; 
+  t = clock(); 
   char* responce = exec_in_memory(memoryfd, package); 
-  //log_info(logger_debug, "Se ejecuta en memoria accion select");
-  
-  unlock_memory(memoryfd);
+  t = clock() - t; 
+  double time_taken = ((double)t)/CLOCKS_PER_SEC; 
+  double* latency = malloc(sizeof(double));
+  *latency = time_taken;
+  log_info(logger_debug, "Se ejecuta en memoria accion select respuesta:", responce);
+  int id = unlock_memory(memoryfd);
+  if(id>0) register_select(id, consistency, latency);
+
   return responce;
 
 }
@@ -138,6 +178,7 @@ char* action_run(package_run* run_info){
 
   if(fp == NULL){
     log_error(logger, "El archivo no existe o no se puede leer.");
+    return "";
   }else{
     
     t_queue* instruction_set = queue_create();
@@ -203,11 +244,12 @@ char* action_create(package_create* create_info){
   
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
   
+  char* tbl_name = strdup(create_info->table_name);
+  t_consistency c = create_info->consistency;
   char* package = parse_package_create(create_info);
-  string_to_upper(create_info->table_name);
-  kmemoy_add_table(create_info->table_name, create_info->consistency);
   char* responce = exec_in_memory(memoryfd, package);
-  
+  kmemoy_add_table(tbl_name, c);
+  free(tbl_name);
   unlock_memory(memoryfd);
   return responce;
 }
@@ -275,9 +317,8 @@ char* action_describe(package_describe* describe_info){
 char* action_drop(package_drop* drop_info){
   log_info(logger_debug, "Se recibio una accion drop");
   int memoryfd = get_loked_memory(ALL_CONSISTENCY, NULL);
-  char* package = parse_package_drop(drop_info);
-  string_to_upper(drop_info->table_name);
   kmemory_drop_table(drop_info->table_name);
+  char* package = parse_package_drop(drop_info);
   char* responce = exec_in_memory(memoryfd, package);
   unlock_memory(memoryfd);
   return responce;
@@ -300,32 +341,59 @@ char* action_metrics(package_metrics* metrics_info){
 }
 
 char* action_intern__status(){
+
   log_info(logger_debug, "Se recibio una accion status");
-  check_for_new_memory(MEMORY_IP ,MEMORY_PORT, 0);
+
   int memfd = get_loked_main_memory();
   
   if(memfd<0){
+    //la memoria principal fue desconectada
+    log_debug(logger_debug, "No existe memoria principal para hacer gossiping");
+    log_debug(logger_debug, "Se intenta comunicar con la memoria por default");
+
+    /* t_config* config = config_create("config");
+
+    char* main_ip = strdup(config_get_string_value(config, "QUANTUM"));
+    int main_port = config_get_int_value(config, "MEMORY_PORT");
+    config_destroy(config);*/
+
+    //printf("se intenta consectar con la principal ip:%s", main_ip);
+
+    check_for_new_memory(MEMORY_IP ,MEMORY_PORT, 0);
     return strdup("");
   }
 
-  char* responce = exec_in_memory(memfd, "MEMORY");
+  char* responce = exec_in_memory(memfd, strdup("MEMORY"));
   unlock_memory(memfd);
-  if(responce == ""){
+  if(responce == NULL || strlen(responce)==0 ){
+    if(responce!=NULL) free(responce);
     return strdup("");
   }
+
+  
   char** memories = string_split(responce, "|");
-  update_memory_finder_service_time(atoi(memories[0]));
-    int i = 1;
+  update_memory_finder_service_time(atoi(memories[1]));
+  set_main_memory_id(atoi(memories[0]));
+  free(memories[0]);
+  free(memories[1]);
+    int i = 2;
 
     while(memories[i]!=NULL){
       char** info = string_split(memories[i], ",");
       int id = atoi(info[0]);
       char* ip = info[1];
       int port = atoi(info[2]);
-
       check_for_new_memory(ip ,port, id);
+
+      free(ip);
+      free(info[0]);
+      free(info[2]);
+      free(info);
+      free(memories[i]);
       i++;
     }
+    free(memories);
+    free(responce);
     return strdup("");
 }
 

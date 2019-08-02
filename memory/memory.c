@@ -12,11 +12,14 @@
 #include "../server.h"
 // #include "../pharser.h"
 #include <signal.h>
+
 // #include "../actions.h"
 #include "../console.h"
 #include "segments.h"
 #include "gossiping.h"
-char* action_intern__status();
+
+
+void exec_err_abort(){};
 //logger global para que lo accedan los threads
 int main_memory_size;
 
@@ -30,6 +33,7 @@ int main(int argc, char const *argv[])
   sigset_t set;	
   signal(SIGPIPE, SIG_IGN);
 	
+
   //set up config  
   char* config_name = malloc(10);
   strcpy(config_name, "config");
@@ -240,7 +244,7 @@ char* action_metrics(package_metrics* metrics_info){
 //en esta funcion se devuelve lo 
 //proveniente del gossiping
 //devuelve solo las seeds
-//con esta forma: RETARDO_GOSSIPING_DE_ESTA_MEMORIA|id,ip,port|id,ip,port|id,ip,port
+//con esta forma: ID_PROPIO|RETARDO_GOSSIPING_DE_ESTA_MEMORIA|id,ip,port|id,ip,port|id,ip,port
 //                                                    seed        seed      seed
 char* action_intern__status(){
   // char* res = strdup("300000000|"); //ya que se puede modificar en tiempo real y yo necesito saber cada cuanto ir a buscar una memoira se le añade como primer elemento el retargo gossiping de la memoria principal.
@@ -310,3 +314,4 @@ char* action_gossip(gossip_t** parsed_gossip_table){
   
   return strdup(gossip_buffer);
 }
+
