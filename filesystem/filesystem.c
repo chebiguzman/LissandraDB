@@ -837,4 +837,7 @@ void adjust_size(char* size,int tam){
   return;
 }
 
+char* action_gossip(gossip_t** buffer){
+  return strdup("");
+}
 void exec_err_abort(){};
