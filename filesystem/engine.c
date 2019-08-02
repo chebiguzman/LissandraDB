@@ -121,7 +121,7 @@ void engine_start(t_log* logger){
     MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE"); //CHECK
     int TAM_VALUE = config_get_int_value(config, "TAMAÑO_VALUE");
     DIR* mnt_dir = opendir(MNT_POINT); 
-    
+    tables_name = list_create();
     pthread_mutex_init(&config_lock, NULL);
     if(mnt_dir == NULL){
         log_error(logger, "Fatal error. El punto de montaje es invalido.");
@@ -216,9 +216,9 @@ void engine_start(t_log* logger){
     }
  
     DIR* tables_dir = opendir(tables_path); 
-    tables_conditions = list_create(); //CHECK
+    //tables_conditions = list_create(); //CHECK
 
-    struct dirent *entry;
+   /*  struct dirent *entry;
     while ((entry = readdir(tables_dir)) != NULL) {
         if(entry->d_type == DT_DIR){
             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
@@ -237,9 +237,9 @@ void engine_start(t_log* logger){
             log_info(logg, entry->d_name);
             //free(name);
         }
-    }
+    }*/
 
-    /*struct dirent *entry;
+    struct dirent *entry;
     while ((entry = readdir(tables_dir)) != NULL) {
         if(entry->d_type == DT_DIR){
             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
@@ -251,7 +251,7 @@ void engine_start(t_log* logger){
             log_info(logg, entry->d_name);
             //free(name);
         }
-    }*/
+    }
 
     closedir(tables_dir);
 
