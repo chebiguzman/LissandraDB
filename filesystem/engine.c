@@ -5,6 +5,8 @@
 #include <commons/bitarray.h>
 #include "filesystem.h"
 
+#define EVENT_SIZE  ( sizeof (struct inotify_event) )
+#define EVENT_BUF_LEN     ( 1024 * ( EVENT_SIZE + 16 ) )
 #define BLOCK_SIZE_DEFAULT 128
 #define BLOCKS_AMOUNT_DEFAULT 12
 char* MNT_POINT;
@@ -16,7 +18,10 @@ char* bitmap_path;
 int block_amount;
 int block_size;
 int row_amount;
-
+long config_tiempo_dump;
+long config_retardo;
+t_config* config;
+pthread_mutex_t config_lock;
 void check_or_create_dir(char* path){
     DIR* dir = opendir(path);
     if (dir != NULL) {
@@ -111,11 +116,12 @@ int recursive_delete(const char *dir){
 void engine_start(t_log* logger){
 
     logg = logger; //CHECK
-    t_config* config = config_create("config"); 
+    config = config_create("config"); 
     MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE"); //CHECK
     int TAM_VALUE = config_get_int_value(config, "TAMAÑO_VALUE");
     DIR* mnt_dir = opendir(MNT_POINT); 
- 
+    
+    pthread_mutex_init(&config_lock, NULL);
     if(mnt_dir == NULL){
         log_error(logger, "Fatal error. El punto de montaje es invalido.");
         exit(-1);
@@ -464,6 +470,44 @@ t_table_partiton* get_table_partition(char* table_name, int table_partition_numb
     free(partition_path);
 
     return parition;
+}
+
+
+
+
+void* config_worker(void* args){
+    int inotifyFd = inotify_init();
+    inotify_add_watch(inotifyFd, "config", IN_CLOSE_WRITE);
+    char* buf = malloc(EVENT_BUF_LEN);
+    while(1){
+        int length = read(inotifyFd, buf, EVENT_BUF_LEN);
+
+         if ( length < 0 ) {
+            perror( "Error en config" );
+        }  
+
+        struct inotify_event *event = (struct inotify_event *) buf;
+        if(event->mask == IN_CLOSE_WRITE){
+        //config_destroy(fconfig);
+        config = config_create("config");
+        update_engine_config();
+
+        }
+    }
+    
+}
+
+//leo y actualico la informaion del config;
+void update_engine_config(){
+         
+        int dump = config_get_int_value(config, "TIEMPO_DUMP");
+        long retardo = config_get_long_value(config, "RETARDO");
+        //log_debug(logg, "el nuevo es: ");
+        //log_debug(logg, string_itoa((int) refresh));
+        pthread_mutex_lock(&config_lock);
+        config_tiempo_dump = dump;
+        config_retardo = retardo;
+        pthread_mutex_unlock(&config_lock);
 }
 
 t_table_metadata* get_table_metadata(char* table_name){
@@ -957,4 +1001,12 @@ void engine_adjust(char* tabla,int particion,int adjust){
     free(registro[0].line);
     free(registro[1].line);
     return;
+}
+
+long get_dump_time(){
+    long r;
+    pthread_mutex_lock(&config_lock);
+    r = config_tiempo_dump;
+    pthread_mutex_unlock(&config_lock);
+    return r;
 }
