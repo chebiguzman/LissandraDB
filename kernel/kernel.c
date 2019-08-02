@@ -120,9 +120,11 @@ char* exec_in_memory(int memory_fd, char* payload){
     signal(SIGPIPE,handler);
 
     //ejecutar
+    log_debug(logger_debug, "voy a ejecutar en memoria");
     if(write(memory_fd,payload, strlen(payload)+1)){
       read(memory_fd, responce, 3000);
       free(payload);
+    log_debug(logger_debug, "memoria responde");
 
       
       if(responce[0]=='\033'){
@@ -345,6 +347,7 @@ char* action_intern__status(){
   log_info(logger_debug, "Se recibio una accion status");
 
   int memfd = get_loked_main_memory();
+  log_info(logger_debug, "obtube memoria principal");
   
   if(memfd<0){
     //la memoria principal fue desconectada
@@ -363,7 +366,11 @@ char* action_intern__status(){
     return strdup("");
   }
 
+  log_info(logger_debug, "x ejecutar en mem");
+
   char* responce = exec_in_memory(memfd, strdup("MEMORY"));
+  log_info(logger_debug, "ejecute, la resupuesta fue: %s", responce);
+
   unlock_memory(memfd);
   if(responce == NULL || strlen(responce)==0 ){
     if(responce!=NULL) free(responce);
@@ -379,6 +386,8 @@ char* action_intern__status(){
     int i = 2;
 
     while(memories[i]!=NULL){
+      log_debug(logger_debug, "%s", memories[i]);
+      if(strlen(memories[i])<14) break;
       char** info = string_split(memories[i], ",");
       int id = atoi(info[0]);
       char* ip = info[1];
@@ -396,7 +405,7 @@ char* action_intern__status(){
     free(responce);
     return strdup("");
 }
-char* action_gossip(gossip_t** buffer){
+char* action_gossip(char* buffer){
   return strdup("");
 }
 

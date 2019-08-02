@@ -134,13 +134,11 @@ void* exec(void *system_queue){
 
         lock_queue();
         pthread_mutex_lock(&lock_for_tasks);
-        if(added_queue==0){
+        int z = added_queue;
+        added_queue =0;
+        pthread_mutex_unlock(&lock_for_tasks);
+        if(z==0){
             pthread_cond_wait(&queue->cond, &queue->lock);
-            pthread_mutex_unlock(&lock_for_tasks);
-        }else{
-            added_queue=0;
-            pthread_mutex_unlock(&lock_for_tasks);
-
         }
 
 
