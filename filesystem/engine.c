@@ -12,7 +12,7 @@
 #define BLOCKS_AMOUNT_DEFAULT 12
 char* MNT_POINT;
 t_log* logg;
-t_list* tables_name;
+t_list* tables_conditions;
 char* tables_path;
 DIR* root;
 char* bitmap_path;
@@ -224,13 +224,14 @@ void engine_start(t_log* logger){
             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
             continue;
 
-            struct t_table_condition* new_table_condition;
-            new_table_condition = (struct t_table_condition*)malloc(sizeof(struct t_table_condition));
+            t_table_condition* new_table_condition;
+            new_table_condition = malloc(sizeof(t_table_condition));
             char* name = malloc(strlen(entry->d_name) +1); //CHECK
             strcpy(name, entry->d_name);
             new_table_condition->table_name = name;
-            new_table_condition->compacting = 0;
-            pthread_mutex_init(new_table_condition->lock,new_table_condition->cond);
+            new_table_condition->compactating = 0;
+            pthread_cond_init(&new_table_condition->cond,NULL);
+            pthread_mutex_init(&new_table_condition->lock,NULL);
 
             list_add(tables_conditions, new_table_condition);
             string_to_upper(entry->d_name);
@@ -267,7 +268,9 @@ int does_table_exist(char* table_name){
     printf("DOES TABLE EXIST: %s\n", q);
 
     bool findTableByName(void* t){
-        char* cmp = strdup((char*) t);
+        t_table_condition* table_cond = t;
+        char* t_name = table_cond->table_name;
+        char* cmp = strdup((char*) t_name);
         string_to_upper(cmp);
         if(!strcmp(q, cmp)){
             free(cmp);
@@ -277,7 +280,7 @@ int does_table_exist(char* table_name){
         return false;
     }
 
-    char* t = list_find(tables_name,findTableByName);
+    char* t = list_find(tables_conditions,findTableByName);
     //free(q);
     if(t == NULL){
         return 0;
@@ -377,7 +380,14 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     
     free(resp);
 
-    list_add(tables_name, table_name);
+    t_table_condition* new_table_condition;
+    new_table_condition = malloc(sizeof(t_table_condition));
+    new_table_condition->table_name = table_name;
+    new_table_condition->compactating = 0;
+    pthread_cond_init(&new_table_condition->cond,NULL);
+    pthread_mutex_init(&new_table_condition->lock,NULL);
+
+    list_add(tables_conditions, new_table_condition);
     char* copy = strdup(table_name);
     string_to_upper(copy);
 
@@ -395,7 +405,9 @@ void engine_drop_table(char* table_name){
     string_to_upper(q);
 
     bool findTableByName(void* t){
-        char* cmp = strdup((char*) t);
+        t_table_condition* table_cond = t;
+        char* t_name = table_cond->table_name;
+        char* cmp = strdup((char*) t_name);
         string_to_upper(cmp);
         if(!strcmp(q, cmp)){
             free(cmp);
@@ -405,7 +417,7 @@ void engine_drop_table(char* table_name){
         return false;
     }
 
-    list_remove_by_condition(tables_name,findTableByName);
+    list_remove_by_condition(tables_conditions,findTableByName);
     char* path = malloc(strlen(tables_path) + strlen(table_name) + 5);
     strcpy(path, tables_path);
     strcat(path, table_name);
@@ -441,22 +453,25 @@ char* get_table_metadata_as_string(char* table_name){
 
 char* get_all_tables_metadata_as_string(){
 
-    if(list_is_empty(tables_name)) return strdup("");
-    int tables_amount = list_size(tables_name);
+    if(list_is_empty(tables_conditions)) return strdup("");
+    int tables_amount = list_size(tables_conditions);
 
     char* result = strdup("");
 
     for (size_t i = 0; i < tables_amount; i++)
     {   
 
-        result = realloc(result, strlen(result) + strlen(list_get(tables_name,i))+ 8);
+        t_table_condition* table_cond = list_get(tables_conditions,i);
+        char* table_name = table_cond->table_name;
+
+        result = realloc(result, strlen(result) + strlen(table_name) + strlen("NOMBRE=") + 1);
         strcat(result, "NOMBRE=");
-        strcat(result, list_get(tables_name,i));
+        strcat(result, table_name);
 
         result = realloc(result, strlen(result) + 2);
         strcat(result, "\n");
     
-        char* m = get_table_metadata_as_string(list_get(tables_name,i));
+        char* m = get_table_metadata_as_string(table_name);
 
         result = realloc(result, strlen(result) + strlen(m) + 1);
         strcat(result, m);
