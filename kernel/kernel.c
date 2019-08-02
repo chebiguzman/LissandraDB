@@ -396,6 +396,9 @@ char* action_intern__status(){
     free(responce);
     return strdup("");
 }
+char* action_gossip(gossip_t** buffer){
+  return strdup("");
+}
 
 //Crea un t_instr con un string
 char* parse_input(char* input){

@@ -283,8 +283,12 @@ char* parse_input(char* input){
   return exec_instr(input);
 }
 
-char* action_gossip(gossip_t** parsed_gossip_table){
-  pthread_mutex_lock(&gossip_table_mutex);  
+char* action_gossip(char* arg){
+  gossip_t** parsed_gossip_table;
+  pthread_mutex_lock(&gossip_table_mutex);    					
+  gossip_t* parsed_gossip_table_buff = parse_gossip_buffer(arg);
+  parsed_gossip_table = &parsed_gossip_table_buff;
+
   printf("Me llego una conexion de una memoria \n");
   char* gossip_buffer = create_gossip_buffer(&GOSSIP_TABLE); // lo creo antes de que compare las tablas asi no le mando las que me acaba de pasar
   printf("- Gossip buffer to send: %s\n", gossip_buffer);
