@@ -295,6 +295,7 @@ char* exec_instr(char* instr_buff){
             string_to_upper(parameters[1]);
             package->table_name = parameters[1];
         } else {
+            printf("no hay parametros\n");
             package->table_name = NULL;
             
         }

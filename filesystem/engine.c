@@ -431,6 +431,7 @@ char* get_table_metadata_as_string(char* table_name){
     strcat(table_path, "/metadata");
 
     FILE* f = fopen(table_path, "r");
+    if(f == NULL) return "";
     fseek(f, 0L, SEEK_END);
     int bytes = ftell(f);
 
@@ -499,12 +500,6 @@ t_table_partiton* get_table_partition(char* table_name, int table_partition_numb
     return parition;
 }
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> f8a9449b115c46273015ee63b9c6ed0326d7eaf7
 void* config_worker(void* args){
     int inotifyFd = inotify_init();
     inotify_add_watch(inotifyFd, "config", IN_CLOSE_WRITE);
@@ -533,8 +528,6 @@ void update_engine_config(){
          
         int dump = config_get_int_value(config, "TIEMPO_DUMP");
         long retardo = config_get_long_value(config, "RETARDO");
-        //log_debug(logg, "el nuevo es: ");
-        //log_debug(logg, string_itoa((int) refresh));
         pthread_mutex_lock(&config_lock);
         config_tiempo_dump = dump;
         config_retardo = retardo;
