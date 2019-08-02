@@ -126,9 +126,9 @@ void schedule(t_instr_set* instr_set){
     lock_queue();
     queue_push(queue->scheduler_queue, instr_set);
     //log_info(logg, "sh:acrego una instruccion");
-    //pthread_mutex_lock(&lock_for_tasks);
-    //added_queue = 1;
-    //pthread_mutex_unlock(&lock_for_tasks);
+    pthread_mutex_lock(&lock_for_tasks);
+    added_queue = 1;
+    pthread_mutex_unlock(&lock_for_tasks);
     pthread_cond_broadcast(&queue->cond);
     unlock_queue();
 
@@ -158,6 +158,9 @@ char* ksyscall(char* call){
 
         
         
+        pthread_mutex_lock(&lock_for_tasks);
+        added_queue = 1;
+        pthread_mutex_unlock(&lock_for_tasks);
         pthread_cond_broadcast(&queue->cond);
         
         pthread_mutex_lock(&syscall->lock);
@@ -175,7 +178,7 @@ char* ksyscall(char* call){
 
     }else{
         log_debug(logger_debug, "Aun no estan disponibles las syscall");
-        return "";
+        return strdup("");
     }
 }
 

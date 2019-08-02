@@ -18,6 +18,7 @@
 extern scheduler_config* config_not;
 extern pthread_mutex_t config_lock;
 long MEMORY_FINDER_SLEEP;
+pthread_mutex_t sleep_lock;
  t_log* logger;
  t_log* logger_debug;
 t_dictionary* tbl_list;   //Lista de tablas (metadata)
@@ -83,7 +84,7 @@ void start_kmemory_module(t_log* logg,t_log* logg_debug, char* main_memory_ip, i
 
     pthread_t tid_metadata_service;
     pthread_create(&tid_metadata_service, NULL,metadata_service, NULL);
-
+    pthread_mutex_init(&sleep_lock, NULL);
     MEMORY_FINDER_SLEEP = 5000;
 
     pthread_t tid_memory_finder_service;
@@ -547,7 +548,9 @@ t_consistency get_table_consistency(char* table_name){
 }
 
 void update_memory_finder_service_time(long time){
+    pthread_mutex_lock(&sleep_lock);
     MEMORY_FINDER_SLEEP = time;
+    pthread_mutex_unlock(&sleep_lock);
 }
 
 void *metadata_service(void* args){
@@ -568,8 +571,10 @@ void *metadata_service(void* args){
 
 void *memory_finder_service(void* args){
     while(true){
-
-        usleep( MEMORY_FINDER_SLEEP);
+        pthread_mutex_lock(&sleep_lock);
+        long sleep = MEMORY_FINDER_SLEEP;
+        pthread_mutex_unlock(&sleep_lock);
+        usleep( sleep);
         log_debug(logger_debug, "kmemoryService: Se actualiza las memorias");
         char* r = ksyscall(strdup("MEMORY"));
         free(r);
