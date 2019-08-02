@@ -121,15 +121,9 @@ void engine_start(t_log* logger){
     config = config_create("config");
     MNT_POINT = config_get_string_value(config, "PUNTO_MONTAJE"); //CHECK
     int TAM_VALUE = config_get_int_value(config, "TAMAÑO_VALUE");
-<<<<<<< HEAD
-    DIR* mnt_dir = opendir(MNT_POINT);
-    tables_name = list_create();
- 
-=======
     DIR* mnt_dir = opendir(MNT_POINT); 
     tables = list_create();
 
->>>>>>> dd6be0e34b2b12d7d92c8cf510ea1efb1526f33d
     update_engine_config();
     pthread_mutex_init(&config_lock, NULL);
  
@@ -228,48 +222,17 @@ void engine_start(t_log* logger){
         free(p);
     }
  
-<<<<<<< HEAD
-    DIR* tables_dir = opendir(tables_path);
-    //tables_conditions = list_create(); //CHECK
- 
-   /*  struct dirent *entry;
-=======
     DIR* tables_dir = opendir(tables_path); 
 
     struct dirent *entry;
->>>>>>> dd6be0e34b2b12d7d92c8cf510ea1efb1526f33d
     while ((entry = readdir(tables_dir)) != NULL) {
         if(entry->d_type == DT_DIR){
             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
             continue;
-<<<<<<< HEAD
- 
-            struct t_table_condition* new_table_condition;
-            new_table_condition = (struct t_table_condition*)malloc(sizeof(struct t_table_condition));
-            char* name = malloc(strlen(entry->d_name) +1); //CHECK
-            strcpy(name, entry->d_name);
-            new_table_condition->table_name = name;
-            new_table_condition->compacting = 0;
-            pthread_mutex_init(new_table_condition->lock,new_table_condition->cond);
- 
-            list_add(tables_conditions, new_table_condition);
-            string_to_upper(entry->d_name);
-            log_info(logg, entry->d_name);
-            //free(name);
-        }
-    }*/
- 
-    struct dirent *entry;
-    while ((entry = readdir(tables_dir)) != NULL) {
-        if(entry->d_type == DT_DIR){
-            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
-            continue;
-=======
 
             t_table* table;
             table = malloc(sizeof(t_table));
 
->>>>>>> dd6be0e34b2b12d7d92c8cf510ea1efb1526f33d
             char* name = malloc(strlen(entry->d_name) +1); //CHECK
             strcpy(name, entry->d_name);
             table->name = name;
@@ -306,13 +269,8 @@ int does_table_exist(char* table_name){
         free(cmp);
         return false;
     }
-<<<<<<< HEAD
- 
-    char* t = list_find(tables_name,findTableByName);
-=======
 
     char* t = list_find(tables,findTableByName);
->>>>>>> dd6be0e34b2b12d7d92c8cf510ea1efb1526f33d
     //free(q);
     if(t == NULL){
         return 0;
@@ -411,10 +369,6 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     }
    
     free(resp);
-<<<<<<< HEAD
- 
-    list_add(tables_name, table_name);
-=======
 
     t_table* new_table = malloc( sizeof(t_table));
     new_table->name = table_name;
@@ -422,7 +376,6 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     pthread_cond_init(&new_table->cond, NULL);
     new_table->compactating = 0;
     list_add(tables, new_table);
->>>>>>> dd6be0e34b2b12d7d92c8cf510ea1efb1526f33d
     char* copy = strdup(table_name);
     string_to_upper(copy);
  
@@ -450,13 +403,8 @@ void engine_drop_table(char* table_name){
         free(cmp);
         return false;
     }
-<<<<<<< HEAD
- 
-    list_remove_by_condition(tables_name,findTableByName);
-=======
 
     list_remove_by_condition(tables,findTableByName);
->>>>>>> dd6be0e34b2b12d7d92c8cf510ea1efb1526f33d
     char* path = malloc(strlen(tables_path) + strlen(table_name) + 5);
     strcpy(path, tables_path);
     strcat(path, table_name);
@@ -484,11 +432,7 @@ char* get_table_metadata_as_string(char* table_name){
     fseek(f, 0l, SEEK_SET);
     char* meta = (char*)calloc(bytes, sizeof(char));   
     fread(meta, sizeof(char), bytes, f);
-<<<<<<< HEAD
- 
-=======
     printf("metadata de:%s", table_name);
->>>>>>> dd6be0e34b2b12d7d92c8cf510ea1efb1526f33d
     fclose(f);
     free(table_path);
  
@@ -496,33 +440,13 @@ char* get_table_metadata_as_string(char* table_name){
 }
  
 char* get_all_tables_metadata_as_string(){
-<<<<<<< HEAD
- 
-    if(list_is_empty(tables_name)) return strdup("");
-    int tables_amount = list_size(tables_name);
- 
-=======
 
     if(list_is_empty(tables)) return strdup("");
     int tables_amount = list_size(tables);
 
->>>>>>> dd6be0e34b2b12d7d92c8cf510ea1efb1526f33d
     char* result = strdup("");
  
     for (size_t i = 0; i < tables_amount; i++)
-<<<<<<< HEAD
-    {  
- 
-        result = realloc(result, strlen(result) + strlen(list_get(tables_name,i))+ 8);
-        strcat(result, "NOMBRE=");
-        strcat(result, list_get(tables_name,i));
- 
-        result = realloc(result, strlen(result) + 2);
-        strcat(result, "\n");
-   
-        char* m = get_table_metadata_as_string(list_get(tables_name,i));
- 
-=======
     {   
 
         result = realloc(result, strlen(result) + strlen(((t_table*)list_get(tables,i))->name)+ 8);
@@ -534,7 +458,6 @@ char* get_all_tables_metadata_as_string(){
     
         char* m = get_table_metadata_as_string(((t_table*) list_get(tables,i))->name);
         printf("recivo m:%s\n", m);
->>>>>>> dd6be0e34b2b12d7d92c8cf510ea1efb1526f33d
         result = realloc(result, strlen(result) + strlen(m) + 1);
         strcat(result, m);
         result = realloc(result, strlen(result) + 4);
@@ -571,34 +494,6 @@ t_table_partiton* get_table_partition(char* table_name, int table_partition_numb
     return parition;
 }
 
-<<<<<<< HEAD
-t_table_partiton* get_table_partition3(char* table_name, int table_partition_number){
-    char* partition_name = strdup(string_itoa(table_partition_number));
-    char* partition_path =malloc(strlen(tables_path) + strlen(table_name) + 1 + strlen(partition_name)+ strlen(".part") + 5);
-    strcpy(partition_path ,tables_path);
- 
-    strcat(partition_path,table_name);
-    strcat(partition_path,"/");
-    strcat(partition_path, partition_name);
-    strcat(partition_path, ".tmpc");
- 
-    free(partition_name);
- 
-    t_table_partiton* parition = malloc(sizeof(t_table_partiton));
-    t_config* c = config_create(partition_path);
-    printf("assasd %s\n", partition_path);
- 
-    parition->blocks_size = config_get_long_value(c, "SIZE");
- 
-    parition->blocks = config_get_array_value(c, "BLOCKS");
- 
-    free(partition_path);
- 
-    return parition;
-}
- 
-=======
->>>>>>> dd6be0e34b2b12d7d92c8cf510ea1efb1526f33d
 void* config_worker(void* args){
     int inotifyFd = inotify_init();
     inotify_add_watch(inotifyFd, "config", IN_CLOSE_WRITE);
