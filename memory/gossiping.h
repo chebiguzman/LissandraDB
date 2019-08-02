@@ -34,6 +34,7 @@ pthread_mutex_t gossip_table_mutex;
 gossip_t* create_node(int port, char* ip);
 void add_node(gossip_t** gossip_table, gossip_t* node);
 void remove_node(gossip_t** gossip_table, gossip_t* node);
+void free_node(gossip_t* node);
 gossip_t* find_node(gossip_t** gossip_table, int port, char* ip);
 gossip_t* create_gossip_table();
 gossip_t* parse_gossip_buffer(char* buffer);
