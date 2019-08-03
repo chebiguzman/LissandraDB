@@ -249,7 +249,8 @@ char* action_create(package_create* create_info){
   char* tbl_name = strdup(create_info->table_name);
   t_consistency c = create_info->consistency;
   char* package = parse_package_create(create_info);
-  char* responce = exec_in_memory(memoryfd, package);
+  printf("el paquete es:%s\n", package);
+    char* responce = exec_in_memory(memoryfd, package);
   kmemoy_add_table(tbl_name, c);
   free(tbl_name);
   unlock_memory(memoryfd);

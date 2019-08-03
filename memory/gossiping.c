@@ -129,7 +129,7 @@ gossip_t* parse_gossip_buffer(char* buffer){
 }
 
 char* create_gossip_buffer(gossip_t** gossip_table){
-    printf("Creando Buffer \n");
+    //printf("Creando Buffer \n");
     gossip_t* temp = *gossip_table;
     char* buffer = (char*)malloc(1000);
     memset(buffer, 0, 1000);

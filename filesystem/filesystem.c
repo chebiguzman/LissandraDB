@@ -86,6 +86,7 @@ char* action_select(package_select* select_info){
   }
  
   t_table* t = get_table(select_info->table_name);
+
   pthread_mutex_lock(&t->lock);
  
 
@@ -170,6 +171,8 @@ char* action_select(package_select* select_info){
   argumentosthread* parametros [block_amount];
   int* number_of_threads = malloc(sizeof(int));
   *number_of_threads = block_amount;
+  int* con_l = malloc(sizeof(int));
+  *con_l = 0;
  
   while(whilethread<block_amount){
     argumentosthread* args = malloc(sizeof(argumentosthread));
@@ -179,6 +182,7 @@ char* action_select(package_select* select_info){
     args->cond = &cond;
     args->lock = lock;
     args->timestap=0;
+    args->l = con_l;
     args->number_of_running_threads = number_of_threads;
     parametros[whilethread] = args;
     pthread_create(&buscadores[whilethread],NULL,buscador,args);
@@ -187,9 +191,16 @@ char* action_select(package_select* select_info){
   }
  
   free(partition);
- 
+ printf("espero condicion\n");
   pthread_mutex_lock(&lock);
-  pthread_cond_wait(&cond, &lock);
+  if(*con_l==0){
+    pthread_cond_wait(&cond, &lock);
+  }else{
+    printf("jamas espere\n");
+  }
+  
+ printf("se solto la condicion\n");
+
   int whileparametro=0;
   while(whileparametro<block_amount){
     if(parametros[whileparametro]->bolean){
@@ -357,6 +368,7 @@ char* action_metrics(package_metrics* metrics_info){
  
 //ACA VA A HABER QUE CREAR THREADS DE EJECUCION
 char* parse_input(char* input){
+  usleep(get_retardo_time());
   return exec_instr(input);
 }
  
@@ -802,6 +814,9 @@ void* buscador(void* args){
     pthread_mutex_lock(&parametros->lock);
     int amount = *parametros->number_of_running_threads;
     amount--;
+    int l = *parametros->l;
+    l++;
+    *parametros->l = l;
     *parametros->number_of_running_threads= amount;
     pthread_mutex_unlock(&parametros->lock);
     if(amount==0){
@@ -927,6 +942,7 @@ void* buscador2(void* args){
   parametros->retorno = strdup("");
   while(!feof(bloque)){
     fgets(buffer,50,bloque);
+    printf("el buffer que falla es%s\n", buffer);
     parametros->row= strdup(buffer);
  
     //devuelve key

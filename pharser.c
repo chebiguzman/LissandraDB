@@ -514,8 +514,10 @@ char* parse_package_create(package_create* pk){
         break;
     case H_CONSISTENCY:
         consistency = strdup("HC");
+        break;
     case ANY_CONSISTENCY:
         consistency = strdup("EC");
+        break;
     
     default:
         consistency = strdup("ERR");

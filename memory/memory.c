@@ -195,6 +195,7 @@ char* action_insert(package_insert* insert_info){
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
   char* buffer_package_create = parse_package_create(create_info);
+  printf("%s\n", buffer_package_create);
   char* response = exec_in_fs(fs_socket, buffer_package_create); // retorno el response de fs
   free(buffer_package_create);
   return response;
@@ -266,7 +267,7 @@ char* action_intern__status(){
 
   char sep[2] = { ',', '\0' };
   char div[2] = { '|', '\0' };
-  printf("algo por aca\n");
+  //printf("algo por aca\n");
   char* gossip_table_buffer = create_gossip_buffer(&GOSSIP_TABLE);
   char* buffer = malloc(strlen(retardo_gossip) + strlen(gossip_table_buffer) + 2);
   *buffer = 0;
@@ -278,7 +279,7 @@ char* action_intern__status(){
 
   pthread_mutex_unlock(&gossip_table_mutex);  
 
-  log_error(logger, "%s",buffer);
+  //log_error(logger, "%s",buffer);
   return buffer;
 }
 
