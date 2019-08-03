@@ -178,6 +178,7 @@ char* action_select(package_select* select_info){
     argumentosthread* args = malloc(sizeof(argumentosthread));
     args->bolean=0;
     args->ruta = strdup(regruta[whilethread].line);
+    free(regruta[whilethread].line);
     args->key=select_info->key;
     args->cond = &cond;
     args->lock = lock;
@@ -494,6 +495,7 @@ void particiontemporal(t_table_partiton* particion, int block_amount, char* tabl
     log_info(logger,paloggear);
 
     reubicar_rows(temp_rows,tabla,reg_amount);
+    free(regruta[i].line);
     i++;
   }
   return ;
@@ -585,6 +587,7 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
      if(block_amount==0){
        log_info(logger,"adentro del if");
       new_block(row_list[q].line,tabla,part);
+      free(row_list[q].line);
       q++;
     }
     else{
@@ -680,10 +683,12 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
  
     pthread_mutex_destroy(&lock);
     pthread_cond_destroy(&cond);
+    free(row_list[q].line);
+    free(regruta[q].line);//CUIDADO CON EL FREE DE ESTA LINEA!
     q++;
   }
   }
- 
+  free(auxkey);
   return;
 }
  
