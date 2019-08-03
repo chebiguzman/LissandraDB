@@ -428,23 +428,35 @@ t_table* get_table(char* q){
     return tbl;
 }
 void engine_drop_table(char* table_name){
-    char* q = strdup(table_name);
-    string_to_upper(q);
-    t_table* tbl;
-    bool findTableByName(void* t){
-        t_table* tt = (t_table*) t;
-        char* cmp = strdup(tt->name);
-        string_to_upper(cmp);
-        if(!strcmp(q, cmp)){
-            free(cmp);
-            tbl = tt;
-            
-            return true;
-        }
-        free(cmp);
-        return false;
-    }
+   char* ruta=malloc(200);
+   strcpy(ruta,tables_path);
+   strcat(ruta,table_name);
+   DIR* t_drop=NULL;
+   t_drop=opendir(ruta);
+   if(t_drop==NULL){
+       free(ruta);
+       log_error(logg, "No se encontro la tabla");
+       return;
+   }
+    t_table_metadata* metadata = get_table_metadata(table_name);
+    int contador = 0;
+    char* temp = malloc(100);
 
+    while(contador < metadata->partition_number){
+        t_table_partiton* partition = get_table_partition(table_name, contador);
+        free_part(partition, contador, table_name);
+        contador++;
+    }
+    char* nuevo = malloc(200);
+
+    recursive_delete(ruta);
+
+    free(temp);
+    free(ruta);
+    return;
+
+    }
+/*
     list_remove_by_condition(tables,findTableByName);
     if(tbl!=NULL){
         pthread_mutex_destroy(&tbl->lock);
@@ -461,8 +473,9 @@ void engine_drop_table(char* table_name){
     free(q);
     free(path);
     return;
- 
-}
+    }
+*/ 
+
  
 char* get_table_metadata_as_string(char* table_name){
  
@@ -1292,4 +1305,54 @@ row* select_particiones_temporales(package_select* select_info){
     row_return->value=strdup(r);
     return row_return;
   
+ }
+
+ void free_part(t_table_partiton* partition, int numero_particion, char* nombre_table){
+    int block_amount = 0;
+    void* first_block = partition->blocks;
+    while(*partition->blocks){
+        block_amount++;
+        partition->blocks++;
+       }
+    partition->blocks = first_block;
+    
+    if(block_amount == 0){
+        char* path = malloc(200);
+        strcpy(path, MNT_POINT);
+        strcat(path, nombre_table);
+        char* aux = string_itoa(numero_particion);
+        strcat(path, aux);
+        strcat(path, ".part");
+        remove(path);
+        free(path);
+        free(aux);
+    }
+    char* rutaTemp = malloc(200);
+    int tempContador = 0;
+    FILE* block;
+    while(block_amount > tempContador){
+        strcpy(rutaTemp, MNT_POINT);
+        strcat(rutaTemp, "Bloques/");
+        strcat(rutaTemp, partition->blocks[tempContador]);
+        strcat(rutaTemp, ".bin");
+        block = fopen(rutaTemp, "w");
+        fclose(block);
+        int block_num = atoi(partition->blocks[tempContador]);
+        set_block_as_free(block_num);
+        tempContador++;
+        log_info(logg, "Se borro ");
+    }
+    char* path = malloc(200);
+    strcpy(path, MNT_POINT);
+    strcat(path, nombre_table);
+    strcat(path, "/");
+    char* aux = string_itoa(numero_particion);
+    strcat(path, aux);
+    strcat(path, ".part");
+    log_info(logg, path);
+    remove(path);
+    free(path);
+    free(aux);
+    free(rutaTemp);
+    return;
  }
