@@ -54,7 +54,7 @@ int main(int argc, char const *argv[]){
     serverInfo->logger = logger;
     serverInfo->portNumber = PORT;
     pthread_t tid;
-    pthread_create(&tid, NULL, create_server, (void*) serverInfo);
+    pthread_create(&tid, NULL, create_server_fs, (void*) serverInfo);
    
  
     //inicio lectura por consola
