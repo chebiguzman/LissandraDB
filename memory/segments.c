@@ -87,8 +87,8 @@ int find_unmodified_page(){
 }
 
 void free_page(page_t* page){
-	// (page->value);
-	// (page);
+	free(page->value);
+	free(page);
 }
 
 // guarda una pagina en memoria sin dirtybit porque es un select de fs
@@ -109,7 +109,8 @@ page_info_t* insert_page(char* table_name, page_t* page){
 	if(page_info != NULL){
 		if(page_info->page_ptr->timestamp < page->timestamp){ // si por alguna razon de la vida el timestamp del insert es menor al timestamp que ya tengo en la page, no la modifico
 			log_info(logger, "Updating value %s->%s\n", page_info->page_ptr->value, page->value);
-			memcpy(page_info->page_ptr, page, PAGE_SIZE);
+			
+			memcpy(page_info->page_ptr->value, page->value, VALUE_SIZE);
 			page_info->dirty_bit = 1;
 		}
 	}
