@@ -191,7 +191,7 @@ void engine_start(t_log* logger){
     block_amount = config_get_int_value(meta_config, "BLOCKS"); //CHECK
     block_size = config_get_int_value(meta_config, "BLOCK_SIZE"); //CHECK
     row_amount = block_size/(5 + 1 + 2 + TAM_VALUE  );
-    FILE* bitmap = fopen(bitmap_path,"r");
+    FILE* bitmap = fopen(bitmap_path,"r+");
     if(bitmap==NULL){
  
         printf("------------cantidad de bloques---------------\n");
@@ -210,6 +210,20 @@ void engine_start(t_log* logger){
         fclose(bitmap);
  
     }else{
+        char* buff = malloc(3000);
+        fgets(buff, 3000, bitmap);
+        if(strlen(buff)<block_amount){
+            char* bits = string_repeat('0', block_amount-strlen(buff));
+            fclose(bitmap);
+            bitmap = fopen(bitmap_path,"w");
+
+            char* file_buff = malloc(strlen(buff) + strlen(bits) +10);
+            strcpy(file_buff, buff);
+            strcat(file_buff, bits);
+
+            fputs(file_buff, bitmap);
+        }
+        if(strlen(buff))
         fclose(bitmap);
     }
  
