@@ -42,6 +42,7 @@ typedef struct{
     long compactation_time;
     pthread_mutex_t lock;
     pthread_cond_t *cond;
+    pthread_t tid;
 }t_table;
 
 typedef struct{

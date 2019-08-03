@@ -80,12 +80,14 @@ int main(int argc, char const *argv[]){
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
  
-  usleep(get_retardo_time());
+  
  
   if(!does_table_exist(select_info->table_name)){
     free(parse_package_select(select_info));
     return strdup("La tabla solicitada no existe.\n");
   }
+
+
  char* m = NULL;
   if(is_data_on_memtable(select_info->table_name, select_info->key)){
       m = malloc(strlen(get_row_from_memtable(select_info->table_name, select_info->key) )+ 2);
@@ -579,7 +581,7 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
       log_info(logger,regruta[i].line);
       log_info(logger,"una vuelta de armado de rutas");
       i++;
-      *currentpartition->blocks++;
+      currentpartition->blocks++;
     }
     pthread_mutex_t lock;
     pthread_cond_t cond;

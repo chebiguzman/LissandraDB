@@ -244,6 +244,7 @@ void engine_start(t_log* logger){
             pthread_mutex_init(&table->lock,NULL);
             pthread_cond_init(table->cond,NULL);
             pthread_t tid;
+            table->tid = tid;
             pthread_create(&tid, NULL, compactation_worker, (void*) table);
 
             list_add(tables, table);
@@ -382,6 +383,10 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     pthread_mutex_init(&new_table->lock, NULL);
     pthread_cond_init(new_table->cond, NULL);
     new_table->compactating = 0;
+    new_table->compactation_time = compactation_time;
+    pthread_t tid;
+    new_table->tid = tid;
+    pthread_create(&tid, NULL, compactation_worker, (void*) new_table);
     list_add(tables, new_table);
     char* copy = strdup(table_name);
     string_to_upper(copy);
@@ -398,13 +403,15 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
 void engine_drop_table(char* table_name){
     char* q = strdup(table_name);
     string_to_upper(q);
- 
+    t_table* tbl;
     bool findTableByName(void* t){
         t_table* tt = (t_table*) t;
         char* cmp = strdup(tt->name);
         string_to_upper(cmp);
         if(!strcmp(q, cmp)){
             free(cmp);
+            tbl = tt;
+            
             return true;
         }
         free(cmp);
@@ -412,10 +419,17 @@ void engine_drop_table(char* table_name){
     }
 
     list_remove_by_condition(tables,findTableByName);
+    if(tbl!=NULL){
+        pthread_mutex_destroy(&tbl->lock);
+        pthread_cond_destroy(tbl->cond);
+        pthread_cancel(tbl->tid);
+    }
     char* path = malloc(strlen(tables_path) + strlen(table_name) + 5);
     strcpy(path, tables_path);
     strcat(path, table_name);
     recursive_delete(path);
+
+
  
     free(q);
     free(path);
@@ -560,21 +574,25 @@ t_table_metadata* get_table_metadata(char* table_name){
  
 void* compactation_worker(void* args){
     t_table* table = (t_table*) args;
-    
+    printf("se inicia un thread\n");
     while (1)
     {
         usleep(table->compactation_time/1000);
-        t_table_compactation_args_function* y =  engine_preparate_compactation(strdup("A"));
+        t_table_compactation_args_function* y =  engine_preparate_compactation(table->name);
         if(y!=NULL){
             pthread_mutex_lock(&table->lock);
             engine_compactate(y);
             pthread_mutex_unlock(&table->lock);
+        }else{
+            //printf("nada por aqui\n");
+
         }
         
 
     }
     
 }
+
 char* get_blocksize_table_rows(char* table_data){
     char* buffer = malloc(block_size);
     char** rows = string_split(table_data, "\n");
@@ -825,7 +843,7 @@ t_table_partiton* get_table_partition2(char* table_name, int table_partition_num
     printf("assasd %s\n", partition_path);
     log_info(logg,"antes de la linea");
     parition->blocks_size = config_get_long_value(c, "SIZE");
-   log_info(logg,"despues de la linea");
+    log_info(logg,"despues de la linea");
     parition->blocks = config_get_array_value(c, "BLOCKS");
    
     return parition;
@@ -853,13 +871,13 @@ t_table_partiton* get_table_partition2(char* table_name, int table_partition_num
 }
 
 t_table_compactation_args_function* engine_preparate_compactation(char* name_table){
- 
     char* ruta=malloc(strlen(tables_path) + strlen(name_table) + 30);
     strcpy(ruta,tables_path);
     strcat(ruta,name_table);
 
     DIR* tablaDir=opendir(ruta);
     int cantidad=contadordetemp(tablaDir);
+    printf("cantidad:%d\n", cantidad);
     if(cantidad==0){
         closedir(tablaDir);
         return NULL;
@@ -1023,9 +1041,12 @@ void new_block(char* new_row,char* tabla,int particion){
 }
  
 char* add_block_to_list(char* block_list,int new){
+    int i = 1;
+    if(block_list[strlen(block_list)]=='\n')i++;
+    
     char* new_block=string_itoa(new);
     char* buff = malloc(strlen(block_list) + 5);
-    memcpy(buff, block_list, strlen(block_list)-2);
+    memcpy(buff, block_list, strlen(block_list)-i);
     buff[strlen(block_list)-1] = '\0';
 
     if(block_list[8]!=']') strcat(buff, ",");
