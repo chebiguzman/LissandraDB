@@ -22,7 +22,7 @@ int row_amount;
 long config_tiempo_dump;
 long config_retardo;
 t_config* config;
- 
+
 pthread_mutex_t config_lock;
 void check_or_create_dir(char* path){
     DIR* dir = opendir(path);
@@ -238,14 +238,57 @@ void engine_start(t_log* logger){
         free(p);
     }
  
-    DIR* tables_dir = opendir(tables_path); 
+    load_dir();
+    pthread_t tid2;
+    pthread_create(&tid2, NULL, del_wacher, NULL);
+    //config_destroy(config); -> si hago destroy pierdo el punto de montaje que uso en engine_dump_table
+    config_destroy(meta_config);
+    
+}
+ 
 
+void load_dir(){
+    DIR* tables_dir = opendir(tables_path); 
     struct dirent *entry;
     while ((entry = readdir(tables_dir)) != NULL) {
         if(entry->d_type == DT_DIR){
+            char* old = malloc(strlen(tables_path) + strlen(entry->d_name)+7);
+            char* new = malloc(strlen(tables_path) + strlen(entry->d_name)+7);
+
+            strcpy(old, tables_path);
+            strcat(old, entry->d_name);
+
+            string_to_upper(entry->d_name);
+            strcpy(new, tables_path);
+            strcat(new, entry->d_name);
+
+            free(old);
+            free(new);
+            
+
+            rename(old, new);
+
             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
             continue;
 
+            
+            t_table_metadata* meta = get_table_metadata(entry->d_name);
+            if(meta==NULL) continue;
+            //printf("pase y ");
+            int cond = 0;
+            for(int i = 0; i < meta->partition_number;i++){
+                t_table_partiton* p = get_table_partition(entry->d_name, i);
+                if(p==NULL){
+                    cond=1;
+                    break;
+                }
+
+                free(p);
+            }
+
+            if(cond==1) continue;
+
+            if(does_table_exist(entry->d_name)) continue;
             t_table* table;
             table = malloc(sizeof(t_table));
 
@@ -255,28 +298,24 @@ void engine_start(t_log* logger){
             table->compactating = 0;
             table->cond = malloc(sizeof(pthread_cond_t));
 
-            t_table_metadata* meta = get_table_metadata(table->name);
             table->compactation_time = meta->compactation_time;
             pthread_mutex_init(&table->lock,NULL);
             pthread_cond_init(table->cond,NULL);
             pthread_t tid;
             table->tid = tid;
             pthread_create(&tid, NULL, compactation_worker, (void*) table);
-
+            //printf("Se detecto talba:%s\n", name);
             list_add(tables, table);
             string_to_upper(name);
             log_info(logg,name);
             
         }
     }
- 
+    
+
     closedir(tables_dir);
  
-    //config_destroy(config); -> si hago destroy pierdo el punto de montaje que uso en engine_dump_table
-    config_destroy(meta_config);
- 
-}
- 
+} 
 int does_table_exist(char* table_name){
     char* q = strdup(table_name);
     string_to_upper(q);
@@ -299,6 +338,18 @@ int does_table_exist(char* table_name){
         return 0;
     }
     return 1;
+}
+
+void* dir_wacher(void* args){
+
+    int inotifyFd = inotify_init();
+    inotify_add_watch(inotifyFd, tables_path,IN_DELETE);
+    char* buf = malloc(EVENT_BUF_LEN);
+    while(1){
+        usleep(990000);
+        load_dir();
+    }
+   
 }
  
 int enginet_create_table(char* table_name, int consistency, int particiones, long compactation_time){
@@ -529,10 +580,16 @@ t_table_partiton* get_table_partition(char* table_name, int table_partition_numb
  
     free(partition_name);
  
+    FILE* test = fopen(partition_path, "r");
+    if(test==NULL){
+        free(partition_path);
+        return NULL;
+    } 
+    fclose(test);
     t_table_partiton* parition = malloc(sizeof(t_table_partiton));
     t_config* c = config_create(partition_path);
-    printf("assasd %s\n", partition_path);
- 
+    if(!config_has_property(c,"SIZE")||!config_has_property(c,"BLOCKS")) return NULL;
+
     parition->blocks_size = config_get_long_value(c, "SIZE");
  
     parition->blocks = config_get_array_value(c, "BLOCKS");
@@ -564,7 +621,38 @@ void* config_worker(void* args){
     }
    
 }
+
+
+void* del_wacher(void* args){
+    int inotifyFd = inotify_init();
+    inotify_add_watch(inotifyFd, tables_path, IN_DELETE);
+    char* buf = malloc(EVENT_BUF_LEN);
+    while(1){
+        int length = read(inotifyFd, buf, EVENT_BUF_LEN);
  
+         if ( length < 0 ) {
+            perror( "Error en config" );
+        }  
+ 
+        struct inotify_event *event = (struct inotify_event *) buf;
+        if(event->mask == IN_DELETE){
+        //log_info(logg, "se borro un tablaaaaaaa");
+        //config_destroy(config);
+            printf("nombre:%s\n", event->name);
+
+            bool table_has_name(void* a ){
+                t_table* t = (t_table*) a;
+                if(t->name==event->name ) {
+                    return true;
+                }
+                return false;
+            }
+//            list_remove_by_condition(tables, table_has_name);
+        }
+    }
+   
+}
+
 //leo y actualico la informaion del config;
 void update_engine_config(){
          
@@ -583,17 +671,25 @@ t_table_metadata* get_table_metadata(char* table_name){
     strcat(meta_path, table_name);
     strcat(meta_path, "/metadata");
  
-    log_info(logg, meta_path);
-   
+    //log_info(logg, meta_path);
+    FILE* test = fopen(meta_path, "r");
+    if(test == NULL){
+        free(meta);
+        free(meta_path);
+        return NULL;
+    }
+
+    fclose(test);
     t_config* c = config_create(meta_path);
     free(meta_path);
+    if(!config_has_property(c,"CONSISTENCY")||!config_has_property(c,"PARTICIONES")||!config_has_property(c,"COMPACTATION")) return NULL;
     meta->consistency = config_get_int_value(c, "CONSISTENCY");
     meta->partition_number = config_get_int_value(c, "PARTICIONES");
     meta->compactation_time = config_get_long_value(c, "COMPACTATION");
     config_destroy(c);
-    log_error(logg,"la consistencia %d", meta->consistency);
-    log_error(logg, "numero de particiones %d", meta->partition_number);
-    log_error(logg, "comapctation %dl",meta->compactation_time);
+    //log_error(logg,"la consistencia %d", meta->consistency);
+    //log_error(logg, "numero de particiones %d", meta->partition_number);
+    //log_error(logg, "comapctation %dl",meta->compactation_time);
  
  
     return meta;
@@ -1000,6 +1096,7 @@ void engine_compactate(t_table_compactation_args_function* args){
 
 int contadordetemp(DIR* directorio){
     struct dirent* file;
+    if(directorio ==NULL ) return 0;
     int contador=0;
     while((file= readdir(directorio))!=NULL ){
         int len= strlen(file->d_name);
