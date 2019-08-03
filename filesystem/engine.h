@@ -104,5 +104,6 @@ row* select_particiones_temporales(package_select* select_info);
 t_table_compactation_args_function* engine_preparate_compactation(char* name_table);
 t_table_partiton* get_table_partition3(char* table_name, int table_partition_number);
 t_table* get_table(char* q);
+void free_part(t_table_partiton* partition, int numero_particion, char* nombre_table);
 
 #endif /* ENGINE_H */
