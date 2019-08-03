@@ -417,7 +417,8 @@ void* dump_cron(void* TIEMPO_DUMP) {
  
 t_table_partiton* particion_xd_parte1(char* temporal,char* tabla, int* c){
   char* ruta=malloc(100);
-  strcpy(ruta,"MountTest/Tables/") ;
+  strcpy(ruta,MNT_POINT);
+  strcat(ruta,"Tables/");
   strcat(ruta,tabla);
   strcat(ruta,"/");
   strcat(ruta,temporal);
@@ -458,7 +459,7 @@ void particiontemporal(t_table_partiton* particion, int block_amount, char* tabl
   
   while(i<block_amount){
     regruta[i].line=malloc(100);
-    strcpy(regruta[i].line,"MountTest/");
+    strcpy(regruta[i].line,MNT_POINT);
     strcat(regruta[i].line,"Bloques/");
     strcat(regruta[i].line,particion->blocks[i]);
     block_number=atoi(particion->blocks[i]);
@@ -573,7 +574,7 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
     log_info(logger,"bloques:");
     while(i<block_amount){
       regruta[i].line=malloc(100);
-      strcpy(regruta[i].line,"MountTest/");
+      strcpy(regruta[i].line,MNT_POINT);
       strcat(regruta[i].line,"Bloques/");
       strcat(regruta[i].line,*currentpartition->blocks);
       strcat(regruta[i].line,".bin");
