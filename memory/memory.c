@@ -145,25 +145,22 @@ char* action_select(package_select* select_info){
   pthread_mutex_lock(&main_memory_mutex);
   char* table_name = strdup(select_info->table_name);
   int select_key = select_info->key;
-  // char* buffer_package_select = parse_package_select(select_info);
+  char* buffer_package_select = parse_package_select(select_info);
   printf("TABLE NAME: %s\n", table_name);
   printf("SELECT KEY: %d\n", select_key);
-  page_info_t* page_info = find_page_info(select_info->table_name, select_info->key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
-  // page_info_t* page_info = find_page_info(table_name, select_key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
+  page_info_t* page_info = find_page_info(table_name, select_key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
   if(page_info != NULL){
     log_info(logger, "Page found in memory -> Key: %d, Value: %s", select_key, page_info->page_ptr->value);
   
-    // free(buffer_package_select);
+    free(buffer_package_select);
     free(table_name);
     
     pthread_mutex_unlock(&main_memory_mutex);
 
-    return page_info->page_ptr->value;
+    return strdup(page_info->page_ptr->value);
   }
   // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
   log_info(logger, "Buscando en FileSystem. Tabla: %s, Key:%d...", table_name, select_key);  
- 
-  char* buffer_package_select = parse_package_select(select_info);
   char* response = exec_in_fs(fs_socket, buffer_package_select); 
   log_info(logger, "Respuesta del FileSystem: %s", response);  
   if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0 && !strcmp(response, "NO SE ENCUENTRA FS")){
