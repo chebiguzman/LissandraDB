@@ -145,9 +145,16 @@ char* action_select(package_select* select_info){
   pthread_mutex_lock(&segment_table_mutex);					
   pthread_mutex_lock(&lru_table_mutex);
   pthread_mutex_lock(&main_memory_mutex);
-  page_info_t* page_info = find_page_info(select_info->table_name, select_info->key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
+  char* table_name = strdup(select_info->table_name);
+  int select_key = select_info->key;
+  char* buffer_package_select = parse_package_select(select_info);
+  page_info_t* page_info = find_page_info(table_name, select_key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
   if(page_info != NULL){
-    printf("Page found in memory -> Key: %d, Value: %s\n", select_info->key, page_info->page_ptr->value);
+    printf("Page found in memory -> Key: %d, Value: %s\n", select_key, page_info->page_ptr->value);
+  
+    free(buffer_package_select);
+    free(table_name);
+    
     pthread_mutex_unlock(&segment_table_mutex);					
     pthread_mutex_unlock(&lru_table_mutex);
     pthread_mutex_unlock(&main_memory_mutex);
@@ -156,9 +163,6 @@ char* action_select(package_select* select_info){
   }
   // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
   printf("Buscando en FileSystem. Tabla: %s, Key:%d...\n", select_info->table_name, select_info->key);  
-  char* table_name = strdup(select_info->table_name);
-  int select_key = select_info->key;
-  char* buffer_package_select = parse_package_select(select_info);
   char* response = exec_in_fs(fs_socket, buffer_package_select); 
   printf("Respuesta del FileSystem: %s\n", response);  
   if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0 && !strcmp(response, "NO SE ENCUENTRA FS")){
@@ -184,6 +188,7 @@ char* action_insert(package_insert* insert_info){
   //BUSCO O CREO EL SEGMENTO
   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
+  printf("VALLUE %s\n\n", page->value);
   page_info_t* page_info = insert_page(insert_info->table_name, page);
   char* buffer_package_insert = parse_package_insert(insert_info);
   free(buffer_package_insert); // parse_package_info libera lo del insert info, y despues libero el buffer que devuelve, asi es mas facil
@@ -196,12 +201,18 @@ char* action_insert(package_insert* insert_info){
 
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
-  return exec_in_fs(fs_socket, parse_package_create(create_info)); // retorno el response de fs
+  char* buffer_package_create = parse_package_create(create_info);
+  char* response = exec_in_fs(fs_socket, buffer_package_create); // retorno el response de fs
+  free(buffer_package_create);
+  return response;
 }
 
 char* action_describe(package_describe* describe_info){
   log_info(logger, "Se recibio una accion describe");
-  return exec_in_fs(fs_socket, parse_package_describe(describe_info)); // retorno el response de fs
+  char* buffer_package_describe = parse_package_describe(describe_info);
+  char* response = exec_in_fs(fs_socket, buffer_package_describe); // retorno el response de fs
+  free(buffer_package_describe);
+  return response;
 }
 
 char* action_drop(package_drop* drop_info){
@@ -214,11 +225,16 @@ char* action_drop(package_drop* drop_info){
   pthread_mutex_unlock(&segment_table_mutex);					
   pthread_mutex_unlock(&lru_table_mutex);
   pthread_mutex_unlock(&main_memory_mutex);
-  return exec_in_fs(fs_socket, parse_package_drop(drop_info)); // retorno el response de fs
+  char* buffer_package_drop = parse_package_drop(drop_info);
+  char* response = exec_in_fs(fs_socket, buffer_package_drop); // retorno el response de fs
+  free(buffer_package_drop);
+  return response;
 }
 
 char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
+  char* buffer_package_journal = parse_package_journal(journal_info);
+  free(buffer_package_journal);
   pthread_mutex_lock(&segment_table_mutex);					
 	pthread_mutex_lock(&lru_table_mutex);
 	pthread_mutex_lock(&main_memory_mutex);
@@ -230,14 +246,20 @@ char* action_journal(package_journal* journal_info){
 }
 
 char* action_add(package_add* add_info){
+  free(add_info->instruction);
+  free(add_info);
   return strdup("No es una instruccion valida\n");
 }
 
 char* action_run(package_run* run_info){
+  char* buffer_package_run = parse_package_run(run_info);
+  free(buffer_package_run);
   return strdup("No es una instruccion valida\n");
 }
 
 char* action_metrics(package_metrics* metrics_info){
+  free(metrics_info->instruction);
+  free(metrics_info);
   return strdup("No es una instruccion valida\n");
 }
 
@@ -272,6 +294,9 @@ char* action_intern__status(){
 }
 
 char* parse_input(char* input){
+  // char* response = exec_instr(input);
+  // free(input);
+  // return response;
   return exec_instr(input);
 }
 
