@@ -206,6 +206,7 @@ char* action_select(package_select* select_info){
   while(whileparametro<block_amount){
     if(parametros[whileparametro]->bolean){
       if(temp_row->timestap<=parametros[whileparametro]->timestap){
+        printf("value: %s\n",parametros[whileparametro]->value );
       char* r = malloc( strlen(parametros[whileparametro]->value) + 2);
       strcpy(r, parametros[whileparametro]->value);
       free(parse_package_select(select_info));
@@ -216,6 +217,7 @@ char* action_select(package_select* select_info){
       else{
       free(parse_package_select(select_info));
       pthread_mutex_unlock(&t->lock);
+      printf("value: %d\n", parametros[whileparametro]->timestap);
       return temp_row->value;
       }
     }
@@ -849,7 +851,12 @@ void* buscador(void* args){
  
     //devuelve key
  
+    uint16_t time_getter(char* parametros_row){
+
+    }
+
     if(parametros->key==get_row_key(parametros->row)){
+      printf("buscador::%s\n",parametros->row);
       parametros->timestap=atoi(parametros->row);
       obtengovalue(parametros->row,parametros->value);
       parametros->bolean=1;

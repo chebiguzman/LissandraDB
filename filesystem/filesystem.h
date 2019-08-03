@@ -15,7 +15,7 @@ typedef struct {
   int key;
   char* retorno;
   char* row;
-  int16_t timestap;
+  uint16_t timestap;
   char value [100];
   int bolean;
   pthread_cond_t* cond;
