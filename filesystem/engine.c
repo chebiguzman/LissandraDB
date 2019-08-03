@@ -436,23 +436,29 @@ void engine_drop_table(char* table_name){
    if(t_drop==NULL){
        free(ruta);
        log_error(logg, "No se encontro la tabla");
+       closedir(t_drop);
        return;
    }
     t_table_metadata* metadata = get_table_metadata(table_name);
     int contador = 0;
     char* temp = malloc(100);
 
+    t_table* tt = get_table(table_name);
+    pthread_cancel(tt->tid);
     while(contador < metadata->partition_number){
         t_table_partiton* partition = get_table_partition(table_name, contador);
         free_part(partition, contador, table_name);
         contador++;
     }
-    char* nuevo = malloc(200);
 
     recursive_delete(ruta);
 
     free(temp);
     free(ruta);
+    pthread_mutex_destroy(&tt->lock);
+    pthread_cond_destroy(tt->cond);
+    closedir(t_drop);
+    //free(tt);
     return;
 
     }
@@ -936,8 +942,9 @@ t_table_compactation_args_function* engine_preparate_compactation(char* name_tab
             contador++;
         }
 
-        //free(file);
+        // free(file->d_name);
     }
+    closedir(tablaDir);
     int contador_rename=0;
     
     
@@ -981,7 +988,6 @@ t_table_compactation_args_function* engine_preparate_compactation(char* name_tab
     
     free(ruta);
     free(file_path);
-    closedir(tablaDir);
     args->table_compact_args_list = list;
     printf("\nel tamaño de la lista es:%d\n", list_size(args->table_compact_args_list));
 
@@ -1013,6 +1019,7 @@ void engine_compactate(t_table_compactation_args_function* args){
 
 int contadordetemp(DIR* directorio){
     struct dirent* file;
+    if(directorio==NULL) return 0;
     int contador=0;
     while((file= readdir(directorio))!=NULL ){
         int len= strlen(file->d_name);
@@ -1316,17 +1323,6 @@ row* select_particiones_temporales(package_select* select_info){
        }
     partition->blocks = first_block;
     
-    if(block_amount == 0){
-        char* path = malloc(200);
-        strcpy(path, MNT_POINT);
-        strcat(path, nombre_table);
-        char* aux = string_itoa(numero_particion);
-        strcat(path, aux);
-        strcat(path, ".part");
-        remove(path);
-        free(path);
-        free(aux);
-    }
     char* rutaTemp = malloc(200);
     int tempContador = 0;
     FILE* block;
@@ -1341,18 +1337,9 @@ row* select_particiones_temporales(package_select* select_info){
         set_block_as_free(block_num);
         tempContador++;
         log_info(logg, "Se borro ");
+        log_info(logg, rutaTemp);
     }
-    char* path = malloc(200);
-    strcpy(path, MNT_POINT);
-    strcat(path, nombre_table);
-    strcat(path, "/");
-    char* aux = string_itoa(numero_particion);
-    strcat(path, aux);
-    strcat(path, ".part");
-    log_info(logg, path);
-    remove(path);
-    free(path);
-    free(aux);
+
     free(rutaTemp);
     return;
  }

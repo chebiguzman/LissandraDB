@@ -337,7 +337,7 @@ char* action_drop(package_drop* drop_info){
  
   if(!does_table_exist(drop_info->table_name)){
     free(parse_package_drop(drop_info));
-    return strdup("La tabla solicitada no existe.\n");
+    return strdup("La tabla solicitada no excreiste.\n");
   }
   engine_drop_table(drop_info->table_name);
  
