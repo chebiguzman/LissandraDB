@@ -79,14 +79,15 @@ int main(int argc, char const *argv[]){
  
 char* action_select(package_select* select_info){
   log_info(logger, "Se recibio una accion select");
- 
-  
- 
+
   if(!does_table_exist(select_info->table_name)){
     free(parse_package_select(select_info));
     return strdup("La tabla solicitada no existe.\n");
   }
-
+ 
+  t_table* t = get_table(select_info->table_name);
+  pthread_mutex_lock(&t->lock);
+ 
 
  char* m = NULL;
   if(is_data_on_memtable(select_info->table_name, select_info->key)){
@@ -130,12 +131,16 @@ char* action_select(package_select* select_info){
   partition->blocks = first_block;
  
   if(block_amount==0 && bit==0){
+      pthread_mutex_unlock(&t->lock);
+
     return strdup("Key invalida\n");
   }
 
   if(block_amount==0 && bit==1){
     free(parse_package_select(select_info));
     printf("retorno: \n");
+    pthread_mutex_unlock(&t->lock);
+
     return temp_row->value;
   }
 
@@ -192,10 +197,13 @@ char* action_select(package_select* select_info){
       char* r = malloc( strlen(parametros[whileparametro]->value) + 2);
       strcpy(r, parametros[whileparametro]->value);
       free(parse_package_select(select_info));
+      pthread_mutex_unlock(&t->lock);
+
       return r;
       }
       else{
       free(parse_package_select(select_info));
+      pthread_mutex_unlock(&t->lock);
       return temp_row->value;
       }
     }
@@ -208,8 +216,11 @@ char* action_select(package_select* select_info){
   printf("%d",bit);
  if(bit==1){
     printf("entre al if de retorno \n");
+    pthread_mutex_unlock(&t->lock);
+
     return temp_row->value;
   }
+  pthread_mutex_unlock(&t->lock);
   return strdup("Key invalida\n");
   //falta atender los memory leaks, en especial los de los thread.
  

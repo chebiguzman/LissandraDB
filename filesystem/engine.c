@@ -400,6 +400,17 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
  
 }
  
+t_table* get_table(char* q){
+    
+    bool findTableByName(void* t){
+        t_table* tt = (t_table*) t;
+        if(!strcmp(q, tt->name)){
+            return true;
+        }
+    }
+    t_table* tbl = list_find(tables, findTableByName);
+    return tbl;
+}
 void engine_drop_table(char* table_name){
     char* q = strdup(table_name);
     string_to_upper(q);

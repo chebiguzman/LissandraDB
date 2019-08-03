@@ -85,6 +85,11 @@ int find_unmodified_page(){
 	return -1;
 }
 
+void free_page(page_t* page){
+	free(page->value);
+	free(page);
+}
+
 // guarda una pagina en memoria sin dirtybit porque es un select de fs
 page_info_t* save_page(char* table_name, page_t* page){ 
 	page_info_t* page_info = find_page_info(table_name, page->key);
@@ -141,6 +146,7 @@ void remove_page(page_info_t* page_info){
 	remove_from_segment(lru_page_info->segment, page_info);
 	remove_from_LRU(lru_page_info);
 	memset(MAIN_MEMORY+page_info->index, 0, VALUE_SIZE); // seteo a 0 la page en main memory
+	free_lru_page(lru_page_info);
 }
 
 // libera la pagina y si tiene dirtybit la manda al fs 
@@ -155,8 +161,11 @@ void remove_and_save_page(page_info_t* page_info){
 		insert_info->key = page_info->page_ptr->key;
 		insert_info->value = page_info->page_ptr->value;
 		insert_info->timestamp = (unsigned)time(NULL);
-		char* response = exec_in_fs(fs_socket, parse_package_insert(insert_info));
+		char* parsed_package_insert = parse_package_insert(insert_info);
+		char* response = exec_in_fs(fs_socket, parsed_package_insert);
 		printf("Response FS: %s\n", response);
+		free(parsed_package_insert);
+		free(response);
 	}
 	remove_page(page_info);
 }
@@ -176,6 +185,11 @@ void remove_all_pages_from_segment(segment_t* segment, int save_to_fs_bit){
 	}
 }
 
+void free_segment(segment_t* segment){
+	free(segment->name);
+	free(segment);
+}
+
 // remueve el segmento y todas sus paginas, si el save_to_fs_bit es != 0, manda las paginas al fs 
 void remove_segment(char* table_name, int save_to_fs_bit){
 	segment_t* temp = find_segment(table_name);	
@@ -190,8 +204,8 @@ void remove_segment(char* table_name, int save_to_fs_bit){
 	else{ // en caso de que sea el primero..
 		SEGMENT_TABLE = temp->next;
 	}
+	free_segment(temp);
 	printf("-- SEGMENT REMOVED --\n\n");	
-	//free(temp);
 }
 
 void remove_from_segment(segment_t* segment, page_info_t* temp){
@@ -365,18 +379,24 @@ void update_LRU(segment_t* segment, page_info_t* page_info){
 	else{ // si no esta en la tabla la agrego
 		lru_page_t* temp = create_lru_page(segment, page_info);
 		memcpy(LRU_TABLE->lru_pages+last_index+1, temp, sizeof(lru_page_t));
+		free_lru_page(temp);
 		LRU_TABLE->current_pages++;
 	}
 	update_used_pages();
 	print_LRU_TABLE();
 }
 
-void remove_from_LRU(lru_page_t* lru_page_info){
+void free_lru_page(lru_page_t* lru_page_info){
+	free(lru_page_info->lru_page);
+	free(lru_page_info);
+}
 
+void remove_from_LRU(lru_page_t* lru_page_info){
 	printf("- Removing \"%s\" from LRU -\n", lru_page_info->lru_page->page_ptr->value);	
 	int index = find_page_in_LRU(lru_page_info->lru_page);
 	if(index != -1){
 		memmove(LRU_TABLE->lru_pages+index, LRU_TABLE->lru_pages+index+1, sizeof(lru_page_t) * NUMBER_OF_PAGES-index-1);		
+		free_lru_page(lru_page_info);
 		LRU_TABLE->current_pages--;
 	}
 	update_used_pages();
@@ -426,13 +446,15 @@ char* exec_in_fs(int memory_fd, char* payload){
 
     //ejecutar
     if(send(memory_fd,payload, strlen(payload)+1,MSG_NOSIGNAL)>0){
-      read(memory_fd, responce, 3000);
-      return responce;
+      	read(memory_fd, responce, 3000);
+      	return responce;
     }else{
-      log_error(logger, "No se logo comuniarse con FS");
-      return strdup("NO SE ENCUENTRA FS\n");
+		free(responce);
+		log_error(logger, "No se logo comuniarse con FS");
+      	return strdup("NO SE ENCUENTRA FS\n");
     }  
-    return strdup("algo sale mal");
+		free(responce);
+    	return strdup("algo sale mal");
 }
 
 void journal(){
