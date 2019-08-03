@@ -39,7 +39,7 @@ int main(int argc, char const *argv[])
   strcat(config_name, argv[1]);
   config = config_create(config_name);
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
-  MEMORY_PORT = config_get_int_value(config, "PORT");
+  MEMORY_PORT = config_get_int_value(config, "PUERTO");
   MEMORY_IP = config_get_string_value(config, "IP");;
 
   //set up log
@@ -56,8 +56,8 @@ int main(int argc, char const *argv[])
 
   //set up fs client 
   fs_socket = socket(AF_INET, SOCK_STREAM, 0);
-  char* FS_IP = config_get_string_value(config, "FS_IP");
-  int FS_PORT = config_get_int_value(config, "FS_PORT");
+  char* FS_IP = config_get_string_value(config, "IP_FS");
+  int FS_PORT = config_get_int_value(config, "PUERTO_FS");
   printf("%s %d\n", FS_IP, FS_PORT);
   struct sockaddr_in sock_client;
   
@@ -113,8 +113,6 @@ int main(int argc, char const *argv[])
   pthread_mutex_unlock(&gossip_table_mutex);					
 
   pthread_mutex_init(&main_memory_mutex, NULL);
-  pthread_mutex_init(&segment_table_mutex, NULL);
-  pthread_mutex_init(&lru_table_mutex, NULL);
 
   // inicio gossiping
   pthread_t tid_gossiping;
@@ -278,7 +276,10 @@ char* action_intern__status(){
   char div[2] = { '|', '\0' };
   //printf("algo por aca\n");
   char* gossip_table_buffer = create_gossip_buffer(&GOSSIP_TABLE);
-  if(gossip_table_buffer==NULL) return strdup("");
+  if(gossip_table_buffer==NULL){
+    pthread_mutex_unlock(&gossip_table_mutex);  
+    return strdup("");
+  }
 
   char* buffer = malloc(strlen(retardo_gossip) + strlen(gossip_table_buffer) + 3);
   *buffer = 0;
