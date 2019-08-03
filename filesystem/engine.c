@@ -989,17 +989,14 @@ void new_block(char* new_row,char* tabla,int particion){
 }
  
 char* add_block_to_list(char* block_list,int new){
-    printf("se recive:%s", block_list);
     char* new_block=string_itoa(new);
     char* buff = malloc(strlen(block_list) + 5);
-    memcpy(buff, block_list, strlen(block_list)-1);
+    memcpy(buff, block_list, strlen(block_list)-2);
     buff[strlen(block_list)-1] = '\0';
-    printf("se copia:%s", buff);
 
     if(block_list[8]!=']') strcat(buff, ",");
     strcat(buff, new_block);
     strcat(buff, "]");
-    printf("se agrega:%s", buff);
 
     return buff;
  
