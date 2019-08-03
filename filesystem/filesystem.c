@@ -598,6 +598,7 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
       args->bolean=0;
       args->hecho=0;
       args->ruta = strdup(regruta[whilethread].line);
+      printf("una de las rutas:%s\n", args->ruta);
       args->key=key;
       args->cond = &cond;
       args->lock = lock;
@@ -672,12 +673,14 @@ void* buscador_compactacion(void* args){
   log_info(logger,parametros->ruta);
   int len_new_row=strlen(parametros->new_row);
   int length_row;
+
   void kill_thread(){
     pthread_mutex_lock(&parametros->lock);
     //*parametros->number_of_running_threads= *parametros->number_of_running_threads ;
     int amount = *parametros->number_of_running_threads;
     amount--;
     *parametros->number_of_running_threads= amount;
+    printf("la cantidad de thread es:%d", amount);
     if(amount==0) pthread_cond_broadcast(parametros->cond);
     pthread_mutex_unlock(&parametros->lock);
  
@@ -708,62 +711,68 @@ void* buscador_compactacion(void* args){
     if(buffer[l].line[0] == '\0') break;
     parametros->row= strdup(buffer[l].line);
     buffer[l].dirty=0;
+
     if(parametros->key== get_row_key(buffer[l].line) ){
       log_info(logger,"se detecto key repetida");
-      if(atoi(parametros->new_row)<atoi(buffer[l].line)){
-      log_info(logger,"y con timestamp menor");
-      length_row=strlen(buffer[l].line);
-      parametros->bolean=1;
-     
-      if(len_new_row<=(free_space+length_row)){
-      buffer[l].line=strdup(parametros->new_row);
-      }
-      else{
-      buffer[l].dirty=1;
-      }
-      }
-      else{
+
+      if(atoi(parametros->new_row)>atoi(buffer[l].line)){
+        log_info(logger,"y con timestamp mayor");
+        length_row=strlen(buffer[l].line);
+        parametros->bolean=1;
+    
+        if(len_new_row<=(free_space+length_row)){
+          buffer[l].line=strdup(parametros->new_row);
+
+        }else{
+          buffer[l].dirty=1;
+        }
+
+      }else{
         parametros->hecho=1;
         fclose(bloque);
         kill_thread();
         return NULL;
       }
+
     }
-    parametros->retorno = strdup("");
-    l++;
-    log_info(logger,"una vuela de lectura");
-    }
-    log_info(logger,"se termino de leer el bloque");
-    rewind(bloque);
-    fclose(bloque);
+      parametros->retorno = strdup("");
+      l++;
+  }
+      
+  log_info(logger,"se termino de leer el bloque");
+  rewind(bloque);
+  fclose(bloque);
+
   if(parametros->bolean){
     bloque=fopen(parametros->ruta,"w");
     int contadorcito=0;
     int escrito=0;
+
     while(contadorcito<l){
-    if(buffer[contadorcito].dirty!=1){
-    log_info(logger,"se va a escribir:");
-    log_info(logger,buffer[contadorcito].line);
-    fputs(buffer[contadorcito].line,bloque);
-    escrito++;
+
+      if(buffer[contadorcito].dirty!=1){
+        log_info(logger,"se va a escribir:");
+        log_info(logger,buffer[contadorcito].line);
+        fputs(buffer[contadorcito].line,bloque);
+        escrito++;
+      }else{
+        int lost=0 - strlen(buffer[contadorcito].line);
+        engine_adjust(parametros->tabla,parametros->part,lost);
+      }
+      contadorcito++;
     }
-    else{
-    int lost=0 - strlen(buffer[contadorcito].line);
-    engine_adjust(parametros->tabla,parametros->part,lost);
-    }
-    contadorcito++;
-    }
+
     fflush(bloque);
     fclose(bloque);
     if(escrito==contadorcito){
-    parametros->hecho=1;
-    int lost2= len_new_row - length_row;
-    engine_adjust(parametros->tabla,parametros->part,lost2);
+      parametros->hecho=1;
+      int lost2= len_new_row - length_row;
+      engine_adjust(parametros->tabla,parametros->part,lost2);
     }
     kill_thread();
     pthread_cond_broadcast(parametros->cond);
-   
-    return NULL;
+
+  return NULL;
   }
  
   kill_thread();
