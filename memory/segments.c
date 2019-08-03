@@ -149,7 +149,7 @@ void remove_page(page_info_t* page_info){
 	remove_from_segment(lru_page_info->segment, page_info);
 	remove_from_LRU(lru_page_info);
 	memset(MAIN_MEMORY+page_info->index, 0, VALUE_SIZE); // seteo a 0 la page en main memory
-	free_lru_page(lru_page_info);
+	// free_lru_page(lru_page_info);
 }
 
 // libera la pagina y si tiene dirtybit la manda al fs 
