@@ -536,7 +536,7 @@ t_table_partiton* get_table_partition(char* table_name, int table_partition_numb
     parition->blocks_size = config_get_long_value(c, "SIZE");
  
     parition->blocks = config_get_array_value(c, "BLOCKS");
- 
+    config_destroy(c);
     free(partition_path);
  
     return parition;
@@ -590,7 +590,7 @@ t_table_metadata* get_table_metadata(char* table_name){
     meta->consistency = config_get_int_value(c, "CONSISTENCY");
     meta->partition_number = config_get_int_value(c, "PARTICIONES");
     meta->compactation_time = config_get_long_value(c, "COMPACTATION");
- 
+    config_destroy(c);
     log_error(logg,"la consistencia %d", meta->consistency);
     log_error(logg, "numero de particiones %d", meta->partition_number);
     log_error(logg, "comapctation %dl",meta->compactation_time);
@@ -872,6 +872,7 @@ t_table_partiton* get_table_partition2(char* table_name, int table_partition_num
     parition->blocks_size = config_get_long_value(c, "SIZE");
     //log_info(logg,"despues de la linea");
     parition->blocks = config_get_array_value(c, "BLOCKS");
+    config_destroy(c);
    
     return parition;
 }
@@ -892,6 +893,8 @@ t_table_partiton* get_table_partition2(char* table_name, int table_partition_num
     t_config* c = config_create(partition_path);
     parition->blocks_size = config_get_long_value(c, "SIZE");
     parition->blocks = config_get_array_value(c, "BLOCKS");
+    config_destroy(c);
+
    free(partition_path);
     return parition;
 }
@@ -920,7 +923,7 @@ t_table_compactation_args_function* engine_preparate_compactation(char* name_tab
             contador++;
         }
 
-        free(file);
+        //free(file);
     }
     int contador_rename=0;
     
@@ -1170,6 +1173,8 @@ row* select_particiones_temporales(package_select* select_info){
     int cantidad=contadordetemp(tablaDir) + contadordetempc(tablaDir);
     printf("cantidad  de ar : %d", cantidad);
     if(cantidad==0){
+        closedir(tablaDir);
+        free(ruta);
         row_return->timestap=0;
         return row_return;
     }
@@ -1191,7 +1196,7 @@ row* select_particiones_temporales(package_select* select_info){
             contador++;
         }
     }
-
+    closedir(tablaDir);
     printf("contador:%d\n", contador);
     int contador2=0;
     int temp_part;

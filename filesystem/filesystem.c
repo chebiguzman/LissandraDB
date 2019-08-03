@@ -615,12 +615,10 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
     pthread_cond_t cond;
     pthread_mutex_init(&lock, NULL);
     pthread_cond_init(&cond, NULL);
-    log_info(logger,"semaforos levantados");
     int whilethread=0;
     argumentosthread_compactacion* parametros [block_amount];
     int* number_of_threads = malloc(sizeof(int));
     *number_of_threads = block_amount;
-    log_info(logger,"mallock hecho");
  
     while(whilethread<block_amount){
       argumentosthread_compactacion* args = malloc(sizeof(argumentosthread));
@@ -642,14 +640,11 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
       whilethread++;
     }
  
-    log_info(logger,"antes del lock");
     pthread_mutex_lock(&lock);
     if(*number_of_threads!=0){
-      log_info(logger,"espero condicion");
  
       pthread_cond_wait(&cond, &lock);
     }
-    log_info(logger,"despues del lock");
  
     int whileparametro=0;
     int nada=0;
@@ -670,7 +665,6 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
       int size_free=BLOCK_SIZE_DEFAULT-size_file;
       int size_row=strlen(row_list[q].line);
       if(size_row<size_free){
-        log_info(logger,"despues del w");
         fputs(row_list[q].line,last);
         fclose(last);
         int tam_adjust=strlen(row_list[q].line);
@@ -690,6 +684,7 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
     q++;
   }
   }
+
   free(auxkey);
   return;
 }
@@ -733,6 +728,11 @@ void* buscador_compactacion(void* args){
   int free_space=BLOCK_SIZE_DEFAULT-block_size;//max block;
   regg buffer[100];
   int l=0;
+  void destroy_buffer(){
+    for(int i = 0;i<l;i++){
+      free(buffer[i].line);
+    }
+  }
   parametros->retorno = strdup("");
   while(!feof(bloque)){
  
@@ -740,7 +740,9 @@ void* buscador_compactacion(void* args){
     buffer[l].line[0] = '\0';
     fgets(buffer[l].line,100,bloque);
     if(buffer[l].line[0] == '\0') break;
+
     parametros->row= strdup(buffer[l].line);
+    
     buffer[l].dirty=0;
 
     if(parametros->key== get_row_key(buffer[l].line) ){
@@ -762,6 +764,7 @@ void* buscador_compactacion(void* args){
         parametros->hecho=1;
         fclose(bloque);
         kill_thread();
+        destroy_buffer();
         return NULL;
       }
 
@@ -769,6 +772,8 @@ void* buscador_compactacion(void* args){
       parametros->retorno = strdup("");
       l++;
   }
+  l--;
+  destroy_buffer();
       
   log_info(logger,"se termino de leer el bloque");
   rewind(bloque);

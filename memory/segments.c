@@ -211,7 +211,7 @@ void remove_segment(char* table_name, int save_to_fs_bit){
 	else{ // en caso de que sea el primero..
 		SEGMENT_TABLE = temp->next;
 	}
-	// free_segment(temp);
+	free_segment(temp);
 	log_info(logger, "-- SEGMENT REMOVED --");	
 }
 
