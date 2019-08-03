@@ -262,11 +262,11 @@ void load_dir(){
             strcpy(new, tables_path);
             strcat(new, entry->d_name);
 
+            rename(old, new);
+
             free(old);
             free(new);
-            
-
-            rename(old, new);
+    
 
             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
             continue;
@@ -342,8 +342,6 @@ int does_table_exist(char* table_name){
 
 void* dir_wacher(void* args){
 
-    int inotifyFd = inotify_init();
-    inotify_add_watch(inotifyFd, tables_path,IN_DELETE);
     char* buf = malloc(EVENT_BUF_LEN);
     while(1){
         usleep(990000);
