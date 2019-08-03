@@ -320,7 +320,6 @@ char* action_drop(package_drop* drop_info){
 char* action_journal(package_journal* journal_info){
   free(parse_package_journal(journal_info));
   log_info(logger,"wat?");
-   engine_compactate(strdup("A"));
   return strdup("No es una instruccion valida\n");
 }
  
@@ -430,14 +429,14 @@ t_table_partiton* particion_xd_parte1(char* temporal,char* tabla, int* c){
   t_table_partiton* particion= get_table_partition2(tabla, numparticion);
  
   int block_amount = 0;
-  char* first_block = particion->blocks[0];
+  void* first_block = particion->blocks;
   log_info(logger,"antes de la iteracion");
   
     while(*particion->blocks){
     block_amount++;
-    *particion->blocks++;
+    particion->blocks++;
   }
-  *particion->blocks = first_block;
+  particion->blocks = first_block;
   *c = block_amount;
   free(ruta);
 

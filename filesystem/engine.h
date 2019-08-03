@@ -49,6 +49,18 @@ typedef struct{
   uint16_t timestap;
 }row;
 
+typedef struct{
+    t_table_partiton* partition;
+    char* path;
+    int block_amount;
+}t_table_compactation_partition;
+
+
+typedef struct{
+    t_list* table_compact_args_list;
+    char* name; 
+}t_table_compactation_args_function;
+
 
 void* setup_fs(void* args);
 void engine_start(t_log* logger);
@@ -71,7 +83,7 @@ int find_tmp_name(char* tmp_path);
 char* add_block_to_list(char* block_list,int );
 void adjust_size(char* size,int tam);
 void new_block(char* new_row,char* tabla,int particion);
-void engine_compactate(char* table_name);
+void engine_compactate();
 int contadordetemp(DIR* directorio);
  int contadordetempc(DIR* directorio);
 t_table_partiton* particion_xd_parte1();
@@ -82,6 +94,8 @@ long get_dump_time();
 void update_engine_config();
 long get_retardo_time();
 void* config_worker(void* args);
+void* compactation_worker(void* args);
 row* select_particiones_temporales(package_select* select_info);
+t_table_compactation_args_function* engine_preparate_compactation(char* name_table);
 t_table_partiton* get_table_partition3(char* table_name, int table_partition_number);
 #endif /* ENGINE_H */

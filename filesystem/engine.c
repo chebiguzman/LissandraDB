@@ -238,8 +238,13 @@ void engine_start(t_log* logger){
             table->name = name;
             table->compactating = 0;
             table->cond = malloc(sizeof(pthread_cond_t));
+
+            t_table_metadata* meta = get_table_metadata(table->name);
+            table->compactation_time = meta->compactation_time;
             pthread_mutex_init(&table->lock,NULL);
             pthread_cond_init(table->cond,NULL);
+            pthread_t tid;
+            pthread_create(&tid, NULL, compactation_worker, (void*) table);
 
             list_add(tables, table);
             string_to_upper(name);
@@ -282,7 +287,7 @@ int does_table_exist(char* table_name){
 int enginet_create_table(char* table_name, int consistency, int particiones, long compactation_time){
    
     //creo la carpeta
-    int path_len = strlen(tables_path) + strlen(table_name) +1;
+    int path_len = strlen(tables_path) + strlen(table_name) +7;
     char* path_dir =  malloc(path_len);
  
     strcpy(path_dir, tables_path);
@@ -296,7 +301,7 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
  
  
     FILE * metadata;
-    char* meta_path= malloc( strlen(path_dir) + strlen("metadata")+1);
+    char* meta_path= malloc( strlen(path_dir) + strlen("/metadata")+1);
     strcpy(meta_path, path_dir);
     strcat(meta_path,"/metadata");
    
@@ -373,6 +378,7 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
 
     t_table* new_table = malloc( sizeof(t_table));
     new_table->name = table_name;
+    new_table->cond = malloc( sizeof(pthread_cond_t));
     pthread_mutex_init(&new_table->lock, NULL);
     pthread_cond_init(new_table->cond, NULL);
     new_table->compactating = 0;
@@ -558,9 +564,13 @@ void* compactation_worker(void* args){
     while (1)
     {
         usleep(table->compactation_time/1000);
-        pthread_mutex_lock(&table->lock);
-        engine_compactate(table->name);
-        pthread_mutex_unlock(&table->lock);
+        t_table_compactation_args_function* y =  engine_preparate_compactation(strdup("A"));
+        if(y!=NULL){
+            pthread_mutex_lock(&table->lock);
+            engine_compactate(y);
+            pthread_mutex_unlock(&table->lock);
+        }
+        
 
     }
     
@@ -842,16 +852,17 @@ t_table_partiton* get_table_partition2(char* table_name, int table_partition_num
     return parition;
 }
 
-void engine_compactate(char* name_table){
+t_table_compactation_args_function* engine_preparate_compactation(char* name_table){
  
     char* ruta=malloc(strlen(tables_path) + strlen(name_table) + 30);
     strcpy(ruta,tables_path);
     strcat(ruta,name_table);
- 
+
     DIR* tablaDir=opendir(ruta);
     int cantidad=contadordetemp(tablaDir);
     if(cantidad==0){
-        return;
+        closedir(tablaDir);
+        return NULL;
     }
     char* temporales[cantidad];
  
@@ -866,27 +877,50 @@ void engine_compactate(char* name_table){
             contador++;
         }
     }
- 
+    
+    t_table_compactation_args_function* args = malloc(sizeof(t_table_compactation_args_function));
+    args->name = name_table;
+
     char* file_path=malloc(strlen(ruta) + 50);
-
-    for(int i=0;i<cantidad;i++){
+    t_list* list = list_create();
+    
+     for(int i=0;i<cantidad;i++){
         int block_amount;
-        t_table_partiton*  p = particion_xd_parte1(temporales[i],name_table, &block_amount);
-        printf("amounr:%d\n", block_amount );
-        particiontemporal(p, block_amount, name_table);
 
+        t_table_compactation_partition* r = malloc( sizeof(t_table_compactation_partition));
+        t_table_partiton*  p = particion_xd_parte1(temporales[i],name_table, &block_amount);
         strcpy(file_path,ruta);
         strcat(file_path,"/");
         strcat(file_path,temporales[i]);
-        log_info(logg,"delete:%s", file_path);
-        remove(file_path);
+        
+        r->path = strdup(file_path);
+        r->partition = p;
+        r->block_amount = block_amount;
+        list_add(list, r); 
+        
     }
- 
+    
     free(ruta);
     free(file_path);
+    closedir(tablaDir);
+    args->table_compact_args_list = list;
+    printf("\nel tamaño de la lista es:%d\n", list_size(args->table_compact_args_list));
+
+    return args;
+}
+
+void engine_compactate(t_table_compactation_args_function* args){
+
+    for(int i=0;i<list_size(args->table_compact_args_list);i++){
+        t_table_compactation_partition* t = list_get(args->table_compact_args_list, i);
+        particiontemporal(t->partition, t->block_amount, args->name);
+        remove(t->path);
+    }
+ 
     return;
 }
- 
+
+
 int contadordetemp(DIR* directorio){
     struct dirent* file;
     int contador=0;
@@ -938,7 +972,7 @@ void new_block(char* new_row,char* tabla,int particion){
     while(!feof(part)){
         registro[i].line=malloc(100);
         fgets(registro[i].line,100,part);
-        log_info(logg,registro[i].line);
+        //log_info(logg,registro[i].line);
         i++;//cambiar el 100 por max+1
     }
  
