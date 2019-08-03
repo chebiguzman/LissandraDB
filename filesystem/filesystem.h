@@ -78,3 +78,4 @@ int contar_rows(char* ruta);
 void adjust_size(char* size,int new_row);
 void* buscador_compactacion(void* args);
 void exec_err_abort();
+void particiontemporal();

@@ -237,8 +237,9 @@ void engine_start(t_log* logger){
             strcpy(name, entry->d_name);
             table->name = name;
             table->compactating = 0;
+            table->cond = malloc(sizeof(pthread_cond_t));
             pthread_mutex_init(&table->lock,NULL);
-            pthread_cond_init(&table->cond,NULL);
+            pthread_cond_init(table->cond,NULL);
 
             list_add(tables, table);
             string_to_upper(name);
@@ -373,7 +374,7 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     t_table* new_table = malloc( sizeof(t_table));
     new_table->name = table_name;
     pthread_mutex_init(&new_table->lock, NULL);
-    pthread_cond_init(&new_table->cond, NULL);
+    pthread_cond_init(new_table->cond, NULL);
     new_table->compactating = 0;
     list_add(tables, new_table);
     char* copy = strdup(table_name);
@@ -551,6 +552,19 @@ t_table_metadata* get_table_metadata(char* table_name){
     return meta;
 }
  
+void* compactation_worker(void* args){
+    t_table* table = (t_table*) args;
+    
+    while (1)
+    {
+        usleep(table->compactation_time/1000);
+        pthread_mutex_lock(&table->lock);
+        engine_compactate(table->name);
+        pthread_mutex_unlock(&table->lock);
+
+    }
+    
+}
 char* get_blocksize_table_rows(char* table_data){
     char* buffer = malloc(block_size);
     char** rows = string_split(table_data, "\n");
@@ -827,6 +841,7 @@ t_table_partiton* get_table_partition2(char* table_name, int table_partition_num
    
     return parition;
 }
+
 void engine_compactate(char* name_table){
  
     char* ruta=malloc(strlen(tables_path) + strlen(name_table) + 30);
@@ -842,6 +857,7 @@ void engine_compactate(char* name_table){
  
     int contador=0;
     struct dirent * file;
+
     while((file= readdir(tablaDir))!=NULL ){
         int len= strlen(file->d_name);
         if(file->d_name[len-1]=='p'){
@@ -852,9 +868,13 @@ void engine_compactate(char* name_table){
     }
  
     char* file_path=malloc(strlen(ruta) + 50);
+
     for(int i=0;i<cantidad;i++){
- 
-        particiontemporal(temporales[i],name_table);
+        int block_amount;
+        t_table_partiton*  p = particion_xd_parte1(temporales[i],name_table, &block_amount);
+        printf("amounr:%d\n", block_amount );
+        particiontemporal(p, block_amount, name_table);
+
         strcpy(file_path,ruta);
         strcat(file_path,"/");
         strcat(file_path,temporales[i]);
@@ -881,6 +901,19 @@ int contadordetemp(DIR* directorio){
  
 }
  
+ int contadordetempc(DIR* directorio){
+    struct dirent* file;
+    int contador=0;
+    while((file= readdir(directorio))!=NULL ){
+        int len= strlen(file->d_name);
+        if(file->d_name[len-1]=='c'){
+            contador++;
+        }
+    }
+    rewinddir(directorio);
+    return contador;
+ 
+}
  
 void new_block(char* new_row,char* tabla,int particion){
  
@@ -956,17 +989,18 @@ void new_block(char* new_row,char* tabla,int particion){
 }
  
 char* add_block_to_list(char* block_list,int new){
- 
+    printf("se recive:%s", block_list);
     char* new_block=string_itoa(new);
     char* buff = malloc(strlen(block_list) + 5);
     memcpy(buff, block_list, strlen(block_list)-1);
     buff[strlen(block_list)-1] = '\0';
+    printf("se copia:%s", buff);
+
     if(block_list[8]!=']') strcat(buff, ",");
     strcat(buff, new_block);
     strcat(buff, "]");
- 
- 
- 
+    printf("se agrega:%s", buff);
+
     return buff;
  
 }
@@ -1019,27 +1053,38 @@ long get_retardo_time(){
 }
 
 row* select_particiones_temporales(package_select* select_info){
+    printf("tms");
     char* ruta=malloc(strlen(tables_path) + strlen(select_info->table_name) + 30);
     strcpy(ruta,tables_path);
     strcat(ruta,select_info->table_name);
     row* row_return=malloc(sizeof(row));//hace malloc
     DIR* tablaDir=opendir(ruta);
-    int cantidad=contadordetemp(tablaDir);
+    int cantidad=contadordetemp(tablaDir) + contadordetempc(tablaDir);
+    printf("cantidad  de ar : %d", cantidad);
     if(cantidad==0){
         row_return->timestap=0;
         return row_return;
     }
     char* temporales[cantidad];
     int contador=0;
+    int temp_count = 0;
+    int tempc_count = 0;
+
     struct dirent * file;
     while((file= readdir(tablaDir))!=NULL ){
         int len= strlen(file->d_name);
+            printf("nombre:%s\n", file->d_name);
+
         if(file->d_name[len-1]=='p' || file->d_name[len-1]=='c'){
             temporales[contador]=strdup(file->d_name);
             log_info(logg,temporales[contador]);
+            printf("nombre dd:%s\n", file->d_name);
+
             contador++;
         }
     }
+
+    printf("contador:%d\n", contador);
     int contador2=0;
     int temp_part;
     long mayor=0;
@@ -1049,38 +1094,40 @@ row* select_particiones_temporales(package_select* select_info){
         char* current_part=malloc(150);
         strcpy(current_part,temporales[contador2]);
         temp_part=partition_num(current_part);
-         t_table_partiton* partition;
-        if(current_part[longitud]== 'p'){
+        t_table_partiton* partition;
+
+        if(current_part[longitud-1]== 'p'){
             partition=get_table_partition2(select_info->table_name,temp_part);
         }
-        else{
+
+        if(current_part[longitud-1]== 'c'){
             partition=get_table_partition3(select_info->table_name,temp_part);
         }
         int block_amount = 0;
-  void* first_block = partition->blocks;
-  while(*partition->blocks){
-    block_amount++;
-    partition->blocks++;
-  }
-  partition->blocks = first_block;
+        void* first_block = partition->blocks;
+        while(*partition->blocks){
+            block_amount++;
+            partition->blocks++;
+        }
+        partition->blocks = first_block;
  
-  if(block_amount==0)return NULL;
+        if(block_amount==0)return NULL;
  
-  pthread_t buscadores[block_amount];
-  regg regruta[block_amount];
+        pthread_t buscadores[block_amount];
+        regg regruta[block_amount];
  
-  int i = 0;
-  while(i<block_amount){
-    regruta[i].line=malloc(100);
-    strcpy(regruta[i].line,"MountTest/");
-    strcat(regruta[i].line,"Bloques/");
-    strcat(regruta[i].line,partition->blocks[i]);
- 
-    strcat(regruta[i].line,".bin");
-   
-    log_info(logg,regruta[i].line);
-    i++;
-  }
+        int i = 0;
+        while(i<block_amount){
+            regruta[i].line=malloc(100);
+            strcpy(regruta[i].line,"MountTest/");
+            strcat(regruta[i].line,"Bloques/");
+            strcat(regruta[i].line,partition->blocks[i]);
+        
+            strcat(regruta[i].line,".bin");
+        
+            log_info(logg,regruta[i].line);
+            i++;
+        }
 
         pthread_mutex_t lock;
         pthread_cond_t cond;
@@ -1123,9 +1170,9 @@ row* select_particiones_temporales(package_select* select_info){
 
         pthread_mutex_destroy(&lock);
         pthread_cond_destroy(&cond);
-
-  //retornar timestap y value
-  //falta atender los memory leaks, en especial los de los thread.
+        contador2++;
+         //retornar timestap y value
+        //falta atender los memory leaks, en especial los de los thread.
 
     }
     row_return->timestap=mayor;

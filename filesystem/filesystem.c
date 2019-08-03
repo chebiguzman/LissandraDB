@@ -98,6 +98,7 @@ char* action_select(package_select* select_info){
  
   //nro particion
   row* temp_row=malloc(sizeof(temp_row)); 
+  printf("llamo temporales\n");
   temp_row=select_particiones_temporales(select_info);
   if(is_data_on_memtable(select_info->table_name, select_info->key)){
     if(atoi(m)>temp_row->timestap){
@@ -108,7 +109,6 @@ char* action_select(package_select* select_info){
       free(m);
     }
   }
-  printf("||| %s ||| %d \n",temp_row->value, temp_row->timestap );
   
   int table_partition_number = select_info->key % meta->partition_number ;
  
@@ -415,9 +415,7 @@ void* dump_cron(void* TIEMPO_DUMP) {
   }
 }
  
- 
-void particiontemporal(char* temporal,char* tabla){
- 
+t_table_partiton* particion_xd_parte1(char* temporal,char* tabla, int* c){
   char* ruta=malloc(100);
   strcpy(ruta,"MountTest/Tables/") ;
   strcat(ruta,tabla);
@@ -434,17 +432,30 @@ void particiontemporal(char* temporal,char* tabla){
   int block_amount = 0;
   char* first_block = particion->blocks[0];
   log_info(logger,"antes de la iteracion");
-  while(*particion->blocks){
+  
+    while(*particion->blocks){
     block_amount++;
     *particion->blocks++;
   }
-  *particion->blocks = first_block;  
+  *particion->blocks = first_block;
+  *c = block_amount;
+  free(ruta);
+
+  return particion;
+}
+
+void particiontemporal(t_table_partiton* particion, int block_amount, char* tabla){
+ 
+
+
   regg regruta[block_amount];
-  regg temp_rows[40];
+  regg temp_rows[800];
   int reg_amount;
   int i = 0;
   int block_number;
   char* paloggear;
+
+  
   while(i<block_amount){
     regruta[i].line=malloc(100);
     strcpy(regruta[i].line,"MountTest/");
@@ -457,13 +468,13 @@ void particiontemporal(char* temporal,char* tabla){
     reg_amount= get_all_rows(regruta[i].line,temp_rows,block_number);
     paloggear=string_itoa(reg_amount);
     log_info(logger,paloggear);
- 
+
     reubicar_rows(temp_rows,tabla,reg_amount);
     i++;
   }
-  free(ruta);
   return ;
 }
+
  
 int partition_num(char* numero){
   char** name_parts = string_split(numero, ".");
@@ -629,7 +640,7 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
       int size_free=BLOCK_SIZE_DEFAULT-size_file;
       int size_row=strlen(row_list[q].line);
       if(size_row<size_free){
-      log_info(logger,"despues del w");
+        log_info(logger,"despues del w");
         fputs(row_list[q].line,last);
         fclose(last);
         int tam_adjust=strlen(row_list[q].line);

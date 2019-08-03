@@ -39,8 +39,9 @@ typedef struct{
 
     char* name;
     int compactating;
+    long compactation_time;
     pthread_mutex_t lock;
-    pthread_cond_t cond;
+    pthread_cond_t *cond;
 }t_table;
 
 typedef struct{
@@ -72,7 +73,9 @@ void adjust_size(char* size,int tam);
 void new_block(char* new_row,char* tabla,int particion);
 void engine_compactate(char* table_name);
 int contadordetemp(DIR* directorio);
-void particiontemporal(char* temporal,char* tabla);
+ int contadordetempc(DIR* directorio);
+t_table_partiton* particion_xd_parte1();
+void particiontemporal();
 int max_row_amount();
 void engine_adjust(char* tabla,int particion,int adjust);
 long get_dump_time();
