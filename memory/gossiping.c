@@ -257,6 +257,7 @@ void* gossip(void* void_gossip_table){
                     delete_table(&gossip_temp);
                     free(gossip_buffer);
                     free(response);
+                    close(seed_socket);
                 }
             }
             nodes_to_connect = nodes_to_connect->next;
