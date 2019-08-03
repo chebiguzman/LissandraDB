@@ -124,6 +124,14 @@ int main(int argc, char const *argv[])
   pthread_t tid_console;
   pthread_create(&tid_console, NULL, console_input, "Memory");
 
+  //set up journal
+  //int journal_time_buffer = config_get_int_value(config, "RETARDO_JOURNAL");
+  //int *TIEMPO_JOURNAL = &journal_time_buffer;
+
+  pthread_t tid_journal;
+  pthread_create(&tid_journal, NULL, journal_activation, "TIEMPO JOURNAL");
+
+
   //Espera a que terminen las threads antes de seguir
   pthread_join(tid,NULL);
   
@@ -197,6 +205,7 @@ char* action_insert(package_insert* insert_info){
 char* action_create(package_create* create_info){
   log_info(logger, "Se recibio una accion create");
   char* buffer_package_create = parse_package_create(create_info);
+  printf("%s\n", buffer_package_create);
   char* response = exec_in_fs(fs_socket, buffer_package_create); // retorno el response de fs
   free(buffer_package_create);
   return response;
@@ -268,8 +277,10 @@ char* action_intern__status(){
 
   char sep[2] = { ',', '\0' };
   char div[2] = { '|', '\0' };
-
+  //printf("algo por aca\n");
   char* gossip_table_buffer = create_gossip_buffer(&GOSSIP_TABLE);
+  if(gossip_table_buffer==NULL) return strdup("");
+
   char* buffer = malloc(strlen(retardo_gossip) + strlen(gossip_table_buffer) + 2);
   *buffer = 0;
   strcpy(buffer, id);
@@ -280,7 +291,8 @@ char* action_intern__status(){
 
   pthread_mutex_unlock(&gossip_table_mutex);  
 
-  log_error(logger, "%s",buffer);
+  //log_error(logger, "%s",buffer);
+  if(buffer==NULL) return strdup("");
   return buffer;
 }
 

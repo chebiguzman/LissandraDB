@@ -15,13 +15,13 @@ typedef struct {
   int key;
   char* retorno;
   char* row;
-  int16_t timestap;
+  uint16_t timestap;
   char value [100];
   int bolean;
   pthread_cond_t* cond;
   pthread_mutex_t lock;
   int* number_of_running_threads;
-  
+  int *l;
 
 }argumentosthread;
 
@@ -78,3 +78,4 @@ int contar_rows(char* ruta);
 void adjust_size(char* size,int new_row);
 void* buscador_compactacion(void* args);
 void exec_err_abort();
+void particiontemporal();

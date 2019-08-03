@@ -103,5 +103,6 @@ int memory_full();
 int is_memory_full();
 void free_lru_page(lru_page_t* lru_page_info);
 void free_page(page_t* page);
+void* journal_activation();
 
 #endif
