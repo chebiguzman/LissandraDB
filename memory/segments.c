@@ -169,8 +169,8 @@ void remove_and_save_page(page_info_t* page_info){
 		char* parsed_package_insert = parse_package_insert(insert_info);
 		char* response = exec_in_fs(fs_socket, parsed_package_insert);
 		log_info(logger, "Response FS: %s", response);
-		// // (parsed_package_insert);
-		// // (response);
+		free(parsed_package_insert);
+		free(response);
 	}
 	else{
 		remove_page(page_info);
@@ -193,8 +193,8 @@ void remove_all_pages_from_segment(segment_t* segment, int save_to_fs_bit){
 }
 
 void free_segment(segment_t* segment){
-	// (segment->name);
-	// (segment);
+	free(segment->name);
+	free(segment);
 }
 
 // remueve el segmento y todas sus paginas, si el save_to_fs_bit es != 0, manda las paginas al fs 
@@ -226,7 +226,7 @@ void remove_from_segment(segment_t* segment, page_info_t* temp){
 	else{ // en caso de que sea el primero..
 		segment->pages = temp->next;
 	}
-	//// (temp);
+	// free(temp);
 }
 
 int is_modified(page_info_t* page){
@@ -394,8 +394,8 @@ void update_LRU(segment_t* segment, page_info_t* page_info){
 }
 
 void free_lru_page(lru_page_t* lru_page_info){
-	// (lru_page_info->lru_page);
-	// (lru_page_info);
+	free(lru_page_info->lru_page);
+	free(lru_page_info);
 }
 
 void remove_from_LRU(lru_page_t* lru_page_info){
