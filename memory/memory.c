@@ -196,9 +196,7 @@ char* action_insert(package_insert* insert_info){
   page_info_t* page_info = insert_page(insert_info->table_name, page);
   char* buffer_package_insert = parse_package_insert(insert_info);
   free(buffer_package_insert); // parse_package_info libera lo del insert info, y despues libero el buffer que devuelve, asi es mas facil
-  // free_page(page);
   free(page);
-  // free(page_info);
   pthread_mutex_unlock(&main_memory_mutex);
   return strdup("");
 }
