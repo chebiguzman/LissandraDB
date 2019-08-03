@@ -676,7 +676,12 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
       }
     }
  
- 
+    for(int i = 0; i < whilethread; i++){
+      free(parametros[i]->tabla);
+      free(parametros[i]->ruta);
+      free(parametros[i]->new_row);
+      free(parametros[i]);
+    }
     pthread_mutex_destroy(&lock);
     pthread_cond_destroy(&cond);
     free(row_list[q].line);
@@ -773,7 +778,7 @@ void* buscador_compactacion(void* args){
       l++;
   }
   l--;
-  destroy_buffer();
+
       
   log_info(logger,"se termino de leer el bloque");
   rewind(bloque);
@@ -808,11 +813,13 @@ void* buscador_compactacion(void* args){
     kill_thread();
     pthread_cond_broadcast(parametros->cond);
 
+  destroy_buffer();
   return NULL;
   }
  
   kill_thread();
   log_info(logger, "salida de la funcion");
+  destroy_buffer();
   return NULL;
 }
  
