@@ -101,4 +101,6 @@ void* compactation_worker(void* args);
 row* select_particiones_temporales(package_select* select_info);
 t_table_compactation_args_function* engine_preparate_compactation(char* name_table);
 t_table_partiton* get_table_partition3(char* table_name, int table_partition_number);
+t_table* get_table(char* q);
+
 #endif /* ENGINE_H */

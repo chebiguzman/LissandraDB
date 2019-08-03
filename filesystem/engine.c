@@ -358,7 +358,7 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
     c--;
  
     char* resp=malloc(1000);
-    char* metadata_template = "SIZE=0\nBLOCKS=[]\n";
+    char* metadata_template = "SIZE=0\nBLOCKS=[]";
  
     while(c>=0){
         char* auxx=NULL;
@@ -400,6 +400,17 @@ int enginet_create_table(char* table_name, int consistency, int particiones, lon
  
 }
  
+t_table* get_table(char* q){
+    
+    bool findTableByName(void* t){
+        t_table* tt = (t_table*) t;
+        if(!strcmp(q, tt->name)){
+            return true;
+        }
+    }
+    t_table* tbl = list_find(tables, findTableByName);
+    return tbl;
+}
 void engine_drop_table(char* table_name){
     char* q = strdup(table_name);
     string_to_upper(q);
@@ -877,7 +888,7 @@ t_table_compactation_args_function* engine_preparate_compactation(char* name_tab
 
     DIR* tablaDir=opendir(ruta);
     int cantidad=contadordetemp(tablaDir);
-    printf("cantidad:%d\n", cantidad);
+    //printf("cantidad:%d\n", cantidad);
     if(cantidad==0){
         closedir(tablaDir);
         return NULL;
