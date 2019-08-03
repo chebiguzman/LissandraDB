@@ -116,7 +116,7 @@ page_info_t* insert_page(char* table_name, page_t* page){
 	}
 	// si no existe, creo una nueva con dirtybit (si no tiene dirtybit no se la mando a fs en el journaling)
 	else{
-		save_page_to_memory(table_name, page, 1);
+		page_info = save_page_to_memory(table_name, page, 1);
 	}
 	// free_page(page);
 	return page_info;
@@ -150,6 +150,7 @@ void remove_page(page_info_t* page_info){
 	remove_from_LRU(lru_page_info);
 	memset(MAIN_MEMORY+page_info->index, 0, VALUE_SIZE); // seteo a 0 la page en main memory
 	// free_lru_page(lru_page_info);
+	free(page_info);
 }
 
 // libera la pagina y si tiene dirtybit la manda al fs 
@@ -211,6 +212,7 @@ void remove_segment(char* table_name, int save_to_fs_bit){
 	else{ // en caso de que sea el primero..
 		SEGMENT_TABLE = temp->next;
 	}
+	free(temp);
 	// free_segment(temp);
 	log_info(logger, "-- SEGMENT REMOVED --");	
 }
@@ -388,6 +390,7 @@ void update_LRU(segment_t* segment, page_info_t* page_info){
 		memcpy(LRU_TABLE->lru_pages+last_index+1, temp, sizeof(lru_page_t));
 		LRU_TABLE->current_pages++;
 		// free_lru_page(temp);
+		free(temp);
 	}
 	update_used_pages();
 	print_LRU_TABLE();
