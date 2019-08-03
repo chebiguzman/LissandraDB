@@ -336,8 +336,20 @@ void add_memory_to_hc(int id){
         return;
     }
 
+    void* journal_hc(void* mem){
+        t_kmemory* t = (t_kmemory*) mem;
+        char* r = malloc(30);
+        pthread_mutex_lock(&t->lock);
+        write(t->fd,"JOURNAL",8 );
+        read(t->fd,r, 30);
+        pthread_mutex_unlock(&t->lock);
+        free(r);
+        return t;
+    }
     pthread_mutex_lock(&hc_lock);
     list_add(hc_list, finded);
+
+    list_map(hc_list,journal_hc);
     pthread_mutex_unlock(&hc_lock);
 
 

@@ -382,6 +382,8 @@ char* action_intern__status(){
     return strdup("");
   }
 
+ 
+
   
   char** memories = string_split(responce, "|");
   update_memory_finder_service_time(atoi(memories[1]));
