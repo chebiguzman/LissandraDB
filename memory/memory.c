@@ -33,13 +33,13 @@ int main(int argc, char const *argv[])
   sigset_t set;	
   signal(SIGPIPE, SIG_IGN);
 	
-
   //set up config  
   char* config_name = malloc(10);
   strcpy(config_name, "config");
   strcat(config_name, argv[1]);
   config = config_create(config_name);
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
+  printf("HOLA\n");
   MEMORY_PORT = config_get_int_value(config, "PORT");
   MEMORY_IP = "127.0.0.1";
 
@@ -119,7 +119,7 @@ int main(int argc, char const *argv[])
 
   // inicio gossiping
   pthread_t tid_gossiping;
-  pthread_create(&tid_gossiping, NULL, gossip, (void*)&GOSSIP_TABLE);
+  // pthread_create(&tid_gossiping, NULL, gossip, (void*)&GOSSIP_TABLE);
   
   //inicio lectura por consola
   pthread_t tid_console;
@@ -156,18 +156,19 @@ char* action_select(package_select* select_info){
   }
   // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
   printf("Buscando en FileSystem. Tabla: %s, Key:%d...\n", select_info->table_name, select_info->key);  
-  char* response = exec_in_fs(fs_socket, parse_package_select(select_info)); 
+  char* table_name = strdup(select_info->table_name);
+  int select_key = select_info->key;
+  char* buffer_package_select = parse_package_select(select_info);
+  char* response = exec_in_fs(fs_socket, buffer_package_select); 
   printf("Respuesta del FileSystem: %s\n", response);  
   if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0 && !strcmp(response, "NO SE ENCUENTRA FS")){
-    page_t* page = create_page((unsigned)time(NULL), select_info->key, response);
-    save_page(select_info->table_name, page);
-    printf("Page found in file system. Table: %s, Key: %d, Value: %s\n", select_info->table_name, page->key, page->value);
-    pthread_mutex_unlock(&segment_table_mutex);					
-    pthread_mutex_unlock(&lru_table_mutex);
-    pthread_mutex_unlock(&main_memory_mutex);
-
-    return string_new("%s\n", page->value);
+    page_t* page = create_page((unsigned)time(NULL), select_key, response);
+    save_page(table_name, page);
+    printf("Page found in file system. Table: %s, Key: %d, Value: %s\n", table_name, page->key, page->value);
+    free_page(page);
   }
+  free(buffer_package_select);
+  free(table_name);
   pthread_mutex_unlock(&segment_table_mutex);					
   pthread_mutex_unlock(&lru_table_mutex);
   pthread_mutex_unlock(&main_memory_mutex);
@@ -184,6 +185,9 @@ char* action_insert(package_insert* insert_info){
   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
   page_info_t* page_info = insert_page(insert_info->table_name, page);
+  char* buffer_package_insert = parse_package_insert(insert_info);
+  free(buffer_package_insert); // parse_package_info libera lo del insert info, y despues libero el buffer que devuelve, asi es mas facil
+  free_page(page);
   pthread_mutex_unlock(&segment_table_mutex);					
   pthread_mutex_unlock(&lru_table_mutex);
   pthread_mutex_unlock(&main_memory_mutex);
