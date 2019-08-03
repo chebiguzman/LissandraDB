@@ -146,6 +146,8 @@ char* action_select(package_select* select_info){
   char* table_name = strdup(select_info->table_name);
   int select_key = select_info->key;
   char* buffer_package_select = parse_package_select(select_info);
+  printf("TABLE NAME: %s\n", table_name);
+  printf("SELECT KEY: %d\n", select_key);
   page_info_t* page_info = find_page_info(table_name, select_key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
   if(page_info != NULL){
     log_info(logger, "Page found in memory -> Key: %d, Value: %s", select_key, page_info->page_ptr->value);
@@ -155,7 +157,7 @@ char* action_select(package_select* select_info){
     
     pthread_mutex_unlock(&main_memory_mutex);
 
-    return page_info->page_ptr->value;
+    return strdup(page_info->page_ptr->value);
   }
   // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
   log_info(logger, "Buscando en FileSystem. Tabla: %s, Key:%d...", table_name, select_key);  
@@ -185,8 +187,7 @@ char* action_insert(package_insert* insert_info){
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
   page_info_t* page_info = insert_page(insert_info->table_name, page);
   char* buffer_package_insert = parse_package_insert(insert_info);
-  // free(buffer_package_insert); // parse_package_info libera lo del insert info, y despues libero el buffer que devuelve, asi es mas facil
-  printf("VALLUE %s\n\n", page->value);
+  free(buffer_package_insert); // parse_package_info libera lo del insert info, y despues libero el buffer que devuelve, asi es mas facil
   // free_page(page);
  
   pthread_mutex_unlock(&main_memory_mutex);
@@ -225,7 +226,7 @@ char* action_drop(package_drop* drop_info){
 }
 
 char* action_journal(package_journal* journal_info){
-  log_info(logger, "Se recibio una accion select");
+  log_info(logger, "Se recibio una accion journal");
   char* buffer_package_journal = parse_package_journal(journal_info);
   free(buffer_package_journal);
   
