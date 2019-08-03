@@ -418,8 +418,7 @@ void* dump_cron(void* TIEMPO_DUMP) {
  
 t_table_partiton* particion_xd_parte1(char* temporal,char* tabla, int* c){
   char* ruta=malloc(100);
-  strcpy(ruta,MNT_POINT);
-  strcat(ruta,"Tables/");
+  strcpy(ruta,"MountTest/Tables/") ;
   strcat(ruta,tabla);
   strcat(ruta,"/");
   strcat(ruta,temporal);
@@ -460,7 +459,7 @@ void particiontemporal(t_table_partiton* particion, int block_amount, char* tabl
   
   while(i<block_amount){
     regruta[i].line=malloc(100);
-    strcpy(regruta[i].line,MNT_POINT);
+    strcpy(regruta[i].line,"MountTest/");
     strcat(regruta[i].line,"Bloques/");
     strcat(regruta[i].line,particion->blocks[i]);
     block_number=atoi(particion->blocks[i]);
@@ -575,7 +574,7 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
     log_info(logger,"bloques:");
     while(i<block_amount){
       regruta[i].line=malloc(100);
-      strcpy(regruta[i].line,MNT_POINT);
+      strcpy(regruta[i].line,"MountTest/");
       strcat(regruta[i].line,"Bloques/");
       strcat(regruta[i].line,*currentpartition->blocks);
       strcat(regruta[i].line,".bin");
@@ -640,7 +639,7 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
       FILE* last=fopen(regruta[block_amount-1].line,"r+");
       fseek(last,0,SEEK_END);
       int size_file=ftell(last);
-      int size_free=block_size-size_file;
+      int size_free=BLOCK_SIZE_DEFAULT-size_file;
       int size_row=strlen(row_list[q].line);
       if(size_row<size_free){
         log_info(logger,"despues del w");
@@ -699,9 +698,9 @@ void* buscador_compactacion(void* args){
     return NULL;
   }
   fseek(bloque,0,SEEK_END);
-  int block_tam=ftell(bloque);
+  int block_size=ftell(bloque);
   rewind(bloque);
-  int free_space=block_size-block_tam;//max block;
+  int free_space=BLOCK_SIZE_DEFAULT-block_size;//max block;
   regg buffer[100];
   int l=0;
   parametros->retorno = strdup("");
