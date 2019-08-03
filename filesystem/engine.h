@@ -20,6 +20,8 @@
 #include <commons/string.h>
 #include "../kernel/kmemory.h"
 
+int block_size;
+
 typedef struct {
     t_log* logger;
 } fs_structure_info;
