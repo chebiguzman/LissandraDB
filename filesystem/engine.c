@@ -225,6 +225,8 @@ void engine_start(t_log* logger){
         }
         if(strlen(buff))
         fclose(bitmap);
+
+        free(buff);
     }
  
     for(int i = 0; i < block_amount;i++){
@@ -875,7 +877,7 @@ t_table_partiton* get_table_partition2(char* table_name, int table_partition_num
 }
  
  t_table_partiton* get_table_partition3(char* table_name, int table_partition_number){
-    char* partition_name = strdup(string_itoa(table_partition_number));
+    char* partition_name = string_itoa(table_partition_number);
     char* partition_path =malloc(strlen(tables_path) + strlen(table_name) + 1 + strlen(partition_name)+ strlen(".temp") + 5);
     strcpy(partition_path ,tables_path);
  
@@ -883,15 +885,14 @@ t_table_partiton* get_table_partition2(char* table_name, int table_partition_num
     strcat(partition_path,"/");
     strcat(partition_path, partition_name);
     strcat(partition_path, ".tmpc");
+
+    free(partition_name);
  
     t_table_partiton* parition = malloc(sizeof(t_table_partiton));
     t_config* c = config_create(partition_path);
-    printf("assasd %s\n", partition_path);
-    log_info(logg,"antes de la linea");
     parition->blocks_size = config_get_long_value(c, "SIZE");
-   log_info(logg,"despues de la linea");
     parition->blocks = config_get_array_value(c, "BLOCKS");
-   
+   free(partition_path);
     return parition;
 }
 
@@ -904,6 +905,7 @@ t_table_compactation_args_function* engine_preparate_compactation(char* name_tab
     //printf("cantidad:%d\n", cantidad);
     if(cantidad==0){
         closedir(tablaDir);
+        free(ruta);
         return NULL;
     }
     char* temporales[cantidad];
@@ -915,24 +917,25 @@ t_table_compactation_args_function* engine_preparate_compactation(char* name_tab
         int len= strlen(file->d_name);
         if(file->d_name[len-1]=='p'){
            temporales[contador]= strdup(file->d_name);
-            log_info(logg,temporales[contador]);
             contador++;
         }
+
+        free(file);
     }
     int contador_rename=0;
-    char* ruta2=malloc(200);
+    
     
     while(contador>contador_rename){
+        char* ruta2=malloc(200);
         strcpy(ruta2,ruta);
         strcat(ruta2,"/");
         strcat(ruta2,temporales[contador_rename]);
-        char* respaldo=malloc(100);
         char* new=malloc(strlen(temporales[contador_rename])+200);
         strcpy(new,ruta2);
         strcat(new,"c");
-        log_error(logg,ruta2);
-        log_error(logg,new);
         rename(ruta2,new);
+        free(new);
+        free(ruta2);
         strcat(temporales[contador_rename],"c");
         contador_rename++;
     }
@@ -976,7 +979,17 @@ void engine_compactate(t_table_compactation_args_function* args){
         log_error(logg,t->path);
         particiontemporal(t->partition, t->block_amount, args->name);
         remove(t->path);
+        string_iterate_lines(t->partition->blocks, free);
+        free(t->partition->blocks);
+        free(t->partition);
+        free(t->path);
+        free(t);
+
     }
+
+    //free(args->name);
+    list_destroy(args->table_compact_args_list);
+    free(args);
  
     return;
 }
