@@ -251,7 +251,7 @@ char* action_intern__status(){
 
   char sep[2] = { ',', '\0' };
   char div[2] = { '|', '\0' };
-
+  printf("algo por aca\n");
   char* gossip_table_buffer = create_gossip_buffer(&GOSSIP_TABLE);
   char* buffer = malloc(strlen(retardo_gossip) + strlen(gossip_table_buffer) + 2);
   *buffer = 0;
