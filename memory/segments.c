@@ -1,7 +1,8 @@
 #include "segments.h"
 
 
-page_t* create_page(int timestamp, int key, char* value){
+page_t* 
+create_page(int timestamp, int key, char* value){
 	//TODO: LEVANTAR EXCEPCION SI EL VALUE ES MUY GRANDE????
 	page_t* page = (page_t*)malloc(sizeof(page_t));
 	page->timestamp = timestamp;
@@ -86,8 +87,8 @@ int find_unmodified_page(){
 }
 
 void free_page(page_t* page){
-	// (page->value);
-	// (page);
+	free(page->value);
+	free(page);
 }
 
 // guarda una pagina en memoria sin dirtybit porque es un select de fs
@@ -108,7 +109,8 @@ page_info_t* insert_page(char* table_name, page_t* page){
 	if(page_info != NULL){
 		if(page_info->page_ptr->timestamp < page->timestamp){ // si por alguna razon de la vida el timestamp del insert es menor al timestamp que ya tengo en la page, no la modifico
 			log_info(logger, "Updating value %s->%s\n", page_info->page_ptr->value, page->value);
-			memcpy(page_info->page_ptr, page, PAGE_SIZE);
+			
+			memcpy(page_info->page_ptr->value, page->value, VALUE_SIZE);
 			page_info->dirty_bit = 1;
 		}
 	}
@@ -116,6 +118,7 @@ page_info_t* insert_page(char* table_name, page_t* page){
 	else{
 		save_page_to_memory(table_name, page, 1);
 	}
+	// free_page(page);
 	return page_info;
 }
 
@@ -145,7 +148,7 @@ void remove_page(page_info_t* page_info){
 	
 	remove_from_segment(lru_page_info->segment, page_info);
 	remove_from_LRU(lru_page_info);
-	// memset(MAIN_MEMORY+page_info->index, 0, VALUE_SIZE); // seteo a 0 la page en main memory
+	memset(MAIN_MEMORY+page_info->index, 0, VALUE_SIZE); // seteo a 0 la page en main memory
 	// free_lru_page(lru_page_info);
 }
 
@@ -208,7 +211,7 @@ void remove_segment(char* table_name, int save_to_fs_bit){
 	else{ // en caso de que sea el primero..
 		SEGMENT_TABLE = temp->next;
 	}
-	free_segment(temp);
+	// free_segment(temp);
 	log_info(logger, "-- SEGMENT REMOVED --");	
 }
 
