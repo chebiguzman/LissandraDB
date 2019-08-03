@@ -27,6 +27,8 @@
 char* MEMORY_IP;
 int MEMORY_PORT;
 
+void* printer_l(void* args);
+
 int main(int argc, char const *argv[])
 {   
     //set up confg
@@ -72,7 +74,9 @@ int main(int argc, char const *argv[])
   
 
    
-        
+
+    pthread_t ttid;
+    pthread_create(&ttid, NULL, printer_l, NULL);        
 
 
     start_sheduler(logger,logger_debug, control);
@@ -427,4 +431,12 @@ char* parse_input(char* input){
   set->instr = q;
   schedule(set);
   return "";
+}
+
+void *printer_l(void* args){
+  while(1){
+    sleep(30);
+    log_info(logger, get_metrics());
+
+  }
 }
