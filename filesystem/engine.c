@@ -191,7 +191,7 @@ void engine_start(t_log* logger){
     block_amount = config_get_int_value(meta_config, "BLOCKS"); //CHECK
     block_size = config_get_int_value(meta_config, "BLOCK_SIZE"); //CHECK
     row_amount = block_size/(5 + 1 + 2 + TAM_VALUE  );
-    FILE* bitmap = fopen(bitmap_path,"r");
+    FILE* bitmap = fopen(bitmap_path,"r+");
     if(bitmap==NULL){
  
         printf("------------cantidad de bloques---------------\n");
@@ -210,6 +210,20 @@ void engine_start(t_log* logger){
         fclose(bitmap);
  
     }else{
+        char* buff = malloc(3000);
+        fgets(buff, 3000, bitmap);
+        if(strlen(buff)<block_amount){
+            char* bits = string_repeat('0', block_amount-strlen(buff));
+            fclose(bitmap);
+            bitmap = fopen(bitmap_path,"w");
+
+            char* file_buff = malloc(strlen(buff) + strlen(bits) +10);
+            strcpy(file_buff, buff);
+            strcat(file_buff, bits);
+
+            fputs(file_buff, bitmap);
+        }
+        if(strlen(buff))
         fclose(bitmap);
     }
  
@@ -758,12 +772,12 @@ int find_tmp_name(char* tmp_path) {
         strcat(tmp_filepath ,tmp_name);
         strcat(tmp_filepath ,".tmp");
  
-        printf("\n============================\n");
-        printf("%s\n", tmp_filepath);
-        printf("============================\n");
+        //printf("\n============================\n");
+        //printf("%s\n", tmp_filepath);
+        //printf("============================\n");
  
         if(!does_file_exist(tmp_filepath)){
-            printf("encontre un nombre para tmp\n");
+            //printf("encontre un nombre para tmp\n");
             free(tmp_filepath);
             return i;
         }
@@ -774,11 +788,11 @@ int find_tmp_name(char* tmp_path) {
  
 int find_free_block() {
  
-    printf("El bloque %s\n", bitmap_path);
+    //printf("El bloque %s\n", bitmap_path);
     FILE* bitmap_file = fopen(bitmap_path,"r+");
     char* bitmap = malloc(block_amount+2);
  
-    printf("cantidad de bloques: %d",block_amount);
+    //printf("cantidad de bloques: %d",block_amount);
    
  
     fread(bitmap ,sizeof(char) ,block_amount ,bitmap_file);
@@ -790,13 +804,13 @@ int find_free_block() {
         }
     }
  
-    printf("-------------------NO HAY BLOQUES LIBRES-----------------------\n");
-    printf("%s",bitmap);
-    printf("---------------------------------------------------------------\n");
+    //printf("-------------------NO HAY BLOQUES LIBRES-----------------------\n");
+    //printf("%s",bitmap);
+    //printf("---------------------------------------------------------------\n");
    
  
     free(bitmap);
-    log_error(logg,"No hay bloques libres");
+   // log_error(logg,"No hay bloques libres");
     //exit(-1); //ver bien que hacer cuando no hay bloques libres
     return -1;
 }
@@ -851,10 +865,10 @@ t_table_partiton* get_table_partition2(char* table_name, int table_partition_num
  
     t_table_partiton* parition = malloc(sizeof(t_table_partiton));
     t_config* c = config_create(partition_path);
-    printf("assasd %s\n", partition_path);
-    log_info(logg,"antes de la linea");
+    //printf("assasd %s\n", partition_path);
+    //log_info(logg,"antes de la linea");
     parition->blocks_size = config_get_long_value(c, "SIZE");
-    log_info(logg,"despues de la linea");
+    //log_info(logg,"despues de la linea");
     parition->blocks = config_get_array_value(c, "BLOCKS");
    
     return parition;

@@ -21,7 +21,7 @@ typedef struct {
   pthread_cond_t* cond;
   pthread_mutex_t lock;
   int* number_of_running_threads;
-  
+  int *l;
 
 }argumentosthread;
 
