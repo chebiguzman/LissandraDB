@@ -1,7 +1,8 @@
 #include "segments.h"
 
 
-page_t* create_page(int timestamp, int key, char* value){
+page_t* 
+create_page(int timestamp, int key, char* value){
 	//TODO: LEVANTAR EXCEPCION SI EL VALUE ES MUY GRANDE????
 	page_t* page = (page_t*)malloc(sizeof(page_t));
 	page->timestamp = timestamp;
@@ -116,6 +117,7 @@ page_info_t* insert_page(char* table_name, page_t* page){
 	else{
 		save_page_to_memory(table_name, page, 1);
 	}
+	// free_page(page);
 	return page_info;
 }
 
@@ -145,7 +147,7 @@ void remove_page(page_info_t* page_info){
 	
 	remove_from_segment(lru_page_info->segment, page_info);
 	remove_from_LRU(lru_page_info);
-	// memset(MAIN_MEMORY+page_info->index, 0, VALUE_SIZE); // seteo a 0 la page en main memory
+	memset(MAIN_MEMORY+page_info->index, 0, VALUE_SIZE); // seteo a 0 la page en main memory
 	// free_lru_page(lru_page_info);
 }
 
