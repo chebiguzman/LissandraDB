@@ -206,15 +206,15 @@ void* gossip(void* void_gossip_table){
     while(1){
         pthread_mutex_lock(&gossip_table_mutex);					
         
-        printf("Gossiping...\n");
+        log_info(logger, "Iniciando Gossiping");
         gossip_t* nodes_to_connect = create_nodes_to_connect(gossip_table, seeds_ports);
         gossip_t* nodes_to_connect_address = nodes_to_connect; // me guardo el address del primer nodo para liberarlo despues
-        printf("Nodes to connect with: ");
-        print_gossip_table(&nodes_to_connect);
+        // printf("Nodes to connect with: ");
+        // print_gossip_table(&nodes_to_connect);
         while(nodes_to_connect != NULL){
             int seed_port = nodes_to_connect->port;
             char* seed_ip = nodes_to_connect->ip;
-            printf("Connecting with node: %d...\n", seed_port);
+            log_info(logger, "Conectandose con el nodo %d...", seed_port);
 
             // setup client para conectarse con otro nodo   
             int seed_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -228,42 +228,44 @@ void* gossip(void* void_gossip_table){
             
             // si no se conecta, lo saco de la gossip table
             if(connection_result < 0){
-                log_error(logger, "No se logro establecer la conexion con el siguiente nodo");   
+                log_error(logger, "No se pudo conectar con el nodo %d", seed_port);   
                 remove_node(gossip_table, find_node(gossip_table, seed_port, seed_ip));
             }
 
             // si se conecta, le paso mi gossip table y el otro nodo me va a pasar su gossip table. La comparo con la mia y agrego los que faltan
             else{
+                log_info(logger, "Se logro conectar con el nodo %d", seed_port); 
                 char* instruction = "GOSSIP ";
                 char* string_gossip_table = create_gossip_buffer(gossip_table);
                 char* gossip_buffer = malloc(strlen(instruction) + strlen(string_gossip_table) + 1);
                 strcpy(gossip_buffer, instruction);
                 strcat(gossip_buffer, string_gossip_table);
                 free(string_gossip_table);
-                printf("Me conecte con el nodo y le mando esta tabla: ");
+                // printf("Me conecte con el nodo y le mando esta tabla: ");
                 print_gossip_table(gossip_table);
 
                 char* response = malloc(1000);
                 if(write(seed_socket, gossip_buffer, strlen(gossip_buffer) + 1)){
                     read(seed_socket, response, 1000);
-                    printf("Buffer recibido: %s\n", response);
+                    // printf("Buffer recibido: %s\n", response);
                     gossip_t* gossip_temp = parse_gossip_buffer(response);
+                    log_info(logger, "Comparando las tablas gossip");
                     compare_gossip_tables(gossip_table, &gossip_temp);
-                    printf("Me conecto con una memoria y actualizo la ");
-                    print_gossip_table(gossip_table);
-                    // liberar tabla????
+                    // printf("Me conecto con una memoria y actualizo la ");
+                    // print_gossip_table(gossip_table);
+                    
                     delete_table(&gossip_temp);
                     free(gossip_buffer);
                     free(response);
                 }
-
             }
             nodes_to_connect = nodes_to_connect->next;
         }
         delete_table(&nodes_to_connect_address);
-        printf("Despues de gossip: ");
-        print_gossip_table(gossip_table);
-        config_save(config);
+        log_info(logger, "Gossiping terminado");
+        // printf("Despues de gossip: ");
+        // print_gossip_table(gossip_table);
+        // config_save(config);
         pthread_mutex_unlock(&gossip_table_mutex);					
         
         sleep(config_get_int_value(config, "RETARDO_GOSSIPING") / 1000);

@@ -94,11 +94,10 @@ int main(int argc, char const *argv[])
   NUMBER_OF_PAGES = main_memory_size / PAGE_SIZE;
   LRU_TABLE = create_LRU_TABLE();
 
-  printf("\n---- Memory info ----\n");
-  printf("Main memory size: %d\n", main_memory_size);
-  printf("Page size: %d\n", PAGE_SIZE);
-  printf("Number of pages: %d\n", NUMBER_OF_PAGES);
-  printf("---------------------\n\n");
+  log_info(logger, "Memoria inicializada");
+  log_info(logger, "Main memory size: %d", main_memory_size);
+  log_info(logger, "Page size: %d", PAGE_SIZE);
+  log_info(logger, "Number of pages: %d", NUMBER_OF_PAGES);
   
   // setup gossiping
   seeds_ports = config_get_array_value(config, "PUERTO_SEEDS");
@@ -107,6 +106,7 @@ int main(int argc, char const *argv[])
   gossip_t* this_node = create_node(MEMORY_PORT, MEMORY_IP);
   this_node->number = config_get_int_value(config, "MEMORY_NUMBER");
   add_node(&GOSSIP_TABLE, this_node);
+  log_info(logger, "Setup gossip terminado");
   
   print_gossip_table(&GOSSIP_TABLE);
 
@@ -118,7 +118,7 @@ int main(int argc, char const *argv[])
 
   // inicio gossiping
   pthread_t tid_gossiping;
-  // pthread_create(&tid_gossiping, NULL, gossip, (void*)&GOSSIP_TABLE);
+  pthread_create(&tid_gossiping, NULL, gossip, (void*)&GOSSIP_TABLE);
   
   //inicio lectura por consola
   pthread_t tid_console;
