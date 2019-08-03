@@ -270,8 +270,6 @@ char* action_intern__status(){
   char div[2] = { '|', '\0' };
   //printf("algo por aca\n");
   char* gossip_table_buffer = create_gossip_buffer(&GOSSIP_TABLE);
-  if(gossip_table_buffer==NULL) return strdup("");
-
   char* buffer = malloc(strlen(retardo_gossip) + strlen(gossip_table_buffer) + 2);
   *buffer = 0;
   strcpy(buffer, id);
@@ -283,7 +281,6 @@ char* action_intern__status(){
   pthread_mutex_unlock(&gossip_table_mutex);  
 
   //log_error(logger, "%s",buffer);
-  if(buffer==NULL) return strdup("");
   return buffer;
 }
 
