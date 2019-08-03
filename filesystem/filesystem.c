@@ -637,7 +637,7 @@ void reubicar_rows(regg* row_list,char* tabla,int reg_amount){
       FILE* last=fopen(regruta[block_amount-1].line,"r+");
       fseek(last,0,SEEK_END);
       int size_file=ftell(last);
-      int size_free=BLOCK_SIZE_DEFAULT-size_file;
+      int size_free=block_size-size_file;
       int size_row=strlen(row_list[q].line);
       if(size_row<size_free){
         log_info(logger,"despues del w");
@@ -694,9 +694,9 @@ void* buscador_compactacion(void* args){
     return NULL;
   }
   fseek(bloque,0,SEEK_END);
-  int block_size=ftell(bloque);
+  int block_tam=ftell(bloque);
   rewind(bloque);
-  int free_space=BLOCK_SIZE_DEFAULT-block_size;//max block;
+  int free_space=block_size-block_tam;//max block;
   regg buffer[100];
   int l=0;
   parametros->retorno = strdup("");
