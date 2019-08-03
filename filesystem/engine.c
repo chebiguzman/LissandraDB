@@ -240,7 +240,7 @@ void engine_start(t_log* logger){
  
     load_dir();
     pthread_t tid2;
-    pthread_create(&tid2, NULL, del_wacher, NULL);
+    pthread_create(&tid2, NULL, dir_wacher, NULL);
     //config_destroy(config); -> si hago destroy pierdo el punto de montaje que uso en engine_dump_table
     config_destroy(meta_config);
     

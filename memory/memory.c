@@ -280,7 +280,7 @@ char* action_intern__status(){
   char* gossip_table_buffer = create_gossip_buffer(&GOSSIP_TABLE);
   if(gossip_table_buffer==NULL) return strdup("");
 
-  char* buffer = malloc(strlen(retardo_gossip) + strlen(gossip_table_buffer) + 2);
+  char* buffer = malloc(strlen(retardo_gossip) + strlen(gossip_table_buffer) + 3);
   *buffer = 0;
   strcpy(buffer, id);
   strcat(buffer, div);
