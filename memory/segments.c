@@ -36,23 +36,23 @@ int is_memory_full(){
 }
 
 int find_free_page(){
-	printf("Searching for free index\n");
+	log_info(logger, "Searching for //  index");
 	if(!is_memory_full()){
 		for(int i = 0; i < NUMBER_OF_PAGES; i++){ // me fijo que indexes de pagina estan siendo usados
-			printf("Index %d is free? ", i);
+			// printf("Index %d is // ? ", i);
 			if(!page_is_on_use(i)){
-				printf("Yes\n");
+				// printf("Yes\n");
 				return i;
 			}
-			printf("No\n");
+			// printf("No\n");
 		}
 		
 	}
 	else{
-		printf("-- MEMORY FULL, REPLACING PAGE --\n\n");
+		log_info(logger, "-- MEMORY FULL, REPLACING PAGE --");
 		int index_to_replace = find_unmodified_page();
 		if(index_to_replace != -1){
-			printf("Index to replace: %d\n", index_to_replace);
+			log_info(logger, "Index to replace: %d", index_to_replace);
 			return index_to_replace;
 		}
 	}
@@ -69,25 +69,25 @@ int memory_full(){
 // busco la primer pagina sin dirtybit y devuelvo el index o -1 si esta todo hasta las bolas
 int find_unmodified_page(){
 	lru_page_t* to_be_replaced_page;
-	printf("-- Looking for unmodified page --\n");
+	log_info(logger, "-- Looking for unmodified page --");
 	
 	for(int i = 0; i < LRU_TABLE->current_pages; i++){ 
-		printf("Index %d is unmodified?: ", i);		
+		// printf("Index %d is unmodified?: ", i);		
 		to_be_replaced_page = LRU_TABLE->lru_pages+i;
 		if(!is_modified(to_be_replaced_page->lru_page)){
 			int index = to_be_replaced_page->lru_page->index;
 			remove_page(to_be_replaced_page->lru_page);
-			printf("Yes\n");
+			// printf("Yes\n");
 			return index;
 		}
-		printf("No\n");		
+		// printf("No\n");		
 	}
 	return -1;
 }
 
 void free_page(page_t* page){
-	free(page->value);
-	free(page);
+	// (page->value);
+	// (page);
 }
 
 // guarda una pagina en memoria sin dirtybit porque es un select de fs
@@ -107,7 +107,7 @@ page_info_t* insert_page(char* table_name, page_t* page){
 	// si ya existe la pagina, reemplazo el value y toco el dirtybit
 	if(page_info != NULL){
 		if(page_info->page_ptr->timestamp < page->timestamp){ // si por alguna razon de la vida el timestamp del insert es menor al timestamp que ya tengo en la page, no la modifico
-			printf("Updating value %s->%s\n", page_info->page_ptr->value, page->value);
+			log_info(logger, "Updating value %s->%s\n", page_info->page_ptr->value, page->value);
 			memcpy(page_info->page_ptr, page, PAGE_SIZE);
 			page_info->dirty_bit = 1;
 		}
@@ -145,8 +145,8 @@ void remove_page(page_info_t* page_info){
 	
 	remove_from_segment(lru_page_info->segment, page_info);
 	remove_from_LRU(lru_page_info);
-	memset(MAIN_MEMORY+page_info->index, 0, VALUE_SIZE); // seteo a 0 la page en main memory
-	free_lru_page(lru_page_info);
+	// memset(MAIN_MEMORY+page_info->index, 0, VALUE_SIZE); // seteo a 0 la page en main memory
+	// free_lru_page(lru_page_info);
 }
 
 // libera la pagina y si tiene dirtybit la manda al fs 
@@ -154,25 +154,29 @@ void remove_and_save_page(page_info_t* page_info){
 	// busco la pagina en la lru table (para saber el segmento al que pertenece)
 	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
 	if(page_info->dirty_bit != 0){
-		printf("- Saving \"%s\" to fs -\n", page_info->page_ptr->value);
+		log_info(logger, "- Saving \"%s\" to fs -", page_info->page_ptr->value);
 		package_insert* insert_info = (package_insert*)malloc(sizeof(package_insert));
 		insert_info->table_name = lru_page_info->segment->name;
-		insert_info->instruction = "insert";
+		insert_info->instruction = strdup("insert");
 		insert_info->key = page_info->page_ptr->key;
 		insert_info->value = page_info->page_ptr->value;
 		insert_info->timestamp = (unsigned)time(NULL);
+		remove_page(page_info);
+		
 		char* parsed_package_insert = parse_package_insert(insert_info);
 		char* response = exec_in_fs(fs_socket, parsed_package_insert);
-		printf("Response FS: %s\n", response);
-		free(parsed_package_insert);
-		free(response);
+		log_info(logger, "Response FS: %s", response);
+		// // (parsed_package_insert);
+		// // (response);
 	}
-	remove_page(page_info);
+	else{
+		remove_page(page_info);
+	}
 }
 
 // si el segundo argumento es 0, droppeo la pagina sin mandarla al fs
 void remove_all_pages_from_segment(segment_t* segment, int save_to_fs_bit){
-	printf("-- REMOVING PAGES FROM SEGMENT --\n");
+	log_info(logger, "-- REMOVING PAGES FROM SEGMENT --");
 	if(save_to_fs_bit != 0){
 		while(segment->pages != NULL){
 			remove_and_save_page(segment->pages);
@@ -186,14 +190,14 @@ void remove_all_pages_from_segment(segment_t* segment, int save_to_fs_bit){
 }
 
 void free_segment(segment_t* segment){
-	free(segment->name);
-	free(segment);
+	// (segment->name);
+	// (segment);
 }
 
 // remueve el segmento y todas sus paginas, si el save_to_fs_bit es != 0, manda las paginas al fs 
 void remove_segment(char* table_name, int save_to_fs_bit){
 	segment_t* temp = find_segment(table_name);	
-	printf("-- REMOVING SEGMENT: %s --\n", temp->name);
+	log_info(logger, "-- REMOVING SEGMENT: %s --", temp->name);
 	remove_all_pages_from_segment(temp, save_to_fs_bit);
 	if(temp->next != NULL){ // si no es el ultimo..
 		temp->next->prev = temp->prev; // le asigno al siguiente de temp, su anterior, o null en caso de que sea el primero
@@ -205,11 +209,11 @@ void remove_segment(char* table_name, int save_to_fs_bit){
 		SEGMENT_TABLE = temp->next;
 	}
 	free_segment(temp);
-	printf("-- SEGMENT REMOVED --\n\n");	
+	log_info(logger, "-- SEGMENT REMOVED --");	
 }
 
 void remove_from_segment(segment_t* segment, page_info_t* temp){
-	printf("- Removing \"%s\" from table %s -\n", temp->page_ptr->value, segment->name);
+	log_info(logger, "- Removing \"%s\" from table %s -", temp->page_ptr->value, segment->name);
 	if(temp->next != NULL){ // si no es el ultimo..
 		temp->next->prev = temp->prev; // le asigno al siguiente de temp, su anterior, o null en caso de que sea el primero
 	}
@@ -219,7 +223,7 @@ void remove_from_segment(segment_t* segment, page_info_t* temp){
 	else{ // en caso de que sea el primero..
 		segment->pages = temp->next;
 	}
-	//free(temp);
+	//// (temp);
 }
 
 int is_modified(page_info_t* page){
@@ -257,7 +261,7 @@ segment_t* find_or_create_segment(char* table_name){
 	if(segment != NULL){
 		return segment;
 	}
-	segment = create_segment(table_name);
+	segment = create_segment(strdup(table_name));
 	return segment;
 }
 
@@ -355,22 +359,22 @@ lru_page_t* create_lru_page(segment_t* segment, page_info_t* page_info){
 	lru_page_t* lru_page_info = (lru_page_t*)malloc(sizeof(lru_page_t));
 	lru_page_info->lru_page = page_info;
 	lru_page_info->segment = segment;
-	printf("Creating page... Index %d, Value: %s, Table: %s\n", lru_page_info->lru_page->index, lru_page_info->lru_page->page_ptr->value, lru_page_info->segment->name);
+	log_info(logger, "Creating page... Index %d, Value: %s, Table: %s", lru_page_info->lru_page->index, lru_page_info->lru_page->page_ptr->value, lru_page_info->segment->name);
 	return lru_page_info;
 }
 
 void update_LRU(segment_t* segment, page_info_t* page_info){
-	printf("-- Updating LRU --\n");	
+	log_info(logger, "-- Updating LRU --");	
 	int index = find_page_in_LRU(page_info);
 	int last_index = LRU_TABLE->current_pages-1;
 	
 	if(index != -1){ // si ya esta en la tabla, la muevo al final
 		if(index == last_index){
-			printf("Page was already the most RU.\n");
+			log_info(logger, "Page was already the most RU.");
 			print_LRU_TABLE();
 			return;
 		}
-		printf("Found page on table, updating...\n");
+		log_info(logger, "Found page on table, updating...");
 		lru_page_t temp = *(LRU_TABLE->lru_pages+index); // no uso un puntero porque cuando muevo piso la posicion donde apuntaba y se rompe todo
 		memmove(LRU_TABLE->lru_pages+index, LRU_TABLE->lru_pages+index+1, sizeof(lru_page_t) * NUMBER_OF_PAGES-index-1);		
 		memcpy(LRU_TABLE->lru_pages+last_index, &temp, sizeof(lru_page_t));
@@ -379,24 +383,25 @@ void update_LRU(segment_t* segment, page_info_t* page_info){
 	else{ // si no esta en la tabla la agrego
 		lru_page_t* temp = create_lru_page(segment, page_info);
 		memcpy(LRU_TABLE->lru_pages+last_index+1, temp, sizeof(lru_page_t));
-		free_lru_page(temp);
 		LRU_TABLE->current_pages++;
+		// free_lru_page(temp);
 	}
 	update_used_pages();
 	print_LRU_TABLE();
 }
 
 void free_lru_page(lru_page_t* lru_page_info){
-	free(lru_page_info->lru_page);
-	free(lru_page_info);
+	// (lru_page_info->lru_page);
+	// (lru_page_info);
 }
 
 void remove_from_LRU(lru_page_t* lru_page_info){
-	printf("- Removing \"%s\" from LRU -\n", lru_page_info->lru_page->page_ptr->value);	
+	log_info(logger, "- Removing \"%s\" from LRU -", lru_page_info->lru_page->page_ptr->value);	
+	
 	int index = find_page_in_LRU(lru_page_info->lru_page);
 	if(index != -1){
 		memmove(LRU_TABLE->lru_pages+index, LRU_TABLE->lru_pages+index+1, sizeof(lru_page_t) * NUMBER_OF_PAGES-index-1);		
-		free_lru_page(lru_page_info);
+		// free_lru_page(lru_page_info);
 		LRU_TABLE->current_pages--;
 	}
 	update_used_pages();
@@ -449,24 +454,26 @@ char* exec_in_fs(int memory_fd, char* payload){
       	read(memory_fd, responce, 3000);
       	return responce;
     }else{
-		free(responce);
+		// free(responce);
 		log_error(logger, "No se logo comuniarse con FS");
       	return strdup("NO SE ENCUENTRA FS\n");
     }  
-		free(responce);
+		// (responce);
     	return strdup("algo sale mal");
 }
 
 void journal(){
-	printf("\n-- JOURNALING ATR --\n\n");
-	print_everything();
+	// printf("\n-- JOURNALING ATR --\n\n");
+	log_info(logger, "Iniciando Journaling");
+	// print_everything();
 	segment_t* temp = SEGMENT_TABLE;
 	while(temp != NULL){
 		remove_segment(temp->name, 1);
 		temp = SEGMENT_TABLE;
 	}
 	print_everything();
-	printf("\n-- JOURNALING TERMINADO --\n\n");	
+	log_info(logger, "Journaling terminado");
+	// printf("\n-- JOURNALING TERMINADO --\n\n");	
 }
 
 void print_everything(){

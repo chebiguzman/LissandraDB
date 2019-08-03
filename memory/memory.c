@@ -94,11 +94,10 @@ int main(int argc, char const *argv[])
   NUMBER_OF_PAGES = main_memory_size / PAGE_SIZE;
   LRU_TABLE = create_LRU_TABLE();
 
-  printf("\n---- Memory info ----\n");
-  printf("Main memory size: %d\n", main_memory_size);
-  printf("Page size: %d\n", PAGE_SIZE);
-  printf("Number of pages: %d\n", NUMBER_OF_PAGES);
-  printf("---------------------\n\n");
+  log_info(logger, "Memoria inicializada");
+  log_info(logger, "Main memory size: %d", main_memory_size);
+  log_info(logger, "Page size: %d", PAGE_SIZE);
+  log_info(logger, "Number of pages: %d", NUMBER_OF_PAGES);
   
   // setup gossiping
   seeds_ports = config_get_array_value(config, "PUERTO_SEEDS");
@@ -107,6 +106,7 @@ int main(int argc, char const *argv[])
   gossip_t* this_node = create_node(MEMORY_PORT, MEMORY_IP);
   this_node->number = config_get_int_value(config, "MEMORY_NUMBER");
   add_node(&GOSSIP_TABLE, this_node);
+  log_info(logger, "Setup gossip terminado");
   
   print_gossip_table(&GOSSIP_TABLE);
 
@@ -118,7 +118,7 @@ int main(int argc, char const *argv[])
 
   // inicio gossiping
   pthread_t tid_gossiping;
-  // pthread_create(&tid_gossiping, NULL, gossip, (void*)&GOSSIP_TABLE);
+  pthread_create(&tid_gossiping, NULL, gossip, (void*)&GOSSIP_TABLE);
   
   //inicio lectura por consola
   pthread_t tid_console;
@@ -148,7 +148,7 @@ char* action_select(package_select* select_info){
   char* buffer_package_select = parse_package_select(select_info);
   page_info_t* page_info = find_page_info(table_name, select_key); // cuando creo paginas en el main y las busco con la misma key, no me las reconoce por alguna razon
   if(page_info != NULL){
-    printf("Page found in memory -> Key: %d, Value: %s\n", select_key, page_info->page_ptr->value);
+    log_info(logger, "Page found in memory -> Key: %d, Value: %s", select_key, page_info->page_ptr->value);
   
     free(buffer_package_select);
     free(table_name);
@@ -158,13 +158,14 @@ char* action_select(package_select* select_info){
     return page_info->page_ptr->value;
   }
   // si no tengo el segmento, o el segmento no tiene la pagina, se la pido al fs
-  printf("Buscando en FileSystem. Tabla: %s, Key:%d...\n", select_info->table_name, select_info->key);  
+  log_info(logger, "Buscando en FileSystem. Tabla: %s, Key:%d...", table_name, select_key);  
   char* response = exec_in_fs(fs_socket, buffer_package_select); 
-  printf("Respuesta del FileSystem: %s\n", response);  
+  log_info(logger, "Respuesta del FileSystem: %s", response);  
   if(strcmp(response, "La tabla solicitada no existe.\n") != 0 && strcmp(response, "Key invalida\n") != 0 && !strcmp(response, "NO SE ENCUENTRA FS")){
-    page_t* page = create_page((unsigned)time(NULL), select_key, response);
+    char* select_value = strdup(response);
+    page_t* page = create_page((unsigned)time(NULL), select_key, select_value);
     save_page(table_name, page);
-    printf("Page found in file system. Table: %s, Key: %d, Value: %s\n", table_name, page->key, page->value);
+    log_info(logger, "Page found in file system. Table: %s, Key: %d, Value: %s", table_name, page->key, page->value);
     free_page(page);
   }
   free(buffer_package_select);
@@ -182,11 +183,11 @@ char* action_insert(package_insert* insert_info){
   //BUSCO O CREO EL SEGMENTO
   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
-  printf("VALLUE %s\n\n", page->value);
   page_info_t* page_info = insert_page(insert_info->table_name, page);
   char* buffer_package_insert = parse_package_insert(insert_info);
-  free(buffer_package_insert); // parse_package_info libera lo del insert info, y despues libero el buffer que devuelve, asi es mas facil
-  free_page(page);
+  // free(buffer_package_insert); // parse_package_info libera lo del insert info, y despues libero el buffer que devuelve, asi es mas facil
+  printf("VALLUE %s\n\n", page->value);
+  // free_page(page);
  
   pthread_mutex_unlock(&main_memory_mutex);
   return strdup("");
@@ -294,9 +295,9 @@ char* action_gossip(char* arg){
   gossip_t* parsed_gossip_table = parse_gossip_buffer(arg);
   pthread_mutex_lock(&gossip_table_mutex);    					
 
-  printf("Me llego una conexion de una memoria \n");
+  log_info(logger, "Me llego una conexion de una memoria ");
   char* gossip_buffer = create_gossip_buffer(&GOSSIP_TABLE); // lo creo antes de que compare las tablas asi no le mando las que me acaba de pasar
-  printf("- Gossip buffer to send: %s\n", gossip_buffer);
+  log_info(logger, "- Gossip buffer to send: %s", gossip_buffer);
 
   // tengo que filtrar los nodos. Si me pasan un nodo al cual yo me conecto, no lo tengo que agregar
   // porque si esta desconectado, lo agrega a la tabla igual y no sale nunca porque el que se lo pasa
@@ -311,9 +312,8 @@ char* action_gossip(char* arg){
       }
       temp_node = temp_node->next;
   }
+  log_info(logger, "- Actualizando gossip table ");
   compare_gossip_tables(&GOSSIP_TABLE, &parsed_gossip_table);
-
-  printf("- Actualizo ");
   print_gossip_table(&GOSSIP_TABLE);
 
   pthread_mutex_unlock(&gossip_table_mutex);
