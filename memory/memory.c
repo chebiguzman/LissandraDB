@@ -39,7 +39,6 @@ int main(int argc, char const *argv[])
   strcat(config_name, argv[1]);
   config = config_create(config_name);
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
-  printf("HOLA\n");
   MEMORY_PORT = config_get_int_value(config, "PORT");
   MEMORY_IP = "127.0.0.1";
 
@@ -142,8 +141,7 @@ int main(int argc, char const *argv[])
 
 char* action_select(package_select* select_info){
  //  log_info(logger, "Se recibio una accion select");
-  pthread_mutex_lock(&segment_table_mutex);					
-  pthread_mutex_lock(&lru_table_mutex);
+  
   pthread_mutex_lock(&main_memory_mutex);
   char* table_name = strdup(select_info->table_name);
   int select_key = select_info->key;
@@ -155,8 +153,6 @@ char* action_select(package_select* select_info){
     free(buffer_package_select);
     free(table_name);
     
-    pthread_mutex_unlock(&segment_table_mutex);					
-    pthread_mutex_unlock(&lru_table_mutex);
     pthread_mutex_unlock(&main_memory_mutex);
 
     return page_info->page_ptr->value;
@@ -173,8 +169,7 @@ char* action_select(package_select* select_info){
   }
   free(buffer_package_select);
   free(table_name);
-  pthread_mutex_unlock(&segment_table_mutex);					
-  pthread_mutex_unlock(&lru_table_mutex);
+ 
   pthread_mutex_unlock(&main_memory_mutex);
   return response;
 }
@@ -182,9 +177,8 @@ char* action_select(package_select* select_info){
 char* action_insert(package_insert* insert_info){
   log_info(logger, "Se recibio una accion insert");
  
-  pthread_mutex_lock(&segment_table_mutex);					
-  pthread_mutex_lock(&lru_table_mutex);
   pthread_mutex_lock(&main_memory_mutex);					
+ 
   //BUSCO O CREO EL SEGMENTO
   segment_t*  segment = find_or_create_segment(insert_info->table_name); // si no existe el segmento lo creo.
   page_t* page = create_page(insert_info->timestamp, insert_info->key, insert_info->value);
@@ -193,8 +187,7 @@ char* action_insert(package_insert* insert_info){
   char* buffer_package_insert = parse_package_insert(insert_info);
   free(buffer_package_insert); // parse_package_info libera lo del insert info, y despues libero el buffer que devuelve, asi es mas facil
   free_page(page);
-  pthread_mutex_unlock(&segment_table_mutex);					
-  pthread_mutex_unlock(&lru_table_mutex);
+ 
   pthread_mutex_unlock(&main_memory_mutex);
   return strdup("");
 }
@@ -217,13 +210,11 @@ char* action_describe(package_describe* describe_info){
 
 char* action_drop(package_drop* drop_info){
   log_info(logger, "Se recibio una accion drop");
-  pthread_mutex_lock(&segment_table_mutex);					
-  pthread_mutex_lock(&lru_table_mutex);
+  
   pthread_mutex_lock(&main_memory_mutex);
   segment_t* segment = find_segment(drop_info->table_name);
   if(segment != NULL) remove_segment(drop_info->table_name, 0);
-  pthread_mutex_unlock(&segment_table_mutex);					
-  pthread_mutex_unlock(&lru_table_mutex);
+ 
   pthread_mutex_unlock(&main_memory_mutex);
   char* buffer_package_drop = parse_package_drop(drop_info);
   char* response = exec_in_fs(fs_socket, buffer_package_drop); // retorno el response de fs
@@ -235,12 +226,10 @@ char* action_journal(package_journal* journal_info){
   log_info(logger, "Se recibio una accion select");
   char* buffer_package_journal = parse_package_journal(journal_info);
   free(buffer_package_journal);
-  pthread_mutex_lock(&segment_table_mutex);					
-	pthread_mutex_lock(&lru_table_mutex);
+  
 	pthread_mutex_lock(&main_memory_mutex);
   journal();
-  pthread_mutex_unlock(&segment_table_mutex);					
-	pthread_mutex_unlock(&lru_table_mutex);
+  
 	pthread_mutex_unlock(&main_memory_mutex);
   return strdup("Journaling done\n");
 }
