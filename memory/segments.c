@@ -486,3 +486,11 @@ void print_everything(){
 		temp = temp->next;
 	}
 }
+
+void* journal_activation() {
+  fflush(stdout);
+  while(1) {
+    sleep( config_get_int_value(config, "RETARDO_JOURNAL") / 1000);
+    journal();
+  }
+}

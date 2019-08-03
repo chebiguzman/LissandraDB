@@ -124,6 +124,14 @@ int main(int argc, char const *argv[])
   pthread_t tid_console;
   pthread_create(&tid_console, NULL, console_input, "Memory");
 
+  //set up journal
+  //int journal_time_buffer = config_get_int_value(config, "RETARDO_JOURNAL");
+  //int *TIEMPO_JOURNAL = &journal_time_buffer;
+
+  pthread_t tid_journal;
+  pthread_create(&tid_journal, NULL, journal_activation, "TIEMPO JOURNAL");
+
+
   //Espera a que terminen las threads antes de seguir
   pthread_join(tid,NULL);
   
