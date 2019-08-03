@@ -102,18 +102,18 @@ gossip_t* parse_gossip_buffer(char* buffer){
         char* string_number = strndup(temp_buffer, next_value_length);
         int new_number = atoi(string_number);
         temp_buffer += next_value_length + 1;
-        printf("Parsed number: %d\n", new_number);        
+        // printf("Parsed number: %d\n", new_number);        
 
         next_value_length = get_next_value_length(temp_buffer);
         char* string_port = strndup(temp_buffer, next_value_length);
         int new_port = atoi(string_port);
         temp_buffer += next_value_length + 1;
-        printf("Parsed port: %d\n", new_port);        
+        // printf("Parsed port: %d\n", new_port);        
 
         next_value_length = get_next_value_length(temp_buffer);
         char* new_ip = strndup(temp_buffer, next_value_length);
         temp_buffer += next_value_length + 1;        
-        printf("Parsed ip: %s\n", new_ip);
+        // printf("Parsed ip: %s\n", new_ip);
 
         gossip_t* node = create_node(new_port, new_ip);
         node->number = new_number;
