@@ -40,7 +40,7 @@ int main(int argc, char const *argv[])
   config = config_create(config_name);
   char* LOGPATH = config_get_string_value(config, "LOG_PATH");
   MEMORY_PORT = config_get_int_value(config, "PORT");
-  MEMORY_IP = "127.0.0.1";
+  MEMORY_IP = config_get_string_value(config, "IP");;
 
   //set up log
   logger = log_create(LOGPATH, "Memory", 1, LOG_LEVEL_INFO);
@@ -196,8 +196,7 @@ char* action_insert(package_insert* insert_info){
   page_info_t* page_info = insert_page(insert_info->table_name, page);
   char* buffer_package_insert = parse_package_insert(insert_info);
   free(buffer_package_insert); // parse_package_info libera lo del insert info, y despues libero el buffer que devuelve, asi es mas facil
-  // free_page(page);
- 
+  free(page);
   pthread_mutex_unlock(&main_memory_mutex);
   return strdup("");
 }

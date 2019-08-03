@@ -37,7 +37,7 @@ int is_memory_full(){
 }
 
 int find_free_page(){
-	log_info(logger, "Searching for //  index");
+	log_info(logger, "Searching for  index");
 	if(!is_memory_full()){
 		for(int i = 0; i < NUMBER_OF_PAGES; i++){ // me fijo que indexes de pagina estan siendo usados
 			// printf("Index %d is // ? ", i);
@@ -116,7 +116,7 @@ page_info_t* insert_page(char* table_name, page_t* page){
 	}
 	// si no existe, creo una nueva con dirtybit (si no tiene dirtybit no se la mando a fs en el journaling)
 	else{
-		save_page_to_memory(table_name, page, 1);
+		page_info = save_page_to_memory(table_name, page, 1);
 	}
 	// free_page(page);
 	return page_info;
@@ -150,16 +150,17 @@ void remove_page(page_info_t* page_info){
 	remove_from_LRU(lru_page_info);
 	memset(MAIN_MEMORY+page_info->index, 0, VALUE_SIZE); // seteo a 0 la page en main memory
 	// free_lru_page(lru_page_info);
+	free(page_info);
 }
 
 // libera la pagina y si tiene dirtybit la manda al fs 
 void remove_and_save_page(page_info_t* page_info){
 	// busco la pagina en la lru table (para saber el segmento al que pertenece)
-	lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
 	if(page_info->dirty_bit != 0){
+		lru_page_t* lru_page_info = LRU_TABLE->lru_pages+find_page_in_LRU(page_info);
 		log_info(logger, "- Saving \"%s\" to fs -", page_info->page_ptr->value);
 		package_insert* insert_info = (package_insert*)malloc(sizeof(package_insert));
-		insert_info->table_name = lru_page_info->segment->name;
+		insert_info->table_name = strdup(lru_page_info->segment->name);
 		insert_info->instruction = strdup("insert");
 		insert_info->key = page_info->page_ptr->key;
 		insert_info->value = page_info->page_ptr->value;
@@ -171,6 +172,7 @@ void remove_and_save_page(page_info_t* page_info){
 		log_info(logger, "Response FS: %s", response);
 		free(parsed_package_insert);
 		free(response);
+		// free(lru_page_info->lru_page);
 	}
 	else{
 		remove_page(page_info);
@@ -179,7 +181,7 @@ void remove_and_save_page(page_info_t* page_info){
 
 // si el segundo argumento es 0, droppeo la pagina sin mandarla al fs
 void remove_all_pages_from_segment(segment_t* segment, int save_to_fs_bit){
-	log_info(logger, "-- REMOVING PAGES FROM SEGMENT --");
+	log_info(logger, "-- REMOVING PAGES FROM SEGMENT %s--", segment->name);
 	if(save_to_fs_bit != 0){
 		while(segment->pages != NULL){
 			remove_and_save_page(segment->pages);
@@ -211,6 +213,7 @@ void remove_segment(char* table_name, int save_to_fs_bit){
 	else{ // en caso de que sea el primero..
 		SEGMENT_TABLE = temp->next;
 	}
+	// free(temp);
 	free_segment(temp);
 	log_info(logger, "-- SEGMENT REMOVED --");	
 }
@@ -388,6 +391,7 @@ void update_LRU(segment_t* segment, page_info_t* page_info){
 		memcpy(LRU_TABLE->lru_pages+last_index+1, temp, sizeof(lru_page_t));
 		LRU_TABLE->current_pages++;
 		// free_lru_page(temp);
+		free(temp);
 	}
 	update_used_pages();
 	print_LRU_TABLE();
