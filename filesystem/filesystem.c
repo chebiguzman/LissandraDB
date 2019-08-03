@@ -428,7 +428,7 @@ t_table_partiton* particion_xd_parte1(char* temporal,char* tabla, int* c){
   char* numparticion_aux=string_itoa(numparticion);
   log_info(logger,numparticion_aux);
  
-  t_table_partiton* particion= get_table_partition2(tabla, numparticion);
+  t_table_partiton* particion= get_table_partition3(tabla, numparticion);
  
   int block_amount = 0;
   void* first_block = particion->blocks;
